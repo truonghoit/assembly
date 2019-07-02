@@ -1,9 +1,26 @@
 import React, {Component} from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import ExampleCard from './components/ExampleCard';
+import callAxios from '../../services/api';
 
 class ExamplePage extends Component {
+    componentDidMount(){
+        //setInterval(this.callAxios(), 1000);
+        let method = 'POST';
+        let url = '/api/asc/article';
+        let param = {
+            "dropdownlist-name" : "line"
+        };
+
+        let intervalRequest = setInterval(() => callAxios(method, url, param), 1000);
+        setTimeout(()=> {
+            clearInterval(intervalRequest);
+        }, 10000);
+
+    }
+
     render() {
+
         return (
             <Container className="dashboard">
                 <Row>

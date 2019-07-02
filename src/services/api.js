@@ -1,0 +1,28 @@
+import axios from "axios";
+import {SERVER_URL} from "../constants/constants";
+
+/*
+    Used to connect and get data from API
+        method: 'GET'/'POST'
+        url: 'http://10.2.17.12:8888/api/asc/article'
+        param = {
+                "dropdownlist-name" : "line"
+            }
+*/
+export default function callAxios(method, url, param){
+    console.log("callAxios");
+    let headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    };
+    axios({
+        headers: headers,
+        method: method,
+        url: SERVER_URL + url,
+        data: param
+    }).then((response) => {
+        console.log("response: ", response);
+    });
+}
+
+
