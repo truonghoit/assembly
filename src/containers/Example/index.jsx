@@ -9,13 +9,16 @@ class ExamplePage extends Component {
         let method = 'POST';
         let url = '/api/asc/article';
         let param = {
-            "dropdownlist-name" : "line"
+            "dropdownlist-name" : "parent"
         };
 
-        let intervalRequest = setInterval(() => callAxios(method, url, param), 1000);
+        /*let intervalRequest = setInterval(() => callAxios(method, url, param), 1000);
         setTimeout(()=> {
             clearInterval(intervalRequest);
-        }, 10000);
+        }, 10000);*/
+	    callAxios(method, url, param).then(response => {
+            console.log("response:", response);
+        });
 
     }
 

@@ -15,13 +15,13 @@ export default function callAxios(method, url, param){
         'Accept': 'application/json',
         'Content-Type': 'application/json',
     };
-    axios({
+    return axios({
         headers: headers,
         method: method,
         url: SERVER_URL + url,
         data: param
-    }).then((response) => {
-        console.log("response: ", response);
+    }).catch(err => {
+	    console.log(err)
     });
 }
 
