@@ -1,6 +1,6 @@
 const validate = (values) => {
 	const errors = {};
-	if (!values.mas_cd) {
+	if (!values.parent_mas_cd && !values.mas_cd) {
 		errors.mas_cd = 'Mas code field shouldn’t be empty';
 	}
 	if (!values.mas_cd_nm) {
@@ -10,8 +10,13 @@ const validate = (values) => {
 	if (!values.cate_cd) {
 		errors.cate_cd_nm = 'Please select the category';
 	}
-	if (!values.parent_mas_cd) {
-		errors.parent_mas_name = 'Please select the parent';
+	if (!values.parent_mas_cd && (values.processing_seq != 0)) {
+		errors.processing_seq = 'If parent mas code is empty, process sequence should be 0';
+	}
+
+	if (values.parent_mas_cd && (values.processing_seq <= 0)){
+		errors.processing_seq = 'If parent mas code is selected, process sequence should greater' +
+			' than 0';
 	}
 	if (!values.processing_seq) {
 		errors.processing_seq = 'Process sequence field shouldn’t be empty';
