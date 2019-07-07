@@ -19,10 +19,22 @@ class MasterForm extends Component {
 		super(props);
 		this.state = {
 			dropdownOpen: false,
-			categoryCodeOptions: [],
-			selectedCategoryCode: null,
-			parentCodeOptions: [],
-			selectedParentCode: null,
+			categoryCodeOptions: [{
+				value: "",
+				label: "",
+			}],
+			selectedCategoryCode: {
+				value: "",
+				label: "",
+			},
+			parentCodeOptions: [{
+				value: "",
+				label: "",
+			}],
+			selectedParentCode: {
+				value: "",
+				label: "",
+			},
 			disableMasCode: false,
 		};
 	}
@@ -47,45 +59,55 @@ class MasterForm extends Component {
 
 	componentDidMount() {
 		let method = 'POST';
-		let url = ASSEMBLY_API + FACTORY_ROUTE;
+		let url = ASSEMBLY_API + CATEGORY_ROUTE;
 		let param = {
-			"dropdownlist-name": "factory"
-		};
-
-		callAxios(method, url, param).then(response => {
-			try {
-				this.setState({
-					parentCodeOptions: response.data.data.map(parentCode => ({
-						value: parentCode.code.toString(),
-						label: parentCode.name.toString(),
-					})),
-					selectedParentCode: {
-						value: response.data.data[0].code.toString(),
-						label: response.data.data[0].name.toString(),
-					}
-				})
-			} catch (e) {
-				console.log("Error: ", e);
-			}
-		});
-
-		url = ASSEMBLY_API + CATEGORY_ROUTE;
-		param = {
 			"dropdownlist-name": "cate"
 		};
 
 		callAxios(method, url, param).then(response => {
 			try {
 				this.setState({
-					categoryCodeOptions: response.data.data.map(categoryCode => ({
-						value: categoryCode.code.toString(),
-						label: categoryCode.name.toString(),
-					})),
+					categoryCodeOptions: [{
+						value: "",
+						label: "---",
+					}].concat(
+						response.data.data.map(categoryCode => ({
+							value: categoryCode.code.toString(),
+							label: categoryCode.name.toString(),
+						}))
+					),
 					selectedCategoryCode: {
-						value: response.data.data[0].code.toString(),
-						label: response.data.data[0].name.toString(),
+						value: "",
+						label: "",
 					}
-				})
+				});
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+
+		url = ASSEMBLY_API + FACTORY_ROUTE;
+		param = {
+			"dropdownlist-name": "factory"
+		};
+
+		callAxios(method, url, param).then(response => {
+			try {
+				this.setState({
+					parentCodeOptions: [{
+						value: "",
+						label: "---",
+					}].concat(
+						response.data.data.map(parentCode => ({
+							value: parentCode.code.toString(),
+							label: parentCode.name.toString(),
+						}))
+					),
+					selectedParentCode: {
+						value: "",
+						label: "",
+					}
+				});
 			} catch (e) {
 				console.log("Error: ", e);
 			}
@@ -150,7 +172,7 @@ class MasterForm extends Component {
 											name="cate_cd_nm"
 											component={renderSelectField}
 											options={this.state.categoryCodeOptions}
-											placeholder={this.state.categoryCodeOptions[0] ? this.state.categoryCodeOptions[0].label : "N/A"}
+											placeholder={this.state.categoryCodeOptions[0] ? this.state.categoryCodeOptions[0].label : ""}
 											onChange={this.onCategoryCodeSelected}
 
 										/>
@@ -161,7 +183,7 @@ class MasterForm extends Component {
 											component={renderField}
 											props={{disabled: true}}
 											type="text"
-											placeholder={this.state.selectedCategoryCode ? this.state.selectedCategoryCode.value : "N/A"}
+											placeholder={this.state.selectedCategoryCode ? this.state.selectedCategoryCode.value : ""}
 											style={{marginLeft: 20}}
 										/>
 									</div>
@@ -186,7 +208,7 @@ class MasterForm extends Component {
 											name="parent_mas_name"
 											component={renderSelectField}
 											options={this.state.parentCodeOptions}
-											placeholder={this.state.parentCodeOptions[0] ? this.state.parentCodeOptions[0].label : "N/A"}
+											placeholder={this.state.parentCodeOptions[0] ? this.state.parentCodeOptions[0].label : ""}
 											onChange={this.onParentCodeSelected}
 										/>
 									</div>
@@ -196,7 +218,7 @@ class MasterForm extends Component {
 											component={renderField}
 											props={{disabled: true}}
 											type="text"
-											placeholder={this.state.selectedParentCode ? this.state.selectedParentCode.value : "N/A"}
+											placeholder={this.state.selectedParentCode ? this.state.selectedParentCode.value : ""}
 											style={{marginLeft: 20}}
 											onChange={this.handleParentCodeChange}
 										/>
