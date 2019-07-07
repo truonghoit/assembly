@@ -54,7 +54,7 @@ class MasterForm extends Component {
         };
 
         callAxios(method, url, param).then(response => {
-            if (response.data.data && response.data.data.length > 0) {
+            try {
                 this.setState({
                     factory: response.data.data.map(factory => ({
                         value: factory.code.toString(),
@@ -65,6 +65,8 @@ class MasterForm extends Component {
                         label: response.data.data[0].name.toString(),
                     }
                 })
+            } catch (e) {
+                console.log("Error: ", e);
             }
         });
 
@@ -74,7 +76,7 @@ class MasterForm extends Component {
         };
 
         callAxios(method, url, param).then(response => {
-            if (response.data.data && response.data.data.length > 0) {
+            try {
                 this.setState({
                     category: response.data.data.map(category => ({
                         value: category.code.toString(),
@@ -85,6 +87,8 @@ class MasterForm extends Component {
                         label: response.data.data[0].name.toString(),
                     }
                 })
+            } catch (e) {
+                console.log("Error: ", e);
             }
         });
     }
