@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import {change, Field, reduxForm} from 'redux-form';
+import {Field, reduxForm} from 'redux-form';
 import PropTypes from 'prop-types';
 import {Button, Card, CardBody, Col,} from 'reactstrap';
 import renderCheckBoxField from '../../../shared/components/form/CheckBox';
 import renderSelectField from '../../../shared/components/form/Select';
 import validate from './validate';
 import {renderField} from "../../../shared/components/form/InputField";
-import {ASSEMBLY_API, CATEGORY_ROUTE, FACTORY_ROUTE} from "../../../constants/constants";
-import callAxios from "../../../services/api";
 
 class MasterForm extends Component {
 	static propTypes = {
@@ -52,85 +50,40 @@ class MasterForm extends Component {
 	};
 
 	onParentCodeSelected = (selectedOption) => {
+		/*if (selectedOption.value) {
+			this.props.dispatch(change('MasterForm', 'processing_seq', "0"));
+			this.setState({
+				disableProcessSeq: true,
+			});
+		}
+		if (!selectedOption.value) {
+			this.setState({
+				disableProcessSeq: false,
+			});
+		}*/
 		this.setState({
 			selectedParentCode: selectedOption
 		});
 	};
 
 	componentDidMount() {
-		let method = 'POST';
-		let url = ASSEMBLY_API + CATEGORY_ROUTE;
-		let param = {
-			"dropdownlist-name": "cate"
-		};
-
-		callAxios(method, url, param).then(response => {
-			try {
-				this.setState({
-					categoryCodeOptions: [{
-						value: "",
-						label: "---",
-					}].concat(
-						response.data.data.map(categoryCode => ({
-							value: categoryCode.code.toString(),
-							label: categoryCode.name.toString(),
-						}))
-					),
-					selectedCategoryCode: {
-						value: "",
-						label: "",
-					}
-				});
-			} catch (e) {
-				console.log("Error: ", e);
-			}
-		});
-
-		url = ASSEMBLY_API + FACTORY_ROUTE;
-		param = {
-			"dropdownlist-name": "factory"
-		};
-
-		callAxios(method, url, param).then(response => {
-			try {
-				this.setState({
-					parentCodeOptions: [{
-						value: "",
-						label: "---",
-					}].concat(
-						response.data.data.map(parentCode => ({
-							value: parentCode.code.toString(),
-							label: parentCode.name.toString(),
-						}))
-					),
-					selectedParentCode: {
-						value: "",
-						label: "",
-					}
-				});
-			} catch (e) {
-				console.log("Error: ", e);
-			}
-		});
+		//this.loadCombo();
 	}
 
-	handleParentCodeChange = (event) => {
-		if (event.target.value) {
-			this.props.dispatch(change('MasterForm', 'mas_cd', ''));
-			this.setState({
-				disableMasCode: true,
-			});
+
+
+	componentDidUpdate() {
+		let {saveOk} = this.props;
+		if (saveOk) {
+			//this.loadCombo();
+
 		}
-		if (!event.target.value) {
-			this.setState({
-				disableMasCode: false,
-			});
-		}
-	};
+		//
+	}
 
 	render() {
-		const {handleSubmit, reset} = this.props;
-		const {disableMasCode} = this.state;
+		const {handleSubmit, reset, categoryCodeOptions, parentCodeOptions } = this.props;
+		const {disableMasCode, disableProcessSeq} = this.state;
 		return (
 			<Col md={12} lg={12}>
 				<Card>
@@ -171,20 +124,19 @@ class MasterForm extends Component {
 										<Field
 											name="cate_cd_nm"
 											component={renderSelectField}
-											options={this.state.categoryCodeOptions}
-											placeholder={this.state.categoryCodeOptions[0] ? this.state.categoryCodeOptions[0].label : ""}
+											options={categoryCodeOptions}
+											placeholder={categoryCodeOptions[0] ? categoryCodeOptions[0].label : ""}
 											onChange={this.onCategoryCodeSelected}
 
 										/>
 									</div>
-									<div className="form__form-group-field-20">
+									<div className="form__form-group-field-20" style={{marginLeft: 8}}>
 										<Field
 											name="cate_cd"
 											component={renderField}
 											props={{disabled: true}}
 											type="text"
 											placeholder={this.state.selectedCategoryCode ? this.state.selectedCategoryCode.value : ""}
-											style={{marginLeft: 20}}
 										/>
 									</div>
 									<div style={{width: '20%'}}>
@@ -207,20 +159,19 @@ class MasterForm extends Component {
 										<Field
 											name="parent_mas_name"
 											component={renderSelectField}
-											options={this.state.parentCodeOptions}
-											placeholder={this.state.parentCodeOptions[0] ? this.state.parentCodeOptions[0].label : ""}
+											options={parentCodeOptions}
+											placeholder={parentCodeOptions[0] ? parentCodeOptions[0].label : ""}
 											onChange={this.onParentCodeSelected}
 										/>
 									</div>
-									<div className="form__form-group-field-20">
+									<div className="form__form-group-field-20" style={{marginLeft: 8}}>
 										<Field
 											name="parent_mas_cd"
 											component={renderField}
 											props={{disabled: true}}
 											type="text"
 											placeholder={this.state.selectedParentCode ? this.state.selectedParentCode.value : ""}
-											style={{marginLeft: 20}}
-											onChange={this.handleParentCodeChange}
+
 										/>
 									</div>
 									<div style={{width: '20%'}}>
@@ -246,6 +197,7 @@ class MasterForm extends Component {
 										type="text"
 										component={renderField}
 										className="round_coner form__form-group-field-40"
+										disabled={disableProcessSeq}
 									/>
 									<div className="form__form-group-field-10"
 									     style={{marginLeft: 20, marginTop: 8,}}>
@@ -268,7 +220,7 @@ class MasterForm extends Component {
 									<div className="form__form-group-field-10"
 									     style={{marginTop: 8,}}>
 										<Field
-											name="CurringTime"
+											name="curringTime"
 											component={renderCheckBoxField}
 											label="curringTime"
 											defaultChecked
@@ -291,7 +243,7 @@ class MasterForm extends Component {
 								<span className="form__form-group-label">Description</span>
 								<div className="form__form-group-field">
 									<Field
-										name="defaultInput"
+										name="remark"
 										component="input"
 										type="text"
 									/>

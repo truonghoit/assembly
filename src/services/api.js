@@ -10,7 +10,6 @@ import {SERVER_URL} from "../constants/constants";
             }
 */
 export default function callAxios(method, url, param){
-    console.log("callAxios");
     let headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

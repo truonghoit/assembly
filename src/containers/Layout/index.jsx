@@ -42,7 +42,6 @@ class Layout extends Component {
 
   render() {
     const { customizer, sidebar, theme } = this.props;
-    console.log("customizer: ", customizer);
     const layoutClass = classNames({
       layout: true,
       'layout--collapse': sidebar.collapse,
