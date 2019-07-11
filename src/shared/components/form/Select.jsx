@@ -14,7 +14,7 @@ class SelectField extends PureComponent {
     value: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({
-        value: PropTypes.string,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         label: PropTypes.string,
       }),
     ]).isRequired,
@@ -52,7 +52,7 @@ class SelectField extends PureComponent {
 
 const renderSelectField = (props) => {
   const {
-    input, meta, options, placeholder,className
+    input, meta, options, placeholder, className, selected
   } = props;
   return (
     <div className={className}>
@@ -60,6 +60,7 @@ const renderSelectField = (props) => {
         {...input}
         options={options}
         placeholder={placeholder}
+        value={selected}
       />
       {meta.touched && meta.error && <span className="form__form-group-error">{meta.error}</span>}
     </div>

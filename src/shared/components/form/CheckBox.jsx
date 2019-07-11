@@ -80,7 +80,7 @@ class CheckBoxField extends PureComponent {
 
 const renderCheckBoxField = (props) => {
   const {
-    input, label, defaultChecked, disabled, className, color,
+    input, label, defaultChecked, disabled, className, color, checked
   } = props;
   return (
     <CheckBoxField
@@ -90,6 +90,7 @@ const renderCheckBoxField = (props) => {
       disabled={disabled}
       className={className}
       color={color}
+      value={checked}
     />
   );
 };

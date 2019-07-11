@@ -20,7 +20,7 @@ const validate = (values) => {
 		errors.processing_seq = 'If parent mas code is selected, process sequence should greater' +
 			' than 0';
 	}*/
-	if (!values.processing_seq) {
+	if (values.processing_seq === undefined || values.processing_seq === null) {
 		errors.processing_seq = 'Process sequence field shouldn’t be empty';
 	} else if (!/^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/i.test(values.processing_seq)) {
 		errors.processing_seq = 'Process sequence should be number';

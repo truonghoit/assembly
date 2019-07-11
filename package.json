@@ -37,6 +37,7 @@
     "react-router-dom": "^4.3.1",
     "react-select": "^3.0.4",
     "react-smooth-scrollbar": "^8.0.6",
+    "react-tabulator": "^0.9.1",
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
     "redux-form": "^8.1.0",

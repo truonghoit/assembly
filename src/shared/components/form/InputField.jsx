@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-export const renderField = ({input, placeholder, type, meta: {touched, error}, className, disabled}) => {
+export const renderField = ({input, placeholder, type, meta: {touched, error}, className, disabled, value}) => {
     return (
         <div className={className}>
             <input
                 {...input}
+                value={value}
                 placeholder={placeholder}
                 type={type}
                 disabled={disabled ? disabled : false}
