@@ -8,7 +8,6 @@
   text-align: left;
   -ms-transform: translatez(0);
   transform: translatez(0);
-  min-height: 40em;
 }
 
 .tabulator[tabulator-layout="fitDataFill"] .tabulator-tableHolder .tabulator-table {

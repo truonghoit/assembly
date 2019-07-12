@@ -74,57 +74,37 @@ class MasterForm extends Component {
 
 		return (
 			<Col md={12} lg={12}>
-						<div className="card__title">
-							<h5 className="page-title">Edit</h5>
-						</div>
 						<form className="form form--horizontal" onSubmit={handleSubmit}>
-							<div className="form__form-group ">
-								<span className="form__form-group-label">Mas Code</span>
-								<div className="form__form-group-field">
-									<Field
-										name="mas_cd"
-										component={renderField}
-										props={{
-											value: formData.mas_cd ? formData.mas_cd : '',
-										}}
-										type="text"
-										className="round_coner form__form-group-field-40"
-										disabled={this.state.editMode === true}
-										onChange={e => {
-											this.setState({
+							<Col md={6} lg={6}>
+								<div className="form__form-group marginLeff-15">
+									<span className="form__form-group-label">General Name</span>
+									<div className="form__form-group-field">
+										<Field
+											name="mas_cd_nm"
+											component={renderField}
+											props={{
+												value: formData.mas_cd_nm ? formData.mas_cd_nm : ''
+											}}
+											type="text"
+											className={"form__form-group-field-100"}
+											onChange={e => this.setState({
 												formData: {
 													...formData,
-													mas_cd: e.target.value,
+													mas_cd_nm: e.target.value,
 												}
-											});
-										}}
-									/>
+											})}
+										/>
+									</div>
 								</div>
-							</div>
-							<div className="form__form-group">
-								<span className="form__form-group-label">General Name</span>
-								<div className="form__form-group-field">
-									<Field
-										name="mas_cd_nm"
-										component={renderField}
-										props={{
-											value: formData.mas_cd_nm ? formData.mas_cd_nm : ''
-										}}
-										type="text"
-										className="round_coner form__form-group-field-40"
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												mas_cd_nm: e.target.value,
-											}
-										})}
-									/>
-								</div>
-							</div>
-							<div className="form__form-group">
-								<span className="form__form-group-label">Category</span>
-								<div className="form__form-group-field">
-									<div className="form__form-group-field-40">
+
+							</Col>
+							<Col md={6} lg={6}>
+
+							</Col>
+							<Col md={6} lg={6}>
+								<div className="form__form-group marginLeff-15">
+									<span className="form__form-group-label">Category</span>
+									<div className="form__form-group-field">
 										<Field
 											name="cate_cd_nm"
 											component={renderSelectField}
@@ -136,8 +116,8 @@ class MasterForm extends Component {
 												},
 											}}
 											placeholder={formData.cate_cd_nm ? formData.cate_cd_nm : '---'}
+											className={"form__form-group-field-100"}
 											onChange={selectedOption => {
-												console.log("selectedOption: ", selectedOption);
 												this.setState({
 													formData: {
 														...formData,
@@ -148,52 +128,51 @@ class MasterForm extends Component {
 											}}
 										/>
 									</div>
-									<div className="form__form-group-field-20"
-									     style={{marginLeft: 8}}>
-										<Field
-											name="cate_cd"
-											component={renderField}
-											props={{
-												disabled: true,
-												value: formData.cate_cd ? formData.cate_cd : ''
-											}}
-											type="text"
-										/>
-									</div>
-									<div style={{width: '20%'}}>
-									</div>
-									<div className="form__form-group-field-20 justify-content-right"
-									     style={{marginTop: 8,}}>
-										<Field
-											name="virtual_yn"
-											component={renderCheckBoxField}
-											label="Virtual(Y/N)"
-											checked={formData.virtual_yn === 1}
-											onChange={e => {
-												if (e.target) {
-													this.setState({
-														formData: {
-															...formData,
-															virtual_yn: e.target.checked ? 1 : 0,
-														},
-													});
-												} else {
-													this.setState({
-														formData: {
-															...formData,
-															virtual_yn: e ? 1 : 0,
-														},
-													});
-												}
-											}}
-										/>
-									</div>
 								</div>
-							</div>
-							<div className="form__form-group">
-								<span className="form__form-group-label">Parent Code</span>
+							</Col>
+							<Col md={3} lg={3}>
+									<Field
+										name="cate_cd"
+										component={renderField}
+										props={{
+											disabled: true,
+											value: formData.cate_cd ? formData.cate_cd : ''
+										}}
+										className={"marginLeff-15"}
+										type="text"
+									/>
+							</Col>
+							<Col md={3} lg={3}>
 								<div className="form__form-group-field">
-									<div className="form__form-group-field-40">
+									<Field
+										name="virtual_yn"
+										component={renderCheckBoxField}
+										label="Virtual(Y/N)"
+										checked={formData.virtual_yn === 1}
+										onChange={e => {
+											if (e.target) {
+												this.setState({
+													formData: {
+														...formData,
+														virtual_yn: e.target.checked ? 1 : 0,
+													},
+												});
+											} else {
+												this.setState({
+													formData: {
+														...formData,
+														virtual_yn: e ? 1 : 0,
+													},
+												});
+											}
+										}}
+									/>
+								</div>
+							</Col>
+							<Col md={6} lg={6}>
+								<div className="form__form-group marginLeff-15">
+									<span className="form__form-group-label">Parent Code</span>
+									<div className="form__form-group-field">
 										<Field
 											name="parent_mas_name"
 											component={renderSelectField}
@@ -212,75 +191,79 @@ class MasterForm extends Component {
 													parent_mas_cd: selectedOption.value,
 												}
 											})}
+											className={"form__form-group-field-100"}
 										/>
 									</div>
-									<div className="form__form-group-field-20"
-									     style={{marginLeft: 8}}>
-										<Field
-											name="parent_mas_cd"
-											component={renderField}
-											props={{
-												disabled: true,
-												value: formData.parent_mas_cd ? formData.parent_mas_cd : ''
-											}}
-											type="text"
-										/>
-									</div>
-									<div style={{width: '20%'}}>
-									</div>
-									<div className="form__form-group-field-20"
-									     style={{marginTop: 8,}} className="justify-content-right">
-										<Field
-											name="active_yn"
-											component={renderCheckBoxField}
-											label="Active(Y/N)"
-											checked={formData.active_yn === 1}
-											onChange={e => {
-												if (e.target) {
-													this.setState({
-														formData: {
-															...formData,
-															active_yn: e.target.checked ? 1 : 0,
-														},
-													});
-												} else {
-													this.setState({
-														formData: {
-															...formData,
-															active_yn: e ? 1 : 0,
-														},
-													});
-												}
-											}}
-										/>
-									</div>
-
 								</div>
-							</div>
-							<div className="form__form-group">
-								<span className="form__form-group-label">Process Sequence</span>
+							</Col>
+							<Col md={3} lg={3}>
+								<Field
+									name="parent_mas_cd"
+									component={renderField}
+									props={{
+										disabled: true,
+										value: formData.parent_mas_cd ? formData.parent_mas_cd : ''
+									}}
+									className={"marginLeff-15"}
+									type="text"
+								/>
+							</Col>
+							<Col md={3} lg={3}>
 								<div className="form__form-group-field">
 									<Field
-										name="processing_seq"
-										component="input"
-										type="text"
-										component={renderField}
-										props={{
-											value: formData.processing_seq !== undefined || formData.processing_seq !== null
-												? formData.processing_seq
-												: 0
-										}}
-										className="round_coner form__form-group-field-40"
-										disabled={disableProcessSeq}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												processing_seq: e.target.value,
+										name="active_yn"
+										component={renderCheckBoxField}
+										label="Active(Y/N)"
+										checked={formData.active_yn === 1}
+										onChange={e => {
+											if (e.target) {
+												this.setState({
+													formData: {
+														...formData,
+														active_yn: e.target.checked ? 1 : 0,
+													},
+												});
+											} else {
+												this.setState({
+													formData: {
+														...formData,
+														active_yn: e ? 1 : 0,
+													},
+												});
 											}
-										})}
+										}}
 									/>
-									<div className="form__form-group-field-10"
-									     style={{marginLeft: 20, marginTop: 8,}}>
+								</div>
+							</Col>
+							<Col md={6} lg={6}>
+								<div className="form__form-group marginLeff-15">
+									<span className="form__form-group-label">Process Sequence</span>
+									<div className="form__form-group-field">
+										<Field
+											name="processing_seq"
+											component="input"
+											type="text"
+											component={renderField}
+											props={{
+												value: formData.processing_seq !== undefined || formData.processing_seq !== null
+													? formData.processing_seq
+													: 0
+											}}
+											className="round_coner form__form-group-field-100"
+											disabled={disableProcessSeq}
+											onChange={e => this.setState({
+												formData: {
+													...formData,
+													processing_seq: e.target.value,
+												}
+											})}
+										/>
+									</div>
+								</div>
+							</Col>
+							<Col md={3} lg={3}>
+								<div className="form__form-group-field">
+									<div style={{marginLeft: -155, marginTop: 8,}}>
 										<Field
 											name="temperature"
 											component={renderCheckBoxField}
@@ -305,8 +288,7 @@ class MasterForm extends Component {
 											}}
 										/>
 									</div>
-									<div className="form__form-group-field-10"
-									     style={{marginLeft: 20, marginTop: 8,}}>
+									<div style={{marginLeft: 10, marginTop: 8,}}>
 										<Field
 											name="pressure"
 											component={renderCheckBoxField}
@@ -331,12 +313,11 @@ class MasterForm extends Component {
 											}}
 										/>
 									</div>
-									<div className="form__form-group-field-10"
-									     style={{marginTop: 8,}}>
+									<div style={{marginLeft: 10, marginTop: 8,}}>
 										<Field
 											name="curringTime"
 											component={renderCheckBoxField}
-											label="curringTime"
+											label="Curing Time"
 											checked={curringTime}
 											onChange={e => {
 												if (e.target) {
@@ -357,55 +338,58 @@ class MasterForm extends Component {
 											}}
 										/>
 									</div>
-									<div style={{width: '8%',}}>
 									</div>
-									<div style={{width: '20%', marginTop: 8}}
-									     className="justify-content-right">
+							</Col>
+							<Col md={3} lg={3}>
+								<div className="form__form-group-field">
+									<Field
+										name="sys_code_yn"
+										component={renderCheckBoxField}
+										label="Sys Code(Y/N)"
+										checked={formData.sys_code_yn === 1}
+										onChange={e => {
+											if (e.target) {
+												this.setState({
+													formData: {
+														...formData,
+														sys_code_yn: e.target.checked ? 1 : 0,
+													},
+												});
+											} else {
+												this.setState({
+													formData: {
+														...formData,
+														sys_code_yn: e ? 1 : 0,
+													},
+												});
+											}
+										}}
+									/>
+								</div>
+							</Col>
+							<Col md={6} lg={6}>
+								<div className="form__form-group marginLeff-15">
+									<span className="form__form-group-label">Description</span>
+									<div className="form__form-group-field">
 										<Field
-											name="sys_code_yn"
-											component={renderCheckBoxField}
-											label="Sys Code(Y/N)"
-											checked={formData.sys_code_yn === 1}
-											onChange={e => {
-												if (e.target) {
-													this.setState({
-														formData: {
-															...formData,
-															sys_code_yn: e.target.checked ? 1 : 0,
-														},
-													});
-												} else {
-													this.setState({
-														formData: {
-															...formData,
-															sys_code_yn: e ? 1 : 0,
-														},
-													});
-												}
+											name="remark"
+											component="input"
+											type="text"
+											props={{
+												value: formData.remark ? formData.remark : ''
 											}}
+											onChange={e => this.setState({
+												formData: {
+													...formData,
+													remark: e.target.value,
+												}
+											})}
 										/>
 									</div>
 								</div>
-							</div>
-							<div className="form__form-group">
-								<span className="form__form-group-label">Description</span>
-								<div className="form__form-group-field">
-									<Field
-										name="remark"
-										component="input"
-										type="text"
-										props={{
-											value: formData.remark ? formData.remark : ''
-										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												remark: e.target.value,
-											}
-										})}
-									/>
-								</div>
-							</div>
+							</Col>
+							<Col md={6} lg={6}>
+							</Col>
 							<div className="form__form-group-field justify-content-center">
 								<Button color="primary" type="submit">
 									{(() => {

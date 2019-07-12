@@ -50,8 +50,7 @@ const columns = [
 	{ title: "Virtual(Y/N)", field: "virtual_yn", width: '10%', align: "center", formatter: "tickCross"},
 	{ title: "Activive(Y/N)", field: "active_yn", width: '10%', align: "center", formatter: "tickCross"},
 	{ title: "Sys Code(Y/N)", field: "sys_code_yn", width: '10%', align: "center", formatter: "tickCross"},
-	{ title: "Description", field: "remark", width: '11%', align: "center", headerFilter: "input" },
-
+	{ title: "Description", field: "remark", width: '9%', align: "center", headerFilter: "input" },
 ];
 const data = [
 	{
@@ -94,8 +93,8 @@ class DataTable extends Component {
 		let {dataArray} = this.props;
 		dataArray = dataArray?dataArray:[];
 		const options = {
-			height: 150,
-			movableRows: true
+			height: "40em",
+			movableRows: false
 		};
 		return (
 			<div>

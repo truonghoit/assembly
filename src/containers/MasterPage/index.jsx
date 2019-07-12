@@ -198,7 +198,6 @@ class MasterPage extends Component {
 						<h1 style={{height: 50}}/>
 						<Row>
 							<Col md={12} lg={12}>
-
 										<DataTable dataArray={dataArray} fillForm={this.fillForm}/>
 
 							</Col>
