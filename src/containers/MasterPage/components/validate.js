@@ -1,17 +1,20 @@
+import {MASTER_FORM_CONSTANTS} from "./MasterForm";
+
 const validate = (values) => {
+	const {field} = MASTER_FORM_CONSTANTS;
 	const errors = {};
-	if (!values.mas_cd) {
-		errors.mas_cd = 'Mas code field shouldn’t be empty';
+	if (!values[field.masCd]) {
+		errors[field.masCd] = 'Mas code field shouldn’t be empty';
 	}
-	if (!values.mas_cd_nm) {
-		errors.mas_cd_nm = 'General Name field shouldn’t be empty';
+	if (!values[field.masCdNm]) {
+		errors[field.masCdNm] = 'General Name field shouldn’t be empty';
 	}
-	if (!values.cate_cd_nm || (values.cate_cd_nm && values.cate_cd_nm.value == "")) {
-		errors.cate_cd_nm = 'Please select the category';
+	if (!values[field.catCdNm] || (values[field.catCdNm] && values[field.catCdNm].value == "")) {
+		errors[field.catCdNm] = 'Please select the category';
 	}
-	if (!values.parent_mas_name || (values.parent_mas_name && values.parent_mas_name.value == "")) {
-		if (values.processing_seq < 0){
-			errors.processing_seq = 'If parent mas code is empty, process sequence should be' +
+	if (!values[field.parentMasNm] || (values[field.parentMasNm] && values[field.parentMasNm].value == "")) {
+		if (values[field.processingSeq] < 0){
+			errors[field.processingSeq] = 'If parent mas code is empty, process sequence should be' +
 				' greater or equal 0';
 		}
 	}
@@ -20,10 +23,10 @@ const validate = (values) => {
 		errors.processing_seq = 'If parent mas code is selected, process sequence should greater' +
 			' than 0';
 	}*/
-	if (values.processing_seq === undefined || values.processing_seq === null) {
-		errors.processing_seq = 'Process sequence field shouldn’t be empty';
-	} else if (!/^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/i.test(values.processing_seq)) {
-		errors.processing_seq = 'Process sequence should be number';
+	if (values[field.processingSeq] === undefined || values[field.processingSeq] === null) {
+		errors[field.processingSeq] = 'Process sequence field shouldn’t be empty';
+	} else if (!/^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/i.test(values[field.processingSeq])) {
+		errors[field.processingSeq] = 'Process sequence should be number';
 	}
   return errors;
 };
