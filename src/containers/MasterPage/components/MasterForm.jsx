@@ -53,9 +53,7 @@ class MasterForm extends Component {
 		let cateCd = formData[field.catCd] ? formData[field.catCd] : '';
 		this.props.dispatch(change(MASTER_FORM_CONSTANTS.masterFormName, field.catCd, cateCd));
 
-		let processingSeq = formData[field.processingSeq] !== undefined || formData[field.processingSeq] !== null
-			? formData[field.processingSeq]
-			: '';
+		let processingSeq = formData[field.processingSeq] != undefined ? formData[field.processingSeq] : '0';
 		this.props.dispatch(change(MASTER_FORM_CONSTANTS.masterFormName, field.processingSeq, processingSeq));
 
 		let definitionValue = formData[field.definitionValue] ? formData[field.definitionValue] : "000";
@@ -281,9 +279,9 @@ class MasterForm extends Component {
 									type="text"
 									component={renderField}
 									props={{
-										value: formData[field.processingSeq] != undefined || formData[field.processingSeq] != null
+										value: formData[field.processingSeq] != undefined
 											? formData[field.processingSeq]
-											: ''
+											: '0'
 									}}
 									className="round_corner form__form-group-field-100"
 									onChange={e => this.setState({
