@@ -6,6 +6,9 @@ const validate = (values) => {
 	if (!values[field.masCd]) {
 		errors[field.masCd] = 'Mas code field shouldn’t be empty';
 	}
+	if (values[field.hiddenMasCdDuplicatedChecker]) {
+		errors[field.masCd] = 'Duplicated Mas Code Found! Please use another one or select a table row below to edit.';
+	}
 	if (!values[field.masCdNm]) {
 		errors[field.masCdNm] = 'General Name field shouldn’t be empty';
 	}
@@ -13,7 +16,7 @@ const validate = (values) => {
 		errors[field.catCdNm] = 'Please select the category';
 	}
 	if (!values[field.parentMasNm] || (values[field.parentMasNm] && values[field.parentMasNm].value == "")) {
-		if (values[field.processingSeq] < 0){
+		if (values[field.processingSeq] < 0) {
 			errors[field.processingSeq] = 'If parent mas code is empty, process sequence should be' +
 				' greater or equal 0';
 		}
@@ -28,7 +31,7 @@ const validate = (values) => {
 	} else if (!/^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/i.test(values[field.processingSeq])) {
 		errors[field.processingSeq] = 'Process sequence should be number';
 	}
-  return errors;
+	return errors;
 };
 
 export default validate;

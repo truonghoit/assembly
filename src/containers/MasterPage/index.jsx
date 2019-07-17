@@ -73,12 +73,64 @@ class MasterPage extends Component {
 					parentCodeOptions: parentArray,
 					submissionState: 1,
 				});
+				if (!this.state.editMode) { // Is in Insert Mode
+					let gotError = false;
+					response.data.data.map(rowData => {
+						if (rowData.outvalue) {    // Got Error/Duplicate Mas Code Found
+							gotError = true;
+						}
+					});
+					if (gotError) {
+						this.setState({
+							formData: {
+								...this.state.formData,
+								[field.hiddenMasCdDuplicatedChecker]: true,
+							}
+						});
+					} else {
+						this.setState({
+							tableData: response.data.data.map(rowData => ({
+								[field.masCd]: rowData.mas_cd,
+								[field.masCdNm]: rowData.mas_cd_nm,
+								[field.catCdNm]: rowData.cate_nm,
+								[field.catCd]: rowData.cate_cd,
+								[field.parentMasNm]: rowData.parent_cd_nm,
+								[field.parentMasCd]: rowData.parent_mas_cd,
+								[field.processingSeq]: rowData.processing_seq,
+								[field.definitionValue]: rowData.definition_value,
+								[field.virtualYn]: rowData.virtual_yn,
+								[field.activeYn]: rowData.active_yn,
+								[field.sysCodeYn]: rowData.sys_code_yn,
+								[field.description]: rowData.remark,
+							}))
+						});
+					}
+				} else {
+					this.setState({
+						tableData: response.data.data.map(rowData => ({
+							[field.masCd]: rowData.mas_cd,
+							[field.masCdNm]: rowData.mas_cd_nm,
+							[field.catCdNm]: rowData.cate_nm,
+							[field.catCd]: rowData.cate_cd,
+							[field.parentMasNm]: rowData.parent_cd_nm,
+							[field.parentMasCd]: rowData.parent_mas_cd,
+							[field.processingSeq]: rowData.processing_seq,
+							[field.definitionValue]: rowData.definition_value,
+							[field.virtualYn]: rowData.virtual_yn,
+							[field.activeYn]: rowData.active_yn,
+							[field.sysCodeYn]: rowData.sys_code_yn,
+							[field.description]: rowData.remark,
+						}))
+					});
+				}
 				setTimeout(() => {
 					this.setState({
 						submissionState: -1,
 						editMode: false,
 					});
 				}, 1000);
+			}).catch(reason => {
+				console.log("Error: ", reason);
 			})
 		}, 1000);
 	};
@@ -199,7 +251,8 @@ class MasterPage extends Component {
 							            onSubmit={this.handleSubmit}
 							            formData={formData}
 							            onReset={this.onReset}
-							            editMode={editMode} submissionState={submissionState}/>
+							            editMode={editMode}
+							            submissionState={submissionState}/>
 						</Row>
 						<h1 style={{height: 50}}/>
 						<Row>

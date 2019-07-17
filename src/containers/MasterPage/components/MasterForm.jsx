@@ -32,7 +32,7 @@ class MasterForm extends Component {
 
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (this.props.formData !== prevProps.formData) {
+		if (this.props.formData !== prevProps.formData || this.props.editMode !== prevProps.editMode) {
 			this.setState({
 				formData: this.props.formData,
 				editMode: this.props.editMode,
@@ -86,12 +86,18 @@ class MasterForm extends Component {
 									}}
 									type="text"
 									className="form__form-group-field-100"
-									onChange={e => this.setState({
-										formData: {
-											...formData,
-											[field.masCd]: e.target.value,
-										}
-									})}
+									onChange={e => {
+										this.props.change(
+											field.hiddenMasCdDuplicatedChecker,
+											false
+										);
+										this.setState({
+											formData: {
+												...formData,
+												[field.masCd]: e.target.value,
+											}
+										});
+									}}
 								/>
 							</div>
 						</div>
@@ -431,6 +437,10 @@ class MasterForm extends Component {
 										case 0:
 											return 'Submitting';
 										case 1:
+											this.props.change(
+												field.hiddenMasCdDuplicatedChecker,
+												formData[field.hiddenMasCdDuplicatedChecker]
+											);
 											return 'Submitted';
 										default:
 											return 'Submit';
@@ -460,6 +470,7 @@ export const MASTER_FORM_CONSTANTS = {
 	masterFormName: 'MasterForm',
 	field: {
 		masCd: 'masCd',
+		hiddenMasCdDuplicatedChecker: 'hiddenMasCdDuplicatedChecker',
 		masCdNm: 'masCdName',
 
 		catCdNm: 'cateCdName',
