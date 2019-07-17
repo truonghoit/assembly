@@ -37,9 +37,7 @@ class MasterPage extends Component {
 		event.preventDefault();
 
 		const {field} = MASTER_FORM_CONSTANTS;
-		let definition_value = (values[field.temperature] ? "1" : "0")
-			+ (values[field.pressure] ? "1" : "0")
-			+ (values[field.curingTime] ? "1" : "0");
+		let definition_value = `${values[field.temperature]}${values[field.pressure]}${values[field.curingTime]}`;
 
 		let method = 'POST';
 		let url = '/api/asc/mascode';

@@ -57,6 +57,15 @@ class MasterForm extends Component {
 			? formData[field.processingSeq]
 			: '';
 		this.props.dispatch(change(MASTER_FORM_CONSTANTS.masterFormName, field.processingSeq, processingSeq));
+
+		let definitionValue = formData[field.definitionValue] ? formData[field.definitionValue] : "000";
+		let definitionArray = definitionValue.split('');
+		let temperature = definitionArray.length > 0 ? definitionArray[0] : '0';
+		this.props.change(field.temperature, temperature);
+		let pressure = definitionArray.length > 1 ? definitionArray[1] : '0';
+		this.props.change(field.pressure, pressure);
+		let curingTime = definitionArray.length > 2 ? definitionArray[2] : '0';
+		this.props.change(field.curingTime, curingTime);
 	}
 
 	render() {
@@ -65,10 +74,10 @@ class MasterForm extends Component {
 		const {field} = MASTER_FORM_CONSTANTS;
 
 		let definitionValue = formData[field.definitionValue] ? formData[field.definitionValue] : "000";
-		let definitionArray = definitionValue.split('').map(v => parseInt(v));
-		let temperature = definitionArray.length > 0 && definitionArray[0] === 1;
-		let pressure = definitionArray.length > 0 && definitionArray[1] === 1;
-		let curingTime = definitionArray.length > 0 && definitionArray[2] === 1;
+		let definitionArray = definitionValue.split('');
+		let temperature = definitionArray.length > 0 ? definitionArray[0] : '0';
+		let pressure = definitionArray.length > 1 ? definitionArray[1] : '0';
+		let curingTime = definitionArray.length > 2 ? definitionArray[2] : '0';
 
 		return (
 			<Col md={12} lg={12}>
@@ -288,81 +297,66 @@ class MasterForm extends Component {
 						</div>
 					</Col>
 					<Col md={3} lg={3}>
-						<div className="form__form-group-field">
-							<div style={{marginLeft: -140, marginTop: 8,}}>
+						<div style={{display: 'flex', flexDirection: "row", justifyContent: "space-between"}}>
+							<div style={{display: 'flex',}}>
 								<Field
 									name={field.temperature}
-									component={renderCheckBoxField}
-									label="Temperature"
-									checked={temperature}
+									component={renderField}
+									props={{
+										style: {width: 35, marginRight: 5},
+										value: temperature,
+									}}
 									onChange={e => {
-										if (e.target) {
-											this.setState({
-												formData: {
-													...formData,
-													[field.definitionValue]: `${e.target.checked ? 1 : 0}${pressure ? 1 : 0}${curingTime ? 1 : 0}`,
-												},
-											});
-										} else {
-											this.setState({
-												formData: {
-													...formData,
-													[field.definitionValue]: `${e ? 1 : 0}${pressure ? 1 : 0}${curingTime ? 1 : 0}`,
-												},
-											});
-										}
+										this.props.change(field.temperature, e.target.value);
+										this.setState({
+											formData: {
+												...formData,
+												[field.definitionValue]: `${e.target.value}${pressure}${curingTime}`,
+											},
+										});
 									}}
 								/>
+								<span className="form__form-group-label" style={{width: 80}}>Temperature</span>
 							</div>
-							<div style={{marginLeft: 10, marginTop: 8,}}>
+							<div style={{display: 'flex',}}>
 								<Field
 									name={field.pressure}
-									component={renderCheckBoxField}
-									label="Pressure"
-									checked={pressure}
+									component={renderField}
+									props={{
+										style: {width: 35, marginRight: 5},
+										value: pressure,
+									}}
 									onChange={e => {
-										if (e.target) {
-											this.setState({
-												formData: {
-													...formData,
-													[field.definitionValue]: `${temperature ? 1 : 0}${e.target.checked ? 1 : 0}${curingTime ? 1 : 0}`,
-												},
-											});
-										} else {
-											this.setState({
-												formData: {
-													...formData,
-													[field.definitionValue]: `${temperature ? 1 : 0}${e ? 1 : 0}${curingTime ? 1 : 0}`,
-												},
-											});
-										}
+										this.props.change(field.pressure, e.target.value);
+										this.setState({
+											formData: {
+												...formData,
+												[field.definitionValue]: `${temperature}${e.target.value}${curingTime}`,
+											},
+										});
 									}}
 								/>
+								<span className="form__form-group-label" style={{width: 55}}>Pressure</span>
 							</div>
-							<div style={{marginLeft: 10, marginTop: 8,}}>
+							<div style={{display: 'flex',}}>
 								<Field
 									name={field.curingTime}
-									component={renderCheckBoxField}
-									label="Curing Time"
-									checked={curingTime}
+									component={renderField}
+									props={{
+										style: {width: 35, marginRight: 5},
+										value: curingTime,
+									}}
 									onChange={e => {
-										if (e.target) {
-											this.setState({
-												formData: {
-													...formData,
-													[field.definitionValue]: `${temperature ? 1 : 0}${pressure ? 1 : 0}${e.target.checked ? 1 : 0}`,
-												},
-											});
-										} else {
-											this.setState({
-												formData: {
-													...formData,
-													[field.definitionValue]: `${temperature ? 1 : 0}${pressure ? 1 : 0}${e ? 1 : 0}`,
-												},
-											});
-										}
+										this.props.change(field.curingTime, e.target.value);
+										this.setState({
+											formData: {
+												...formData,
+												[field.definitionValue]: `${temperature}${pressure}${e.target.value}`,
+											},
+										});
 									}}
 								/>
+								<span className="form__form-group-label" style={{width: 75}}>Curing Time</span>
 							</div>
 						</div>
 					</Col>
