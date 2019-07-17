@@ -19,8 +19,6 @@ export default function callAxios(method, url, param){
         method: method,
         url: SERVER_URL + url,
         data: param
-    }).catch(err => {
-	    console.log(err)
     });
 }
 

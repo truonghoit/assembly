@@ -67,7 +67,11 @@ class MasterForm extends Component {
 	}
 
 	render() {
-		let {handleSubmit, reset, categoryCodeOptions, parentCodeOptions, onReset, submissionState} = this.props;
+		let {
+			handleSubmit, reset,
+			parentCodeOptions, categoryCodeOptions,
+			onReset, submissionState, connectionError
+		} = this.props;
 		let {formData} = this.state;
 		const {field} = MASTER_FORM_CONSTANTS;
 
@@ -410,36 +414,47 @@ class MasterForm extends Component {
 					</Col>
 					<div className="form__form-group-field justify-content-center">
 						<Button color="primary" type="submit">
-							{(() => {
-								if (this.state.editMode) {
-									switch (submissionState) {
-										case -1:
-											return 'Save';
-										case 0:
-											return 'Saving';
-										case 1:
-											return 'Saved';
-										default:
-											return 'Save';
+							{
+								(() => {
+									let {failed, initial, onGoing, done} = MASTER_FORM_CONSTANTS.submissionState;
+									if (this.state.editMode) {
+										switch (submissionState) {
+											case failed:
+												return 'Failed';
+											case initial:
+												return 'Save';
+											case onGoing:
+												return 'Saving';
+											case done:
+												return 'Saved';
+											default:
+												return 'Save';
+										}
+									} else {
+										switch (submissionState) {
+											case failed:
+												return 'Failed';
+											case initial:
+												return 'Submit';
+											case onGoing:
+												return 'Submitting';
+											case done:
+												this.props.change(
+													field.hiddenMasCdDuplicatedChecker,
+													formData[field.hiddenMasCdDuplicatedChecker]
+												);
+												return 'Submitted';
+											default:
+												return 'Submit';
+										}
 									}
-								} else {
-									switch (submissionState) {
-										case -1:
-											return 'Submit';
-										case 0:
-											return 'Submitting';
-										case 1:
-											this.props.change(
-												field.hiddenMasCdDuplicatedChecker,
-												formData[field.hiddenMasCdDuplicatedChecker]
-											);
-											return 'Submitted';
-										default:
-											return 'Submit';
-									}
-								}
-							})()}
-							{submissionState === 0 ? <LoadingSpinner/> : ''}
+								})()
+							}
+							{
+								submissionState === MASTER_FORM_CONSTANTS.submissionState.onGoing
+									? <LoadingSpinner/>
+									: ''
+							}
 						</Button>
 						<Button type="button" onClick={() => {
 							reset();
@@ -451,6 +466,9 @@ class MasterForm extends Component {
 						}}>
 							Cancel
 						</Button>
+					</div>
+					<div className="form__form-group-field justify-content-center text-light">
+						{connectionError}
 					</div>
 				</form>
 			</Col>
@@ -483,6 +501,12 @@ export const MASTER_FORM_CONSTANTS = {
 		curingTime: 'curingTime',
 
 		description: 'remark',
+	},
+	submissionState: {
+		failed: -1,
+		initial: 0,
+		onGoing: 1,
+		done: 2,
 	}
 };
 
