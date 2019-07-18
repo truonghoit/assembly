@@ -180,7 +180,8 @@ class MasterForm extends Component {
 							type="text"
 						/>
 					</Col>
-					<Col md={5} lg={5}>
+					<Col md={2} lg={2}></Col>
+					<Col md={3} lg={3}>
 						<div className="form__form-group-field">
 							<Field
 								name={field.virtualYn}
@@ -246,6 +247,7 @@ class MasterForm extends Component {
 							type="text"
 						/>
 					</Col>
+					<Col md={2} lg={2}></Col>
 					<Col md={3} lg={3}>
 						<div className="form__form-group-field">
 							<Field
@@ -298,7 +300,7 @@ class MasterForm extends Component {
 							</div>
 						</div>
 					</Col>
-					<Col md={3} lg={3}>
+					<Col md={3} lg={3} style={{marginLeft:-15}}>
 						<div style={{display: 'flex', flexDirection: "row", justifyContent: "space-between"}}>
 							<div style={{display: 'flex',}}>
 								<Field
@@ -362,7 +364,10 @@ class MasterForm extends Component {
 							</div>
 						</div>
 					</Col>
-					<Col md={5} lg={5}>
+					<Col md={2} lg={2}>
+					</Col>
+					<Col md={3} lg={3} style={{marginLeft:15
+					}}>
 						<div className="form__form-group-field">
 							<Field
 								name={field.sysCodeYn}
