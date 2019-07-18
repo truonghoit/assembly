@@ -7,12 +7,14 @@ import LogIn from '../LogIn/index';
 import ExamplePageOne from '../Example/index';
 import ExamplePageTwo from '../ExampleTwo/index';
 import MasterPage from '../MasterPage/index';
+import MasterAlarm from "../MasterAlarm/index";
 
 const Pages = () => (
 	<Switch>
 		<Route path="/pages/one" component={ExamplePageOne} />
 		<Route path="/pages/two" component={ExamplePageTwo} />
 		<Route path="/pages/master" component={MasterPage} />
+		<Route path="/pages/alarm-master" component={MasterAlarm} />
 	</Switch>
 );
 

@@ -24,6 +24,7 @@ class SidebarContent extends Component {
 				<SidebarLink title="Page one" route="/pages/one" onClick={this.hideSidebar} />
 				<SidebarLink title="Page two" route="/pages/two" onClick={this.hideSidebar} />
 				<SidebarLink title="Master page" route="/pages/master" onClick={this.hideSidebar} />
+	            <SidebarLink title="Alarm master" route="/pages/alarm-master" onClick={this.hideSidebar} />
           </SidebarCategory>
         </ul>
       </div>
