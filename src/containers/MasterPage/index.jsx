@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Card, CardBody, Col, Container, Row} from 'reactstrap';
-import MasterForm from "./components/MasterForm";
+import MasterForm, {MASTER_FORM_CONSTANTS} from "./components/MasterForm";
 import callAxios from "../../services/api";
 import {
 	ASSEMBLY_API,
@@ -25,33 +25,37 @@ class MasterPage extends Component {
 			}],
 			formData: {},
 			editMode: false,
-			submittingState: -1,    // -1: Submit/Save, 0: Submitting/Saving, 1: Submitted/Saved
+			submissionState: -1,    // -1: Submit/Save, 0: Submitting/Saving, 1: Submitted/Saved
 		};
 	}
 
 	handleSubmit = (values) => {
 		this.setState({
-			submittingState: 0,
+			submissionState: 0,
 		});
 
 		event.preventDefault();
-		let definition_value = (values.temperature ? "1" : "0") + (values.pressure ? "1" : "0") + (values.curringTime ? "1" : "0");
+
+		const {field} = MASTER_FORM_CONSTANTS;
+		let definition_value = (values[field.temperature] ? "1" : "0")
+			+ (values[field.pressure] ? "1" : "0")
+			+ (values[field.curingTime] ? "1" : "0");
 
 		let method = 'POST';
 		let url = '/api/asc/mascode';
 		let param = {
 			"status": this.state.editMode ? "UPDATE" : "INSERT",
-			"mas_cd": values.mas_cd,
-			"cate_cd": values.cate_cd,
-			"mas_cd_nm": values.mas_cd_nm,
-			"parent_mas_cd": values.parent_mas_cd,
-			"processing_seq": values.processing_seq,
+			"mas_cd": values[field.masCd],
+			"cate_cd": values[field.catCd],
+			"mas_cd_nm": values[field.masCdNm],
+			"parent_mas_cd": values[field.parentMasCd],
+			"processing_seq": values[field.processingSeq],
 			"definition_value": definition_value,
-			"virtual_yn": values.virtual_yn,
-			"active_yn": values.active_yn,
-			"sys_code_yn": values.sys_code_yn,
+			"virtual_yn": values[field.virtualYn],
+			"active_yn": values[field.activeYn],
+			"sys_code_yn": values[field.sysCodeYn],
 			"username": "truongho",
-			"remark": values.remark
+			"remark": values[field.description]
 		};
 		setTimeout(() => {
 			callAxios(method, url, param).then(response => {
@@ -62,16 +66,16 @@ class MasterPage extends Component {
 					value: "",
 					label: "---",
 				}, {
-					value: values.mas_cd,
-					label: values.mas_cd_nm,
+					value: values[field.masCd],
+					label: values[field.masCdNm],
 				});
 				this.setState({
 					parentCodeOptions: parentArray,
-					submittingState: 1,
+					submissionState: 1,
 				});
 				setTimeout(() => {
 					this.setState({
-						submittingState: -1,
+						submissionState: -1,
 						editMode: false,
 					});
 				}, 1000);
@@ -79,7 +83,7 @@ class MasterPage extends Component {
 		}, 1000);
 	};
 
-	loadCombo = () => {
+	loadComboBoxes = () => {
 		let method = 'POST';
 		let url = ASSEMBLY_API + CATEGORY_ROUTE;
 		let param = {
@@ -135,26 +139,27 @@ class MasterPage extends Component {
 		callAxios(method, url, {}).then(response => {
 			try {
 				let responseArray = response.data.data;
-				let dataArray = [];
+				let tableData = [];
+				const {field} = MASTER_FORM_CONSTANTS;
 				for (let i = 0; i < responseArray.length; i++) {
 					let item = {
-						mas_cd: responseArray[i].mas_cd,
-						mas_cd_nm: responseArray[i].mas_cd_nm,
-						cate_cd_nm: responseArray[i].cate_nm,
-						cate_cd: responseArray[i].cate_cd,
-						parent_mas_name: responseArray[i].parent_cd_nm,
-						parent_mas_cd: responseArray[i].parent_mas_cd,
-						processing_seq: responseArray[i].processing_seq,
-						definition_value: responseArray[i].definition_value,
-						virtual_yn: responseArray[i].virtual_yn,
-						active_yn: responseArray[i].active_yn,
-						sys_code_yn: responseArray[i].sys_code_yn,
-						remark: responseArray[i].remark,
+						[field.masCd]: responseArray[i].mas_cd,
+						[field.masCdNm]: responseArray[i].mas_cd_nm,
+						[field.catCdNm]: responseArray[i].cate_nm,
+						[field.catCd]: responseArray[i].cate_cd,
+						[field.parentMasNm]: responseArray[i].parent_cd_nm,
+						[field.parentMasCd]: responseArray[i].parent_mas_cd,
+						[field.processingSeq]: responseArray[i].processing_seq,
+						[field.definitionValue]: responseArray[i].definition_value,
+						[field.virtualYn]: responseArray[i].virtual_yn,
+						[field.activeYn]: responseArray[i].active_yn,
+						[field.sysCodeYn]: responseArray[i].sys_code_yn,
+						[field.description]: responseArray[i].remark,
 					};
-					dataArray.push(item);
+					tableData.push(item);
 				}
 				this.setState({
-					dataArray: dataArray,
+					tableData: tableData,
 				});
 			} catch (e) {
 				console.log("Error: ", e);
@@ -166,23 +171,24 @@ class MasterPage extends Component {
 		this.setState({
 			formData: selectedRow,
 			editMode: true,
-			submittingState: -1,
+			submissionState: -1,
 		});
 	};
 
-	onEditModeChange = (editMode) => {
+	onReset = () => {
 		this.setState({
-			editMode: editMode,
+			formData: {},
+			editMode: false,
 		})
 	};
 
 	componentDidMount() {
-		this.loadCombo();
+		this.loadComboBoxes();
 		this.loadDataTable();
 	}
 
 	render() {
-		let {parentCodeOptions, categoryCodeOptions, dataArray, formData, editMode, submittingState} = this.state;
+		let {parentCodeOptions, categoryCodeOptions, tableData, formData, editMode, submissionState} = this.state;
 		return (
 			<Container className="dashboard">
 				<Card>
@@ -192,14 +198,13 @@ class MasterPage extends Component {
 							            categoryCodeOptions={categoryCodeOptions}
 							            onSubmit={this.handleSubmit}
 							            formData={formData}
-							            onEditModeChange={this.onEditModeChange}
-							            editMode={editMode} submittingState={submittingState}/>
+							            onReset={this.onReset}
+							            editMode={editMode} submissionState={submissionState}/>
 						</Row>
 						<h1 style={{height: 50}}/>
 						<Row>
 							<Col md={12} lg={12}>
-										<DataTable dataArray={dataArray} fillForm={this.fillForm}/>
-
+								<DataTable tableData={tableData} fillForm={this.fillForm}/>
 							</Col>
 						</Row>
 					</CardBody>
@@ -210,6 +215,6 @@ class MasterPage extends Component {
 }
 
 export default reduxForm({
-	form: 'MasterForm',
+	form: MASTER_FORM_CONSTANTS.masterFormName,
 })(MasterPage);
 

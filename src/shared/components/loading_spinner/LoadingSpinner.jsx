@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../scss/component/spinner.scss';
 
-const Spinner = () => (
+const LoadingSpinner = () => (
 	<svg className="spinner" width="65px" height="65px" style={{marginLeft: 10}}
 	     viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
 		<circle className="path" fill="none" stroke-width="6"
@@ -10,4 +10,4 @@ const Spinner = () => (
 	</svg>
 );
 
-export default Spinner;
+export default LoadingSpinner;
