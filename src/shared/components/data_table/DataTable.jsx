@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ReactTabulator} from "react-tabulator";
-import "../../../scss/component/tabulator_midnight_custom.css"
+import "../../../scss/component/tabulator_bootstrap4.min.css"
 import PropTypes from "prop-types";
 
 export default class DataTable extends Component {
@@ -29,7 +29,7 @@ export default class DataTable extends Component {
     static defaultProps = {
         options: undefined,
         onRowClick: (mouseEvent, rowComponent) => {
-            console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
+            // console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
             console.log(`rowClick id: ${rowComponent.getData().id}`, rowComponent, mouseEvent);
         }
     };

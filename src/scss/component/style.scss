@@ -34,10 +34,26 @@
   margin-left: -15px;
 }
 
+.marginLeff-20 {
+  margin-left: -20px;
+}
+
 .dropdown-custom {
   background-color: #232329;
   border: 1px solid #33333A;
   color: #999999;
   padding: 0.5em;
 }
+
+.selected-process-code {
+  background-color: #1D2F56;
+  color: #FFFFFF;
+}
+
+.not-selected-process-code {
+  background-color: #1A2439;
+  color: #FFFFFF;
+
+}
+
 
