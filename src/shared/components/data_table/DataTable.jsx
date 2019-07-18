@@ -29,7 +29,7 @@ export default class DataTable extends Component {
     static defaultProps = {
         options: undefined,
         onRowClick: (mouseEvent, rowComponent) => {
-            console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
+            // console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
             console.log(`rowClick id: ${rowComponent.getData().id}`, rowComponent, mouseEvent);
         }
     };

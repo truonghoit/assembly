@@ -4,4 +4,8 @@ export const ASSEMBLY_API = '/api/asc/';
 export const CATEGORY_ROUTE = 'cate';
 export const PARENT_ROUTE = 'parent';
 export const MAS_CODE_ROUTE = 'mascodelist';
+export const ALARM_MODEL_ARTICLE = 'masalarmlist';
+export const ALARM_LIST_PROCESS = 'masprocesslist';
+export const ALARM_SENSOR = 'masalarmsensorlist';
+
 

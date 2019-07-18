@@ -7,18 +7,9 @@ import {renderField} from "../../../shared/components/form/InputField";
 import DataTable from "../../../shared/components/data_table/DataTable";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faCircle, faPlay } from '@fortawesome/free-solid-svg-icons'
-
-const columns1 = [
-	{ title: "Model", field: "model", width: '50%', align: "center", headerFilter: "input" },
-	{ title: "Article", field: "article", width: '50%', align: "center", headerFilter: "input" }
-];
-
-const dataArray1 = [
-	{
-		model: "mmmmmmmmmmmmmmmm",
-		article: "aaaaaaaaaaaaaaaaa"
-	},
-];
+import {ASSEMBLY_API,
+	ALARM_LIST_PROCESS} from "../../../constants/constants";
+import callAxios from "../../../services/api";
 
 class AlarmForm extends Component {
 	static propTypes = {
@@ -28,36 +19,87 @@ class AlarmForm extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = ({
+			dataProcess: [],
+		});
+	}
+
+	rowClick = (e, row) => {
+		if (this.props.onMounted){
+			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
+		}
+
+		let selectedRow = row._row.data;
+		let params = {
+			model_cd: selectedRow.model_cd,
+			article_no: selectedRow.article_no
+		};
+		this.loadListProcess(params);
+	};
+
+	loadListProcess = (params) => {
+		let method = 'POST';
+		let url = ASSEMBLY_API + ALARM_LIST_PROCESS;
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let responseArray = response.data.data;
+				let dataArray = [];
+				responseArray.map(item => {
+					item = {
+						code: item.code.toString(),
+						name: item.name.toString(),
+					};
+					dataArray.push(item);
+				});
+				this.setState({
+					dataProcess: dataArray,
+				});
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	onClickProcess = (row) => {
+		let processCode = row.target.value;
+		this.setState({
+			selectedProcessCode: processCode,
+		});
 	}
 
 	render() {
-		let {handleSubmit} = this.props;
+		let {handleSubmit, columnsModelArticle, dataModelArticle} = this.props;
+		let {dataProcess, selectedProcessCode} = this.state;
+
 		return (
 			<Card>
 				<CardBody style={{display:"flex"}}>
 					<Col md={3} lg={3} style={{minHeight: 300}}>
-						<DataTable columns={columns1} data={dataArray1} options={{
+						<DataTable columns={columnsModelArticle} data={dataModelArticle} options={{
 							height: "20em",
-							border: "none"
-						}}/>
+							border: "none",
+						}} onRowClick={this.rowClick}/>
 					</Col>
 					<Col md={2} lg={2} style={{marginLeft: -30, backgroundColor: '#1A2439'}}>
-						<div style={{display: "flex", "flex-direction": "column"}}>
-							<span className="form__form-group-label text-uppercase" style={{marginTop: 3, paddingLeft: 20, minHeight: 80}}>Process</span>
-							<ul className="list-group bg-transparent" style={{width:"100%"}}>
-								<li className="list-group-item border-0" style={{backgroundColor: "#1D2F56", color: "#FFFFFF"}}>
-									<div className={"d-flex"}>
-										<div style={{width: '90%'}}>First item</div>
-										<div>
-											<FontAwesomeIcon style={{color: 'rgba(255, 255, 255,' +
-													' 0.54)', fontSize: 8, justifySelf:"flex-end"}} icon={faPlay} />
-										</div>
+						<div style={{display: "flex", flexDirection: "column"}}>
+							<span className="form__form-group-label text-uppercase" style={{paddingTop: 30, paddingLeft: 20, minHeight: 80}}>Process</span>
+							<ul className="list-group bg-transparent" style={{width:"100%"}} onClick={this.onClickProcess}>
+								{
+									dataProcess.map(item => {
+											let itemClass = (item.code == selectedProcessCode)?'list-group-item border-0 selected-process-code':'list-group-item border-0 not-selected-process-code';
+											let innerData = (item.code == selectedProcessCode)?<div className={"d-flex"}>
+												<div style={{width: '90%'}}>{item.name}</div>
+												<div>
+													<FontAwesomeIcon style={{color: 'rgba(255, 255, 255,' +
+															' 0.54)', fontSize: 8, justifySelf:"flex-end"}} icon={faPlay} />
+												</div>
 
-									</div>
-
-								</li>
-								<li className="list-group-item border-0" style={{backgroundColor: "#1A2439", color: "#FFFFFF"}}>Second item</li>
-								<li className="list-group-item border-0" style={{backgroundColor: "#1A2439", color: "#FFFFFF"}}>Third item</li>
+											</div>:item.name;
+											return <li className={itemClass} key={item.code}
+											    value={item.code}>{innerData}</li>
+										})
+								}
 							</ul>
 						</div>
 					</Col>
@@ -71,7 +113,7 @@ class AlarmForm extends Component {
 											name="defaultInput"
 											component="input"
 											type="text"
-											placeholder="Default Input"
+											disabled={true}
 											className={"marginLeff-20"}
 										/>
 									</div>
@@ -85,7 +127,7 @@ class AlarmForm extends Component {
 											name="defaultInput"
 											component="input"
 											type="text"
-											placeholder="Default Input"
+											disabled={true}
 										/>
 									</div>
 								</div>
