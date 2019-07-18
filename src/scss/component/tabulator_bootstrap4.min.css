@@ -9,7 +9,6 @@
     max-width: 100%;
     transform: translatez(0);
     border: none;
-    min-height: 500px;
 }
 
 .tabulator[tabulator-layout=fitDataFill] .tabulator-tableHolder .tabulator-table {
@@ -21,16 +20,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none
-}
-
-.tabulator .tabulator-header {
-    width: 100%;
-    font-weight: 700;
-    white-space: nowrap;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none
 }
 
 .tabulator .tabulator-header {
@@ -223,7 +212,7 @@
 }
 
 .tabulator-row:nth-child(even) {
-    background-color: transparent;
+    background-color: #2C3034 !important;
 }
 
 .tabulator .tabulator-header .tabulator-frozen-rows-holder {

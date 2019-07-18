@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ReactTabulator} from "react-tabulator";
-import "../../../scss/component/tabulator_midnight_custom.css"
+import "../../../scss/component/tabulator_bootstrap4.min.css"
 import PropTypes from "prop-types";
 
 export default class DataTable extends Component {
