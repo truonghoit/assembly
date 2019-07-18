@@ -8,13 +8,15 @@ import ExamplePageOne from '../Example/index';
 import ExamplePageTwo from '../ExampleTwo/index';
 import MasterPage from '../MasterPage/index';
 import MasterAlarm from "../MasterAlarm/index";
+import LeadTime from "../LeadTime/index";
 
 const Pages = () => (
 	<Switch>
 		<Route path="/pages/one" component={ExamplePageOne} />
 		<Route path="/pages/two" component={ExamplePageTwo} />
-		<Route path="/pages/master" component={MasterPage} />
+		<Route path="/pages/master-page" component={MasterPage} />
 		<Route path="/pages/alarm-master" component={MasterAlarm} />
+		<Route path="/pages/lead-time" component={LeadTime} />
 	</Switch>
 );
 
@@ -31,9 +33,9 @@ const Router = () => (
 <MainWrapper>
 <main>
   <Switch>
-    <Route exact path="/" component={LogIn} />
-    <Route exact path="/log_in" component={LogIn} />
-    <Route path="/" component={wrappedRoutes} />
+	<Route exact path="/" component={LogIn} />
+	<Route exact path="/log_in" component={LogIn} />
+	<Route path="/" component={wrappedRoutes} />
   </Switch>
 </main>
 </MainWrapper>
