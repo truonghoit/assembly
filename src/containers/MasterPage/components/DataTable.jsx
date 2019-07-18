@@ -87,19 +87,13 @@ class DataTable extends Component {
 			movableRows: false
 		};
 		return (
-			<div>
-				<ReactTabulator
-					ref={ref => (this.ref = ref)}
-					columns={columns}
-					data={tableData}
-					rowClick={this.rowClick}
-					options={options}
-					data-custom-attr="test-custom-attribute"
-					className="custom-css-class"
-				/>
-
-
-			</div>
+			<ReactTabulator
+				ref={ref => (this.ref = ref)}
+				columns={columns}
+				data={tableData}
+				rowClick={this.rowClick}
+				options={options}
+			/>
 		);
 	}
 }

@@ -247,14 +247,14 @@ class MasterPage extends Component {
 							            submissionState={submissionState}
 							            connectionError={connectionError}/>
 						</Row>
-						<h1 style={{height: 50}}/>
-						<Row>
-							<Col md={12} lg={12}>
-								<DataTable tableData={tableData} fillForm={this.fillForm}/>
-							</Col>
-						</Row>
 					</CardBody>
 				</Card>
+				<h1 style={{height: 50}}/>
+				<Row>
+					<Col md={12} lg={12}>
+						<DataTable tableData={tableData} fillForm={this.fillForm}/>
+					</Col>
+				</Row>
 			</Container>
 		);
 	}
