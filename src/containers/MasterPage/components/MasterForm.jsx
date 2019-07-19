@@ -99,7 +99,7 @@ class MasterForm extends Component {
 									}}
 									type="text"
 									className="form__form-group-field-100"
-									onChange={e => {
+									onChange={(event, newValue) => {
 										this.props.change(
 											field.hiddenMasCdDuplicatedChecker,
 											false
@@ -107,7 +107,7 @@ class MasterForm extends Component {
 										this.setState({
 											formData: {
 												...formData,
-												[field.masCd]: e.target.value,
+												[field.masCd]: newValue,
 											}
 										});
 									}}
@@ -129,10 +129,10 @@ class MasterForm extends Component {
 									}}
 									type="text"
 									className="form__form-group-field-100"
-									onChange={e => this.setState({
+									onChange={(event, newValue) => this.setState({
 										formData: {
 											...formData,
-											[field.masCdNm]: e.target.value,
+											[field.masCdNm]: newValue,
 										}
 									})}
 								/>
@@ -190,22 +190,13 @@ class MasterForm extends Component {
 								component={renderCheckBoxField}
 								label="Virtual(Y/N)"
 								checked={formData[field.virtualYn] === 1}
-								onChange={e => {
-									if (e.target) {
-										this.setState({
-											formData: {
-												...formData,
-												[field.virtualYn]: e.target.checked ? 1 : 0,
-											},
-										});
-									} else {
-										this.setState({
-											formData: {
-												...formData,
-												[field.virtualYn]: e ? 1 : 0,
-											},
-										});
-									}
+								onChange={(event, newValue) => {
+									this.setState({
+										formData: {
+											...formData,
+											[field.virtualYn]: newValue ? 1 : 0,
+										},
+									});
 								}}
 							/>
 						</div>
@@ -257,22 +248,13 @@ class MasterForm extends Component {
 								component={renderCheckBoxField}
 								label="Active(Y/N)"
 								checked={formData[field.activeYn] === 1}
-								onChange={e => {
-									if (e.target) {
-										this.setState({
-											formData: {
-												...formData,
-												[field.activeYn]: e.target.checked ? 1 : 0,
-											},
-										});
-									} else {
-										this.setState({
-											formData: {
-												...formData,
-												[field.activeYn]: e ? 1 : 0,
-											},
-										});
-									}
+								onChange={(event, newValue) => {
+									this.setState({
+										formData: {
+											...formData,
+											[field.activeYn]: newValue ? 1 : 0,
+										},
+									});
 								}}
 							/>
 						</div>
@@ -292,10 +274,10 @@ class MasterForm extends Component {
 											: '0'
 									}}
 									className="round_corner form__form-group-field-100"
-									onChange={e => this.setState({
+									onChange={(event, newValue) => this.setState({
 										formData: {
 											...formData,
-											[field.processingSeq]: e.target.value,
+											[field.processingSeq]: newValue,
 										}
 									})}
 								/>
@@ -312,9 +294,9 @@ class MasterForm extends Component {
 										style: {width: 35, marginRight: 5},
 										value: temperature,
 									}}
-									onChange={e => {
+									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
-										let value = e.target.value[1];  // Only get latest character user typed
+										let value = newValue[1];  // Only get latest character user typed
 										if (value > definitionValueRange[definitionValueRange.length - 1]) {
 											value = definitionValueRange[definitionValueRange.length - 1];
 										} else if ( // Is a character OR less than 'definitionValueRange[0]'
@@ -341,9 +323,9 @@ class MasterForm extends Component {
 										style: {width: 35, marginRight: 5},
 										value: pressure,
 									}}
-									onChange={e => {
+									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
-										let value = e.target.value[1];  // Only get latest character user typed
+										let value = newValue[1];  // Only get latest character user typed
 										if (value > definitionValueRange[definitionValueRange.length - 1]) {
 											value = definitionValueRange[definitionValueRange.length - 1];
 										} else if ( // Is a character OR less than 'definitionValueRange[0]'
@@ -370,9 +352,9 @@ class MasterForm extends Component {
 										style: {width: 35, marginRight: 5},
 										value: curingTime,
 									}}
-									onChange={e => {
+									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
-										let value = e.target.value[1];  // Only get latest character user typed
+										let value = newValue[1];  // Only get latest character user typed
 										if (value > definitionValueRange[definitionValueRange.length - 1]) {
 											value = definitionValueRange[definitionValueRange.length - 1];
 										} else if ( // Is a character OR less than 'definitionValueRange[0]'
@@ -403,22 +385,13 @@ class MasterForm extends Component {
 								component={renderCheckBoxField}
 								label="Sys Code(Y/N)"
 								checked={formData[field.sysCodeYn] === 1}
-								onChange={e => {
-									if (e.target) {
-										this.setState({
-											formData: {
-												...formData,
-												[field.sysCodeYn]: e.target.checked ? 1 : 0,
-											},
-										});
-									} else {
-										this.setState({
-											formData: {
-												...formData,
-												[field.sysCodeYn]: e ? 1 : 0,
-											},
-										});
-									}
+								onChange={(event, newValue) => {
+									this.setState({
+										formData: {
+											...formData,
+											[field.sysCodeYn]: newValue ? 1 : 0,
+										},
+									});
 								}}
 							/>
 						</div>
@@ -434,10 +407,10 @@ class MasterForm extends Component {
 									props={{
 										value: formData[field.description] ? formData[field.description] : ''
 									}}
-									onChange={e => this.setState({
+									onChange={(event, newValue) => this.setState({
 										formData: {
 											...formData,
-											[field.description]: e.target.value,
+											[field.description]: newValue,
 										}
 									})}
 								/>
