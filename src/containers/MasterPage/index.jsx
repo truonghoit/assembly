@@ -103,12 +103,39 @@ class MasterPage extends Component {
 					this.setState({
 						formData: {
 							...this.state.formData,
+							[field.masCd]: values[field.masCd],
+							[field.masCdNm]: values[field.masCdNm],
 							[field.hiddenMasCdDuplicatedChecker]: true,
+							[field.catCdNm]: values[field.catCdNm],
+							[field.catCd]: values[field.catCd],
+							[field.parentMasNm]: values[field.parentMasNm],
+							[field.parentMasCd]: values[field.parentMasCd],
+							[field.processingSeq]: values[field.processingSeq],
+							[field.definitionValue]: definition_value,
+							[field.virtualYn]: values[field.virtualYn],
+							[field.activeYn]: values[field.activeYn],
+							[field.sysCodeYn]: values[field.sysCodeYn],
+							[field.description]: values[field.description],
 						},
 						submissionState: failed,
 					});
-				} else {    // Is in Edit Mode
+				} else {    // Is in Insert OR Edit Mode and got NO error
 					this.setState({
+						formData: {
+							...this.state.formData,
+							[field.masCd]: values[field.masCd],
+							[field.masCdNm]: values[field.masCdNm],
+							[field.catCdNm]: values[field.catCdNm],
+							[field.catCd]: values[field.catCd],
+							[field.parentMasNm]: values[field.parentMasNm],
+							[field.parentMasCd]: values[field.parentMasCd],
+							[field.processingSeq]: values[field.processingSeq],
+							[field.definitionValue]: definition_value,
+							[field.virtualYn]: values[field.virtualYn],
+							[field.activeYn]: values[field.activeYn],
+							[field.sysCodeYn]: values[field.sysCodeYn],
+							[field.description]: values[field.description],
+						},
 						tableData: tableData,
 						submissionState: done,
 					});
@@ -116,7 +143,6 @@ class MasterPage extends Component {
 				setTimeout(() => {
 					this.setState({
 						submissionState: initial,
-						editMode: false,
 					});
 				}, 1000);
 			}).catch(reason => {

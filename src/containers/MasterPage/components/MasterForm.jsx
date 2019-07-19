@@ -41,29 +41,31 @@ class MasterForm extends Component {
 
 		let {formData} = this.state;
 		const {field} = MASTER_FORM_CONSTANTS;
-		let masCdNm = formData[field.masCdNm] ? formData[field.masCdNm] : '';
-		this.props.dispatch(change(MASTER_FORM_CONSTANTS.masterFormName, field.masCdNm, masCdNm));
+		this.props.change(field.masCd, formData[field.masCd] ? formData[field.masCd] : '');
+		this.props.change(field.masCdNm, formData[field.masCdNm] ? formData[field.masCdNm] : '');
 
-		let masCd = formData[field.masCd] ? formData[field.masCd] : '';
-		this.props.dispatch(change(MASTER_FORM_CONSTANTS.masterFormName, field.masCd, masCd));
+		this.props.change(field.catCdNm, formData[field.catCdNm] ? formData[field.catCdNm] : '');
+		this.props.change(field.catCd, formData[field.catCd] ? formData[field.catCd] : '');
 
-		let cateCdNm = formData[field.catCdNm] ? formData[field.catCdNm] : '';
-		this.props.dispatch(change(MASTER_FORM_CONSTANTS.masterFormName, field.catCdNm, cateCdNm));
+		this.props.change(field.parentMasNm, formData[field.parentMasNm] ? formData[field.parentMasNm] : '');
+		this.props.change(field.parentMasCd, formData[field.parentMasCd] ? formData[field.parentMasCd] : '');
 
-		let cateCd = formData[field.catCd] ? formData[field.catCd] : '';
-		this.props.dispatch(change(MASTER_FORM_CONSTANTS.masterFormName, field.catCd, cateCd));
-
-		let processingSeq = formData[field.processingSeq] != undefined ? formData[field.processingSeq] : '0';
-		this.props.dispatch(change(MASTER_FORM_CONSTANTS.masterFormName, field.processingSeq, processingSeq));
+		this.props.change(
+			field.processingSeq,
+			formData[field.processingSeq] != undefined ? formData[field.processingSeq] : '0'
+		);
 
 		let definitionValue = formData[field.definitionValue] ? formData[field.definitionValue] : "000";
 		let definitionArray = definitionValue.split('');
-		let temperature = definitionArray.length > 0 ? definitionArray[0] : '0';
-		this.props.change(field.temperature, temperature);
-		let pressure = definitionArray.length > 1 ? definitionArray[1] : '0';
-		this.props.change(field.pressure, pressure);
-		let curingTime = definitionArray.length > 2 ? definitionArray[2] : '0';
-		this.props.change(field.curingTime, curingTime);
+		this.props.change(field.temperature, definitionArray.length > 0 ? definitionArray[0] : '0');
+		this.props.change(field.pressure, definitionArray.length > 1 ? definitionArray[1] : '0');
+		this.props.change(field.curingTime, definitionArray.length > 2 ? definitionArray[2] : '0');
+
+		this.props.change(field.virtualYn, formData[field.virtualYn]);
+		this.props.change(field.activeYn, formData[field.activeYn]);
+		this.props.change(field.sysCodeYn, formData[field.sysCodeYn]);
+
+		this.props.change(field.description, formData[field.description] ? formData[field.description] : '');
 	}
 
 	render() {
