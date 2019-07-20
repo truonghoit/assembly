@@ -313,11 +313,20 @@ class MasterForm extends Component {
 										value: temperature,
 									}}
 									onChange={e => {
-										this.props.change(field.temperature, e.target.value);
+										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
+										let value = e.target.value[1];  // Only get latest character user typed
+										if (value > definitionValueRange[definitionValueRange.length - 1]) {
+											value = definitionValueRange[definitionValueRange.length - 1];
+										} else if ( // Is a character OR less than 'definitionValueRange[0]'
+											!(value in definitionValueRange) || value < definitionValueRange[0]
+										) {
+											value = definitionValueRange[0];
+										}
+										this.props.change(field.temperature, value);
 										this.setState({
 											formData: {
 												...formData,
-												[field.definitionValue]: `${e.target.value}${pressure}${curingTime}`,
+												[field.definitionValue]: `${value}${pressure}${curingTime}`,
 											},
 										});
 									}}
@@ -333,11 +342,20 @@ class MasterForm extends Component {
 										value: pressure,
 									}}
 									onChange={e => {
-										this.props.change(field.pressure, e.target.value);
+										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
+										let value = e.target.value[1];  // Only get latest character user typed
+										if (value > definitionValueRange[definitionValueRange.length - 1]) {
+											value = definitionValueRange[definitionValueRange.length - 1];
+										} else if ( // Is a character OR less than 'definitionValueRange[0]'
+											!(value in definitionValueRange) || value < definitionValueRange[0]
+										) {
+											value = definitionValueRange[0];
+										}
+										this.props.change(field.pressure, value);
 										this.setState({
 											formData: {
 												...formData,
-												[field.definitionValue]: `${temperature}${e.target.value}${curingTime}`,
+												[field.definitionValue]: `${temperature}${value}${curingTime}`,
 											},
 										});
 									}}
@@ -353,11 +371,20 @@ class MasterForm extends Component {
 										value: curingTime,
 									}}
 									onChange={e => {
-										this.props.change(field.curingTime, e.target.value);
+										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
+										let value = e.target.value[1];  // Only get latest character user typed
+										if (value > definitionValueRange[definitionValueRange.length - 1]) {
+											value = definitionValueRange[definitionValueRange.length - 1];
+										} else if ( // Is a character OR less than 'definitionValueRange[0]'
+											!(value in definitionValueRange) || value < definitionValueRange[0]
+										) {
+											value = definitionValueRange[0];
+										}
+										this.props.change(field.curingTime, value);
 										this.setState({
 											formData: {
 												...formData,
-												[field.definitionValue]: `${temperature}${pressure}${e.target.value}`,
+												[field.definitionValue]: `${temperature}${pressure}${value}`,
 											},
 										});
 									}}
@@ -509,6 +536,7 @@ export const MASTER_FORM_CONSTANTS = {
 
 		description: 'remark',
 	},
+	definitionValueRange: [0, 1, 2, 3, 4, 5, 6, 7, 8],
 	submissionState: {
 		failed: -1,
 		initial: 0,
