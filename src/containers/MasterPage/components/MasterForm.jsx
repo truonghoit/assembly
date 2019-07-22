@@ -41,18 +41,18 @@ class MasterForm extends Component {
 
 		let {formData} = this.state;
 		const {field} = MASTER_FORM_CONSTANTS;
-		this.props.change(field.masCd, formData[field.masCd] ? formData[field.masCd] : '');
-		this.props.change(field.masCdNm, formData[field.masCdNm] ? formData[field.masCdNm] : '');
+		this.props.change(field.masCd.name, formData[field.masCd.name] ? formData[field.masCd.name] : '');
+		this.props.change(field.masCdNm.name, formData[field.masCdNm.name] ? formData[field.masCdNm.name] : '');
 
-		this.props.change(field.catCdNm, formData[field.catCdNm] ? formData[field.catCdNm] : '');
+		this.props.change(field.catCdNm, formData[field.catCdNm] ? formData[field.catCdNm] : '---');
 		this.props.change(field.catCd, formData[field.catCd] ? formData[field.catCd] : '');
 
-		this.props.change(field.parentMasNm, formData[field.parentMasNm] ? formData[field.parentMasNm] : '');
+		this.props.change(field.parentMasNm, formData[field.parentMasNm] ? formData[field.parentMasNm] : '---');
 		this.props.change(field.parentMasCd, formData[field.parentMasCd] ? formData[field.parentMasCd] : '');
 
 		this.props.change(
-			field.processingSeq,
-			formData[field.processingSeq] != undefined ? formData[field.processingSeq] : '0'
+			field.processingSeq.name,
+			formData[field.processingSeq.name] != undefined ? formData[field.processingSeq.name] : '0'
 		);
 
 		let definitionValue = formData[field.definitionValue] ? formData[field.definitionValue] : "000";
@@ -91,11 +91,11 @@ class MasterForm extends Component {
 							<span className="form__form-group-label">Mas Code</span>
 							<div className="form__form-group-field">
 								<Field
-									name={field.masCd}
+									name={field.masCd.name}
 									component={renderField}
 									props={{
 										disabled: this.state.editMode === true,
-										value: formData[field.masCd] ? formData[field.masCd] : ''
+										value: formData[field.masCd.name] ? formData[field.masCd.name] : ''
 									}}
 									type="text"
 									className="form__form-group-field-100"
@@ -107,7 +107,7 @@ class MasterForm extends Component {
 										this.setState({
 											formData: {
 												...formData,
-												[field.masCd]: newValue,
+												[field.masCd.name]: newValue,
 											}
 										});
 									}}
@@ -122,17 +122,17 @@ class MasterForm extends Component {
 							<span className="form__form-group-label">General Name</span>
 							<div className="form__form-group-field">
 								<Field
-									name={field.masCdNm}
+									name={field.masCdNm.name}
 									component={renderField}
 									props={{
-										value: formData[field.masCdNm] ? formData[field.masCdNm] : ''
+										value: formData[field.masCdNm.name] ? formData[field.masCdNm.name] : ''
 									}}
 									type="text"
 									className="form__form-group-field-100"
 									onChange={(event, newValue) => this.setState({
 										formData: {
 											...formData,
-											[field.masCdNm]: newValue,
+											[field.masCdNm.name]: newValue,
 										}
 									})}
 								/>
@@ -264,20 +264,20 @@ class MasterForm extends Component {
 							<span className="form__form-group-label">Process Sequence</span>
 							<div className="form__form-group-field">
 								<Field
-									name={field.processingSeq}
+									name={field.processingSeq.name}
 									component="input"
 									type="text"
 									component={renderField}
 									props={{
-										value: formData[field.processingSeq] != undefined
-											? formData[field.processingSeq]
+										value: formData[field.processingSeq.name] != undefined
+											? formData[field.processingSeq.name]
 											: '0'
 									}}
 									className="round_corner form__form-group-field-100"
 									onChange={(event, newValue) => this.setState({
 										formData: {
 											...formData,
-											[field.processingSeq]: newValue,
+											[field.processingSeq.name]: newValue,
 										}
 									})}
 								/>
@@ -486,9 +486,15 @@ class MasterForm extends Component {
 export const MASTER_FORM_CONSTANTS = {
 	masterFormName: 'MasterForm',
 	field: {
-		masCd: 'masCd',
+		masCd: {
+			name: 'masCd',
+			maxLength: 20,
+		},
 		hiddenMasCdDuplicatedChecker: 'hiddenMasCdDuplicatedChecker',
-		masCdNm: 'masCdName',
+		masCdNm: {
+			name: 'masCdName',
+			maxLength: 50,
+		},
 
 		catCdNm: 'cateCdName',
 		catCd: 'cateCd',
@@ -500,7 +506,10 @@ export const MASTER_FORM_CONSTANTS = {
 		activeYn: 'activeYn',
 		sysCodeYn: 'sysCodeYn',
 
-		processingSeq: 'processingSeq',
+		processingSeq: {
+			name: 'processingSeq',
+			maxLength: 6,
+		},
 
 		definitionValue: 'definitionValue',
 		temperature: 'temperature',

@@ -46,11 +46,11 @@ class MasterPage extends Component {
 		let url = '/api/asc/mascode';
 		let param = {
 			"status": this.state.editMode ? "UPDATE" : "INSERT",
-			"mas_cd": values[field.masCd],
+			"mas_cd": values[field.masCd.name],
 			"cate_cd": values[field.catCd],
-			"mas_cd_nm": values[field.masCdNm],
+			"mas_cd_nm": values[field.masCdNm.name],
 			"parent_mas_cd": values[field.parentMasCd],
-			"processing_seq": values[field.processingSeq],
+			"processing_seq": values[field.processingSeq.name],
 			"definition_value": definition_value,
 			"virtual_yn": values[field.virtualYn],
 			"active_yn": values[field.activeYn],
@@ -68,8 +68,8 @@ class MasterPage extends Component {
 						value: "",
 						label: "---",
 					}, {
-						value: values[field.masCd],
-						label: values[field.masCdNm],
+						value: values[field.masCd.name],
+						label: values[field.masCdNm.name],
 					});
 					this.setState({
 						parentCodeOptions: parentArray,
@@ -85,13 +85,13 @@ class MasterPage extends Component {
 						gotError = true;
 					}
 					return {
-						[field.masCd]: rowData.mas_cd,
-						[field.masCdNm]: rowData.mas_cd_nm,
+						[field.masCd.name]: rowData.mas_cd,
+						[field.masCdNm.name]: rowData.mas_cd_nm,
 						[field.catCdNm]: rowData.cate_nm,
 						[field.catCd]: rowData.cate_cd,
 						[field.parentMasNm]: rowData.parent_cd_nm,
 						[field.parentMasCd]: rowData.parent_mas_cd,
-						[field.processingSeq]: rowData.processing_seq,
+						[field.processingSeq.name]: rowData.processing_seq,
 						[field.definitionValue]: rowData.definition_value,
 						[field.virtualYn]: rowData.virtual_yn,
 						[field.activeYn]: rowData.active_yn,
@@ -103,14 +103,14 @@ class MasterPage extends Component {
 					this.setState({
 						formData: {
 							...this.state.formData,
-							[field.masCd]: values[field.masCd],
-							[field.masCdNm]: values[field.masCdNm],
+							[field.masCd.name]: values[field.masCd.name],
+							[field.masCdNm.name]: values[field.masCdNm.name],
 							[field.hiddenMasCdDuplicatedChecker]: true,
 							[field.catCdNm]: values[field.catCdNm],
 							[field.catCd]: values[field.catCd],
 							[field.parentMasNm]: values[field.parentMasNm],
 							[field.parentMasCd]: values[field.parentMasCd],
-							[field.processingSeq]: values[field.processingSeq],
+							[field.processingSeq.name]: values[field.processingSeq.name],
 							[field.definitionValue]: definition_value,
 							[field.virtualYn]: values[field.virtualYn],
 							[field.activeYn]: values[field.activeYn],
@@ -123,13 +123,13 @@ class MasterPage extends Component {
 					this.setState({
 						formData: {
 							...this.state.formData,
-							[field.masCd]: values[field.masCd],
-							[field.masCdNm]: values[field.masCdNm],
+							[field.masCd.name]: values[field.masCd.name],
+							[field.masCdNm.name]: values[field.masCdNm.name],
 							[field.catCdNm]: values[field.catCdNm],
 							[field.catCd]: values[field.catCd],
 							[field.parentMasNm]: values[field.parentMasNm],
 							[field.parentMasCd]: values[field.parentMasCd],
-							[field.processingSeq]: values[field.processingSeq],
+							[field.processingSeq.name]: values[field.processingSeq.name],
 							[field.definitionValue]: definition_value,
 							[field.virtualYn]: values[field.virtualYn],
 							[field.activeYn]: values[field.activeYn],
@@ -212,13 +212,13 @@ class MasterPage extends Component {
 			const {field} = MASTER_FORM_CONSTANTS;
 			for (let i = 0; i < responseArray.length; i++) {
 				let item = {
-					[field.masCd]: responseArray[i].mas_cd,
-					[field.masCdNm]: responseArray[i].mas_cd_nm,
+					[field.masCd.name]: responseArray[i].mas_cd,
+					[field.masCdNm.name]: responseArray[i].mas_cd_nm,
 					[field.catCdNm]: responseArray[i].cate_nm,
 					[field.catCd]: responseArray[i].cate_cd,
 					[field.parentMasNm]: responseArray[i].parent_cd_nm,
 					[field.parentMasCd]: responseArray[i].parent_mas_cd,
-					[field.processingSeq]: responseArray[i].processing_seq,
+					[field.processingSeq.name]: responseArray[i].processing_seq,
 					[field.definitionValue]: responseArray[i].definition_value,
 					[field.virtualYn]: responseArray[i].virtual_yn,
 					[field.activeYn]: responseArray[i].active_yn,

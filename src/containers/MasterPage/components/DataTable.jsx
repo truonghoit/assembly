@@ -37,13 +37,13 @@ function minMaxFilterFunction(headerValue, rowValue, rowData, filterParams) {
 let {field} = MASTER_FORM_CONSTANTS;
 
 const columns = [
-	{title: "Mas Code", field: field.masCd, width: '10%', align: "center", headerFilter: "input"},
-	{title: "General Name", field: field.masCdNm, width: '10%', align: "center", headerFilter: "input"},
+	{title: "Mas Code", field: field.masCd.name, width: '10%', align: "center", headerFilter: "input"},
+	{title: "General Name", field: field.masCdNm.name, width: '10%', align: "center", headerFilter: "input"},
 	{title: "Category Code", field: field.catCd, headerFilter: "input", visible: false},
 	{title: "Category", field: field.catCdNm, width: '10%', align: "center", headerFilter: "input"},
 	{title: "Parent Code", field: field.parentMasCd, headerFilter: "input", visible: false},
 	{title: "Parent", field: field.parentMasNm, width: '10%', align: "center", headerFilter: "input"},
-	{title: "Process Sequence", field: field.processingSeq, width: '10%', align: "center", headerFilter: "input"},
+	{title: "Process Sequence", field: field.processingSeq.name, width: '10%', align: "center", headerFilter: "input"},
 	{title: "Definition", field: field.definitionValue, align: "center", width: '10%', headerFilter: "input"},
 	{title: "Virtual(Y/N)", field: field.virtualYn, width: '10%', align: "center", formatter: "tickCross"},
 	{title: "Active(Y/N)", field: field.activeYn, width: '10%', align: "center", formatter: "tickCross"},
@@ -52,13 +52,13 @@ const columns = [
 ];
 const data = [
 	{
-		[field.masCd]: "1",
-		[field.masCdNm]: "mas_cd_nm",
+		[field.masCd.name]: "1",
+		[field.masCdNm.name]: "mas_cd_nm",
 		[field.catCd]: "12",
 		[field.catCdNm]: "red",
 		[field.parentMasCd]: "1234",
 		[field.parentMasNm]: "5",
-		[field.processingSeq]: "243",
+		[field.processingSeq.name]: "243",
 		[field.definitionValue]: "111",
 		[field.virtualYn]: "true",
 		[field.activeYn]: "false",
