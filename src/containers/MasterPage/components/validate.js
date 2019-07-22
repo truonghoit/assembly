@@ -1,4 +1,4 @@
-import {MASTER_FORM_CONSTANTS} from "./MasterForm";
+import MASTER_FORM_CONSTANTS from "../constants";
 
 const validate = (values) => {
 	const {field} = MASTER_FORM_CONSTANTS;

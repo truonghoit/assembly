@@ -8,7 +8,7 @@ import "../../../scss/component/tabulator_midnight_custom.css"; // use Theme(s)
 
 // for React 16.4.x use: import { ReactTabulator }
 import {ReactTabulator, reactFormatter} from "react-tabulator";
-import {MASTER_FORM_CONSTANTS} from "./MasterForm";
+import MASTER_FORM_CONSTANTS from "../constants";
 
 //custom max min filter function
 function minMaxFilterFunction(headerValue, rowValue, rowData, filterParams) {
