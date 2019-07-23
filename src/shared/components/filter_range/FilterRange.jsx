@@ -1,0 +1,351 @@
+import React, {Component}                                         from 'react';
+import '../../../scss/component/spinner.scss';
+import {Field, reduxForm}                                         from 'redux-form';
+import renderRadioButtonField                                     from '../form/RadioButton';
+import renderDatePickerField                                      from '../form/DatePicker';
+import renderSelectField                                          from "../form/Select";
+import {faCalendarAlt}                                            from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon}                                          from "@fortawesome/react-fontawesome";
+import {Col, Row}                                                 from 'reactstrap';
+import "react-datepicker/dist/react-datepicker.css";
+import {ARRAY_ARTICLES, ARRAY_LINES, ARRAY_MODELS}                from "../../../constants/variable_constants";
+import {ASSEMBLY_API, FILTER_ARTICLE, FILTER_LINE, FILTER_MODEL}  from "../../../constants/constants";
+import {changeFilterArticle, changeFilterLine, changeFilterModel} from "../../../redux/actions/filterActions";
+import callAxios                                                  from "../../../services/api";
+import {connect}                                                  from "react-redux";
+import PropTypes                                                  from 'prop-types';
+import validate                                                   from "./validateForFilterRange";
+
+class FilterRange extends Component {
+
+	static propTypes = {
+		handleFilterDateChange   : PropTypes.func.isRequired,
+		handleFilterModelChange  : PropTypes.func.isRequired,
+		handleFilterLineChange   : PropTypes.func.isRequired,
+		handleFilterArticleChange: PropTypes.func.isRequired,
+	};
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			startDate            : new Date(),
+			disableFromDatePicker: true,
+			disableToDatePicker  : true,
+			arrayLines           : ARRAY_LINES,
+			selectedLine         : ARRAY_LINES[0],
+			arrayModels          : ARRAY_MODELS,
+			selectedModel        : ARRAY_MODELS[0],
+			arrayArticles        : ARRAY_ARTICLES,
+			selectedArticle      : ARRAY_ARTICLES[0]
+		};
+
+		this.fillComboboxes();
+	}
+
+	fillComboboxes = () => {
+		this.fillLineCombobox();
+		this.fillModelCombobox();
+		this.fillArticleCombobox();
+	}
+
+	fillLineCombobox = () => {
+		let method = 'POST';
+		let url    = ASSEMBLY_API + FILTER_LINE;
+		let params = {
+			"dropdownlist-name": "line"
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let dataArray  = response.data.data;
+				let arrayLines = ARRAY_LINES;
+				dataArray.forEach(element => {
+					arrayLines.push(
+						{value: element.code, label: element.name}
+					);
+				});
+
+				this.setState({
+					arrayLines: arrayLines,
+				});
+
+				this.props.dispatch(
+					changeFilterLine(arrayLines)
+				);
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	fillModelCombobox = (selectedLine = null) => {
+		let selectedLineCode = "";
+		if (selectedLine) {
+			selectedLineCode = selectedLine.value;
+		}
+		let method = 'POST';
+		let url    = ASSEMBLY_API + FILTER_MODEL;
+		let params = {
+			"dropdownlist-name": "model",
+			"code"             : selectedLineCode
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let dataArray   = response.data.data;
+				let arrayModels = [
+					{value: '', label: '---'}
+				];
+				dataArray.forEach(element => {
+					arrayModels.push(
+						{value: element.code, label: element.name}
+					);
+				});
+
+				this.setState({
+					arrayModels: arrayModels,
+				});
+
+				this.props.dispatch(
+					changeFilterModel(arrayModels)
+				);
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	fillArticleCombobox = (selectedModel = null) => {
+		let method = 'POST';
+		let url    = ASSEMBLY_API + FILTER_ARTICLE;
+
+		let selectedModelCode = "";
+		if (selectedModel) {
+			selectedModelCode = selectedModel.value;
+		}
+
+		let params = {
+			"dropdownlist-name": "article",
+			"code"             : selectedModelCode
+		};
+		console.log("params 130: ", params);
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let dataArray     = response.data.data;
+				let arrayArticles = [
+					{value: '', label: '---'}
+				];
+				dataArray.forEach(element => {
+					arrayArticles.push(
+						{value: element.code, label: element.name}
+					);
+				});
+
+				this.setState({
+					arrayArticles: arrayArticles,
+				});
+
+				this.props.dispatch(
+					changeFilterArticle(arrayArticles)
+				);
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	handleFilterFromDateChange = (value) => {
+		this.props.handleFilterFromDateChange(value);
+		this.setState({
+			selectedFromDate: value,
+		});
+	}
+
+	handleFilterToDateChange = (value) => {
+		this.props.handleFilterToDateChange(value);
+		this.setState({
+			selectedToDate: value,
+		});
+	}
+
+	handleFilterLineChange = (value) => {
+		this.props.handleFilterLineChange(value);
+
+		this.fillModelCombobox(value);
+
+		this.setState({
+			selectedLine   : value,
+			selectedModel  : ARRAY_MODELS[0],
+			selectedArticle: ARRAY_ARTICLES[0]
+		});
+	}
+
+	handleFilterModelChange = (value) => {
+		this.props.handleFilterModelChange(value);
+		this.fillArticleCombobox(value);
+		this.setState({
+			selectedModel  : value,
+			selectedArticle: ARRAY_ARTICLES[0]
+		});
+	}
+
+	handleFilterArticleChange = (value) => {
+		this.props.handleFilterArticleChange(value);
+		this.setState({
+			selectedArticle: value,
+		});
+	}
+
+	onCheckboxChange = (value) => {
+		if (parseInt(value) === 1) {
+			this.setState({
+				disableFromDatePicker: true,
+				disableToDatePicker  : true,
+				selectedFromDate     : new Date(),
+				selectedToDate       : new Date(),
+			});
+		} else {
+			this.setState({
+				disableFromDatePicker: false,
+				disableToDatePicker  : false,
+			});
+		}
+	}
+
+	render() {
+		let {handleSubmit}                           = this.props;
+		let {arrayLines, arrayModels, arrayArticles} = this.state;
+		return (
+			<form className="form form--preview" onSubmit={handleSubmit} style={{paddingLeft: 20}}>
+				<Col md={6} lg={6}>
+					<Row>
+						<Col md={2} lg={2} style={{justifyContent: "flex-end"}}>
+							<span className="form__form-group-label">Date Period:</span>
+						</Col>
+						<Col md={3} lg={3}>
+							<div className="form__form-group" style={{marginLeft: 20}}>
+								<div className="form__form-group-field">
+									<Field
+										name="dateRadio"
+										component={renderRadioButtonField}
+										label="Today"
+										radioValue="1"
+										defaultChecked
+										onChange={this.onCheckboxChange}
+									/>
+									<Field
+										name="dateRadio"
+										component={renderRadioButtonField}
+										label="Select"
+										radioValue="2"
+										onChange={this.onCheckboxChange}
+									/>
+								</div>
+							</div>
+						</Col>
+						<Col md={4} lg={4} style={{marginTop: -7}}>
+							<div className="form__form-group" style={{marginLeft: 20}}>
+								<div className="form__form-group-field">
+									<div style={{width: 100}}>
+										<Field
+											name="filterFromDate"
+											component={renderDatePickerField}
+											disabled={this.state.disableFromDatePicker}
+											selected={this.state.selectedFromDate}
+											onChange={this.handleFilterFromDateChange}
+										/>
+									</div>
+									<div className="form__form-group-icon">
+										<FontAwesomeIcon icon={faCalendarAlt}/>
+									</div>
+								</div>
+							</div>
+						</Col>
+						<span>~</span>
+						<Col md={4} lg={4} style={{marginLeft: -120, marginTop: -7}}>
+							<div className="form__form-group" style={{marginLeft: 20}}>
+								<div className="form__form-group-field">
+									<div style={{width: 100}}>
+										<Field
+											name="filterToDate"
+											component={renderDatePickerField}
+											disabled={this.state.disableToDatePicker}
+											selected={this.state.selectedToDate}
+											onChange={this.handleFilterToDateChange}
+										/>
+									</div>
+									<div className="form__form-group-icon">
+										<FontAwesomeIcon icon={faCalendarAlt}/>
+									</div>
+								</div>
+							</div>
+						</Col>
+					</Row>
+				</Col>
+				<Col md={2} lg={2} style={{marginLeft: -120}}>
+					<Row>
+						<Col md={2} lg={2}>
+							<span className="form__form-group-label">Line: </span>
+						</Col>
+						<Col md={10} lg={10} style={{marginTop: -12}}>
+							<Field
+								name="filterLine"
+								component={renderSelectField}
+								options={arrayLines}
+								onChange={this.handleFilterLineChange}
+								selected={this.state.selectedLine}
+							/>
+						</Col>
+					</Row>
+				</Col>
+				<Col md={2} lg={2} style={{marginLeft: -40}}>
+					<Row>
+						<Col md={2} lg={2}>
+							<span className="form__form-group-label">Model: </span>
+						</Col>
+						<Col md={9} lg={9} style={{marginLeft: 10, marginTop: -12}}>
+							<Field
+								name="filterModel"
+								component={renderSelectField}
+								options={arrayModels}
+								onChange={this.handleFilterModelChange}
+								selected={this.state.selectedModel}
+							/>
+						</Col>
+					</Row>
+				</Col>
+				<Col md={2} lg={2}>
+					<Row>
+						<Col md={2} lg={2}>
+							<span className="form__form-group-label">Article: </span>
+						</Col>
+						<Col md={9} lg={9} style={{marginLeft: 10, marginTop: -12}}>
+							<Field
+								name="filterArticle"
+								component={renderSelectField}
+								options={arrayArticles}
+								onChange={this.handleFilterArticleChange}
+								selected={this.state.selectedArticle}
+							/>
+						</Col>
+					</Row>
+				</Col>
+			</form>
+		);
+	}
+}
+
+const mapStateToProps = (state) => ({
+	filterFromDate: state.filterFromDate,
+	filterToDate  : state.filterToDate,
+	filterLine    : state.filterLine,
+	filterModel   : state.filterModel,
+	filterArticle : state.filterArticle,
+});
+
+
+export default connect(mapStateToProps)(reduxForm({
+	form: 'filter_range',
+	validate,
+})(FilterRange));
