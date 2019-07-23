@@ -250,7 +250,7 @@ class AlarmMasterForm extends Component {
 											disabled: true,
 											value: formData.model_nm ? formData.model_nm:''
 										}}
-										className={"marginLeff-20"}
+										className={"marginLeft-20"}
 									/>
 								</div>
 							</div>

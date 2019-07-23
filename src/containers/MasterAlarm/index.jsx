@@ -72,7 +72,7 @@ class MasterAlarm extends Component {
 				columns: [
 					{
 						title: "<span style='color:#03CF65; font-size: large'>●</span>",
-						field: "temp_stardand",
+						field: "temp_standard",
 						width: '8%',
 						align: "center",
 						formatterParams: this.formatStandard
@@ -98,7 +98,7 @@ class MasterAlarm extends Component {
 				columns: [
 					{
 						title: "<span style='color:#03CF65; font-size: large'>●</span>",
-						field: "pres_stardand",
+						field: "pres_standard",
 						width: '8%',
 						align: "center",
 						formatterParams: this.formatStandard
@@ -124,7 +124,7 @@ class MasterAlarm extends Component {
 				columns: [
 					{
 						title: "<span style='color:#03CF65; font-size: large'>●</span>",
-						field: "curr_stardand",
+						field: "curr_standard",
 						width: '8%',
 						align: "center",
 						formatterParams: this.formatStandard
@@ -182,13 +182,13 @@ class MasterAlarm extends Component {
 				process_cd: '0',
 				process_nm: '0',
 
-				temp_stardand: '0-0',
+				temp_standard: '0-0',
 				temp_yellow: '0-0',
 				temp_red: '0-0',
-				pres_stardand: '0-0',
+				pres_standard: '0-0',
 				pres_yellow: '0-0',
 				pres_red: '0-0',
-				curr_stardand: '0-0',
+				curr_standard: '0-0',
 				curr_yellow: '0-0',
 				curr_red: '0-0',
 
@@ -289,13 +289,13 @@ class MasterAlarm extends Component {
 						process_cd: item.process_cd ? item.process_cd : '0',
 						process_nm: item.process_nm ? item.process_nm : '0',
 
-						temp_stardand: item.temp_standard_from + '-' + item.temp_standard_to,
+						temp_standard: item.temp_standard_from + '-' + item.temp_standard_to,
 						temp_yellow: item.temp_yellow_first + '-' + item.temp_yellow_last,
 						temp_red: item.temp_red_first + '-' + item.temp_red_last,
-						pres_stardand: item.pres_standard_from + '-' + item.pres_standard_to,
+						pres_standard: item.pres_standard_from + '-' + item.pres_standard_to,
 						pres_yellow: item.pres_yellow_first + '-' + item.pres_yellow_last,
 						pres_red: item.pres_red_first + '-' + item.pres_red_last,
-						curr_stardand: item.curr_standard_from + '-' + item.curr_standard_to,
+						curr_standard: item.curr_standard_from + '-' + item.curr_standard_to,
 						curr_yellow: item.curr_yellow_first + '-' + item.curr_yellow_last,
 						curr_red: item.curr_red_first + '-' + item.curr_red_last,
 
