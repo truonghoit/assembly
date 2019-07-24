@@ -15,16 +15,18 @@ let initialData = {
 	],
 	datasets: [
 		{
-			label          : "Bar dataset",
-			backgroundColor: "#2880E9",
-			data           : [1, 2, 3, 4, 5, 6, 7]
+			label          : "Line dataset",
+			data           : [0, 0, 0, 0, 0, 0, 0],
+			type           : 'line',
+			borderColor: "#EBEDF1",
+			fill: false,
+			lineTension: 0,
 		},
 		{
-			label          : "Line dataset",
-			data           : [5, 2, 3, 4, 5, 6, 7],
-			type           : 'line',
-			backgroundColor: "#FFFFFF"
-		}
+			label          : "Bar dataset",
+			backgroundColor: "#2880E9",
+			data           : [0, 0, 0, 0, 0, 0, 0]
+		},
 	]
 };
 
@@ -130,8 +132,8 @@ export default class MixedLineBarChart extends PureComponent {
 
 	render() {
 		return (
-			<div style={{padding: 20, paddingLeft: 200}}>
-				<canvas width={1000} height={500} ref={(element) => this.canvas = element}/>
+			<div>
+				<canvas ref={(element) => this.canvas = element}/>
 			</div>
 		);
 	}

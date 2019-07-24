@@ -63,7 +63,13 @@ class LeadTimeDetail extends Component {
 				             handleFilterArticleChange={this.handleFilterArticleChange}/>
 				<hr/>
 				<Row>
-					<MixedLineBarChart />
+					<div className="col-2">
+					</div>
+					<div className="col-8">
+						<MixedLineBarChart />
+					</div>
+					<div className="col-2">
+					</div>
 				</Row>
 				<hr/>
 				<Row>
