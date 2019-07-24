@@ -9,6 +9,7 @@ import ExamplePageTwo from '../ExampleTwo/index';
 import MasterPage from '../MasterPage/index';
 import MasterAlarm from "../MasterAlarm/index";
 import LeadTime from "../LeadTime/index";
+import LeadTimeDetail from "../LeadTimeDetail/index";
 
 const Pages = () => (
 	<Switch>
@@ -17,6 +18,7 @@ const Pages = () => (
 		<Route path="/pages/master-page" component={MasterPage} />
 		<Route path="/pages/alarm-master" component={MasterAlarm} />
 		<Route path="/pages/lead-time" component={LeadTime} />
+		<Route path="/pages/lead-time-detail" component={LeadTimeDetail} />
 	</Switch>
 );
 
