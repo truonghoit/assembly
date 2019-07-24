@@ -10,35 +10,39 @@ class LeadTable extends Component {
 	}
 
 	fillRow = (data, firstCol) => {
-		if (data) {
-			if (firstCol){
-				let rowSpan = 1;
-				if (firstCol == "STICHING"){
-					rowSpan = 6;
-				} else if (firstCol == 'SHOE MAKING'){
-					rowSpan = 11;
-				} else if (firstCol == 'LEAD TIME'){
-					rowSpan = 3;
-				}
-
-				let min_process_crr = data.min_process_crr!=undefined && data.min_process_crr != ""?true:false;
-				let color = "#FFFFFF";
-				if (min_process_crr){
-					color = "#FF9356";
-				}
-				return  <tr>
-							<td rowSpan={rowSpan}style={{verticalAlign: 'middle', color: color}}>{firstCol}</td><td style={{color: color}}>{data.mas_cd_nm}</td><td style={{color: color}}>{data.pair_qty}</td><td style={{color: color}}>{data.lead_time}</td>
-						</tr>
-			} else {
-				let min_process_crr = data.min_process_crr!=undefined && data.min_process_crr != ""?true:false;
-				let color = "#FFFFFF";
-				if (min_process_crr){
-					color = "#FF9356";
-				}
-				return  <tr>
-							<td style={{color: color}}>{data.mas_cd_nm}</td><td style={{color: color}}>{data.pair_qty}</td><td style={{color: color}}>{data.lead_time}</td>
-						</tr>
+		if (firstCol){
+			let rowSpan = 1;
+			if (firstCol == "STICHING"){
+				rowSpan = 6;
+			} else if (firstCol == 'SHOE MAKING'){
+				rowSpan = 11;
+			} else if (firstCol == 'LEAD TIME'){
+				rowSpan = 3;
 			}
+
+			let min_process_crr = 0;
+			if (data){
+				min_process_crr = data.min_process_crr!=undefined && data.min_process_crr != ""?true:false;
+			}
+			let color = "#FFFFFF";
+			if (min_process_crr){
+				color = "#FF9356";
+			}
+			return  <tr>
+						<td rowSpan={rowSpan}style={{verticalAlign: 'middle', color: color}}>{firstCol}</td><td style={{color: color}}>{data?data.mas_cd_nm:0}</td><td style={{color: color}}>{data?data.pair_qty:0}</td><td style={{color: color}}>{data?data.lead_time:0}</td>
+					</tr>
+		} else {
+			let min_process_crr = 0;
+			if (data){
+				min_process_crr = data.min_process_crr!=undefined && data.min_process_crr != ""?true:false;
+			}
+			let color = "#FFFFFF";
+			if (min_process_crr){
+				color = "#FF9356";
+			}
+			return  <tr>
+						<td style={{color: color}}>{data?data.mas_cd_nm:0}</td><td style={{color: color}}>{data?data.pair_qty:0}</td><td style={{color: color}}>{data?data.lead_time:0}</td>
+					</tr>
 		}
 	}
 

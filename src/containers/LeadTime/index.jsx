@@ -22,8 +22,8 @@ class LeadTime extends Component {
 			},
 			workingHourData: [],
 			workingHourLabel: [],
-			filterFromDate:changeDateToUnix(new Date()),
-			filterToDate:changeDateToUnix(new Date()),
+			filterFromDate:changeDateToUnix(new Date(), "start"),
+			filterToDate:changeDateToUnix(new Date(), "end"),
 			filterLine:'',
 			filterModel:'',
 			filterArticle:''
@@ -35,21 +35,35 @@ class LeadTime extends Component {
 		this.retrieveWorkingHourData();
 	}
 
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (prevState.filterArticle !== this.state.filterArticle || prevState.filterFromDate !== this.state.filterFromDate
+		    || prevState.filterToDate !== this.state.filterToDate
+		    || prevState.filterLine !== this.state.filterLine || prevState.filterModel !== this.state.filterModel
+			|| prevState.filterArticle !== this.state.filterArticle){
+			//filterArticle: ""
+			// filterFromDate: 1563160349
+			// filterLine: ""
+			// filterModel: ""
+			// filterToDate: 1563937949
+			this.retrieveLeadTableData();
+			this.retrieveWorkingHourData();
+		}
+	}
+
 	retrieveLeadTableData = () => {
 		let {filterFromDate, filterToDate, filterLine, filterModel, filterArticle} = this.state;
 		let method = 'POST';
 		let url    = ASSEMBLY_API + PRODUCTION_LEAD_TIME;
 		let params = {
 			"factory"   : "",
-			"line"      : "",
-			"model"     : "",
-			"article_no": "",
+			"line"      : filterLine,
+			"model"     : filterModel,
+			"article_no": filterArticle,
 			"process"   : "",
-			"from_date" : "1563166026",
-			"to_date"   : "1563166026"
+			"from_date" : filterFromDate,
+			"to_date"   : filterToDate
 		};
 		callAxios(method, url, params).then(response => {
-			console.log("response 50: ", response);
 			let leadData   = response.data.data;
 			let ccrProcess = this.findCcrProcess(leadData);
 			try {
@@ -65,24 +79,41 @@ class LeadTime extends Component {
 	}
 
 	handleWorkingData = (workingHourData) => {
+		console.log("workingHourData 86: ", workingHourData);
 		try {
-			let labels = [];
-			let data = [];
-			workingHourData.map(item=>{
-				labels.push(item[0]);
-				data.push(item[1]);
-			});
-			this.setState({
-				...this.state,
-				workingHourData: [{
-					data: data,
-					backgroundColor: "#2880E9",
-				}],
-				workingHourLabel: labels
-			});
-
+			if (workingHourData && workingHourData[0].chart_data){
+				let labels = [];
+				let data = [];
+				workingHourData.map(item=>{
+					labels.push(item[0]);
+					data.push(item[1]);
+				});
+				this.setState({
+					...this.state,
+					workingHourData: [{
+						data: data,
+						backgroundColor: "#2880E9",
+					}],
+					workingHourLabel: labels
+				});
+			} else {
+				this.setState({
+					...this.state,
+					workingHourData: [{
+						data: [0, 0, 0, 0, 0,
+						       0, 0, 0, 0, 0,
+						       0, 0, 0, 0, 0,
+						       0],
+						backgroundColor: "#2880E9",
+					}],
+					workingHourLabel: ["Computer Stiching", "Normal Stiching", "Backpack Molding", "Toe Molding", "Strobel",
+					                   "Lasting", "Heel Lasting", "Heat Chamber", "Negative Gage", "Cementing",
+					                   "Attach Sole With Upper", "Chiller", "Delasting", "Metal Detect", "QIP Defect",
+					                   "Packing"]
+				});
+			}
 		} catch (e) {
-			console.log();
+			console.log("Error: ", e);
 		}
 	}
 
@@ -92,15 +123,14 @@ class LeadTime extends Component {
 		let url    = ASSEMBLY_API + WORKING_HOUR_LEAD_TIME;
 		let params = {
 			"factory"   : "",
-			"line"      : "",
-			"model"     : "",
-			"article_no": "",
+			"line"      : filterLine,
+			"model"     : filterModel,
+			"article_no": filterArticle,
 			"process"   : "",
-			"from_date" : "1563757203",
-			"to_date"   : "1563813024"
+			"from_date" : filterFromDate,
+			"to_date"   : filterToDate
 		};
 		callAxios(method, url, params).then(response => {
-			console.log("response 99: ", response);
 			try {
 				let workingHourDataArray = response.data.data;
 				this.handleWorkingData(workingHourDataArray);
@@ -111,63 +141,38 @@ class LeadTime extends Component {
 	}
 
 	handleFilterFromDateChange    = (newValue) => {
-		console.log("handleFilterFromDateChange");
-		console.log("value: ", newValue);
 		this.setState({
 			...this.state,
-			filterFromDate:changeDateToUnix(newValue),
+			filterFromDate:changeDateToUnix(newValue, "start"),
 		});
-
-		this.retrieveLeadTableData();
-		this.retrieveWorkingHourData();
 	}
 
 	handleFilterToDateChange    = (newValue) => {
-		console.log("handleFilterToDateChange");
-		console.log("value: ", newValue);
 		this.setState({
 			...this.state,
-			filterToDate:changeDateToUnix(newValue),
+			filterToDate:changeDateToUnix(newValue, "end"),
 		});
-
-		this.retrieveLeadTableData();
-		this.retrieveWorkingHourData();
 	}
 	handleFilterModelChange   = (newValue) => {
-		console.log("handleFilterModelChange");
-		console.log("newValue: ", newValue);
-		console.log("newValue.value: ", newValue.value);
 		this.setState({
 			...this.state,
-			filterModel:newValue,
+			filterModel:newValue.value,
+			filterArticle: ""
 		});
-
-		this.retrieveLeadTableData();
-		this.retrieveWorkingHourData();
 	}
 	handleFilterLineChange    = (newValue) => {
-		console.log("handleFilterLineChange");
-		console.log("newValue: ", newValue);
-		console.log("newValue.value: ", newValue.value);
 		this.setState({
 			...this.state,
 			filterLine:newValue.value,
+			filterModel:"",
+			filterArticle: ""
 		});
-
-		this.retrieveLeadTableData();
-		this.retrieveWorkingHourData();
 	}
 	handleFilterArticleChange = (newValue) => {
-		console.log("handleFilterArticleChange");
-		console.log("newValue: ", newValue);
-		console.log("newValue.value: ", newValue.value);
 		this.setState({
 			...this.state,
 			filterArticle:newValue.value,
 		});
-
-		this.retrieveLeadTableData();
-		this.retrieveWorkingHourData();
 	}
 
 	findCcrProcess = (leadData) => {
@@ -203,6 +208,7 @@ class LeadTime extends Component {
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
 				             handleFilterArticleChange={this.handleFilterArticleChange}/>
+				<hr/>
 				<Row>
 					<Col md={6} lg={6}>
 						<LeadTable leadData={leadData}/>

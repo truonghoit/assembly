@@ -10,10 +10,10 @@ let initialData = {
 	           "Packing"
 	],
 	datasets: [{
-		data           : [10, 10, 3, 5, 2,
-		                  3, 20, 3, 5, 6,
-		                  3, 20, 3, 5, 6,
-		                  2
+		data           : [0, 0, 0, 0, 0,
+		                  0, 0, 0, 0, 0,
+		                  0, 0, 0, 0, 0,
+		                  0
 		],
 		backgroundColor: "#2880E9",
 	}],

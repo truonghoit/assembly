@@ -28,7 +28,6 @@ class FilterRange extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			startDate            : new Date(),
 			disableFromDatePicker: true,
 			disableToDatePicker  : true,
 			arrayLines           : ARRAY_LINES,
@@ -66,6 +65,7 @@ class FilterRange extends Component {
 				});
 
 				this.setState({
+					...this.state,
 					arrayLines: arrayLines,
 				});
 
@@ -103,6 +103,7 @@ class FilterRange extends Component {
 				});
 
 				this.setState({
+					...this.state,
 					arrayModels: arrayModels,
 				});
 
@@ -128,7 +129,6 @@ class FilterRange extends Component {
 			"dropdownlist-name": "article",
 			"code"             : selectedModelCode
 		};
-		console.log("params 130: ", params);
 
 		callAxios(method, url, params).then(response => {
 			try {
@@ -143,6 +143,7 @@ class FilterRange extends Component {
 				});
 
 				this.setState({
+					...this.state,
 					arrayArticles: arrayArticles,
 				});
 
@@ -156,15 +157,21 @@ class FilterRange extends Component {
 	}
 
 	handleFilterFromDateChange = (value) => {
+		console.log("handleFilterFromDateChange");
+		console.log("value: ", value);
 		this.props.handleFilterFromDateChange(value);
 		this.setState({
+			...this.state,
 			selectedFromDate: value,
 		});
 	}
 
 	handleFilterToDateChange = (value) => {
+		console.log("handleFilterToDateChange");
+		console.log("value: ", value);
 		this.props.handleFilterToDateChange(value);
 		this.setState({
+			...this.state,
 			selectedToDate: value,
 		});
 	}
@@ -173,8 +180,10 @@ class FilterRange extends Component {
 		this.props.handleFilterLineChange(value);
 
 		this.fillModelCombobox(value);
+		console.log("handleFilterLineChange 180: ", this.state);
 
 		this.setState({
+			...this.state,
 			selectedLine   : value,
 			selectedModel  : ARRAY_MODELS[0],
 			selectedArticle: ARRAY_ARTICLES[0]
@@ -185,6 +194,7 @@ class FilterRange extends Component {
 		this.props.handleFilterModelChange(value);
 		this.fillArticleCombobox(value);
 		this.setState({
+			...this.state,
 			selectedModel  : value,
 			selectedArticle: ARRAY_ARTICLES[0]
 		});
@@ -193,6 +203,7 @@ class FilterRange extends Component {
 	handleFilterArticleChange = (value) => {
 		this.props.handleFilterArticleChange(value);
 		this.setState({
+			...this.state,
 			selectedArticle: value,
 		});
 	}
@@ -200,6 +211,7 @@ class FilterRange extends Component {
 	onCheckboxChange = (value) => {
 		if (parseInt(value) === 1) {
 			this.setState({
+				...this.state,
 				disableFromDatePicker: true,
 				disableToDatePicker  : true,
 				selectedFromDate     : new Date(),
@@ -207,6 +219,7 @@ class FilterRange extends Component {
 			});
 		} else {
 			this.setState({
+				...this.state,
 				disableFromDatePicker: false,
 				disableToDatePicker  : false,
 			});
