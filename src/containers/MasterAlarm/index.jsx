@@ -99,9 +99,9 @@ class MasterAlarm extends Component {
 						pres_standard: item.pres_standard_from + '-' + item.pres_standard_to,
 						pres_yellow  : item.pres_yellow_first + '-' + item.pres_yellow_last,
 						pres_red     : item.pres_red_first + '-' + item.pres_red_last,
-						curr_standard: item.curr_standard_from + '-' + item.curr_standard_to,
-						curr_yellow  : item.curr_yellow_first + '-' + item.curr_yellow_last,
-						curr_red     : item.curr_red_first + '-' + item.curr_red_last,
+						cur_standard : item.cur_standard_from + '-' + item.cur_standard_to,
+						cur_yellow   : item.cur_yellow_first + '-' + item.cur_yellow_last,
+						cur_red      : item.cur_red_first + '-' + item.cur_red_last,
 
 						temp_standard_from: item.temp_standard_from,
 						temp_standard_to  : item.temp_standard_to,
@@ -115,12 +115,12 @@ class MasterAlarm extends Component {
 						pres_yellow_last  : item.pres_yellow_last,
 						pres_red_first    : item.pres_red_first,
 						pres_red_last     : item.pres_red_last,
-						curr_standard_from: item.curr_standard_from,
-						curr_standard_to  : item.curr_standard_to,
-						curr_yellow_first : item.curr_yellow_first,
-						curr_yellow_last  : item.curr_yellow_last,
-						curr_red_first    : item.curr_red_first,
-						curr_red_last     : item.curr_red_last,
+						cur_standard_from : item.cur_standard_from,
+						cur_standard_to   : item.cur_standard_to,
+						cur_yellow_first  : item.cur_yellow_first,
+						cur_yellow_last   : item.cur_yellow_last,
+						cur_red_first     : item.cur_red_first,
+						cur_red_last      : item.cur_red_last,
 						definition_value  : item.definition_value,
 					};
 					dataArray.push(item);
@@ -172,12 +172,12 @@ class MasterAlarm extends Component {
 					red_first     = values.pres_red_first;
 					red_last      = values.pres_red_last;
 				} else if (sensor_type == 3) {
-					standard_from = values.curr_standard_from;
-					standard_to   = values.curr_standard_to;
-					yellow_first  = values.curr_yellow_first;
-					yellow_last   = values.curr_yellow_last;
-					red_first     = values.curr_red_first;
-					red_last      = values.curr_red_last;
+					standard_from = values.cur_standard_from;
+					standard_to   = values.cur_standard_to;
+					yellow_first  = values.cur_yellow_first;
+					yellow_last   = values.cur_yellow_last;
+					red_first     = values.cur_red_first;
+					red_last      = values.cur_red_last;
 				}
 				let param = {
 					"status"       : this.state.editMode ? "UPDATE" : "INSERT",
@@ -228,12 +228,12 @@ class MasterAlarm extends Component {
 										pres_yellow_last  : values.pres_yellow_last,
 										pres_red_first    : values.pres_red_first,
 										pres_red_last     : values.pres_red_last,
-										curr_standard_from: values.curr_standard_from,
-										curr_standard_to  : values.curr_standard_to,
-										curr_yellow_first : values.curr_yellow_first,
-										curr_yellow_last  : values.curr_yellow_last,
-										curr_red_first    : values.curr_red_first,
-										curr_red_last     : values.curr_red_last,
+										cur_standard_from : values.cur_standard_from,
+										cur_standard_to   : values.cur_standard_to,
+										cur_yellow_first  : values.cur_yellow_first,
+										cur_yellow_last   : values.cur_yellow_last,
+										cur_red_first     : values.cur_red_first,
+										cur_red_last      : values.cur_red_last,
 									});
 								}
 								this.setState({
@@ -269,12 +269,12 @@ class MasterAlarm extends Component {
 			pres_yellow_last  : '',
 			pres_red_first    : '',
 			pres_red_last     : '',
-			curr_standard_from: '',
-			curr_standard_to  : '',
-			curr_yellow_first : '',
-			curr_yellow_last  : '',
-			curr_red_first    : '',
-			curr_red_last     : '',
+			cur_standard_from : '',
+			cur_standard_to   : '',
+			cur_yellow_first  : '',
+			cur_yellow_last   : '',
+			cur_red_first     : '',
+			cur_red_last      : '',
 		};
 		this.setState({
 			editMode: false,
@@ -305,12 +305,12 @@ class MasterAlarm extends Component {
 				pres_yellow_last  : selectedRow.pres_yellow_last,
 				pres_red_first    : selectedRow.pres_red_first,
 				pres_red_last     : selectedRow.pres_red_last,
-				curr_standard_from: selectedRow.curr_standard_from,
-				curr_standard_to  : selectedRow.curr_standard_to,
-				curr_yellow_first : selectedRow.curr_yellow_first,
-				curr_yellow_last  : selectedRow.curr_yellow_last,
-				curr_red_first    : selectedRow.curr_red_first,
-				curr_red_last     : selectedRow.curr_red_last,
+				cur_standard_from : selectedRow.cur_standard_from,
+				cur_standard_to   : selectedRow.cur_standard_to,
+				cur_yellow_first  : selectedRow.cur_yellow_first,
+				cur_yellow_last   : selectedRow.cur_yellow_last,
+				cur_red_first     : selectedRow.cur_red_first,
+				cur_red_last      : selectedRow.cur_red_last,
 				definition_value  : selectedRow.definition_value,
 			}
 		});

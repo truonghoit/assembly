@@ -121,21 +121,21 @@ export const alarmSensorTableColumns = [
 		columns: [
 			{
 				title          : "<span style='color:#03CF65; font-size: large'>●</span>",
-				field          : "curr_standard",
+				field          : "cur_standard",
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatStandard
 			},
 			{
 				title          : "<span style='color:#FFD44F; font-size: large'>●</span>",
-				field          : "curr_yellow",
+				field          : "cur_yellow",
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatYellow
 			},
 			{
 				title          : "<span style='color:#F84E4E; font-size: large'>●</span>",
-				field          : "curr_red",
+				field          : "cur_red",
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatRed
@@ -158,12 +158,12 @@ export const alarmSensorTableColumns = [
 			{field: "pres_red_first", visible: false},
 			{field: "pres_red_last", visible: false},
 
-			{field: "curr_standard_from", visible: false},
-			{field: "curr_standard_to", visible: false},
-			{field: "curr_yellow_first", visible: false},
-			{field: "curr_yellow_last", visible: false},
-			{field: "curr_red_first", visible: false},
-			{field: "curr_red_last", visible: false},
+			{field: "cur_standard_from", visible: false},
+			{field: "cur_standard_to", visible: false},
+			{field: "cur_yellow_first", visible: false},
+			{field: "cur_yellow_last", visible: false},
+			{field: "cur_red_first", visible: false},
+			{field: "cur_red_last", visible: false},
 
 			{field: "definition_value", visible: false},
 		],
@@ -185,9 +185,9 @@ export const defaultAlarmSensorTableData = [
 		pres_standard: '0-0',
 		pres_yellow  : '0-0',
 		pres_red     : '0-0',
-		curr_standard: '0-0',
-		curr_yellow  : '0-0',
-		curr_red     : '0-0',
+		cur_standard : '0-0',
+		cur_yellow   : '0-0',
+		cur_red      : '0-0',
 
 		temp_standard_from: '0',
 		temp_standard_to  : '0',
@@ -201,12 +201,12 @@ export const defaultAlarmSensorTableData = [
 		pres_yellow_last  : '0',
 		pres_red_first    : '0',
 		pres_red_last     : '0',
-		curr_standard_from: '0',
-		curr_standard_to  : '0',
-		curr_yellow_first : '0',
-		curr_yellow_last  : '0',
-		curr_red_first    : '0',
-		curr_red_last     : '0',
+		cur_standard_from : '0',
+		cur_standard_to   : '0',
+		cur_yellow_first  : '0',
+		cur_yellow_last   : '0',
+		cur_red_first     : '0',
+		cur_red_last      : '0',
 		definition_value  : '0',
 	}
 ];
