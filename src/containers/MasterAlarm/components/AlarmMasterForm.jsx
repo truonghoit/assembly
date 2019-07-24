@@ -1,27 +1,26 @@
-import React, {Component} from 'react';
-import {change, Field, reduxForm} from 'redux-form';
-import PropTypes from 'prop-types';
-import {Button, Card, CardBody, Container, Col, Row, ButtonToolbar} from 'reactstrap';
-import {renderField} from "../../../shared/components/form/InputField";
-import DataTable from "../../../shared/components/data_table/DataTable";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faCircle, faPlay } from '@fortawesome/free-solid-svg-icons'
-import {ASSEMBLY_API, ALARM_LIST_PROCESS} from "../../../constants/constants";
-import callAxios from "../../../services/api";
-import {MASTER_FORM_CONSTANTS} from "../../MasterPage/components/MasterForm";
-import LoadingSpinner from "../../../shared/components/loading_spinner/LoadingSpinner";
+import React, {Component}                 from 'react';
+import {change, Field, reduxForm}         from 'redux-form';
+import PropTypes                          from 'prop-types';
+import {Button, ButtonToolbar, Col, Row}  from 'reactstrap';
+import {renderField}                      from "../../../shared/components/form/InputField";
+import DataTable                          from "../../../shared/components/data_table/DataTable";
+import {FontAwesomeIcon}                  from "@fortawesome/react-fontawesome";
+import {faCircle, faPlay}                 from '@fortawesome/free-solid-svg-icons';
+import {ALARM_LIST_PROCESS, ASSEMBLY_API} from "../../../constants/constants";
+import callAxios                          from "../../../services/api";
+import LoadingSpinner                     from "../../../shared/components/loading_spinner/LoadingSpinner";
 
 class AlarmMasterForm extends Component {
 	static propTypes = {
 		handleSubmit: PropTypes.func.isRequired,
-		reset: PropTypes.func.isRequired,
+		reset       : PropTypes.func.isRequired,
 	};
 
 	constructor(props) {
 		super(props);
 		this.state = ({
-			dataProcess: [],
-			formData: {},
+			dataProcess       : [],
+			formData          : {},
 			selectedDefinition: [true, true, true],
 		});
 	}
@@ -29,10 +28,10 @@ class AlarmMasterForm extends Component {
 	callChildLoadProcess = (params) => {
 		this.loadListProcess(params);
 		//this.setDefinitionValue(params.definition_value, params.process_cd);
-	}
+	};
 
 	onModelArticleClick = (e, row) => {
-		if (this.props.onMounted){
+		if (this.props.onMounted) {
 			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
 		}
 
@@ -44,9 +43,9 @@ class AlarmMasterForm extends Component {
 		this.props.fillForm(selectedRow);
 
 		let params = {
-			model_cd: selectedRow.model_cd,
+			model_cd  : selectedRow.model_cd,
 			article_no: selectedRow.article_no,
-			resetForm: true
+			resetForm : true
 		};
 
 		//this.resetFieldForm();
@@ -57,40 +56,40 @@ class AlarmMasterForm extends Component {
 		let formData = this.state.formData;
 		this.setState({
 			...formData,
-			definition_value:'000',
+			definition_value  : '000',
 			temp_standard_from: '',
-			temp_standard_to: '',
-			temp_yellow_first: '',
-			temp_yellow_last: '',
-			temp_red_first: '',
-			temp_red_last: '',
+			temp_standard_to  : '',
+			temp_yellow_first : '',
+			temp_yellow_last  : '',
+			temp_red_first    : '',
+			temp_red_last     : '',
 			pres_standard_from: '',
-			pres_standard_to: '',
-			pres_yellow_first: '',
-			pres_yellow_last: '',
-			pres_red_first: '',
-			pres_red_last: '',
+			pres_standard_to  : '',
+			pres_yellow_first : '',
+			pres_yellow_last  : '',
+			pres_red_first    : '',
+			pres_red_last     : '',
 			curr_standard_from: '',
-			curr_standard_to: '',
-			curr_yellow_first: '',
-			curr_yellow_last: '',
-			curr_red_first: '',
-			curr_red_last: '',
+			curr_standard_to  : '',
+			curr_yellow_first : '',
+			curr_yellow_last  : '',
+			curr_red_first    : '',
+			curr_red_last     : '',
 		});
-	}
+	};
 
 	loadListProcess = (params) => {
 		let method = 'POST';
-		let url = ASSEMBLY_API + ALARM_LIST_PROCESS;
+		let url    = ASSEMBLY_API + ALARM_LIST_PROCESS;
 
 		callAxios(method, url, params).then(response => {
 			try {
 				let responseArray = response.data.data;
-				let dataArray = [];
+				let dataArray     = [];
 				responseArray.map(item => {
 					item = {
-						code: item.code.toString(),
-						name: item.name.toString(),
+						code            : item.code.toString(),
+						name            : item.name.toString(),
 						definition_value: item.definition_value.toString(),
 					};
 					dataArray.push(item);
@@ -103,10 +102,10 @@ class AlarmMasterForm extends Component {
 				console.log("Error: ", e);
 			}
 		});
-		if (params.resetForm){
+		if (params.resetForm) {
 			this.resetFieldForm();
 		}
-	}
+	};
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (this.props.formData !== prevProps.formData) {
@@ -119,95 +118,95 @@ class AlarmMasterForm extends Component {
 		//When click row in the below table, have to dispatch value so that submit receives values
 		let {formData} = this.state;
 
-		let temp_standard_from  = formData.temp_standard_from   ? formData.temp_standard_from  :'';
-		let temp_standard_to    = formData.temp_standard_to     ? formData.temp_standard_to    :'';
-		let temp_yellow_first   = formData.temp_yellow_first    ? formData.temp_yellow_first   :'';
-		let temp_yellow_last    = formData.temp_yellow_last     ? formData.temp_yellow_last    :'';
-		let temp_red_first      = formData.temp_red_first       ? formData.temp_red_first      :'';
-		let temp_red_last       = formData.temp_red_last        ? formData.temp_red_last       :'';
+		let temp_standard_from = formData.temp_standard_from ? formData.temp_standard_from : '';
+		let temp_standard_to   = formData.temp_standard_to ? formData.temp_standard_to : '';
+		let temp_yellow_first  = formData.temp_yellow_first ? formData.temp_yellow_first : '';
+		let temp_yellow_last   = formData.temp_yellow_last ? formData.temp_yellow_last : '';
+		let temp_red_first     = formData.temp_red_first ? formData.temp_red_first : '';
+		let temp_red_last      = formData.temp_red_last ? formData.temp_red_last : '';
 
-		let pres_standard_from  = formData.pres_standard_from   ? formData.pres_standard_from  :'';
-		let pres_standard_to    = formData.pres_standard_to     ? formData.pres_standard_to    :'';
-		let pres_yellow_first   = formData.pres_yellow_first    ? formData.pres_yellow_first   :'';
-		let pres_yellow_last    = formData.pres_yellow_last     ? formData.pres_yellow_last    :'';
-		let pres_red_first      = formData.pres_red_first       ? formData.pres_red_first      :'';
-		let pres_red_last       = formData.pres_red_last        ? formData.pres_red_last       :'';
+		let pres_standard_from = formData.pres_standard_from ? formData.pres_standard_from : '';
+		let pres_standard_to   = formData.pres_standard_to ? formData.pres_standard_to : '';
+		let pres_yellow_first  = formData.pres_yellow_first ? formData.pres_yellow_first : '';
+		let pres_yellow_last   = formData.pres_yellow_last ? formData.pres_yellow_last : '';
+		let pres_red_first     = formData.pres_red_first ? formData.pres_red_first : '';
+		let pres_red_last      = formData.pres_red_last ? formData.pres_red_last : '';
 
-		let curr_standard_from  = formData.curr_standard_from   ? formData.curr_standard_from  :'';
-		let curr_standard_to    = formData.curr_standard_to     ? formData.curr_standard_to    :'';
-		let curr_yellow_first   = formData.curr_yellow_first    ? formData.curr_yellow_first   :'';
-		let curr_yellow_last    = formData.curr_yellow_last     ? formData.curr_yellow_last    :'';
-		let curr_red_first      = formData.curr_red_first       ? formData.curr_red_first      :'';
-		let curr_red_last       = formData.curr_red_last        ? formData.curr_red_last       :'';
+		let curr_standard_from = formData.curr_standard_from ? formData.curr_standard_from : '';
+		let curr_standard_to   = formData.curr_standard_to ? formData.curr_standard_to : '';
+		let curr_yellow_first  = formData.curr_yellow_first ? formData.curr_yellow_first : '';
+		let curr_yellow_last   = formData.curr_yellow_last ? formData.curr_yellow_last : '';
+		let curr_red_first     = formData.curr_red_first ? formData.curr_red_first : '';
+		let curr_red_last      = formData.curr_red_last ? formData.curr_red_last : '';
 
-		let remark = formData.remark ? formData.remark:'';
+		let remark = formData.remark ? formData.remark : '';
 
 		this.props.dispatch(change("AlarmMasterForm", 'temp_standard_from', temp_standard_from));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_standard_to',   temp_standard_to));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_yellow_first',  temp_yellow_first));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_yellow_last',   temp_yellow_last));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_red_first',      temp_red_first));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_red_last',        temp_red_last));
+		this.props.dispatch(change("AlarmMasterForm", 'temp_standard_to', temp_standard_to));
+		this.props.dispatch(change("AlarmMasterForm", 'temp_yellow_first', temp_yellow_first));
+		this.props.dispatch(change("AlarmMasterForm", 'temp_yellow_last', temp_yellow_last));
+		this.props.dispatch(change("AlarmMasterForm", 'temp_red_first', temp_red_first));
+		this.props.dispatch(change("AlarmMasterForm", 'temp_red_last', temp_red_last));
 
 		this.props.dispatch(change("AlarmMasterForm", 'pres_standard_from', pres_standard_from));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_standard_to',   pres_standard_to));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_yellow_first',  pres_yellow_first));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_yellow_last',   pres_yellow_last));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_red_first',      pres_red_first));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_red_last',        pres_red_last));
+		this.props.dispatch(change("AlarmMasterForm", 'pres_standard_to', pres_standard_to));
+		this.props.dispatch(change("AlarmMasterForm", 'pres_yellow_first', pres_yellow_first));
+		this.props.dispatch(change("AlarmMasterForm", 'pres_yellow_last', pres_yellow_last));
+		this.props.dispatch(change("AlarmMasterForm", 'pres_red_first', pres_red_first));
+		this.props.dispatch(change("AlarmMasterForm", 'pres_red_last', pres_red_last));
 
-		this.props.dispatch(change("AlarmMasterForm", 'curr_standard_from',     curr_standard_from));
-		this.props.dispatch(change("AlarmMasterForm", 'curr_standard_to',       curr_standard_to));
-		this.props.dispatch(change("AlarmMasterForm", 'curr_yellow_first',      curr_yellow_first));
-		this.props.dispatch(change("AlarmMasterForm", 'curr_yellow_last',       curr_yellow_last));
-		this.props.dispatch(change("AlarmMasterForm", 'curr_red_first',         curr_red_first));
-		this.props.dispatch(change("AlarmMasterForm", 'curr_red_last',          curr_red_last));
+		this.props.dispatch(change("AlarmMasterForm", 'curr_standard_from', curr_standard_from));
+		this.props.dispatch(change("AlarmMasterForm", 'curr_standard_to', curr_standard_to));
+		this.props.dispatch(change("AlarmMasterForm", 'curr_yellow_first', curr_yellow_first));
+		this.props.dispatch(change("AlarmMasterForm", 'curr_yellow_last', curr_yellow_last));
+		this.props.dispatch(change("AlarmMasterForm", 'curr_red_first', curr_red_first));
+		this.props.dispatch(change("AlarmMasterForm", 'curr_red_last', curr_red_last));
 		this.props.dispatch(change("AlarmMasterForm", 'remark', remark));
 	}
 
 	onClickProcess = (row) => {
 		let processCode = row.target.value;
 
-		let {dataProcess} = this.state;
+		let {dataProcess}      = this.state;
 		let selectedDefinition = [true, true, true];
 		dataProcess.map(item => {
-			if (item.code == processCode){
-				let definitionArray = item.definition_value.split("");
-				let disableTemperature  = parseInt(definitionArray[0]) > 0?false:true;
-				let disablePressure     = parseInt(definitionArray[1]) > 0?false:true;
-				let disableCuringTime   = parseInt(definitionArray[2]) > 0?false:true;
-				selectedDefinition = [disableTemperature, disablePressure, disableCuringTime];
+			if (item.code == processCode) {
+				let definitionArray    = item.definition_value.split("");
+				let disableTemperature = parseInt(definitionArray[0]) > 0 ? false : true;
+				let disablePressure    = parseInt(definitionArray[1]) > 0 ? false : true;
+				let disableCuringTime  = parseInt(definitionArray[2]) > 0 ? false : true;
+				selectedDefinition     = [disableTemperature, disablePressure, disableCuringTime];
 			}
 		});
 		this.props.dispatch(change("AlarmMasterForm", "definition_value", selectedDefinition));
 
 		this.setState({
 			selectedProcessCode: processCode,
-			selectedDefinition: selectedDefinition,
-			editMode: false,
+			selectedDefinition : selectedDefinition,
+			editMode           : false,
 		});
 		this.props.setSelectedProcess(processCode);
-	}
+	};
 
 	setDefinitionValue = (definitionValue, selectedCode) => {
-		let definitionArray = definitionValue.split("");
-		let disableTemperature  = parseInt(definitionArray[0]) > 0?false:true;
-		let disablePressure     = parseInt(definitionArray[1]) > 0?false:true;
-		let disableCuringTime   = parseInt(definitionArray[2]) > 0?false:true;
+		let definitionArray    = definitionValue.split("");
+		let disableTemperature = parseInt(definitionArray[0]) > 0 ? false : true;
+		let disablePressure    = parseInt(definitionArray[1]) > 0 ? false : true;
+		let disableCuringTime  = parseInt(definitionArray[2]) > 0 ? false : true;
 		let selectedDefinition = [disableTemperature, disablePressure, disableCuringTime];
 		this.props.dispatch(change("AlarmMasterForm", "definition_value", selectedDefinition));
 		this.setState({
 			selectedProcessCode: selectedCode,
-			selectedDefinition: selectedDefinition,
+			selectedDefinition : selectedDefinition,
 		});
-	}
+	};
 
 	render() {
 		let {handleSubmit, columnsModelArticle, dataModelArticle, onReset, submissionState} = this.props;
-		let {dataProcess, selectedProcessCode, selectedDefinition, editMode} = this.state;
-		let {formData} = this.state;
+		let {dataProcess, selectedProcessCode, selectedDefinition, editMode}                = this.state;
+		let {formData}                                                                      = this.state;
 		return (
-			<div style={{display:"flex"}}>
+			<div style={{display: "flex"}}>
 				<Col md={3} lg={3} style={{minHeight: 300}}>
 					<DataTable columns={columnsModelArticle} data={dataModelArticle} options={{
 						height: "500px",
@@ -216,21 +215,28 @@ class AlarmMasterForm extends Component {
 				</Col>
 				<Col md={2} lg={2} style={{marginLeft: -30, backgroundColor: '#1A2439'}}>
 					<div style={{display: "flex", flexDirection: "column"}}>
-						<span className="form__form-group-label text-uppercase" style={{paddingTop: 30, paddingLeft: 20, minHeight: 80}}>Process</span>
-						<ul className="list-group bg-transparent" style={{width:"100%"}} onClick={this.onClickProcess}>
+						<span className="form__form-group-label text-uppercase"
+						      style={{paddingTop: 30, paddingLeft: 20, minHeight: 80}}>Process</span>
+						<ul className="list-group bg-transparent" style={{width: "100%"}} onClick={this.onClickProcess}>
 							{
 								dataProcess.map(item => {
-									let itemClass = (item.code == selectedProcessCode)?'list-group-item border-0 selected-process-code':'list-group-item border-0 not-selected-process-code';
-									let innerData = (item.code == selectedProcessCode)?<div className={"d-flex"}>
-										<div style={{width: '90%'}}>{item.name}</div>
-										<div>
-											<FontAwesomeIcon style={{color: 'rgba(255, 255, 255,' +
-													' 0.54)', fontSize: 8, justifySelf:"flex-end"}} icon={faPlay} />
-										</div>
-
-									</div>:item.name;
+									let itemClass = (item.code == selectedProcessCode)
+									                ? 'list-group-item border-0 selected-process-code'
+									                : 'list-group-item border-0 not-selected-process-code';
+									let innerData = (item.code == selectedProcessCode)
+									                ? <div className={"d-flex"}>
+										                <div style={{width: '90%'}}>{item.name}</div>
+										                <div>
+											                <FontAwesomeIcon style={{
+												                color: 'rgba(255, 255, 255, 0.54)',
+												                fontSize: 8,
+												                justifySelf: "flex-end"
+											                }} icon={faPlay}/>
+										                </div>
+									                </div>
+									                : item.name;
 									return <li className={itemClass} key={item.code}
-									           value={item.code}>{innerData}</li>
+									           value={item.code}>{innerData}</li>;
 								})
 							}
 						</ul>
@@ -248,7 +254,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: true,
-											value: formData.model_nm ? formData.model_nm:''
+											value   : formData.model_nm ? formData.model_nm : ''
 										}}
 										className={"marginLeft-20"}
 									/>
@@ -265,7 +271,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: true,
-											value: formData.article_nm ? formData.article_nm:''
+											value   : formData.article_nm ? formData.article_nm : ''
 										}}
 									/>
 								</div>
@@ -275,7 +281,7 @@ class AlarmMasterForm extends Component {
 						<Col md={3} lg={3}>
 						</Col>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label text-center text-uppercase" >Temperature</span>
+							<span className="form__form-group-label text-center text-uppercase">Temperature</span>
 						</Col>
 						<Col md={3} lg={3}>
 							<span className="form__form-group-label text-center text-uppercase">Pressure</span>
@@ -286,7 +292,8 @@ class AlarmMasterForm extends Component {
 
 						<hr style={{height: 30}}/>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label"><FontAwesomeIcon style={{color: '#03CF65', fontSize: 8}} icon={faCircle} /> Standard Value</span>
+							<span className="form__form-group-label"><FontAwesomeIcon
+								style={{color: '#03CF65', fontSize: 8}} icon={faCircle}/> Standard Value</span>
 						</Col>
 						<Col md={3} lg={3}>
 							<Row>
@@ -300,7 +307,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[0],
-											value: formData.temp_standard_from ? formData.temp_standard_from : ''
+											value   : formData.temp_standard_from ? formData.temp_standard_from : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -320,7 +327,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[0],
-											value: formData.temp_standard_to ? formData.temp_standard_to : ''
+											value   : formData.temp_standard_to ? formData.temp_standard_to : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -344,7 +351,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[1],
-											value: formData.pres_standard_from ? formData.pres_standard_from : ''
+											value   : formData.pres_standard_from ? formData.pres_standard_from : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -364,7 +371,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[1],
-											value: formData.pres_standard_to ? formData.pres_standard_to : ''
+											value   : formData.pres_standard_to ? formData.pres_standard_to : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -388,7 +395,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[2],
-											value: formData.curr_standard_from ? formData.curr_standard_from : ''
+											value   : formData.curr_standard_from ? formData.curr_standard_from : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -408,7 +415,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[2],
-											value: formData.curr_standard_to ? formData.curr_standard_to : ''
+											value   : formData.curr_standard_to ? formData.curr_standard_to : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -423,7 +430,8 @@ class AlarmMasterForm extends Component {
 
 						<hr style={{height: 30}}/>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label"><FontAwesomeIcon style={{color: '#FFD44F', fontSize: 8}} icon={faCircle} /> Yellow Range</span>
+							<span className="form__form-group-label"><FontAwesomeIcon
+								style={{color: '#FFD44F', fontSize: 8}} icon={faCircle}/> Yellow Range</span>
 						</Col>
 						<Col md={3} lg={3}>
 							<Row>
@@ -437,7 +445,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[0],
-											value: formData.temp_yellow_first ? formData.temp_yellow_first : ''
+											value   : formData.temp_yellow_first ? formData.temp_yellow_first : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -457,7 +465,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[0],
-											value: formData.temp_yellow_last ? formData.temp_yellow_last : ''
+											value   : formData.temp_yellow_last ? formData.temp_yellow_last : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -481,7 +489,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[1],
-											value: formData.pres_yellow_first ? formData.pres_yellow_first : ''
+											value   : formData.pres_yellow_first ? formData.pres_yellow_first : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -501,7 +509,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[1],
-											value: formData.pres_yellow_last ? formData.pres_yellow_last : ''
+											value   : formData.pres_yellow_last ? formData.pres_yellow_last : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -525,7 +533,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[2],
-											value: formData.curr_yellow_first ? formData.curr_yellow_first : ''
+											value   : formData.curr_yellow_first ? formData.curr_yellow_first : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -545,7 +553,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[2],
-											value: formData.curr_yellow_last ? formData.curr_yellow_last : ''
+											value   : formData.curr_yellow_last ? formData.curr_yellow_last : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -560,7 +568,8 @@ class AlarmMasterForm extends Component {
 
 						<hr style={{height: 30}}/>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label"><FontAwesomeIcon style={{color: '#F84E4E', fontSize: 8}} icon={faCircle} /> Red Range</span>
+							<span className="form__form-group-label"><FontAwesomeIcon
+								style={{color: '#F84E4E', fontSize: 8}} icon={faCircle}/> Red Range</span>
 						</Col>
 						<Col md={3} lg={3}>
 							<Row>
@@ -574,7 +583,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[0],
-											value: formData.temp_red_first ? formData.temp_red_first : ''
+											value   : formData.temp_red_first ? formData.temp_red_first : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -594,7 +603,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[0],
-											value: formData.temp_red_last ? formData.temp_red_last : ''
+											value   : formData.temp_red_last ? formData.temp_red_last : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -618,7 +627,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[1],
-											value: formData.pres_red_first ? formData.pres_red_first : ''
+											value   : formData.pres_red_first ? formData.pres_red_first : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -638,7 +647,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[1],
-											value: formData.pres_red_last ? formData.pres_red_last : ''
+											value   : formData.pres_red_last ? formData.pres_red_last : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -662,7 +671,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[2],
-											value: formData.curr_red_first ? formData.curr_red_first : ''
+											value   : formData.curr_red_first ? formData.curr_red_first : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -682,7 +691,7 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: selectedDefinition[2],
-											value: formData.curr_red_last ? formData.curr_red_last : ''
+											value   : formData.curr_red_last ? formData.curr_red_last : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
@@ -731,7 +740,7 @@ class AlarmMasterForm extends Component {
 						</Col>
 
 						<hr style={{height: 30}}/>
-						<Col md={12} lg={12} style={{display:'flex', justifyItems: 'flex-end'}}>
+						<Col md={12} lg={12} style={{display: 'flex', justifyItems: 'flex-end'}}>
 							<ButtonToolbar className="form__button-toolbar">
 								<Button color="primary" type="submit">
 									{(() => {
