@@ -66,7 +66,7 @@ class LeadTimeDetail extends Component {
 					<div className="col-2">
 					</div>
 					<div className="col-8">
-						<MixedLineBarChart />
+						<MixedLineBarChart style={{width: 1000, height: 300}} />
 					</div>
 					<div className="col-2">
 					</div>

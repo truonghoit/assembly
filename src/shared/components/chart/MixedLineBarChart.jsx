@@ -131,9 +131,10 @@ export default class MixedLineBarChart extends PureComponent {
 	}
 
 	render() {
+		let {style} = this.props;
 		return (
 			<div>
-				<canvas ref={(element) => this.canvas = element}/>
+				<canvas style={style} ref={(element) => this.canvas = element}/>
 			</div>
 		);
 	}
