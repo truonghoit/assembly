@@ -153,7 +153,7 @@ class LeadDetailTable extends Component {
 		let tableBody = this.fillTableBody(leadDetailData);
 		let tableFooter = this.fillTableFooter(leadDetailData);
 		return (
-			<Table responsive hover style={{backgroundColor: '#232529', color: 'white'}}>
+			<Table responsive style={{backgroundColor: '#232529', color: 'white'}}>
 				<thead>
 					<tr>
 						<th rowSpan="2" style={{verticalAlign:'middle'}}>ASC PROCESS</th>
