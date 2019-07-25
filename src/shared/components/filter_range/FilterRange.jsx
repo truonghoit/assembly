@@ -19,7 +19,8 @@ import validate                                                   from "./valida
 class FilterRange extends Component {
 
 	static propTypes = {
-		handleFilterDateChange   : PropTypes.func.isRequired,
+		handleFilterFromDateChange  : PropTypes.func.isRequired,
+		handleFilterToDateChange    : PropTypes.func.isRequired,
 		handleFilterModelChange  : PropTypes.func.isRequired,
 		handleFilterLineChange   : PropTypes.func.isRequired,
 		handleFilterArticleChange: PropTypes.func.isRequired,
