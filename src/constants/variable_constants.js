@@ -10,3 +10,7 @@ export const ARRAY_MODELS = [    // initial data
 export const ARRAY_ARTICLES = [    // initial data
 	{ value: '', label: '---' }
 ];
+
+export const DAY_WORKING_HOUR = 13;
+export const DAY_WORKING_SECONDS = DAY_WORKING_HOUR * 3600;
+

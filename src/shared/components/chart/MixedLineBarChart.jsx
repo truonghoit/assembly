@@ -16,7 +16,7 @@ let initialData = {
 	datasets: [
 		{
 			label          : "Line dataset",
-			data           : [0, 0, 0, 0, 0, 0, 0],
+			data           : [4, 4, 4, 4, 4, 4, 4],
 			type           : 'line',
 			borderColor: "#EBEDF1",
 			fill: false,
@@ -25,7 +25,7 @@ let initialData = {
 		{
 			label          : "Bar dataset",
 			backgroundColor: "#2880E9",
-			data           : [0, 0, 0, 0, 0, 0, 0]
+			data           : [5, 5, 5, 5, 5, 5, 5]
 		},
 	]
 };
