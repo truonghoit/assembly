@@ -116,28 +116,7 @@ class LeadTable extends Component {
 
 			table =
 				    <tbody>
-				    {rowData[0]}
-				    {rowData[1]}
-				    {rowData[2]}
-				    {rowData[3]}
-				    {rowData[4]}
-				    {rowData[5]}
-
-				    {rowData[6]}
-				    {rowData[7]}
-				    {rowData[8]}
-				    {rowData[9]}
-				    {rowData[10]}
-				    {rowData[11]}
-				    {rowData[12]}
-				    {rowData[13]}
-				    {rowData[14]}
-				    {rowData[15]}
-				    {rowData[16]}
-
-				    {rowData[17]}
-				    {rowData[18]}
-				    {rowData[19]}
+				    {rowData}
 				    </tbody>
 		} catch (e){
 			console.log("Error: ", e);
