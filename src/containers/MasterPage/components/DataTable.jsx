@@ -10,30 +10,6 @@ import "../../../scss/component/tabulator_midnight_custom.css"; // use Theme(s)
 import {ReactTabulator, reactFormatter} from "react-tabulator";
 import MASTER_FORM_CONSTANTS from "../constants";
 
-//custom max min filter function
-function minMaxFilterFunction(headerValue, rowValue, rowData, filterParams) {
-	//headerValue - the value of the header filter element
-	//rowValue - the value of the column in this row
-	//rowData - the data for the row being filtered
-	//filterParams - params object passed to the headerFilterFuncParams property
-
-	if (rowValue) {
-		if (headerValue.start != "") {
-			if (headerValue.end != "") {
-				return rowValue >= headerValue.start && rowValue <= headerValue.end;
-			} else {
-				return rowValue >= headerValue.start;
-			}
-		} else {
-			if (headerValue.end != "") {
-				return rowValue <= headerValue.end;
-			}
-		}
-	}
-
-	return false; //must return a boolean, true if it passes the filter.
-}
-
 let {field} = MASTER_FORM_CONSTANTS;
 
 const columns = [

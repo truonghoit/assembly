@@ -13,6 +13,7 @@ export const FILTER_ARTICLE = 'article';
 export const PRODUCTION_LEAD_TIME = 'search/production-lead-time';
 export const WORKING_HOUR_LEAD_TIME = 'search/working-hour';
 export const PRODUCTION_LEAD_TIME_DETAIL = 'search/process_working-hour';
+export const MACHINE_ALARM_STATUS = 'search/alarm-history';
 
 
 

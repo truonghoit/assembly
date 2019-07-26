@@ -10,6 +10,7 @@ import MasterPage from '../MasterPage/index';
 import MasterAlarm from "../MasterAlarm/index";
 import LeadTime from "../LeadTime/index";
 import LeadTimeDetail from "../LeadTimeDetail/index";
+import MachineAlarmStatus from "../MachineAlarmStatus/index";
 
 const Pages = () => (
 	<Switch>
@@ -19,6 +20,7 @@ const Pages = () => (
 		<Route path="/pages/alarm-master" component={MasterAlarm} />
 		<Route path="/pages/lead-time" component={LeadTime} />
 		<Route path="/pages/lead-time-detail" component={LeadTimeDetail} />
+		<Route path="/pages/machine-alarm-status" component={MachineAlarmStatus} />
 	</Switch>
 );
 
