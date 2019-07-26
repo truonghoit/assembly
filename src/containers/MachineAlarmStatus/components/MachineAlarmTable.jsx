@@ -10,7 +10,7 @@ import {ARROW_ICON}                     from "../../../constants/variableConstan
 // "process_cd":"20105","sensor_type":"Temp","alarm_seq":1,"alarm_time":"05:15:40","alarm":"G","value":"",
 // "article_no":"R6-30500","created_date":1562660433,"standard_from":1234570000,"standard_to":2,
 // "model_nm":"PRINCESS WIDE D","article_nm":"R6-30500","process_nm":"Packpart Molding"}]}
-const formatAlarm = function(cell, formatterParams, onRendered){ //plain text value
+const formatAlarmColumn = function(cell, formatterParams, onRendered){ //plain text value
 	console.log("cell.getRow(): ", cell.getRow());
 	let value = cell._cell.value;
 	if (value.toUpperCase() === "R"){
@@ -21,18 +21,44 @@ const formatAlarm = function(cell, formatterParams, onRendered){ //plain text va
 		//cell.getRow().getElement().style.color = '#FFD44F';
 		return "<span style='color:#FFD44F; font-size: large;'>●</span>";
 	} else {
-		return "<span font-size: large'>G</span>";
+		return "<span style='color:#BEBEBE; font-size: large;'>●</span>";
 	}
+};
+
+const formatValueColumn = function(cell, formatterParams, onRendered){ //plain text value
+	let value = cell._cell.value;
+	let rowData = cell.getRow()._row.data;
+	if (rowData.alarm.toUpperCase() === "R"){
+		return `<span style='color:#F84E4E;'>${value}</span>`;
+	} else if (rowData.alarm.toUpperCase() === "Y") {
+		return `<span style='color:#FFD44F;'>${value}</span>`;
+	} else {
+		return "<span></span>";
+	}
+	return value;
+};
+
+const formatDateTimeSensorColumn = function(cell, formatterParams, onRendered){ //plain text value
+	let value = cell._cell.value;
+	let rowData = cell.getRow()._row.data;
+	if (rowData.alarm.toUpperCase() === "R"){
+		return `<span style='color:#F84E4E;'>${value}</span>`;
+	} else if (rowData.alarm.toUpperCase() === "Y") {
+		return `<span style='color:#FFD44F;'>${value}</span>`;
+	} else {
+		return `<span'>${value}</span>`;
+	}
+	return value;
 };
 
 const columns = [
 	{title: "PROCESS", field: "process_nm", width: '15%', align: "center", headerFilter: "input"},
-	{title: "DATE", field: "alarm_date", width: '10%', align: "center", headerFilter: "input"},
-	{title: "TIME", field: "alarm_time", width: '10%', align: "center", headerFilter: "input"},
-	{title: "SENSOR TYPE", field: "sensor_type", width: '10%', align: "center", headerFilter: "input"},
+	{title: "DATE", field: "alarm_date", width: '10%', align: "center", headerFilter: "input", formatter: formatDateTimeSensorColumn},
+	{title: "TIME", field: "alarm_time", width: '10%', align: "center", headerFilter: "input", formatter: formatDateTimeSensorColumn},
+	{title: "SENSOR TYPE", field: "sensor_type", width: '10%', align: "center", headerFilter: "input", formatter: formatDateTimeSensorColumn},
 	{title: "STN", field: "standard_from", width: '15%', align: "center", headerFilter: "input"},
-	{title: "VALUE", field: "value", width: '10%', align: "center", headerFilter: "input"},
-	{title: "ALARM", field: "alarm", width: '10%', align: "center", headerFilter: "input", formatter: formatAlarm},
+	{title: "VALUE", field: "value", width: '10%', align: "center", headerFilter: "input", formatter: formatValueColumn},
+	{title: "ALARM", field: "alarm", width: '10%', align: "center", headerFilter: "input", formatter: formatAlarmColumn},
 	{title: "MODEL", field: "model_nm", align: "center", width: '10%', headerFilter: "input"},
 	{title: "ARTICLE", field: "article", width: '10%', align: "center", headerFilter: "input", formatter: "input"},
 ];
