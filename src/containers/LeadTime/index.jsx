@@ -7,7 +7,7 @@ import {Col, Container, Row}                                        from 'reacts
 import LeadTable                                                    from "./components/LeadTable";
 import ProductivityTable                                            from "./components/ProductivityTable";
 import WorkingHourTable                                             from "./components/WorkingHourTable";
-import {ASSEMBLY_API, PRODUCTION_LEAD_TIME, WORKING_HOUR_LEAD_TIME} from "../../constants/constants";
+import {ASSEMBLY_API, PRODUCTION_LEAD_TIME, WORKING_HOUR_LEAD_TIME} from "../../constants/urlConstants";
 import callAxios                                                    from "../../services/api";
 import {changeDateToUnix}                                           from "../../shared/utils/Utilities";
 

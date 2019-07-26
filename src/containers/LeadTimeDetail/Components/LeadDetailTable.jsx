@@ -1,6 +1,6 @@
-import React, {Component} from "react";
-import {Table,}           from 'reactstrap';
-import {DAY_WORKING_SECONDS}           from '../../../constants/variable_constants';
+import React, {Component}    from "react";
+import {Table,}              from 'reactstrap';
+import {DAY_WORKING_SECONDS} from '../../../constants/variableConstants';
 
 class LeadDetailTable extends Component {
 	constructor(props) {

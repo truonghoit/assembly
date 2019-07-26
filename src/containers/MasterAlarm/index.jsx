@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {Col, Container, Row} from 'reactstrap';
-import AlarmMasterForm from "./components/AlarmMasterForm";
-import {reduxForm} from "redux-form";
-import DataTable from "../../shared/components/data_table/DataTable";
-import {ALARM_MODEL_ARTICLE, ALARM_SENSOR, ASSEMBLY_API} from "../../constants/constants";
-import callAxios from "../../services/api";
-import MasterForm from "../MasterPage/components/MasterForm";
+import React, {Component}                                from 'react';
+import {Col, Container, Row}                             from 'reactstrap';
+import AlarmMasterForm                                   from "./components/AlarmMasterForm";
+import {reduxForm}                                       from "redux-form";
+import DataTable                                         from "../../shared/components/data_table/DataTable";
+import {ALARM_MODEL_ARTICLE, ALARM_SENSOR, ASSEMBLY_API} from "../../constants/urlConstants";
+import callAxios                                         from "../../services/api";
+import MasterForm                                        from "../MasterPage/components/MasterForm";
 
 class MasterAlarm extends Component {
 	constructor(props) {

@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
+import React, {Component}                    from 'react';
 import {Card, CardBody, Col, Container, Row} from 'reactstrap';
-import MasterForm from "./components/MasterForm";
-import callAxios from "../../services/api";
+import MasterForm                            from "./components/MasterForm";
+import callAxios                             from "../../services/api";
 import {
 	ASSEMBLY_API,
 	CATEGORY_ROUTE,
 	MAS_CODE_ROUTE,
 	PARENT_ROUTE
-} from "../../constants/constants";
-import DataTable from "./components/DataTable";
-import {reduxForm} from "redux-form";
-import MASTER_FORM_CONSTANTS from "./constants";
+}                                            from "../../constants/urlConstants";
+import DataTable                             from "./components/DataTable";
+import {reduxForm}                           from "redux-form";
+import MASTER_FORM_CONSTANTS                 from "./constants";
 
 class MasterPage extends Component {
 	constructor(props) {

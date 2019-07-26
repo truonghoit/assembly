@@ -14,3 +14,4 @@ export const ARRAY_ARTICLES = [    // initial data
 export const DAY_WORKING_HOUR = 13;
 export const DAY_WORKING_SECONDS = DAY_WORKING_HOUR * 3600;
 
+export const ARROW_ICON = "\u279c";

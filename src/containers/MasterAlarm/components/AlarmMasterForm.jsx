@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
-import {change, Field, reduxForm} from 'redux-form';
-import PropTypes from 'prop-types';
+import React, {Component}                                           from 'react';
+import {change, Field, reduxForm}                                   from 'redux-form';
+import PropTypes                                                    from 'prop-types';
 import {Button, Card, CardBody, Container, Col, Row, ButtonToolbar} from 'reactstrap';
-import {renderField} from "../../../shared/components/form/InputField";
-import DataTable from "../../../shared/components/data_table/DataTable";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faCircle, faPlay } from '@fortawesome/free-solid-svg-icons'
-import {ASSEMBLY_API, ALARM_LIST_PROCESS} from "../../../constants/constants";
-import callAxios from "../../../services/api";
-import {MASTER_FORM_CONSTANTS} from "../../MasterPage/components/MasterForm";
-import LoadingSpinner from "../../../shared/components/loading_spinner/LoadingSpinner";
+import {renderField}                                                from "../../../shared/components/form/InputField";
+import DataTable                                                    from "../../../shared/components/data_table/DataTable";
+import {FontAwesomeIcon}                                            from "@fortawesome/react-fontawesome";
+import { faCircle, faPlay }                                         from '@fortawesome/free-solid-svg-icons'
+import {ASSEMBLY_API, ALARM_LIST_PROCESS}                           from "../../../constants/urlConstants";
+import callAxios                                                    from "../../../services/api";
+import {MASTER_FORM_CONSTANTS}                                      from "../../MasterPage/components/MasterForm";
+import LoadingSpinner                                               from "../../../shared/components/loading_spinner/LoadingSpinner";
 
 class AlarmMasterForm extends Component {
 	static propTypes = {

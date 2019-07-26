@@ -3,9 +3,9 @@ import {withRouter}                                                      from "r
 import {Col, Container}                                                  from "reactstrap";
 import FilterRange                                                       from "../../shared/components/filter_range/FilterRange";
 import {changeDateToUnix}                                                from "../../shared/utils/Utilities";
-import {ASSEMBLY_API, MACHINE_ALARM_STATUS, PRODUCTION_LEAD_TIME_DETAIL} from "../../constants/constants";
+import {ASSEMBLY_API, MACHINE_ALARM_STATUS, PRODUCTION_LEAD_TIME_DETAIL} from "../../constants/urlConstants";
 import callAxios                                                         from "../../services/api";
-import MachineAlarmTable from "./components/MachineAlarmTable";
+import MachineAlarmTable                                                 from "./components/MachineAlarmTable";
 
 class MachineAlarmStatus extends Component {
 	constructor(props) {

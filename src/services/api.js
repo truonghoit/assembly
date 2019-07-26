@@ -1,5 +1,5 @@
-import axios from "axios";
-import {SERVER_URL} from "../constants/constants";
+import axios        from "axios";
+import {SERVER_URL} from "../constants/urlConstants";
 
 /*
     Used to connect and get data from API

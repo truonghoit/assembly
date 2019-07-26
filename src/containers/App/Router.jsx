@@ -4,8 +4,6 @@ import Layout from '../Layout/index';
 import MainWrapper from './MainWrapper';
 
 import LogIn from '../LogIn/index';
-import ExamplePageOne from '../Example/index';
-import ExamplePageTwo from '../ExampleTwo/index';
 import MasterPage from '../MasterPage/index';
 import MasterAlarm from "../MasterAlarm/index";
 import LeadTime from "../LeadTime/index";
@@ -14,8 +12,6 @@ import MachineAlarmStatus from "../MachineAlarmStatus/index";
 
 const Pages = () => (
 	<Switch>
-		<Route path="/pages/one" component={ExamplePageOne} />
-		<Route path="/pages/two" component={ExamplePageTwo} />
 		<Route path="/pages/master-page" component={MasterPage} />
 		<Route path="/pages/alarm-master" component={MasterAlarm} />
 		<Route path="/pages/lead-time" component={LeadTime} />

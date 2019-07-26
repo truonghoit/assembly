@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import "../../../scss/component/tabulator_midnight_custom.css"; // use Theme(s)
 
+
 // for React 16.4.x use: import { ReactTabulator }
 import {ReactTabulator, reactFormatter} from "react-tabulator";
+import {ARROW_ICON}                     from "../../../constants/variableConstants";
 
 //			// {"status":200,"data":[{"alarm_date":"2019.07.09","factory_cd":"AS2","line_cd":"2030",
 // "process_cd":"20105","sensor_type":"Temp","alarm_seq":1,"alarm_time":"05:15:40","alarm":"G","value":"",
@@ -41,7 +43,7 @@ const data = [
 	"alarm_date": "2019.06.03",
 	"alarm_time": "11:53",
 	"sensor_type": "Temp 3",
-	"standard_from": "10 🡆 30",
+	"standard_from": `10 ${ARROW_ICON} 30`,
 	"value": "150",
 	"alarm": "R",
 	"model_nm": "Model-1",
@@ -52,7 +54,7 @@ const data = [
 		"alarm_date": "2019.06.05",
 		"alarm_time": "13:57",
 		"sensor_type": "Temp 1",
-		"standard_from": "10 🡆 30",
+		"standard_from": `10 ${ARROW_ICON} 500`,
 		"value": "20",
 		"alarm": "G",
 		"model_nm": "Model-2",
@@ -61,9 +63,9 @@ const data = [
 	{
 		"process_nm": "Heat Chamber",
 		"alarm_date": "2019.06.15",
-		"alarm_time": "10:11",
+		"alarm_time": "10:15",
 		"sensor_type": "Pressure 1",
-		"standard_from": "10 🡆 30",
+		"standard_from": `10 ${ARROW_ICON} 60`,
 		"value": "137",
 		"alarm": "Y",
 		"model_nm": "Model-3",

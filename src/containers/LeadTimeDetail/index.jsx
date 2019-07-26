@@ -1,12 +1,12 @@
 import React, {Component}                   from "react";
-import {withRouter}                         from "react-router-dom";
-import {changeDateToUnix}                   from "../../shared/utils/Utilities";
-import FilterRange                          from "../../shared/components/filter_range/FilterRange";
-import {Container, Row}                     from 'reactstrap';
-import LeadDetailTable                      from './Components/LeadDetailTable';
-import MixedLineBarChart                    from "../../shared/components/chart/MixedLineBarChart";
-import {ASSEMBLY_API, PRODUCTION_LEAD_TIME_DETAIL} from "../../constants/constants";
-import callAxios                            from "../../services/api";
+import {withRouter}                                from "react-router-dom";
+import {changeDateToUnix}                          from "../../shared/utils/Utilities";
+import FilterRange                                 from "../../shared/components/filter_range/FilterRange";
+import {Container, Row}                            from 'reactstrap';
+import LeadDetailTable                             from './Components/LeadDetailTable';
+import MixedLineBarChart                           from "../../shared/components/chart/MixedLineBarChart";
+import {ASSEMBLY_API, PRODUCTION_LEAD_TIME_DETAIL} from "../../constants/urlConstants";
+import callAxios                                   from "../../services/api";
 
 class LeadTimeDetail extends Component {
 	constructor(props) {
