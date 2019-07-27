@@ -1,5 +1,5 @@
 import React, {Component}                 from 'react';
-import {change, Field, reduxForm}         from 'redux-form';
+import {Field, reduxForm}                 from 'redux-form';
 import PropTypes                          from 'prop-types';
 import {Button, ButtonToolbar, Col, Row}  from 'reactstrap';
 import {renderField}                      from "../../../shared/components/form/InputField";
@@ -9,6 +9,7 @@ import {faCircle, faPlay}                 from '@fortawesome/free-solid-svg-icon
 import {ALARM_LIST_PROCESS, ASSEMBLY_API} from "../../../constants/constants";
 import callAxios                          from "../../../services/api";
 import LoadingSpinner                     from "../../../shared/components/loading_spinner/LoadingSpinner";
+import {ALARM_MASTER_PAGE_CONSTANTS}      from "../constants";
 
 class AlarmMasterForm extends Component {
 	static propTypes = {
@@ -18,10 +19,12 @@ class AlarmMasterForm extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = ({
-			dataProcess       : [],
-			formData          : {},
-			selectedDefinition: [true, true, true],
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.state  = ({
+			dataProcess: [],
+			formData   : {
+				[field.definitionValue]: '000',
+			},
 		});
 	}
 
@@ -31,6 +34,7 @@ class AlarmMasterForm extends Component {
 	};
 
 	onModelArticleClick = (e, row) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		if (this.props.onMounted) {
 			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
 		}
@@ -43,8 +47,8 @@ class AlarmMasterForm extends Component {
 		this.props.fillForm(selectedRow);
 
 		let params = {
-			model_cd  : selectedRow.model_cd,
-			article_no: selectedRow.article_no,
+			model_cd  : selectedRow[field.modelCd],
+			article_no: selectedRow[field.articleNo],
 			resetForm : true
 		};
 
@@ -53,28 +57,36 @@ class AlarmMasterForm extends Component {
 	};
 
 	resetFieldForm = () => {
-		let formData = this.state.formData;
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.setState({
-			...formData,
-			definition_value  : '000',
-			temp_standard_from: '',
-			temp_standard_to  : '',
-			temp_yellow_first : '',
-			temp_yellow_last  : '',
-			temp_red_first    : '',
-			temp_red_last     : '',
-			pres_standard_from: '',
-			pres_standard_to  : '',
-			pres_yellow_first : '',
-			pres_yellow_last  : '',
-			pres_red_first    : '',
-			pres_red_last     : '',
-			cur_standard_from : '',
-			cur_standard_to   : '',
-			cur_yellow_first  : '',
-			cur_yellow_last   : '',
-			cur_red_first     : '',
-			cur_red_last      : '',
+			formData: {
+				...this.state.formData,
+				[field.processCd]: '',
+
+				[field.tempStandardFrom]: '',
+				[field.tempStandardTo]  : '',
+				[field.tempYellowFirst] : '',
+				[field.tempYellowLast]  : '',
+				[field.tempRedFirst]    : '',
+				[field.tempRedLast]     : '',
+
+				[field.presStandardFrom]: '',
+				[field.presStandardTo]  : '',
+				[field.presYellowFirst] : '',
+				[field.presYellowLast]  : '',
+				[field.presRedFirst]    : '',
+				[field.presRedLast]     : '',
+
+				[field.curStandardFrom]: '',
+				[field.curStandardTo]  : '',
+				[field.curYellowFirst] : '',
+				[field.curYellowLast]  : '',
+				[field.curRedFirst]    : '',
+				[field.curRedLast]     : '',
+
+				[field.remark]         : '',
+				[field.definitionValue]: '000',
+			},
 		});
 	};
 
@@ -84,13 +96,14 @@ class AlarmMasterForm extends Component {
 
 		callAxios(method, url, params).then(response => {
 			try {
+				let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
 				let responseArray = response.data.data;
 				let dataArray     = [];
 				responseArray.map(item => {
 					item = {
-						code            : item.code.toString(),
-						name            : item.name.toString(),
-						definition_value: item.definition_value.toString(),
+						[field.processCd]      : item.code.toString(),
+						[field.processNm]      : item.name.toString(),
+						[field.definitionValue]: item.definition_value.toString(),
 					};
 					dataArray.push(item);
 				});
@@ -116,95 +129,105 @@ class AlarmMasterForm extends Component {
 		}
 
 		//When click row in the below table, have to dispatch value so that submit receives values
+		let {field}    = ALARM_MASTER_PAGE_CONSTANTS;
 		let {formData} = this.state;
 
-		let temp_standard_from = formData.temp_standard_from ? formData.temp_standard_from : '';
-		let temp_standard_to   = formData.temp_standard_to ? formData.temp_standard_to : '';
-		let temp_yellow_first  = formData.temp_yellow_first ? formData.temp_yellow_first : '';
-		let temp_yellow_last   = formData.temp_yellow_last ? formData.temp_yellow_last : '';
-		let temp_red_first     = formData.temp_red_first ? formData.temp_red_first : '';
-		let temp_red_last      = formData.temp_red_last ? formData.temp_red_last : '';
+		let temp_standard_from = formData[field.tempStandardFrom] ? formData[field.tempStandardFrom] : '';
+		let temp_standard_to   = formData[field.tempStandardTo] ? formData[field.tempStandardTo] : '';
+		let temp_yellow_first  = formData[field.tempYellowFirst] ? formData[field.tempYellowFirst] : '';
+		let temp_yellow_last   = formData[field.tempYellowLast] ? formData[field.tempYellowLast] : '';
+		let temp_red_first     = formData[field.tempRedFirst] ? formData[field.tempRedFirst] : '';
+		let temp_red_last      = formData[field.tempRedLast] ? formData[field.tempRedLast] : '';
 
-		let pres_standard_from = formData.pres_standard_from ? formData.pres_standard_from : '';
-		let pres_standard_to   = formData.pres_standard_to ? formData.pres_standard_to : '';
-		let pres_yellow_first  = formData.pres_yellow_first ? formData.pres_yellow_first : '';
-		let pres_yellow_last   = formData.pres_yellow_last ? formData.pres_yellow_last : '';
-		let pres_red_first     = formData.pres_red_first ? formData.pres_red_first : '';
-		let pres_red_last      = formData.pres_red_last ? formData.pres_red_last : '';
+		let pres_standard_from = formData[field.presStandardFrom] ? formData[field.presStandardFrom] : '';
+		let pres_standard_to   = formData[field.presStandardTo] ? formData[field.presStandardTo] : '';
+		let pres_yellow_first  = formData[field.presYellowFirst] ? formData[field.presYellowFirst] : '';
+		let pres_yellow_last   = formData[field.presYellowLast] ? formData[field.presYellowLast] : '';
+		let pres_red_first     = formData[field.presRedFirst] ? formData[field.presRedFirst] : '';
+		let pres_red_last      = formData[field.presRedLast] ? formData[field.presRedLast] : '';
 
-		let cur_standard_from = formData.cur_standard_from ? formData.cur_standard_from : '';
-		let cur_standard_to   = formData.cur_standard_to ? formData.cur_standard_to : '';
-		let cur_yellow_first  = formData.cur_yellow_first ? formData.cur_yellow_first : '';
-		let cur_yellow_last   = formData.cur_yellow_last ? formData.cur_yellow_last : '';
-		let cur_red_first     = formData.cur_red_first ? formData.cur_red_first : '';
-		let cur_red_last      = formData.cur_red_last ? formData.cur_red_last : '';
+		let cur_standard_from = formData[field.curStandardFrom] ? formData[field.curStandardFrom] : '';
+		let cur_standard_to   = formData[field.curStandardTo] ? formData[field.curStandardTo] : '';
+		let cur_yellow_first  = formData[field.curYellowFirst] ? formData[field.curYellowFirst] : '';
+		let cur_yellow_last   = formData[field.curYellowLast] ? formData[field.curYellowLast] : '';
+		let cur_red_first     = formData[field.curRedFirst] ? formData[field.curRedFirst] : '';
+		let cur_red_last      = formData[field.curRedLast] ? formData[field.curRedLast] : '';
 
-		let remark = formData.remark ? formData.remark : '';
+		let remark          = formData[field.remark] ? formData[field.remark] : '';
+		let definitionValue = formData[field.definitionValue] ? formData[field.definitionValue] : '000';
 
-		this.props.dispatch(change("AlarmMasterForm", 'temp_standard_from', temp_standard_from));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_standard_to', temp_standard_to));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_yellow_first', temp_yellow_first));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_yellow_last', temp_yellow_last));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_red_first', temp_red_first));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_red_last', temp_red_last));
+		this.props.change(field.tempStandardFrom, temp_standard_from);
+		this.props.change(field.tempStandardTo, temp_standard_to);
+		this.props.change(field.tempYellowFirst, temp_yellow_first);
+		this.props.change(field.tempYellowLast, temp_yellow_last);
+		this.props.change(field.tempRedFirst, temp_red_first);
+		this.props.change(field.tempRedLast, temp_red_last);
 
-		this.props.dispatch(change("AlarmMasterForm", 'pres_standard_from', pres_standard_from));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_standard_to', pres_standard_to));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_yellow_first', pres_yellow_first));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_yellow_last', pres_yellow_last));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_red_first', pres_red_first));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_red_last', pres_red_last));
+		this.props.change(field.presStandardFrom, pres_standard_from);
+		this.props.change(field.presStandardTo, pres_standard_to);
+		this.props.change(field.presYellowFirst, pres_yellow_first);
+		this.props.change(field.presYellowLast, pres_yellow_last);
+		this.props.change(field.presRedFirst, pres_red_first);
+		this.props.change(field.presRedLast, pres_red_last);
 
-		this.props.dispatch(change("AlarmMasterForm", 'cur_standard_from', cur_standard_from));
-		this.props.dispatch(change("AlarmMasterForm", 'cur_standard_to', cur_standard_to));
-		this.props.dispatch(change("AlarmMasterForm", 'cur_yellow_first', cur_yellow_first));
-		this.props.dispatch(change("AlarmMasterForm", 'cur_yellow_last', cur_yellow_last));
-		this.props.dispatch(change("AlarmMasterForm", 'cur_red_first', cur_red_first));
-		this.props.dispatch(change("AlarmMasterForm", 'cur_red_last', cur_red_last));
-		this.props.dispatch(change("AlarmMasterForm", 'remark', remark));
+		this.props.change(field.curStandardFrom, cur_standard_from);
+		this.props.change(field.curStandardTo, cur_standard_to);
+		this.props.change(field.curYellowFirst, cur_yellow_first);
+		this.props.change(field.curYellowLast, cur_yellow_last);
+		this.props.change(field.curRedFirst, cur_red_first);
+		this.props.change(field.curRedLast, cur_red_last);
+
+		this.props.change(field.remark, remark);
+		this.props.change(field.definitionValue, definitionValue);
 	}
 
 	onClickProcess = (row) => {
-		let processCode = row.target.value;
+		let selectedProcessCode = row.target.value;
 
-		let {dataProcess}      = this.state;
-		let selectedDefinition = [true, true, true];
-		dataProcess.map(item => {
-			if (item.code == processCode) {
-				let definitionArray    = item.definition_value.split("");
-				let disableTemperature = parseInt(definitionArray[0]) > 0 ? false : true;
-				let disablePressure    = parseInt(definitionArray[1]) > 0 ? false : true;
-				let disableCuringTime  = parseInt(definitionArray[2]) > 0 ? false : true;
-				selectedDefinition     = [disableTemperature, disablePressure, disableCuringTime];
+		let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
+		let {dataProcess} = this.state;
+		dataProcess.some(item => {
+			if (item[field.processCd] == selectedProcessCode) {
+				this.props.change(field.definitionValue, item[field.definitionValue]);
+
+				this.setState({
+					editMode: false,
+					formData: {
+						...this.state.formData,
+						[field.processCd]      : selectedProcessCode,
+						[field.definitionValue]: item[field.definitionValue],
+					},
+				});
+				this.props.setSelectedProcess(selectedProcessCode, item[field.definitionValue]);
+				return true;
 			}
+			return false;
 		});
-		this.props.dispatch(change("AlarmMasterForm", "definition_value", selectedDefinition));
-
-		this.setState({
-			selectedProcessCode: processCode,
-			selectedDefinition : selectedDefinition,
-			editMode           : false,
-		});
-		this.props.setSelectedProcess(processCode);
 	};
 
-	setDefinitionValue = (definitionValue, selectedCode) => {
-		let definitionArray    = definitionValue.split("");
-		let disableTemperature = parseInt(definitionArray[0]) > 0 ? false : true;
-		let disablePressure    = parseInt(definitionArray[1]) > 0 ? false : true;
-		let disableCuringTime  = parseInt(definitionArray[2]) > 0 ? false : true;
-		let selectedDefinition = [disableTemperature, disablePressure, disableCuringTime];
-		this.props.dispatch(change("AlarmMasterForm", "definition_value", selectedDefinition));
+	setDefinitionValue = (definitionValue, selectedProcessCode) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.props.change(field.definitionValue, definitionValue);
 		this.setState({
-			selectedProcessCode: selectedCode,
-			selectedDefinition : selectedDefinition,
+			formData: {
+				...this.state.formData,
+				[field.processCd]      : selectedProcessCode,
+				[field.definitionValue]: definitionValue,
+			},
 		});
 	};
 
 	render() {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+
 		let {handleSubmit, columnsModelArticle, dataModelArticle, onReset, submissionState} = this.props;
-		let {dataProcess, selectedProcessCode, selectedDefinition, editMode}                = this.state;
-		let {formData}                                                                      = this.state;
+		let {formData, dataProcess}                                                         = this.state;
+
+		let definitionArray     = formData[field.definitionValue].split("");
+		let temperatureDisabled = parseInt(definitionArray[0]) === 0;
+		let pressureDisabled    = parseInt(definitionArray[1]) === 0;
+		let curingTimeDisabled  = parseInt(definitionArray[2]) === 0;
+
 		return (
 			<div style={{display: "flex"}}>
 				<Col md={3} lg={3} style={{minHeight: 300}}>
@@ -220,23 +243,23 @@ class AlarmMasterForm extends Component {
 						<ul className="list-group bg-transparent" style={{width: "100%"}} onClick={this.onClickProcess}>
 							{
 								dataProcess.map(item => {
-									let itemClass = (item.code == selectedProcessCode)
+									let itemClass = (item[field.processCd] == formData[field.processCd])
 									                ? 'list-group-item border-0 selected-process-code'
 									                : 'list-group-item border-0 not-selected-process-code';
-									let innerData = (item.code == selectedProcessCode)
+									let innerData = (item[field.processCd] == formData[field.processCd])
 									                ? <div className={"d-flex"}>
-										                <div style={{width: '90%'}}>{item.name}</div>
+										                <div style={{width: '90%'}}>{item[field.processNm]}</div>
 										                <div>
 											                <FontAwesomeIcon style={{
-												                color: 'rgba(255, 255, 255, 0.54)',
-												                fontSize: 8,
+												                color      : 'rgba(255, 255, 255, 0.54)',
+												                fontSize   : 8,
 												                justifySelf: "flex-end"
 											                }} icon={faPlay}/>
 										                </div>
 									                </div>
-									                : item.name;
-									return <li className={itemClass} key={item.code}
-									           value={item.code}>{innerData}</li>;
+									                : item[field.processNm];
+									return <li className={itemClass} key={item[field.processCd]}
+									           value={item[field.processCd]}>{innerData}</li>;
 								})
 							}
 						</ul>
@@ -249,12 +272,12 @@ class AlarmMasterForm extends Component {
 								<span className="form__form-group-label">Model</span>
 								<div className="form__form-group-field">
 									<Field
-										name="model_nm"
+										name={field.modelNm}
 										component="input"
 										type="text"
 										props={{
 											disabled: true,
-											value   : formData.model_nm ? formData.model_nm : ''
+											value   : formData[field.modelNm] ? formData[field.modelNm] : ''
 										}}
 										className={"marginLeft-20"}
 									/>
@@ -266,12 +289,12 @@ class AlarmMasterForm extends Component {
 								<span className="form__form-group-label">Article</span>
 								<div className="form__form-group-field">
 									<Field
-										name="article_nm"
+										name={field.articleNm}
 										component="input"
 										type="text"
 										props={{
 											disabled: true,
-											value   : formData.article_nm ? formData.article_nm : ''
+											value   : formData[field.articleNm] ? formData[field.articleNm] : ''
 										}}
 									/>
 								</div>
@@ -302,17 +325,19 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_standard_from"
+										name={field.tempStandardFrom}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value   : formData.temp_standard_from ? formData.temp_standard_from : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.tempStandardFrom]
+											          ? formData[field.tempStandardFrom]
+											          : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												temp_standard_from: e.target.value,
+												[field.tempStandardFrom]: e.target.value,
 											}
 										})}
 									/>
@@ -322,17 +347,19 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_standard_to"
+										name={field.tempStandardTo}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value   : formData.temp_standard_to ? formData.temp_standard_to : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.tempStandardTo]
+											          ? formData[field.tempStandardTo]
+											          : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												temp_standard_to: e.target.value,
+												[field.tempStandardTo]: e.target.value,
 											}
 										})}
 									/>
@@ -346,17 +373,19 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_standard_from"
+										name={field.presStandardFrom}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value   : formData.pres_standard_from ? formData.pres_standard_from : ''
+											disabled: pressureDisabled,
+											value   : formData[field.presStandardFrom]
+											          ? formData[field.presStandardFrom]
+											          : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												pres_standard_from: e.target.value,
+												[field.presStandardFrom]: e.target.value,
 											}
 										})}
 									/>
@@ -366,17 +395,19 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_standard_to"
+										name={field.presStandardTo}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value   : formData.pres_standard_to ? formData.pres_standard_to : ''
+											disabled: pressureDisabled,
+											value   : formData[field.presStandardTo]
+											          ? formData[field.presStandardTo]
+											          : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												pres_standard_to: e.target.value,
+												[field.presStandardTo]: e.target.value,
 											}
 										})}
 									/>
@@ -390,17 +421,19 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="cur_standard_from"
+										name={field.curStandardFrom}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value   : formData.cur_standard_from ? formData.cur_standard_from : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.curStandardFrom]
+											          ? formData[field.curStandardFrom]
+											          : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												cur_standard_from: e.target.value,
+												[field.curStandardFrom]: e.target.value,
 											}
 										})}
 									/>
@@ -410,17 +443,17 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="cur_standard_to"
+										name={field.curStandardTo}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value   : formData.cur_standard_to ? formData.cur_standard_to : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.curStandardTo] ? formData[field.curStandardTo] : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												cur_standard_to: e.target.value,
+												[field.curStandardTo]: e.target.value,
 											}
 										})}
 									/>
@@ -440,17 +473,19 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_yellow_first"
+										name={field.tempYellowFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value   : formData.temp_yellow_first ? formData.temp_yellow_first : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.tempYellowFirst]
+											          ? formData[field.tempYellowFirst]
+											          : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												temp_yellow_first: e.target.value,
+												[field.tempYellowFirst]: e.target.value,
 											}
 										})}
 									/>
@@ -460,17 +495,19 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_yellow_last"
+										name={field.tempYellowLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value   : formData.temp_yellow_last ? formData.temp_yellow_last : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.tempYellowLast]
+											          ? formData[field.tempYellowLast]
+											          : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												temp_yellow_last: e.target.value,
+												[field.tempYellowLast]: e.target.value,
 											}
 										})}
 									/>
@@ -484,17 +521,19 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_yellow_first"
+										name={field.presYellowFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value   : formData.pres_yellow_first ? formData.pres_yellow_first : ''
+											disabled: pressureDisabled,
+											value   : formData[field.presYellowFirst]
+											          ? formData[field.presYellowFirst]
+											          : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												pres_yellow_first: e.target.value,
+												[field.presYellowFirst]: e.target.value,
 											}
 										})}
 									/>
@@ -504,17 +543,19 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_yellow_last"
+										name={field.presYellowLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value   : formData.pres_yellow_last ? formData.pres_yellow_last : ''
+											disabled: pressureDisabled,
+											value   : formData[field.presYellowLast]
+											          ? formData[field.presYellowLast]
+											          : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												pres_yellow_last: e.target.value,
+												[field.presYellowLast]: e.target.value,
 											}
 										})}
 									/>
@@ -528,17 +569,19 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="cur_yellow_first"
+										name={field.curYellowFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value   : formData.cur_yellow_first ? formData.cur_yellow_first : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.curYellowFirst]
+											          ? formData[field.curYellowFirst]
+											          : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												cur_yellow_first: e.target.value,
+												[field.curYellowFirst]: e.target.value,
 											}
 										})}
 									/>
@@ -548,17 +591,17 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="cur_yellow_last"
+										name={field.curYellowLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value   : formData.cur_yellow_last ? formData.cur_yellow_last : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.curYellowLast] ? formData[field.curYellowLast] : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												cur_yellow_last: e.target.value,
+												[field.curYellowLast]: e.target.value,
 											}
 										})}
 									/>
@@ -578,17 +621,17 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_red_first"
+										name={field.tempRedFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value   : formData.temp_red_first ? formData.temp_red_first : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.tempRedFirst] ? formData[field.tempRedFirst] : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												temp_red_first: e.target.value,
+												[field.tempRedFirst]: e.target.value,
 											}
 										})}
 									/>
@@ -598,17 +641,17 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_red_last"
+										name={field.tempRedLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value   : formData.temp_red_last ? formData.temp_red_last : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.tempRedLast] ? formData[field.tempRedLast] : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												temp_red_last: e.target.value,
+												[field.tempRedLast]: e.target.value,
 											}
 										})}
 									/>
@@ -622,17 +665,17 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_red_first"
+										name={field.presRedFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value   : formData.pres_red_first ? formData.pres_red_first : ''
+											disabled: pressureDisabled,
+											value   : formData[field.presRedFirst] ? formData[field.presRedFirst] : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												pres_red_first: e.target.value,
+												[field.presRedFirst]: e.target.value,
 											}
 										})}
 									/>
@@ -642,17 +685,17 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_red_last"
+										name={field.presRedLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value   : formData.pres_red_last ? formData.pres_red_last : ''
+											disabled: pressureDisabled,
+											value   : formData[field.presRedLast] ? formData[field.presRedLast] : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												pres_red_last: e.target.value,
+												[field.presRedLast]: e.target.value,
 											}
 										})}
 									/>
@@ -666,17 +709,17 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="cur_red_first"
+										name={field.curRedFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value   : formData.cur_red_first ? formData.cur_red_first : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.curRedFirst] ? formData[field.curRedFirst] : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												cur_red_first: e.target.value,
+												[field.curRedFirst]: e.target.value,
 											}
 										})}
 									/>
@@ -686,17 +729,17 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="cur_red_last"
+										name={field.curRedLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value   : formData.cur_red_last ? formData.cur_red_last : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.curRedLast] ? formData[field.curRedLast] : ''
 										}}
 										onChange={e => this.setState({
 											formData: {
 												...formData,
-												cur_red_last: e.target.value,
+												[field.curRedLast]: e.target.value,
 											}
 										})}
 									/>
@@ -709,31 +752,31 @@ class AlarmMasterForm extends Component {
 						</Col>
 						<Col md={8} lg={8} style={{marginLeft: -80}}>
 							<Field
-								name="remark"
+								name={field.remark}
 								component={renderField}
 								type="text"
 								placeholder="Remark"
 								props={{
-									value: formData.remark ? formData.remark : ''
+									value: formData[field.remark] ? formData[field.remark] : ''
 								}}
 								onChange={e => this.setState({
 									formData: {
 										...formData,
-										remark: e.target.value,
+										[field.remark]: e.target.value,
 									}
 								})}
 							/>
 							<Field
-								name="definition_value"
+								name={field.definitionValue}
 								component={renderField}
 								props={{
-									value: formData.definition_value ? formData.definition_value : ''
+									value: formData[field.definitionValue] ? formData[field.definitionValue] : ''
 								}}
 								type="hidden"
 								onChange={e => this.setState({
 									formData: {
 										...formData,
-										definition_value: e.target.value,
+										[field.definitionValue]: e.target.value,
 									}
 								})}
 							/>
@@ -744,31 +787,36 @@ class AlarmMasterForm extends Component {
 							<ButtonToolbar className="form__button-toolbar">
 								<Button color="primary" type="submit">
 									{(() => {
+										let {initial, onGoing, done} = ALARM_MASTER_PAGE_CONSTANTS.submissionState;
 										if (this.state.editMode) {
 											switch (submissionState) {
-												case -1:
+												case initial:
 													return 'Save';
-												case 0:
+												case onGoing:
 													return 'Saving';
-												case 1:
+												case done:
 													return 'Saved';
 												default:
 													return 'Save';
 											}
 										} else {
 											switch (submissionState) {
-												case -1:
+												case initial:
 													return 'Submit';
-												case 0:
+												case onGoing:
 													return 'Submitting';
-												case 1:
+												case done:
 													return 'Submitted';
 												default:
 													return 'Submit';
 											}
 										}
 									})()}
-									{submissionState === 0 ? <LoadingSpinner/> : ''}
+									{
+										submissionState === ALARM_MASTER_PAGE_CONSTANTS.submissionState.onGoing
+										? <LoadingSpinner/>
+										: ''
+									}
 								</Button>
 								<Button type="button" onClick={() => {
 									reset();
@@ -790,5 +838,5 @@ class AlarmMasterForm extends Component {
 }
 
 export default reduxForm({
-	form: 'AlarmMasterForm',
+	form: ALARM_MASTER_PAGE_CONSTANTS.alarmMasterFormName,
 })(AlarmMasterForm);

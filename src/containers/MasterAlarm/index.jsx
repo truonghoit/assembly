@@ -6,6 +6,7 @@ import DataTable                                         from "../../shared/comp
 import {ALARM_MODEL_ARTICLE, ALARM_SENSOR, ASSEMBLY_API} from "../../constants/constants";
 import callAxios                                         from "../../services/api";
 import {
+	ALARM_MASTER_PAGE_CONSTANTS,
 	alarmSensorTableColumns,
 	defaultAlarmSensorTableData,
 	defaultModelArticleTableData,
@@ -16,6 +17,8 @@ class MasterAlarm extends Component {
 	constructor(props) {
 		super(props);
 
+		let {initial} = ALARM_MASTER_PAGE_CONSTANTS.submissionState;
+
 		this.child = React.createRef();
 
 		this.state = {
@@ -25,16 +28,17 @@ class MasterAlarm extends Component {
 			dataAlarmSensor    : defaultAlarmSensorTableData,
 			formData           : {},
 			editMode           : false,
-			submissionState    : -1,    // -1: Submit/Save, 0: Submitting/Saving, 1: Submitted/Saved
+			submissionState    : initial,    // -1: Submit/Save, 0: Submitting/Saving, 1: Submitted/Saved
 		};
 	}
 
 	loadListModelArticle = () => {
-		let method = 'POST';
-		let url    = ASSEMBLY_API + ALARM_MODEL_ARTICLE;
-		let params = {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + ALARM_MODEL_ARTICLE;
+		let params  = {
 			"value_yn": 0
 		};
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 
 		callAxios(method, url, params).then(response => {
 			try {
@@ -43,10 +47,10 @@ class MasterAlarm extends Component {
 
 				responseArray.map(item => {
 					item = {
-						model_cd  : item.model_cd.toString(),
-						model_nm  : item.model_nm.toString(),
-						article_no: item.article_no.toString(),
-						article_nm: item.article_nm.toString(),
+						[field.modelNm]  : item.model_nm.toString(),
+						[field.modelCd]  : item.model_cd.toString(),
+						[field.articleNm]: item.article_nm.toString(),
+						[field.articleNo]: item.article_no.toString(),
 					};
 					dataArray.push(item);
 				});
@@ -60,24 +64,25 @@ class MasterAlarm extends Component {
 	};
 
 	fillForm = (selectedRow) => {
-		let {formData} = this.state;
-		formData       = {
-			...formData,
-			article_nm: selectedRow.article_nm,
-			article_no: selectedRow.article_no,
-			model_cd  : selectedRow.model_cd,
-			model_nm  : selectedRow.model_nm,
-		};
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.setState({
-			formData       : formData,
+			formData       : {
+				...this.state.formData,
+				[field.modelNm]        : selectedRow[field.modelNm],
+				[field.modelCd]        : selectedRow[field.modelCd],
+				[field.articleNm]      : selectedRow[field.articleNm],
+				[field.articleNo]      : selectedRow[field.articleNo],
+				[field.definitionValue]: '000',
+			},
 			editMode       : false,
-			submissionState: -1,
+			submissionState: ALARM_MASTER_PAGE_CONSTANTS.submissionState.initial,
 		});
 	};
 
 	loadListAlarmSensor = () => {
-		let method = 'POST';
-		let url    = ASSEMBLY_API + ALARM_SENSOR;
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + ALARM_SENSOR;
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 
 		callAxios(method, url, {}).then(response => {
 			try {
@@ -86,42 +91,43 @@ class MasterAlarm extends Component {
 
 				responseArray.map(item => {
 					item = {
-						model_cd  : item.model_cd ? item.model_cd : '0',
-						model_nm  : item.model_nm ? item.model_nm : '0',
-						article_no: item.article_no ? item.article_no : '0',
-						article_nm: item.article_nm ? item.article_nm : '0',
-						process_cd: item.process_cd ? item.process_cd : '0',
-						process_nm: item.process_nm ? item.process_nm : '0',
+						[field.modelNm]  : item.model_nm ? item.model_nm : '0',
+						[field.modelCd]  : item.model_cd ? item.model_cd : '0',
+						[field.articleNm]: item.article_nm ? item.article_nm : '0',
+						[field.articleNo]: item.article_no ? item.article_no : '0',
+						[field.processNm]: item.process_nm ? item.process_nm : '0',
+						[field.processCd]: item.process_cd ? item.process_cd : '0',
 
-						temp_standard: item.temp_standard_from + '-' + item.temp_standard_to,
-						temp_yellow  : item.temp_yellow_first + '-' + item.temp_yellow_last,
-						temp_red     : item.temp_red_first + '-' + item.temp_red_last,
-						pres_standard: item.pres_standard_from + '-' + item.pres_standard_to,
-						pres_yellow  : item.pres_yellow_first + '-' + item.pres_yellow_last,
-						pres_red     : item.pres_red_first + '-' + item.pres_red_last,
-						cur_standard : item.cur_standard_from + '-' + item.cur_standard_to,
-						cur_yellow   : item.cur_yellow_first + '-' + item.cur_yellow_last,
-						cur_red      : item.cur_red_first + '-' + item.cur_red_last,
+						[field.tempStandard]: item.temp_standard_from + '-' + item.temp_standard_to,
+						[field.tempYellow]  : item.temp_yellow_first + '-' + item.temp_yellow_last,
+						[field.tempRed]     : item.temp_red_first + '-' + item.temp_red_last,
+						[field.presStandard]: item.pres_standard_from + '-' + item.pres_standard_to,
+						[field.presYellow]  : item.pres_yellow_first + '-' + item.pres_yellow_last,
+						[field.presRed]     : item.pres_red_first + '-' + item.pres_red_last,
+						[field.curStandard] : item.cur_standard_from + '-' + item.cur_standard_to,
+						[field.curYellow]   : item.cur_yellow_first + '-' + item.cur_yellow_last,
+						[field.curRed]      : item.cur_red_first + '-' + item.cur_red_last,
 
-						temp_standard_from: item.temp_standard_from,
-						temp_standard_to  : item.temp_standard_to,
-						temp_yellow_first : item.temp_yellow_first,
-						temp_yellow_last  : item.temp_yellow_last,
-						temp_red_first    : item.temp_red_first,
-						temp_red_last     : item.temp_red_last,
-						pres_standard_from: item.pres_standard_from,
-						pres_standard_to  : item.pres_standard_to,
-						pres_yellow_first : item.pres_yellow_first,
-						pres_yellow_last  : item.pres_yellow_last,
-						pres_red_first    : item.pres_red_first,
-						pres_red_last     : item.pres_red_last,
-						cur_standard_from : item.cur_standard_from,
-						cur_standard_to   : item.cur_standard_to,
-						cur_yellow_first  : item.cur_yellow_first,
-						cur_yellow_last   : item.cur_yellow_last,
-						cur_red_first     : item.cur_red_first,
-						cur_red_last      : item.cur_red_last,
-						definition_value  : item.definition_value,
+						[field.tempStandardFrom]: item.temp_standard_from,
+						[field.tempStandardTo]  : item.temp_standard_to,
+						[field.tempYellowFirst] : item.temp_yellow_first,
+						[field.tempYellowLast]  : item.temp_yellow_last,
+						[field.tempRedFirst]    : item.temp_red_first,
+						[field.tempRedLast]     : item.temp_red_last,
+						[field.presStandardFrom]: item.pres_standard_from,
+						[field.presStandardTo]  : item.pres_standard_to,
+						[field.presYellowFirst] : item.pres_yellow_first,
+						[field.presYellowLast]  : item.pres_yellow_last,
+						[field.presRedFirst]    : item.pres_red_first,
+						[field.presRedLast]     : item.pres_red_last,
+						[field.curStandardFrom] : item.cur_standard_from,
+						[field.curStandardTo]   : item.cur_standard_to,
+						[field.curYellowFirst]  : item.cur_yellow_first,
+						[field.curYellowLast]   : item.cur_yellow_last,
+						[field.curRedFirst]     : item.cur_red_first,
+						[field.curRedLast]      : item.cur_red_last,
+
+						[field.definitionValue]: item.definition_value,
 					};
 					dataArray.push(item);
 				});
@@ -140,16 +146,19 @@ class MasterAlarm extends Component {
 	}
 
 	handleSubmit = (values) => {
-		this.setState({
-			submissionState: 0,
-		});
+		let {initial, onGoing, done} = ALARM_MASTER_PAGE_CONSTANTS.submissionState;
 
-		let definition_value = values.definition_value;
-		let formData         = this.state.formData;
-		let method           = 'POST';
-		let url              = '/api/asc/masalarmsensor';
-		for (let i = 0; i < definition_value.length; i++) {
-			if (!definition_value[i]) {
+		this.setState({
+			submissionState: onGoing,
+		});
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+
+		let definitionValue = values[field.definitionValue];
+		let formData        = this.state.formData;
+		let method          = 'POST';
+		let url             = '/api/asc/masalarmsensor';
+		for (let i = 0; i < definitionValue.length; i++) {
+			if (definitionValue[i] > 0) {
 				let standard_from = 0;
 				let standard_to   = 0;
 				let yellow_first  = 0;
@@ -158,34 +167,34 @@ class MasterAlarm extends Component {
 				let red_last      = 0;
 				let sensor_type   = i + 1;
 				if (sensor_type == 1) {
-					standard_from = values.temp_standard_from;
-					standard_to   = values.temp_standard_to;
-					yellow_first  = values.temp_yellow_first;
-					yellow_last   = values.temp_yellow_last;
-					red_first     = values.temp_red_first;
-					red_last      = values.temp_red_last;
+					standard_from = values[field.tempStandardFrom];
+					standard_to   = values[field.tempStandardTo];
+					yellow_first  = values[field.tempYellowFirst];
+					yellow_last   = values[field.tempYellowLast];
+					red_first     = values[field.tempRedFirst];
+					red_last      = values[field.tempRedLast];
 				} else if (sensor_type == 2) {
-					standard_from = values.pres_standard_from;
-					standard_to   = values.pres_standard_to;
-					yellow_first  = values.pres_yellow_first;
-					yellow_last   = values.pres_yellow_last;
-					red_first     = values.pres_red_first;
-					red_last      = values.pres_red_last;
+					standard_from = values[field.presStandardFrom];
+					standard_to   = values[field.presStandardTo];
+					yellow_first  = values[field.presYellowFirst];
+					yellow_last   = values[field.presYellowLast];
+					red_first     = values[field.presRedFirst];
+					red_last      = values[field.presRedLast];
 				} else if (sensor_type == 3) {
-					standard_from = values.cur_standard_from;
-					standard_to   = values.cur_standard_to;
-					yellow_first  = values.cur_yellow_first;
-					yellow_last   = values.cur_yellow_last;
-					red_first     = values.cur_red_first;
-					red_last      = values.cur_red_last;
+					standard_from = values[field.curStandardFrom];
+					standard_to   = values[field.curStandardTo];
+					yellow_first  = values[field.curYellowFirst];
+					yellow_last   = values[field.curYellowLast];
+					red_first     = values[field.curRedFirst];
+					red_last      = values[field.curRedLast];
 				}
 				let param = {
 					"status"       : this.state.editMode ? "UPDATE" : "INSERT",
-					"model_cd"     : formData.model_cd,
-					"article_no"   : formData.article_no,
-					"process_cd"   : formData.process_cd,
-					"sensor_type"  : sensor_type,
-					"standard_from": standard_from,//1: temp, 2: pressure, 3: curing time
+					"model_cd"     : formData[field.modelCd],
+					"article_no"   : formData[field.articleNo],
+					"process_cd"   : formData[field.processCd],
+					"sensor_type"  : sensor_type,   //1: temp, 2: pressure, 3: curing time
+					"standard_from": standard_from,
 					"standard_to"  : standard_to,
 					"yellow_first" : yellow_first,
 					"yellow_last"  : yellow_last,
@@ -193,7 +202,7 @@ class MasterAlarm extends Component {
 					"red_last"     : red_last,
 					"time_first"   : '0',
 					"time_last"    : '0',
-					"remark"       : values.remark ? values.remark : '',
+					"remark"       : values[field.remark] ? values[field.remark] : '',
 					"username"     : "truongho"
 				};
 				callAxios(method, url, param).then(response => {
@@ -203,41 +212,44 @@ class MasterAlarm extends Component {
 							this.loadListAlarmSensor();
 							this.loadListModelArticle();
 
-							//reload process loadd
+							//reload process loading
 							this.child.ref.current.wrapped.current.callChildLoadProcess({
-								model_cd  : formData.model_cd,
-								article_no: formData.article_no,
+								model_cd  : formData[field.modelCd],
+								article_no: formData[field.articleNo],
 							});
 							this.setState({
-								submissionState: 1,
+								submissionState: done,
 							});
 							setTimeout(() => {
 								if (!this.state.editMode) {
-									let formData = this.state.formDate;
 									this.setState({
-										...formData,
-										temp_standard_from: values.temp_standard_from,
-										temp_standard_to  : values.temp_standard_to,
-										temp_yellow_first : values.temp_yellow_first,
-										temp_yellow_last  : values.temp_yellow_last,
-										temp_red_first    : values.temp_red_first,
-										temp_red_last     : values.temp_red_last,
-										pres_standard_from: values.pres_standard_from,
-										pres_standard_to  : values.pres_standard_to,
-										pres_yellow_first : values.pres_yellow_first,
-										pres_yellow_last  : values.pres_yellow_last,
-										pres_red_first    : values.pres_red_first,
-										pres_red_last     : values.pres_red_last,
-										cur_standard_from : values.cur_standard_from,
-										cur_standard_to   : values.cur_standard_to,
-										cur_yellow_first  : values.cur_yellow_first,
-										cur_yellow_last   : values.cur_yellow_last,
-										cur_red_first     : values.cur_red_first,
-										cur_red_last      : values.cur_red_last,
+										formData: {
+											...this.state.formData,
+											[field.tempStandardFrom]: values[field.tempStandardFrom],
+											[field.tempStandardTo]  : values[field.tempStandardTo],
+											[field.tempYellowFirst] : values[field.tempYellowFirst],
+											[field.tempYellowLast]  : values[field.tempYellowLast],
+											[field.tempRedFirst]    : values[field.tempRedFirst],
+											[field.tempRedLast]     : values[field.tempRedLast],
+											[field.presStandardFrom]: values[field.presStandardFrom],
+											[field.presStandardTo]  : values[field.presStandardTo],
+											[field.presYellowFirst] : values[field.presYellowFirst],
+											[field.presYellowLast]  : values[field.presYellowLast],
+											[field.presRedFirst]    : values[field.presRedFirst],
+											[field.presRedLast]     : values[field.presRedLast],
+											[field.curStandardFrom] : values[field.curStandardFrom],
+											[field.curStandardTo]   : values[field.curStandardTo],
+											[field.curYellowFirst]  : values[field.curYellowFirst],
+											[field.curYellowLast]   : values[field.curYellowLast],
+											[field.curRedFirst]     : values[field.curRedFirst],
+											[field.curRedLast]      : values[field.curRedLast],
+											[field.remark]          : values[field.remark],
+											[field.definitionValue] : values[field.definitionValue],
+										},
 									});
 								}
 								this.setState({
-									submissionState: -1,
+									submissionState: initial,
 									editMode       : false,
 								});
 							}, 1000);
@@ -252,73 +264,76 @@ class MasterAlarm extends Component {
 		event.preventDefault();
 	};
 
-	setSelectedProcess = (processCode) => {
-		let {formData} = this.state;
-		formData       = {
-			...formData,
-			process_cd        : processCode,
-			temp_standard_from: '',
-			temp_standard_to  : '',
-			temp_yellow_first : '',
-			temp_yellow_last  : '',
-			temp_red_first    : '',
-			temp_red_last     : '',
-			pres_standard_from: '',
-			pres_standard_to  : '',
-			pres_yellow_first : '',
-			pres_yellow_last  : '',
-			pres_red_first    : '',
-			pres_red_last     : '',
-			cur_standard_from : '',
-			cur_standard_to   : '',
-			cur_yellow_first  : '',
-			cur_yellow_last   : '',
-			cur_red_first     : '',
-			cur_red_last      : '',
-		};
+	setSelectedProcess = (processCode, definitionValue) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.setState({
 			editMode: false,
-			formData: formData,
+			formData: {
+				...this.state.formData,
+				[field.processCd]       : processCode,
+				[field.tempStandardFrom]: '',
+				[field.tempStandardTo]  : '',
+				[field.tempYellowFirst] : '',
+				[field.tempYellowLast]  : '',
+				[field.tempRedFirst]    : '',
+				[field.tempRedLast]     : '',
+				[field.presStandardFrom]: '',
+				[field.presStandardTo]  : '',
+				[field.presYellowFirst] : '',
+				[field.presYellowLast]  : '',
+				[field.presRedFirst]    : '',
+				[field.presRedLast]     : '',
+				[field.curStandardFrom] : '',
+				[field.curStandardTo]   : '',
+				[field.curYellowFirst]  : '',
+				[field.curYellowLast]   : '',
+				[field.curRedFirst]     : '',
+				[field.curRedLast]      : '',
+				[field.definitionValue] : definitionValue,
+			},
 		});
 	};
 
 	onAlarmSensorTableRowClick = (e, row) => {
-		let selectedRow = row._row.data;
+		let {field, submissionState} = ALARM_MASTER_PAGE_CONSTANTS;
+		let selectedRow              = row._row.data;
 		this.setState({
 			editMode       : true,
-			submissionState: -1,
+			submissionState: submissionState.initial,
 			formData       : {
-				model_nm          : selectedRow.model_nm,
-				model_cd          : selectedRow.model_cd,
-				article_no        : selectedRow.article_no,
-				article_nm        : selectedRow.article_nm,
-				process_cd        : selectedRow.process_cd,
-				temp_standard_from: selectedRow.temp_standard_from,
-				temp_standard_to  : selectedRow.temp_standard_to,
-				temp_yellow_first : selectedRow.temp_yellow_first,
-				temp_yellow_last  : selectedRow.temp_yellow_last,
-				temp_red_first    : selectedRow.temp_red_first,
-				temp_red_last     : selectedRow.temp_red_last,
-				pres_standard_from: selectedRow.pres_standard_from,
-				pres_standard_to  : selectedRow.pres_standard_to,
-				pres_yellow_first : selectedRow.pres_yellow_first,
-				pres_yellow_last  : selectedRow.pres_yellow_last,
-				pres_red_first    : selectedRow.pres_red_first,
-				pres_red_last     : selectedRow.pres_red_last,
-				cur_standard_from : selectedRow.cur_standard_from,
-				cur_standard_to   : selectedRow.cur_standard_to,
-				cur_yellow_first  : selectedRow.cur_yellow_first,
-				cur_yellow_last   : selectedRow.cur_yellow_last,
-				cur_red_first     : selectedRow.cur_red_first,
-				cur_red_last      : selectedRow.cur_red_last,
-				definition_value  : selectedRow.definition_value,
+				...this.state.formData,
+				[field.modelNm]         : selectedRow[field.modelNm],
+				[field.modelCd]         : selectedRow[field.modelCd],
+				[field.articleNo]       : selectedRow[field.articleNo],
+				[field.articleNm]       : selectedRow[field.articleNm],
+				[field.processNm]       : selectedRow[field.processNm],
+				[field.processCd]       : selectedRow[field.processCd],
+				[field.tempStandardFrom]: selectedRow[field.tempStandardFrom],
+				[field.tempStandardTo]  : selectedRow[field.tempStandardTo],
+				[field.tempYellowFirst] : selectedRow[field.tempYellowFirst],
+				[field.tempYellowLast]  : selectedRow[field.tempYellowLast],
+				[field.tempRedFirst]    : selectedRow[field.tempRedFirst],
+				[field.tempRedLast]     : selectedRow[field.tempRedLast],
+				[field.presStandardFrom]: selectedRow[field.presStandardFrom],
+				[field.presStandardTo]  : selectedRow[field.presStandardTo],
+				[field.presYellowFirst] : selectedRow[field.presYellowFirst],
+				[field.presYellowLast]  : selectedRow[field.presYellowLast],
+				[field.presRedFirst]    : selectedRow[field.presRedFirst],
+				[field.presRedLast]     : selectedRow[field.presRedLast],
+				[field.curStandardFrom] : selectedRow[field.curStandardFrom],
+				[field.curStandardTo]   : selectedRow[field.curStandardTo],
+				[field.curYellowFirst]  : selectedRow[field.curYellowFirst],
+				[field.curYellowLast]   : selectedRow[field.curYellowLast],
+				[field.curRedFirst]     : selectedRow[field.curRedFirst],
+				[field.curRedLast]      : selectedRow[field.curRedLast],
+				[field.definitionValue] : selectedRow[field.definitionValue],
 			}
 		});
 		let params = {
-			model_cd        : selectedRow.model_cd,
-			article_no      : selectedRow.article_no,
-			definition_value: selectedRow.definition_value,
-			process_cd      : selectedRow.process_cd,
+			model_cd        : selectedRow[field.modelCd],
+			article_no      : selectedRow[field.articleNo],
+			definition_value: selectedRow[field.definitionValue],
+			process_cd      : selectedRow[field.processCd],
 		};
 		this.child.ref.current.wrapped.current.callChildLoadProcess(params);
 		this.child.ref.current.wrapped.current.setDefinitionValue(params.definition_value, params.process_cd);
@@ -332,7 +347,6 @@ class MasterAlarm extends Component {
 	};
 
 	render() {
-
 		let {columnsModelArticle, dataModelArticle, columnsAlarmSensor, dataAlarmSensor, formData, submissionState, editMode} = this.state;
 		return (
 			<Container className="dashboard">
@@ -368,5 +382,5 @@ class MasterAlarm extends Component {
 }
 
 export default reduxForm({
-	form: 'MasterAlarm',
+	form: ALARM_MASTER_PAGE_CONSTANTS.alarmMasterFormName,
 })(MasterAlarm);

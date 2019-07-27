@@ -1,28 +1,84 @@
+export const ALARM_MASTER_PAGE_CONSTANTS = {
+	alarmMasterFormName: 'AlarmMasterForm',
+	field              : {
+		modelNm  : 'model_nm',
+		modelCd  : 'model_cd',
+		articleNm: 'article_nm',
+		articleNo: 'article_no',
+		processNm: 'process_nm',
+		processCd: 'process_cd',
+
+		tempStandard    : 'temp_standard',
+		tempStandardFrom: 'temp_standard_from',
+		tempStandardTo  : 'temp_standard_to',
+
+		presStandard    : 'pres_standard',
+		presStandardFrom: 'pres_standard_from',
+		presStandardTo  : 'pres_standard_to',
+
+		curStandard    : 'cur_standard',
+		curStandardFrom: 'cur_standard_from',
+		curStandardTo  : 'cur_standard_to',
+
+		tempYellow     : 'temp_yellow',
+		tempYellowFirst: 'temp_yellow_first',
+		tempYellowLast : 'temp_yellow_last',
+
+		presYellow     : 'pres_yellow',
+		presYellowFirst: 'pres_yellow_first',
+		presYellowLast : 'pres_yellow_last',
+
+		curYellow     : 'cur_yellow',
+		curYellowFirst: 'cur_yellow_first',
+		curYellowLast : 'cur_yellow_last',
+
+		tempRed     : 'temp_red',
+		tempRedFirst: 'temp_red_first',
+		tempRedLast : 'temp_red_last',
+
+		presRed     : 'pres_red',
+		presRedFirst: 'pres_red_first',
+		presRedLast : 'pres_red_last',
+
+		curRed     : 'cur_red',
+		curRedFirst: 'cur_red_first',
+		curRedLast : 'cur_red_last',
+
+		remark         : 'remark',
+		definitionValue: 'definition_value',
+	},
+	submissionState    : {
+		initial: -1,
+		onGoing: 0,
+		done   : 1,
+	},
+};
+
 export const modelArticleTableColumns = [
-	{title: "Model Code", field: "model_cd", visible: false},
 	{
 		title       : "MODEL",
-		field       : "model_nm",
+		field       : ALARM_MASTER_PAGE_CONSTANTS.field.modelNm,
 		width       : '49%',
 		align       : "center",
 		headerFilter: "input"
 	},
-	{title: "Article", field: "article_no", visible: false},
+	{title: "Model Code", field: ALARM_MASTER_PAGE_CONSTANTS.field.modelCd, visible: false},
 	{
 		title       : "ARTICLE",
-		field       : "article_nm",
+		field       : ALARM_MASTER_PAGE_CONSTANTS.field.articleNm,
 		width       : '50%',
 		align       : "center",
 		headerFilter: "input"
-	}
+	},
+	{title: "Article No", field: ALARM_MASTER_PAGE_CONSTANTS.field.articleNo, visible: false},
 ];
 
 export const defaultModelArticleTableData = [
 	{
-		model_cd  : "",
-		model_nm  : "",
-		article_no: "",
-		article_nm: ""
+		[ALARM_MASTER_PAGE_CONSTANTS.field.modelNm]  : "",
+		[ALARM_MASTER_PAGE_CONSTANTS.field.modelCd]  : "",
+		[ALARM_MASTER_PAGE_CONSTANTS.field.articleNm]: "",
+		[ALARM_MASTER_PAGE_CONSTANTS.field.articleNo]: "",
 	},
 ];
 
@@ -39,51 +95,51 @@ let formatRed = (cell) => {
 };
 
 export const alarmSensorTableColumns = [
-	{title: "MODEL CODE", field: "model_cd", visible: false},
 	{
 		title       : "MODEL",
-		field       : "model_nm",
+		field       : ALARM_MASTER_PAGE_CONSTANTS.field.modelNm,
 		width       : '10%',
 		align       : "center",
 		headerFilter: "input"
 	},
-	{title: "ARTICLE NO", field: "article_no", visible: false},
+	{title: "MODEL CODE", field: ALARM_MASTER_PAGE_CONSTANTS.field.modelCd, visible: false},
 	{
 		title       : "ARTICLE",
-		field       : "article_nm",
+		field       : ALARM_MASTER_PAGE_CONSTANTS.field.articleNm,
 		width       : '9%',
 		align       : "center",
 		headerFilter: "input"
 	},
-	{title: "PROCESS CODE", field: "process_cd", visible: false},
+	{title: "ARTICLE NO", field: ALARM_MASTER_PAGE_CONSTANTS.field.articleNo, visible: false},
 	{
 		title       : "PROCESS",
-		field       : "process_nm",
+		field       : ALARM_MASTER_PAGE_CONSTANTS.field.processNm,
 		width       : '10%',
 		align       : "center",
 		headerFilter: "input"
 	},
+	{title: "PROCESS CODE", field: ALARM_MASTER_PAGE_CONSTANTS.field.processCd, visible: false},
 
 	{
 		title  : "TEMPERATURE",
 		columns: [
 			{
 				title          : "<span style='color:#03CF65; font-size: large'>●</span>",
-				field          : "temp_standard",
+				field          : ALARM_MASTER_PAGE_CONSTANTS.field.tempStandard,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatStandard
 			},
 			{
 				title          : "<span style='color:#FFD44F; font-size: large'>●</span>",
-				field          : "temp_yellow",
+				field          : ALARM_MASTER_PAGE_CONSTANTS.field.tempYellow,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatYellow
 			},
 			{
 				title          : "<span style='color:#F84E4E; font-size: large'>●</span>",
-				field          : "temp_red",
+				field          : ALARM_MASTER_PAGE_CONSTANTS.field.tempRed,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatRed
@@ -95,21 +151,21 @@ export const alarmSensorTableColumns = [
 		columns: [
 			{
 				title          : "<span style='color:#03CF65; font-size: large'>●</span>",
-				field          : "pres_standard",
+				field          : ALARM_MASTER_PAGE_CONSTANTS.field.presStandard,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatStandard
 			},
 			{
 				title          : "<span style='color:#FFD44F; font-size: large'>●</span>",
-				field          : "pres_yellow",
+				field          : ALARM_MASTER_PAGE_CONSTANTS.field.presYellow,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatYellow
 			},
 			{
 				title          : "<span style='color:#F84E4E; font-size: large'>●</span>",
-				field          : "pres_red",
+				field          : ALARM_MASTER_PAGE_CONSTANTS.field.presRed,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatRed
@@ -121,21 +177,21 @@ export const alarmSensorTableColumns = [
 		columns: [
 			{
 				title          : "<span style='color:#03CF65; font-size: large'>●</span>",
-				field          : "cur_standard",
+				field          : ALARM_MASTER_PAGE_CONSTANTS.field.curStandard,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatStandard
 			},
 			{
 				title          : "<span style='color:#FFD44F; font-size: large'>●</span>",
-				field          : "cur_yellow",
+				field          : ALARM_MASTER_PAGE_CONSTANTS.field.curYellow,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatYellow
 			},
 			{
 				title          : "<span style='color:#F84E4E; font-size: large'>●</span>",
-				field          : "cur_red",
+				field          : ALARM_MASTER_PAGE_CONSTANTS.field.curRed,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatRed
@@ -144,69 +200,69 @@ export const alarmSensorTableColumns = [
 	},
 	{
 		columns: [
-			{field: "temp_standard_from", visible: false},
-			{field: "temp_standard_to", visible: false},
-			{field: "temp_yellow_first", visible: false},
-			{field: "temp_yellow_last", visible: false},
-			{field: "temp_red_first", visible: false},
-			{field: "temp_red_last", visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.tempStandardFrom, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.tempStandardTo, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.tempYellowFirst, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.tempYellowLast, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.tempRedFirst, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.tempRedLast, visible: false},
 
-			{field: "pres_standard_from", visible: false},
-			{field: "pres_standard_to", visible: false},
-			{field: "pres_yellow_first", visible: false},
-			{field: "pres_yellow_last", visible: false},
-			{field: "pres_red_first", visible: false},
-			{field: "pres_red_last", visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.presStandardFrom, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.presStandardTo, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.presYellowFirst, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.presYellowLast, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.presRedFirst, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.presRedLast, visible: false},
 
-			{field: "cur_standard_from", visible: false},
-			{field: "cur_standard_to", visible: false},
-			{field: "cur_yellow_first", visible: false},
-			{field: "cur_yellow_last", visible: false},
-			{field: "cur_red_first", visible: false},
-			{field: "cur_red_last", visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.curStandardFrom, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.curStandardTo, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.curYellowFirst, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.curYellowLast, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.curRedFirst, visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.curRedLast, visible: false},
 
-			{field: "definition_value", visible: false},
+			{field: ALARM_MASTER_PAGE_CONSTANTS.field.definitionValue, visible: false},
 		],
 	}
 ];
 
 export const defaultAlarmSensorTableData = [
 	{
-		model_cd  : '0',
-		model_nm  : '0',
-		article_no: '0',
-		article_nm: '0',
-		process_cd: '0',
-		process_nm: '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.modelCd]  : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.modelNm]  : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.articleNo]: '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.articleNm]: '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.processCd]: '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.processNm]: '0',
 
-		temp_standard: '0-0',
-		temp_yellow  : '0-0',
-		temp_red     : '0-0',
-		pres_standard: '0-0',
-		pres_yellow  : '0-0',
-		pres_red     : '0-0',
-		cur_standard : '0-0',
-		cur_yellow   : '0-0',
-		cur_red      : '0-0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.tempStandard]: '0-0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.tempYellow]  : '0-0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.tempRed]     : '0-0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.presStandard]: '0-0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.presYellow]  : '0-0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.presRed]     : '0-0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.curStandard] : '0-0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.curYellow]   : '0-0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.curRed]      : '0-0',
 
-		temp_standard_from: '0',
-		temp_standard_to  : '0',
-		temp_yellow_first : '0',
-		temp_yellow_last  : '0',
-		temp_red_first    : '0',
-		temp_red_last     : '0',
-		pres_standard_from: '0',
-		pres_standard_to  : '0',
-		pres_yellow_first : '0',
-		pres_yellow_last  : '0',
-		pres_red_first    : '0',
-		pres_red_last     : '0',
-		cur_standard_from : '0',
-		cur_standard_to   : '0',
-		cur_yellow_first  : '0',
-		cur_yellow_last   : '0',
-		cur_red_first     : '0',
-		cur_red_last      : '0',
-		definition_value  : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.tempStandardFrom]: '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.tempStandardTo]  : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.tempYellowFirst] : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.tempYellowLast]  : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.tempRedFirst]    : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.tempRedLast]     : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.presStandardFrom]: '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.presStandardTo]  : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.presYellowFirst] : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.presYellowLast]  : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.presRedFirst]    : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.presRedLast]     : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.curStandardFrom] : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.curStandardTo]   : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.curYellowFirst]  : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.curYellowLast]   : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.curRedFirst]     : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.curRedLast]      : '0',
+		[ALARM_MASTER_PAGE_CONSTANTS.field.definitionValue] : '0',
 	}
 ];
