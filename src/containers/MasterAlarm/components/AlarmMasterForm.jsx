@@ -21,16 +21,41 @@ class AlarmMasterForm extends Component {
 		super(props);
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.state  = ({
-			dataProcess: [],
+			processList: [],
 			formData   : {
 				[field.definitionValue]: '000',
 			},
 		});
 	}
 
-	callChildLoadProcess = (params) => {
-		this.loadListProcess(params);
-		//this.setDefinitionValue(params.definition_value, params.process_cd);
+	loadProcessList = (params) => {
+		let method = 'POST';
+		let url    = ASSEMBLY_API + ALARM_LIST_PROCESS;
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
+				let responseArray = response.data.data;
+				let processList   = [];
+				responseArray.map(item => {
+					item = {
+						[field.processCd]      : item.code.toString(),
+						[field.processNm]      : item.name.toString(),
+						[field.definitionValue]: item.definition_value.toString(),
+					};
+					processList.push(item);
+				});
+
+				this.setState({
+					processList: processList,
+				});
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+		if (params.resetForm) {
+			this.resetFormFields();
+		}
 	};
 
 	onModelArticleClick = (e, row) => {
@@ -44,7 +69,7 @@ class AlarmMasterForm extends Component {
 
 		let selectedRow = row._row.data;
 
-		this.props.fillForm(selectedRow);
+		this.props.onModelArticleClick(selectedRow);
 
 		let params = {
 			model_cd  : selectedRow[field.modelCd],
@@ -52,11 +77,50 @@ class AlarmMasterForm extends Component {
 			resetForm : true
 		};
 
-		//this.resetFieldForm();
-		this.loadListProcess(params);
+		this.loadProcessList(params);
 	};
 
-	resetFieldForm = () => {
+	onProcessClick = (row) => {
+		let selectedProcessCode = row.target.value;
+
+		let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
+		let {processList} = this.state;
+		processList.some(item => {
+			if (item[field.processCd] == selectedProcessCode) {
+				this.props.change(field.definitionValue, item[field.definitionValue]);
+
+				this.setState({
+					editMode: false,
+					formData: {
+						...this.state.formData,
+						[field.processCd]      : selectedProcessCode,
+						[field.definitionValue]: item[field.definitionValue],
+					},
+				});
+				this.props.onProcessClick(selectedProcessCode, item[field.definitionValue]);
+				return true;
+			}
+			return false;
+		});
+	};
+
+	callChildLoadProcessList = (params) => {
+		this.loadProcessList(params);
+	};
+
+	onAlarmSensorTableRowClick = (selectedProcessCode, definitionValue) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.props.change(field.definitionValue, definitionValue);
+		this.setState({
+			formData: {
+				...this.state.formData,
+				[field.processCd]      : selectedProcessCode,
+				[field.definitionValue]: definitionValue,
+			},
+		});
+	};
+
+	resetFormFields = () => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.setState({
 			formData: {
@@ -88,36 +152,6 @@ class AlarmMasterForm extends Component {
 				[field.definitionValue]: '000',
 			},
 		});
-	};
-
-	loadListProcess = (params) => {
-		let method = 'POST';
-		let url    = ASSEMBLY_API + ALARM_LIST_PROCESS;
-
-		callAxios(method, url, params).then(response => {
-			try {
-				let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
-				let responseArray = response.data.data;
-				let dataArray     = [];
-				responseArray.map(item => {
-					item = {
-						[field.processCd]      : item.code.toString(),
-						[field.processNm]      : item.name.toString(),
-						[field.definitionValue]: item.definition_value.toString(),
-					};
-					dataArray.push(item);
-				});
-
-				this.setState({
-					dataProcess: dataArray,
-				});
-			} catch (e) {
-				console.log("Error: ", e);
-			}
-		});
-		if (params.resetForm) {
-			this.resetFieldForm();
-		}
 	};
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -181,47 +215,11 @@ class AlarmMasterForm extends Component {
 		this.props.change(field.definitionValue, definitionValue);
 	}
 
-	onClickProcess = (row) => {
-		let selectedProcessCode = row.target.value;
-
-		let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
-		let {dataProcess} = this.state;
-		dataProcess.some(item => {
-			if (item[field.processCd] == selectedProcessCode) {
-				this.props.change(field.definitionValue, item[field.definitionValue]);
-
-				this.setState({
-					editMode: false,
-					formData: {
-						...this.state.formData,
-						[field.processCd]      : selectedProcessCode,
-						[field.definitionValue]: item[field.definitionValue],
-					},
-				});
-				this.props.setSelectedProcess(selectedProcessCode, item[field.definitionValue]);
-				return true;
-			}
-			return false;
-		});
-	};
-
-	setDefinitionValue = (definitionValue, selectedProcessCode) => {
-		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
-		this.props.change(field.definitionValue, definitionValue);
-		this.setState({
-			formData: {
-				...this.state.formData,
-				[field.processCd]      : selectedProcessCode,
-				[field.definitionValue]: definitionValue,
-			},
-		});
-	};
-
 	render() {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 
-		let {handleSubmit, columnsModelArticle, dataModelArticle, onReset, submissionState} = this.props;
-		let {formData, dataProcess}                                                         = this.state;
+		let {columnsModelArticle, dataModelArticle, handleSubmit, onReset, submissionState} = this.props;
+		let {formData, processList}                                                         = this.state;
 
 		let definitionArray     = formData[field.definitionValue].split("");
 		let temperatureDisabled = parseInt(definitionArray[0]) === 0;
@@ -240,9 +238,9 @@ class AlarmMasterForm extends Component {
 					<div style={{display: "flex", flexDirection: "column"}}>
 						<span className="form__form-group-label text-uppercase"
 						      style={{paddingTop: 30, paddingLeft: 20, minHeight: 80}}>Process</span>
-						<ul className="list-group bg-transparent" style={{width: "100%"}} onClick={this.onClickProcess}>
+						<ul className="list-group bg-transparent" style={{width: "100%"}} onClick={this.onProcessClick}>
 							{
-								dataProcess.map(item => {
+								processList.map(item => {
 									let itemClass = (item[field.processCd] == formData[field.processCd])
 									                ? 'list-group-item border-0 selected-process-code'
 									                : 'list-group-item border-0 not-selected-process-code';
