@@ -54,7 +54,7 @@ class AlarmMasterForm extends Component {
 			}
 		});
 		if (params.resetForm) {
-			this.resetFormFields();
+			this.props.onReset();
 		}
 	};
 
@@ -116,40 +116,6 @@ class AlarmMasterForm extends Component {
 				...this.state.formData,
 				[field.processCd]      : selectedProcessCode,
 				[field.definitionValue]: definitionValue,
-			},
-		});
-	};
-
-	resetFormFields = () => {
-		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
-		this.setState({
-			formData: {
-				...this.state.formData,
-				[field.processCd]: '',
-
-				[field.tempStandardFrom]: '',
-				[field.tempStandardTo]  : '',
-				[field.tempYellowFirst] : '',
-				[field.tempYellowLast]  : '',
-				[field.tempRedFirst]    : '',
-				[field.tempRedLast]     : '',
-
-				[field.presStandardFrom]: '',
-				[field.presStandardTo]  : '',
-				[field.presYellowFirst] : '',
-				[field.presYellowLast]  : '',
-				[field.presRedFirst]    : '',
-				[field.presRedLast]     : '',
-
-				[field.curStandardFrom]: '',
-				[field.curStandardTo]  : '',
-				[field.curYellowFirst] : '',
-				[field.curYellowLast]  : '',
-				[field.curRedFirst]    : '',
-				[field.curRedLast]     : '',
-
-				[field.remark]         : '',
-				[field.definitionValue]: '000',
 			},
 		});
 	};
@@ -218,8 +184,8 @@ class AlarmMasterForm extends Component {
 	render() {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 
-		let {columnsModelArticle, dataModelArticle, handleSubmit, onReset, submissionState} = this.props;
-		let {formData, processList}                                                         = this.state;
+		let {columnsModelArticle, dataModelArticle, handleSubmit, reset, onReset, submissionState} = this.props;
+		let {formData, processList}                                                                = this.state;
 
 		let definitionArray     = formData[field.definitionValue].split("");
 		let temperatureDisabled = parseInt(definitionArray[0]) === 0;
@@ -818,10 +784,6 @@ class AlarmMasterForm extends Component {
 								</Button>
 								<Button type="button" onClick={() => {
 									reset();
-									this.setState({
-										formData: {},
-										editMode: false,
-									});
 									onReset();
 								}}>
 									Cancel

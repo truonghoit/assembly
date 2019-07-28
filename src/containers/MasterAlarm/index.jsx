@@ -336,8 +336,36 @@ class MasterAlarm extends Component {
 	};
 
 	onReset = () => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.setState({
-			formData: {},
+			formData: {
+				...this.state.formData,
+				[field.processCd]: '',
+
+				[field.tempStandardFrom]: '',
+				[field.tempStandardTo]  : '',
+				[field.tempYellowFirst] : '',
+				[field.tempYellowLast]  : '',
+				[field.tempRedFirst]    : '',
+				[field.tempRedLast]     : '',
+
+				[field.presStandardFrom]: '',
+				[field.presStandardTo]  : '',
+				[field.presYellowFirst] : '',
+				[field.presYellowLast]  : '',
+				[field.presRedFirst]    : '',
+				[field.presRedLast]     : '',
+
+				[field.curStandardFrom]: '',
+				[field.curStandardTo]  : '',
+				[field.curYellowFirst] : '',
+				[field.curYellowLast]  : '',
+				[field.curRedFirst]    : '',
+				[field.curRedLast]     : '',
+
+				[field.remark]         : '',
+				[field.definitionValue]: '000',
+			},
 			editMode: false,
 		});
 	};
