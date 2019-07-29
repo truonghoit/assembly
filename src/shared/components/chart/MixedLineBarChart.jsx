@@ -103,19 +103,12 @@ export default class MixedLineBarChart extends PureComponent {
 				//     datasets: data
 				// };
 				// This works too
-				this.myChart.data = {
+				 this.myChart.data = {
 					labels  : labels,
 					datasets: data
 				};
 
-				this.myChart.options.legend.display = !!showLegend;
-
-				if (customTooltips) {
-					this.myChart.options.tooltips = customTooltips;
-				}
-
 				this.myChart.update();
-				this.setState({loading: false});
 			}
 		}
 	}
