@@ -80,47 +80,98 @@ class LeadDetailTable extends Component {
 		try {
 			let rowFooter = <tr></tr>
 			let data = leadDetailData[leadDetailData.length - 1];
-			let totalQTyLastRow = this.totalQty.reduce((a, b) => a + b, 0);
-			let totalLTLastRow = ((this.totalLT.reduce((a, b) => a + parseFloat(b), 0))/60).toFixed(2);//60: change
-			// to minutes
+			let totalQTyLastRow = [];
+			let totalLTLastRow = [];
+
+			totalQTyLastRow[0] = 0; totalQTyLastRow[1] = 0; totalQTyLastRow[2] = 0; totalQTyLastRow[3] = 0;
+			totalQTyLastRow[4] = 0; totalQTyLastRow[5] = 0; totalQTyLastRow[6] = 0; totalQTyLastRow[7] = 0;
+			totalQTyLastRow[8] = 0; totalQTyLastRow[9] = 0; totalQTyLastRow[10] = 0; totalQTyLastRow[11] = 0;
+			totalQTyLastRow[12] = 0; totalQTyLastRow[13] = 0; totalQTyLastRow[14] = 0; totalQTyLastRow[15] = 0;
+
+			totalLTLastRow[0] = 0; totalLTLastRow[1] = 0; totalLTLastRow[2] = 0; totalLTLastRow[3] = 0;
+			totalLTLastRow[4] = 0; totalLTLastRow[5] = 0; totalLTLastRow[6] = 0; totalLTLastRow[7] = 0;
+			totalLTLastRow[8] = 0; totalLTLastRow[9] = 0; totalLTLastRow[10] = 0; totalLTLastRow[11] = 0;
+			totalLTLastRow[12] = 0; totalLTLastRow[13] = 0; totalLTLastRow[14] = 0; totalLTLastRow[15] = 0;
+
+			console.log("leadDetailData: ", leadDetailData);
+			for (let i = 0; i < leadDetailData.length; i++){
+				totalQTyLastRow[0] = leadDetailData[i].Qty_0730;
+				totalQTyLastRow[1] = leadDetailData[i].Qty_0830;
+				totalQTyLastRow[2] = leadDetailData[i].Qty_0930;
+				totalQTyLastRow[3] = leadDetailData[i].Qty_1030;
+				totalQTyLastRow[4] = leadDetailData[i].Qty_1130;
+				totalQTyLastRow[5] = leadDetailData[i].Qty_1230;
+				totalQTyLastRow[6] = leadDetailData[i].Qty_1330;
+				totalQTyLastRow[7] = leadDetailData[i].Qty_1430;
+				totalQTyLastRow[8] = leadDetailData[i].Qty_1530;
+				totalQTyLastRow[9] = leadDetailData[i].Qty_1630;
+				totalQTyLastRow[10] = leadDetailData[i].Qty_1730;
+				totalQTyLastRow[11] = leadDetailData[i].Qty_1830;
+				totalQTyLastRow[12] = leadDetailData[i].Qty_1930;
+				totalQTyLastRow[13] = leadDetailData[i].Qty_2030;
+				totalQTyLastRow[14] = leadDetailData[i].Qty_2130;
+				totalQTyLastRow[15] = leadDetailData[i].Qty_2230;
+
+				totalLTLastRow[0]   = leadDetailData[i].LT_0730;
+				totalLTLastRow[1]   = leadDetailData[i].LT_0830;
+				totalLTLastRow[2]   = leadDetailData[i].LT_0930;
+				totalLTLastRow[3]   = leadDetailData[i].LT_1030;
+				totalLTLastRow[4]   = leadDetailData[i].LT_1130;
+				totalLTLastRow[5]   = leadDetailData[i].LT_1230;
+				totalLTLastRow[6]   = leadDetailData[i].LT_1330;
+				totalLTLastRow[7]   = leadDetailData[i].LT_1430;
+				totalLTLastRow[8]   = leadDetailData[i].LT_1530;
+				totalLTLastRow[9]   = leadDetailData[i].LT_1630;
+				totalLTLastRow[10]   = leadDetailData[i].LT_1730;
+				totalLTLastRow[11]   = leadDetailData[i].LT_1830;
+				totalLTLastRow[12]   = leadDetailData[i].LT_1930;
+				totalLTLastRow[13]   = leadDetailData[i].LT_2030;
+				totalLTLastRow[14]   = leadDetailData[i].LT_2130;
+				totalLTLastRow[15]   = leadDetailData[i].LT_2230;
+			}
+			console.log("this.totalQty: ", this.totalQty);
+			console.log("this.totalLT: ", this.totalLT);
+			totalQTyLastRow[16] = this.totalQty[leadDetailData.length - 1];
+			totalLTLastRow[16] = ((this.totalLT.reduce((a, b) => a + parseFloat(b), 0))/60).toFixed(2);//60: change to
+			// minutes
 			console.log("data.process_nm: ", data.process_nm);
 			if (data.process_nm.toUpperCase() === "Packing".toUpperCase()){
 				rowFooter = <tr>
 					<td>ASC LEAD-TIME</td>
-					<td style={{textAlign:'center'}}>{data.LT_0730}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_0730}</td>
-					<td style={{textAlign:'center'}}>{data.LT_0830}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_0830}</td>
-					<td style={{textAlign:'center'}}>{data.LT_0930}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_0930}</td>
-					<td style={{textAlign:'center'}}>{data.LT_1030}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_1030}</td>
-					<td style={{textAlign:'center'}}>{data.LT_1130}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_1130}</td>
-					<td style={{textAlign:'center'}}>{data.LT_1230}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_1230}</td>
-					<td style={{textAlign:'center'}}>{data.LT_1330}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_1330}</td>
-					<td style={{textAlign:'center'}}>{data.LT_1430}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_1430}</td>
-					<td style={{textAlign:'center'}}>{data.LT_1530}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_1530}</td>
-					<td style={{textAlign:'center'}}>{data.LT_1630}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_1630}</td>
-					<td style={{textAlign:'center'}}>{data.LT_1730}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_1730}</td>
-					<td style={{textAlign:'center'}}>{data.LT_1830}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_1830}</td>
-					<td style={{textAlign:'center'}}>{data.LT_1930}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_1930}</td>
-					<td style={{textAlign:'center'}}>{data.LT_2030}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_2030}</td>
-					<td style={{textAlign:'center'}}>{data.LT_2130}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_2130}</td>
-					<td style={{textAlign:'center'}}>{data.LT_2230}</td>
-					<td style={{textAlign:'center'}}>{data.Qty_2230}</td>
-					<td style={{textAlign:'center', backgroundColor: '#082738'}}>{totalQTyLastRow}</td>
-					<td style={{textAlign:'center', backgroundColor: '#082738'}}>{totalLTLastRow}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[0]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[0]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[1]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[1]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[2]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[2]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[3]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[3]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[4]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[4]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[5]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[5]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[6]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[6]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[7]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[7]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[8]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[8]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[9]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[9]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[10]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[10]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[11]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[11]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[12]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[12]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[13]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[13]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[14]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[14]}</td>
+					<td style={{textAlign:'center'}}>{totalQTyLastRow[15]}</td>
+					<td style={{textAlign:'center'}}>{totalLTLastRow[15]}</td>
+					<td style={{textAlign:'center', backgroundColor: '#082738'}}>{totalQTyLastRow[16]}</td>
+					<td style={{textAlign:'center', backgroundColor: '#082738'}}>{totalLTLastRow[16]}</td>
 				</tr>
 			}
 			tableFooter =   <tfoot>
