@@ -9,13 +9,6 @@ class LeadDetailTable extends Component {
 
 	fillRow = (data, i = 0) => {
 		if (data) {
-			console.log("data 11: ", data);
-			let color = '#FFFFFF';
-			this.totalQty[i] = data.Qty_0730 + data.Qty_0830 + data.Qty_0930 + data.Qty_1030 + data.Qty_1130 +
-			                   data.Qty_1130 + data.Qty_1230 + data.Qty_1330 + data.Qty_1430 + data.Qty_1530 +
-			                   data.Qty_1630 + data.Qty_1730 + data.Qty_1830 + data.Qty_1930 + data.Qty_2030 +
-			                   data.Qty_2130 + data.Qty_2230;
-			this.totalLT[i] = (DAY_WORKING_SECONDS/this.totalQty[i]).toFixed(2);
 			return (<tr>
 						<td>{data.process_nm}</td>
 						<td style={{textAlign:'center', color: data.flag_Qty_0730 && data.flag_Qty_0730!=""?'#FF9C64':'#BEBEBE'}}>{data.Qty_0730}</td>
@@ -50,8 +43,8 @@ class LeadDetailTable extends Component {
 						<td style={{textAlign:'center'}}>{data.LT_2130}</td>
 						<td style={{textAlign:'center', color: data.flag_Qty_2230!=""?'#FF9C64':'#BEBEBE'}}>{data.Qty_2230}</td>
 						<td style={{textAlign:'center'}}>{data.LT_2230}</td>
-						<td style={{textAlign:'center', backgroundColor: '#082738'}}>{this.totalQty[i]}</td>
-						<td style={{textAlign:'center', backgroundColor: '#082738'}}>{this.totalLT[i]}</td>
+						<td style={{textAlign:'center', backgroundColor: '#082738'}}>{data.totalQty}</td>
+						<td style={{textAlign:'center', backgroundColor: '#082738'}}>{data.totalLT}</td>
 					</tr>);
 		}
 	}
@@ -75,67 +68,14 @@ class LeadDetailTable extends Component {
 		return tableBody;
 	}
 
-	fillTableFooter = (leadDetailData) => {
+	fillTableFooter = (leadDetailFooter) => {
 		let tableFooter = null;
 		try {
+			let totalQTyLastRow = leadDetailFooter.totalQTyLastRow;
+			let totalLTLastRow = leadDetailFooter.totalLTLastRow;
 			let rowFooter = <tr></tr>
-			let data = leadDetailData[leadDetailData.length - 1];
-			let totalQTyLastRow = [];
-			let totalLTLastRow = [];
-
-			totalQTyLastRow[0] = 0; totalQTyLastRow[1] = 0; totalQTyLastRow[2] = 0; totalQTyLastRow[3] = 0;
-			totalQTyLastRow[4] = 0; totalQTyLastRow[5] = 0; totalQTyLastRow[6] = 0; totalQTyLastRow[7] = 0;
-			totalQTyLastRow[8] = 0; totalQTyLastRow[9] = 0; totalQTyLastRow[10] = 0; totalQTyLastRow[11] = 0;
-			totalQTyLastRow[12] = 0; totalQTyLastRow[13] = 0; totalQTyLastRow[14] = 0; totalQTyLastRow[15] = 0;
-
-			totalLTLastRow[0] = 0; totalLTLastRow[1] = 0; totalLTLastRow[2] = 0; totalLTLastRow[3] = 0;
-			totalLTLastRow[4] = 0; totalLTLastRow[5] = 0; totalLTLastRow[6] = 0; totalLTLastRow[7] = 0;
-			totalLTLastRow[8] = 0; totalLTLastRow[9] = 0; totalLTLastRow[10] = 0; totalLTLastRow[11] = 0;
-			totalLTLastRow[12] = 0; totalLTLastRow[13] = 0; totalLTLastRow[14] = 0; totalLTLastRow[15] = 0;
-
-			console.log("leadDetailData: ", leadDetailData);
-			for (let i = 0; i < leadDetailData.length; i++){
-				totalQTyLastRow[0] = leadDetailData[i].Qty_0730;
-				totalQTyLastRow[1] = leadDetailData[i].Qty_0830;
-				totalQTyLastRow[2] = leadDetailData[i].Qty_0930;
-				totalQTyLastRow[3] = leadDetailData[i].Qty_1030;
-				totalQTyLastRow[4] = leadDetailData[i].Qty_1130;
-				totalQTyLastRow[5] = leadDetailData[i].Qty_1230;
-				totalQTyLastRow[6] = leadDetailData[i].Qty_1330;
-				totalQTyLastRow[7] = leadDetailData[i].Qty_1430;
-				totalQTyLastRow[8] = leadDetailData[i].Qty_1530;
-				totalQTyLastRow[9] = leadDetailData[i].Qty_1630;
-				totalQTyLastRow[10] = leadDetailData[i].Qty_1730;
-				totalQTyLastRow[11] = leadDetailData[i].Qty_1830;
-				totalQTyLastRow[12] = leadDetailData[i].Qty_1930;
-				totalQTyLastRow[13] = leadDetailData[i].Qty_2030;
-				totalQTyLastRow[14] = leadDetailData[i].Qty_2130;
-				totalQTyLastRow[15] = leadDetailData[i].Qty_2230;
-
-				totalLTLastRow[0]   = leadDetailData[i].LT_0730;
-				totalLTLastRow[1]   = leadDetailData[i].LT_0830;
-				totalLTLastRow[2]   = leadDetailData[i].LT_0930;
-				totalLTLastRow[3]   = leadDetailData[i].LT_1030;
-				totalLTLastRow[4]   = leadDetailData[i].LT_1130;
-				totalLTLastRow[5]   = leadDetailData[i].LT_1230;
-				totalLTLastRow[6]   = leadDetailData[i].LT_1330;
-				totalLTLastRow[7]   = leadDetailData[i].LT_1430;
-				totalLTLastRow[8]   = leadDetailData[i].LT_1530;
-				totalLTLastRow[9]   = leadDetailData[i].LT_1630;
-				totalLTLastRow[10]   = leadDetailData[i].LT_1730;
-				totalLTLastRow[11]   = leadDetailData[i].LT_1830;
-				totalLTLastRow[12]   = leadDetailData[i].LT_1930;
-				totalLTLastRow[13]   = leadDetailData[i].LT_2030;
-				totalLTLastRow[14]   = leadDetailData[i].LT_2130;
-				totalLTLastRow[15]   = leadDetailData[i].LT_2230;
-			}
-			console.log("this.totalQty: ", this.totalQty);
-			console.log("this.totalLT: ", this.totalLT);
-			totalQTyLastRow[16] = this.totalQty[leadDetailData.length - 1];
-			totalLTLastRow[16] = ((this.totalLT.reduce((a, b) => a + parseFloat(b), 0))/60).toFixed(2);//60: change to
-			// minutes
-			console.log("data.process_nm: ", data.process_nm);
-			if (data.process_nm.toUpperCase() === "Packing".toUpperCase()){
+			//this.props.fillLeadDetailChart(totalQTyLastRow, totalLTLastRow);
+			if (totalQTyLastRow.length > 0 && totalLTLastRow.length > 0){
 				rowFooter = <tr>
 					<td>ASC LEAD-TIME</td>
 					<td style={{textAlign:'center'}}>{totalQTyLastRow[0]}</td>
@@ -187,22 +127,10 @@ class LeadDetailTable extends Component {
 		return tableFooter;
 	}
 
-	initTotal = (leadDetailData) => {
-		this.totalQty = [];
-		this.totalLT = [];
-		if (leadDetailData.length > 0){
-			for (let i = 0; i < leadDetailData.length; i++){
-				this.totalQty[i] = 0;
-				this.totalLT[i] = 0;
-			}
-		}
-	}
-
 	render() {
-		let {leadDetailData} = this.props;
-		this.initTotal(leadDetailData);
+		let {leadDetailData, leadDetailFooter} = this.props;
 		let tableBody = this.fillTableBody(leadDetailData);
-		let tableFooter = this.fillTableFooter(leadDetailData);
+		let tableFooter = this.fillTableFooter(leadDetailFooter);
 		return (
 			<Table responsive style={{backgroundColor: '#232529', color: 'white'}}>
 				<thead>
