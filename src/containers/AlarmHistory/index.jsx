@@ -5,13 +5,13 @@ import FilterRange                                                       from ".
 import {changeDateToUnix}                                                from "../../shared/utils/Utilities";
 import {ASSEMBLY_API, MACHINE_ALARM_STATUS, PRODUCTION_LEAD_TIME_DETAIL} from "../../constants/urlConstants";
 import callAxios                                                         from "../../services/api";
-import MachineAlarmTable                                                 from "./components/MachineAlarmTable";
+import AlarmHistoryTable                                                 from "./components/AlarmHistoryTable";
 
 class MachineAlarmStatus extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			machineStatusData: [],
+			alarmHistoryData: [],
 			filterFromDate: changeDateToUnix(new Date()),
 			filterToDate  : changeDateToUnix(new Date()),
 			filterLine    : '',
@@ -41,11 +41,11 @@ class MachineAlarmStatus extends Component {
 			// {"status":200,"data":[{"alarm_date":"2019.07.09","factory_cd":"AS2","line_cd":"2030","process_cd":"20105","sensor_type":"Temp","alarm_seq":1,"alarm_time":"05:15:40","alarm":"G","value":"","article_no":"R6-30500","created_date":1562660433,"standard_from":1234570000,"standard_to":2,"model_nm":"PRINCESS WIDE D","article_nm":"R6-30500","process_nm":"Packpart Molding"}]}
 
 			try {
-				let machineStatusData = [{"alarm_date":"2019.07.09","factory_cd":"AS2","line_cd":"2030","process_cd":"20105","sensor_type":"Temp","alarm_seq":1,"alarm_time":"05:15:40","alarm":"G","value":"","article_no":"R6-30500","created_date":1562660433,"standard_from":1234570000,"standard_to":2,"model_nm":"PRINCESS WIDE D","article_nm":"R6-30500","process_nm":"Packpart Molding"}];
-				console.log("machineStatusData: ", machineStatusData);
+				let alarmHistoryData = [{"alarm_date":"2019.07.09","factory_cd":"AS2","line_cd":"2030","process_cd":"20105","sensor_type":"Temp","alarm_seq":1,"alarm_time":"05:15:40","alarm":"G","value":"","article_no":"R6-30500","created_date":1562660433,"standard_from":1234570000,"standard_to":2,"model_nm":"PRINCESS WIDE D","article_nm":"R6-30500","process_nm":"Packpart Molding"}];
+				console.log("alarmHistoryData: ", alarmHistoryData);
 				this.setState({
 					...this.state,
-					machineStatusData: machineStatusData,
+					alarmHistoryData: alarmHistoryData,
 				});
 			} catch (e) {
 				console.log("Error: ", e);
@@ -87,7 +87,7 @@ class MachineAlarmStatus extends Component {
 	}
 
 	render() {
-		let {machineStatusData} = this.state;
+		let {alarmHistoryData} = this.state;
 		return (
 			<Container className="dashboard">
 				<h3>DASHBOARD / MACHINE ALARM STATUS</h3>
@@ -99,7 +99,7 @@ class MachineAlarmStatus extends Component {
 				             handleFilterArticleChange={this.handleFilterArticleChange}/>
 				<hr/>
 				<Col md={12} lg={12}>
-					<MachineAlarmTable machineStatusData={machineStatusData}/>
+					<AlarmHistoryTable alarmHistoryData={alarmHistoryData}/>
 				</Col>
 			</Container>
 		);
