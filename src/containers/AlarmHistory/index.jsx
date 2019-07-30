@@ -3,7 +3,7 @@ import {withRouter}                                                      from "r
 import {Col, Container}                                                  from "reactstrap";
 import FilterRange                                                       from "../../shared/components/filter_range/FilterRange";
 import {changeDateToUnix}                                                from "../../shared/utils/Utilities";
-import {ASSEMBLY_API, MACHINE_ALARM_STATUS, PRODUCTION_LEAD_TIME_DETAIL} from "../../constants/urlConstants";
+import {ASSEMBLY_API, PRODUCTION_LEAD_TIME_DETAIL} from "../../constants/urlConstants";
 import callAxios                                                         from "../../services/api";
 import AlarmHistoryTable                                                 from "./components/AlarmHistoryTable";
 
@@ -24,7 +24,7 @@ class AlarmHistory extends Component {
 	loadMachineAlarmTable = () => {
 		let {filterFromDate, filterToDate, filterLine, filterModel, filterArticle} = this.state;
 		let method = 'POST';
-		let url    = ASSEMBLY_API + MACHINE_ALARM_STATUS;
+		let url    = ASSEMBLY_API + ALARM_HISTORY;
 		let params = {
 			"factory": "",
 			"line": "",
