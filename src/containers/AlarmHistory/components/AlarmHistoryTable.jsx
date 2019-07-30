@@ -63,7 +63,7 @@ const columns = [
 	{title: "ARTICLE", field: "article", width: '10%', align: "center", headerFilter: "input", formatter: "input"},
 ];
 
-const data = [
+const alarmHistoryData = [
 	{
 	"process_nm": "Backpack Molding",
 	"alarm_date": "2019.06.03",
@@ -99,14 +99,14 @@ const data = [
 	}
 ]
 
-class MachineAlarmTable extends Component {
+class AlarmHistoryTable extends Component {
 	state = {
 		data: []
 	};
 
 	render() {
-		/*let {tableData} = this.props;
-		tableData = tableData ? tableData : [];*/
+		/*let {alarmHistoryData} = this.props;
+		 alarmHistoryData = alarmHistoryData ? alarmHistoryData : [];*/
 		const options = {
 			height: "40em",
 			movableRows: false,
@@ -115,7 +115,7 @@ class MachineAlarmTable extends Component {
 			<ReactTabulator
 				ref={ref => (this.ref = ref)}
 				columns={columns}
-				data={data}
+				data={alarmHistoryData}
 				rowClick={this.rowClick}
 				options={options}
 			/>
@@ -123,4 +123,4 @@ class MachineAlarmTable extends Component {
 	}
 }
 
-export default MachineAlarmTable;
+export default AlarmHistoryTable;
