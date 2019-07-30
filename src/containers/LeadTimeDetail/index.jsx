@@ -5,9 +5,9 @@ import FilterRange                                 from "../../shared/components
 import {Container, Row}                            from 'reactstrap';
 import LeadDetailTable                             from './Components/LeadDetailTable';
 import MixedLineBarChart                           from "../../shared/components/chart/MixedLineBarChart";
-import {ASSEMBLY_API, PRODUCTION_LEAD_TIME_DETAIL} from "../../constants/constants";
+import {ASSEMBLY_API, PRODUCTION_LEAD_TIME_DETAIL} from "../../constants/urlConstants";
 import callAxios                                   from "../../services/api";
-import {DAY_WORKING_SECONDS}                       from "../../constants/variable_constants";
+import {DAY_WORKING_SECONDS}                       from "../../constants/variableConstants";
 
 class LeadTimeDetail extends Component {
 	constructor(props) {
@@ -204,7 +204,11 @@ class LeadTimeDetail extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let leadDetailData = response.data.data;
+				/*this.setState((state, props) => ({
+					test: "123"
+				}));*/
 				this.handleTableArray(leadDetailData);
+
 			} catch (e) {
 				console.log("Error: ", e);
 			}
