@@ -7,7 +7,7 @@ import {ASSEMBLY_API, MACHINE_ALARM_STATUS, PRODUCTION_LEAD_TIME_DETAIL} from ".
 import callAxios                                                         from "../../services/api";
 import AlarmHistoryTable                                                 from "./components/AlarmHistoryTable";
 
-class MachineAlarmStatus extends Component {
+class AlarmHistory extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -106,4 +106,4 @@ class MachineAlarmStatus extends Component {
 	}
 }
 
-export default withRouter(MachineAlarmStatus);
+export default withRouter(AlarmHistory);
