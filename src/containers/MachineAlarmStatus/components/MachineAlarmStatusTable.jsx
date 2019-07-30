@@ -105,9 +105,81 @@ class MachineAlarmStatusTable extends Component {
 		data: []
 	};
 
+	fillRow = rowData => {
+		let columns = [];
+		let totalGrey   =   parseInt(rowData.sensor_no_1_gray) + parseInt(rowData.sensor_no_2_gray) + parseInt(rowData.sensor_no_3_gray) +
+		                    parseInt(rowData.sensor_no_4_gray) + parseInt(rowData.sensor_no_5_gray) + parseInt(rowData.sensor_no_6_gray) +
+		                    parseInt(rowData.sensor_no_8_gray) + parseInt(rowData.sensor_no_8_gray);
+		let totalYellow =   parseInt(rowData.sensor_no_1_yellow) + parseInt(rowData.sensor_no_2_yellow) + parseInt(rowData.sensor_no_3_yellow) +
+		                    parseInt(rowData.sensor_no_4_yellow) + parseInt(rowData.sensor_no_5_yellow) + parseInt(rowData.sensor_no_6_yellow) +
+		                    parseInt(rowData.sensor_no_8_yellow) + parseInt(rowData.sensor_no_8_yellow);
+		let totalRed    =   parseInt(rowData.sensor_no_1_red) + parseInt(rowData.sensor_no_2_red) + parseInt(rowData.sensor_no_3_red) +
+		                    parseInt(rowData.sensor_no_4_red) + parseInt(rowData.sensor_no_5_red) + parseInt(rowData.sensor_no_6_red) +
+		                    parseInt(rowData.sensor_no_8_red) + parseInt(rowData.sensor_no_8_red);
+		columns[0] = <td style={{textAlign:'center', verticalAlign: 'middle'}}>{rowData.process_nm}</td>
+
+		columns[1] = <td style={{textAlign:'center'}}></td>
+		columns[2] = <td style={{textAlign:'center'}}></td>
+		columns[3] = <td style={{textAlign:'center'}}></td>
+		columns[4] = <td style={{textAlign:'center'}}></td>
+		columns[5] = <td style={{textAlign:'center'}}></td>
+		columns[6] = <td style={{textAlign:'center'}}></td>
+		columns[7] = <td style={{textAlign:'center'}}></td>
+		columns[8] = <td style={{textAlign:'center'}}></td>
+		columns[9] = <td style={{textAlign:'center', backgroundColor: '#082738'}}>
+						<div className="d-flex flex-column justify-content-center">
+							<div className="d-flex justify-content-around">
+								<span style={{color:'#BEBEBE', fontSize: 'large'}}>●</span>
+								<span style={{color:'#FFD44F', fontSize: 'large'}}>●</span>
+								<span style={{color:'#F84E4E', fontSize: 'large'}}>●</span>
+							</div>
+							<div className="d-flex justify-content-around">
+								<span>{totalGrey}</span>
+								<span>{totalYellow}</span>
+								<span>{totalRed}</span>
+							</div>
+						</div>
+					</td>
+		for (let i = 1; i < 9; i++) {
+			let grayValue = `sensor_no_${i}_gray`;
+			let yellowValue = `sensor_no_${i}_yellow`;
+			let redValue = `sensor_no_${i}_red`;
+			if (rowData[grayValue] > 0 || rowData[yellowValue] > 0 || rowData[redValue]){
+				columns[i] = <td style={{textAlign:'center'}}>
+								<div className="d-flex flex-column justify-content-center">
+									<div className="d-flex justify-content-around">
+										<span style={{color:'#BEBEBE', fontSize: 'large'}}>●</span>
+										<span style={{color:'#FFD44F', fontSize: 'large'}}>●</span>
+										<span style={{color:'#F84E4E', fontSize: 'large'}}>●</span>
+									</div>
+									<div className="d-flex justify-content-around">
+										<span>{rowData[grayValue]}</span>
+										<span>{rowData[yellowValue]}</span>
+										<span>{rowData[redValue]}</span>
+									</div>
+								</div>
+							</td>
+			}
+		}
+		return columns;
+	}
+
+	fillTableBody = data => {
+		console.log("fillTableData");
+		console.log("data 110: ", data);
+		let tableRow = [];
+		for (let i = 0; i < data.length; i++){
+			tableRow[i] = this.fillRow(data[i]);
+		}
+		return  <tbody>
+					{tableRow}
+				</tbody>
+	}
+
 	render() {
-		let {machineAlarmData} = this.props;
-		machineAlarmData = machineAlarmData ? machineAlarmData : [];
+		let {data} = this.props;
+		data = data ? data : [];
+		let tableBody = this.fillTableBody(data);
 		const options = {
 			height: "40em",
 			movableRows: false,
@@ -128,46 +200,7 @@ class MachineAlarmStatusTable extends Component {
 					<td style={{textAlign:'center', backgroundColor: '#082738'}}>TOTAL</td>
 				</tr>
 				</thead>
-				<tbody>
-				<tr>
-					<td style={{textAlign:'center', verticalAlign: 'middle'}}>Backpart Molding</td>
-					<td style={{textAlign:'center'}}>
-						<div className="d-flex flex-column justify-content-center">
-							<div className="d-flex justify-content-around">
-								<span style={{color:'#BEBEBE', fontSize: 'large'}}>●</span>
-								<span style={{color:'#FFD44F', fontSize: 'large'}}>●</span>
-								<span style={{color:'#F84E4E', fontSize: 'large'}}>●</span>
-							</div>
-							<div className="d-flex justify-content-around">
-								<span>0</span>
-								<span>12</span>
-								<span>8</span>
-							</div>
-						</div>
-					</td>
-					<td style={{textAlign:'center'}}></td>
-					<td style={{textAlign:'center'}}></td>
-					<td style={{textAlign:'center'}}></td>
-					<td style={{textAlign:'center'}}></td>
-					<td style={{textAlign:'center'}}></td>
-					<td style={{textAlign:'center'}}></td>
-					<td style={{textAlign:'center'}}></td>
-					<td style={{textAlign:'center', backgroundColor: '#082738'}}>
-						<div className="d-flex flex-column justify-content-center">
-							<div className="d-flex justify-content-around">
-								<span style={{color:'#BEBEBE', fontSize: 'large'}}>●</span>
-								<span style={{color:'#FFD44F', fontSize: 'large'}}>●</span>
-								<span style={{color:'#F84E4E', fontSize: 'large'}}>●</span>
-							</div>
-							<div className="d-flex justify-content-around">
-								<span>0</span>
-								<span>12</span>
-								<span>8</span>
-							</div>
-						</div>
-					</td>
-				</tr>
-				</tbody>
+				{tableBody}
 			</Table>
 		);
 	}
