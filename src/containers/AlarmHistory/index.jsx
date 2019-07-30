@@ -90,7 +90,7 @@ class MachineAlarmStatus extends Component {
 		let {alarmHistoryData} = this.state;
 		return (
 			<Container className="dashboard">
-				<h3>DASHBOARD / MACHINE ALARM STATUS</h3>
+				<h3>DASHBOARD / ALARM HISTORY</h3>
 				<hr/>
 				<FilterRange handleFilterFromDateChange={this.handleFilterFromDateChange}
 				             handleFilterToDateChange={this.handleFilterToDateChange}
