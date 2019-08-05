@@ -9,7 +9,6 @@ class ChartArea extends Component {
 	}
 
 	drawChartItem = (dataItem, type = "temp") => {
-		console.log("drawChartItem: ", dataItem);
 		let result =  null;
 		let bgColor = '';
 		let chartType = 'line';
@@ -165,7 +164,7 @@ class ChartArea extends Component {
 				standardData2.fill(0);
 			}
 
-			let chartOption = {
+			let chartOptions = {
 				legend: {
 					display : false,
 					position: 'left',
@@ -247,16 +246,13 @@ class ChartArea extends Component {
 			};
 
 			result = <Col md={2.5} lg={2.5} style={{backgroundColor: bgColor, marginRight: 10, marginBottom: 10, borderRadius: 5}}>
-				<MixedLineBarChart chartOption={chartOption} chartInitialData={initialData} labels={chartLabels} type={chartType} />
+				<MixedLineBarChart chartOptions={chartOptions} chartInitialData={initialData} labels={chartLabels} type={chartType} />
 			</Col>
 		}
 		return result;
 	}
 
 	fillChartContent = (chartData, type) => {
-		console.log("fillChartContent");
-		console.log("chartData: ", chartData);
-		console.log("type: ", type);
 		/*
 		 (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
 		 0:
@@ -270,7 +266,6 @@ class ChartArea extends Component {
 		 1: {graph_2: Array(3)}
 		 */
 		let chartArray = [];
-		console.log("43: ", chartData);
 		for (let i = 0; i < chartData.length; i++){
 			let dataItem = chartData[i][`graph_${i+1}`];
 			if (dataItem.length > 0){

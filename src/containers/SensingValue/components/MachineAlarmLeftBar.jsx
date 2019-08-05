@@ -15,7 +15,6 @@ class MachineAlarmLeftBar extends Component {
             selectedProcess: processData
         }));
         this.props.getChartData(processData);
-
     }
 
     fillProcessContent = (processData) => {

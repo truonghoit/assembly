@@ -86,8 +86,10 @@ class SensingValue extends Component {
 	}
 
 	getChartData = (processData) => {
+		console.log("getChartData getChartData getChartData");
+		console.log("getChartData getChartData getChartData");
+		console.log("processData: ", processData);
 		let definitionValue = processData.definition_value;
-		console.log("definitionValue: ", definitionValue);
 		if (parseInt(definitionValue.charAt(0)) > 0){
 			//Get temp data
 			let method = 'POST';
@@ -95,14 +97,13 @@ class SensingValue extends Component {
 			let params = {
 				"factory": "",
 				"line": "",
-				"process": "",
+				"process": processData.process_cd,
 				"from_date": 1563970019,
 				"to_date": 1564015974
 			}
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
-					console.log("SENSING_TEMP data: ", data);
 					this.setState((state,props)=> ({
 						tempChartData: data
 					}));
@@ -118,14 +119,13 @@ class SensingValue extends Component {
 			let params = {
 				"factory": "",
 				"line": "",
-				"process": "",
+				"process": processData.process_cd,
 				"from_date": 1563970019,
 				"to_date": 1564015974
 			}
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
-					console.log("SENSING_PRESS data: ", data);
 					this.setState((state,props)=> ({
 						pressureChartData: data
 					}));
@@ -142,14 +142,13 @@ class SensingValue extends Component {
 			let params = {
 				"factory": "",
 				"line": "",
-				"process": "",
+				"process": processData.process_cd,
 				"from_date": 1562722712,
 				"to_date": 1562722712
 			}
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
-					console.log("SENSING_TIME data: ", data);
 					this.setState((state,props)=> ({
 						curingChartData: data
 					}));
@@ -203,9 +202,6 @@ class SensingValue extends Component {
 
 	render() {
 		let {tempChartData, pressureChartData, curingChartData, processData} = this.state;
-		console.log("tempChartData: ", tempChartData);
-		console.log("pressureChartData: ", pressureChartData);
-		console.log("curingChartData: ", curingChartData);
 		return (
 			<Container className="dashboard">
 				<h3>DASHBOARD / SENSING VALUE</h3>
