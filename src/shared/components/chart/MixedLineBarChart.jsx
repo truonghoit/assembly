@@ -25,14 +25,14 @@ let initialData = {
 		{
 			label          : "Bar dataset",
 			backgroundColor: "#2880E9",
-			data           : [5, 5, 5, 5, 5, 5, 5]
+			data           : [2, 3, 5, 6, 3, 1, 2]
 		},
 	]
 };
 
 const options = {
 	legend: {
-		display : true,
+		display : false,
 		position: 'left',
 		labels: {
 			boxWidth: 60,
@@ -86,9 +86,12 @@ export default class MixedLineBarChart extends PureComponent {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
+		console.log("componentDidUpdate");
 		if (this.props !== prevProps) {
-			let {labels, data, customTooltips, showLegend} = this.props;
+			console.log("componentDidUpdate: this.props !== prevProps");
+			let {labels, data, customTooltips, showLegend, type} = this.props;
 			if (labels && data && this.canvas) {
+				console.log("94: ", data);
 				// These don't work
 				// this.myChart.data.labels = labels;
 				// this.myChart.data.datasets = data;
@@ -103,11 +106,16 @@ export default class MixedLineBarChart extends PureComponent {
 				//     datasets: data
 				// };
 				// This works too
-				 this.myChart.data = {
+				 /*this.myChart.data = {
 					labels  : labels,
 					datasets: data
-				};
+				};*/
 
+				this.myChart.options.legend.display = !!showLegend;
+				this.myChart.type = "bar";
+				if (type) {
+					this.myChart.type = type;
+				}
 				this.myChart.update();
 			}
 		}
@@ -115,12 +123,20 @@ export default class MixedLineBarChart extends PureComponent {
 
 	componentDidMount() {
 		const ctx    = this.canvas.getContext('2d');
+		let {type, chartInitialData, chartOption} = this.props;
+		if (!type){
+			type = 'bar';
+		}
+		let data = chartInitialData?chartInitialData:initialData;
+		let options = chartOption?chartOption:options;
 		this.myChart = new Chart(ctx, {
-			type   : 'bar',
-			data   : initialData,
+			type   : type,
+			data   : data,
 			options: options,
 			plugins: pluginDrawZeroLineForReportChart,
 		});
+
+		this.myChart.update();
 	}
 
 	render() {

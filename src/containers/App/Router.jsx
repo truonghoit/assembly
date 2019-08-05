@@ -10,6 +10,7 @@ import LeadTime           from "../LeadTime/index";
 import LeadTimeDetail     from "../LeadTimeDetail/index";
 import AlarmHistory from "../AlarmHistory/index";
 import MachineAlarmStatus from "../MachineAlarmStatus/index";
+import SensingValue from "../SensingValue/index";
 
 const Pages = () => (
 	<Switch>
@@ -19,6 +20,7 @@ const Pages = () => (
 		<Route path="/pages/lead-time-detail" component={LeadTimeDetail} />
 		<Route path="/pages/alarm-history" component={AlarmHistory} />
 		<Route path="/pages/machine-alarm-status" component={MachineAlarmStatus} />
+		<Route path="/pages/sensing-value" component={SensingValue} />
 	</Switch>
 );
 
