@@ -319,7 +319,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -333,7 +333,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempStandardFrom]: e.target.value,
+													[field.tempStandardFrom]: newValue,
 												}
 											});
 										}}
@@ -358,7 +358,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -372,7 +372,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempStandardTo]: e.target.value,
+													[field.tempStandardTo]: newValue,
 												}
 											});
 										}}
@@ -401,7 +401,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -415,7 +415,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.presStandardFrom]: e.target.value,
+													[field.presStandardFrom]: newValue,
 												}
 											});
 										}}
@@ -440,7 +440,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -454,7 +454,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.presStandardTo]: e.target.value,
+													[field.presStandardTo]: newValue,
 												}
 											});
 										}}
@@ -483,7 +483,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -497,7 +497,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.curStandardFrom]: e.target.value,
+													[field.curStandardFrom]: newValue,
 												}
 											});
 										}}
@@ -522,7 +522,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -536,7 +536,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.curStandardTo]: e.target.value,
+													[field.curStandardTo]: newValue,
 												}
 											});
 										}}
@@ -571,7 +571,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -585,7 +585,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempYellowFirst]: e.target.value,
+													[field.tempYellowFirst]: newValue,
 												}
 											});
 										}}
@@ -610,7 +610,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -624,7 +624,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempYellowLast]: e.target.value,
+													[field.tempYellowLast]: newValue,
 												}
 											});
 										}}
@@ -653,7 +653,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -667,7 +667,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.presYellowFirst]: e.target.value,
+													[field.presYellowFirst]: newValue,
 												}
 											});
 										}}
@@ -692,7 +692,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -706,7 +706,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.presYellowLast]: e.target.value,
+													[field.presYellowLast]: newValue,
 												}
 											});
 										}}
@@ -735,7 +735,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -749,7 +749,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.curYellowFirst]: e.target.value,
+													[field.curYellowFirst]: newValue,
 												}
 											});
 										}}
@@ -774,7 +774,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -788,7 +788,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.curYellowLast]: e.target.value,
+													[field.curYellowLast]: newValue,
 												}
 											});
 										}}
@@ -823,7 +823,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -837,7 +837,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempRedFirst]: e.target.value,
+													[field.tempRedFirst]: newValue,
 												}
 											});
 										}}
@@ -862,7 +862,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -876,7 +876,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempRedLast]: e.target.value,
+													[field.tempRedLast]: newValue,
 												}
 											});
 										}}
@@ -905,7 +905,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -919,7 +919,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.presRedFirst]: e.target.value,
+													[field.presRedFirst]: newValue,
 												}
 											});
 										}}
@@ -944,7 +944,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -958,7 +958,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.presRedLast]: e.target.value,
+													[field.presRedLast]: newValue,
 												}
 											});
 										}}
@@ -987,7 +987,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -1001,7 +1001,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.curRedFirst]: e.target.value,
+													[field.curRedFirst]: newValue,
 												}
 											});
 										}}
@@ -1026,7 +1026,7 @@ class AlarmMasterForm extends Component {
 											          : '',
 										}}
 										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
-										onChange={e => {
+										onChange={(event, newValue) => {
 											if (submitButtonClicked) {
 												this.setState({
 													submitButtonClicked: false,
@@ -1040,7 +1040,7 @@ class AlarmMasterForm extends Component {
 											this.setState({
 												formData: {
 													...formData,
-													[field.curRedLast]: e.target.value,
+													[field.curRedLast]: newValue,
 												}
 											});
 										}}
