@@ -16,7 +16,7 @@ let initialData = {
 	datasets: [
 		{
 			label          : "Line dataset",
-			data           : [4, 4, 4, 4, 4, 4, 4],
+			data           : [0, 0, 0, 0, 0, 0, 0],
 			type           : 'line',
 			borderColor: "#EBEDF1",
 			fill: false,
@@ -25,12 +25,12 @@ let initialData = {
 		{
 			label          : "Bar dataset",
 			backgroundColor: "#2880E9",
-			data           : [2, 3, 5, 6, 3, 1, 2]
+			data           : [0, 0, 0, 0, 0, 0, 0],
 		},
 	]
 };
 
-const options = {
+const initOptions = {
 	legend: {
 		display : false,
 		position: 'left',
@@ -86,12 +86,9 @@ export default class MixedLineBarChart extends PureComponent {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		console.log("componentDidUpdate");
 		if (this.props !== prevProps) {
-			console.log("componentDidUpdate: this.props !== prevProps");
 			let {labels, data, customTooltips, showLegend, type} = this.props;
 			if (labels && data && this.canvas) {
-				console.log("94: ", data);
 				// These don't work
 				// this.myChart.data.labels = labels;
 				// this.myChart.data.datasets = data;
@@ -106,10 +103,10 @@ export default class MixedLineBarChart extends PureComponent {
 				//     datasets: data
 				// };
 				// This works too
-				 /*this.myChart.data = {
+				 this.myChart.data = {
 					labels  : labels,
 					datasets: data
-				};*/
+				};
 
 				this.myChart.options.legend.display = !!showLegend;
 				this.myChart.type = "bar";
@@ -123,12 +120,12 @@ export default class MixedLineBarChart extends PureComponent {
 
 	componentDidMount() {
 		const ctx    = this.canvas.getContext('2d');
-		let {type, chartInitialData, chartOption} = this.props;
+		let {type, chartInitialData, chartOptions} = this.props;
 		if (!type){
 			type = 'bar';
 		}
 		let data = chartInitialData?chartInitialData:initialData;
-		let options = chartOption?chartOption:options;
+		let options = chartOptions?chartOptions:initOptions;
 		this.myChart = new Chart(ctx, {
 			type   : type,
 			data   : data,
