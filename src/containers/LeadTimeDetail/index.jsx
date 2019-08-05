@@ -30,11 +30,15 @@ class LeadTimeDetail extends Component {
 					borderColor: "#EBEDF1",
 					fill: false,
 					lineTension: 0,
+					pointRadius: 0,
+					pointHoverRadius: 0,
 				},
 				{
 					label          : "Bar dataset",
 					backgroundColor: "#2880E9",
-					data           : [0, 0, 0, 0, 0, 0, 0]
+					data           : [0, 0, 0, 0, 0, 0, 0],
+					pointRadius: 0,
+					pointHoverRadius: 0,
 				},
 			];
 
@@ -204,6 +208,9 @@ class LeadTimeDetail extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let leadDetailData = response.data.data;
+				console.log("207 207 207 207 207 207 207");
+				console.log("207 207 207 207 207 207 207");
+				console.log("leadDetailData: ", leadDetailData);
 				/*this.setState((state, props) => ({
 					test: "123"
 				}));*/
