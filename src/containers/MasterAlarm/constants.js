@@ -46,11 +46,16 @@ export const ALARM_MASTER_PAGE_CONSTANTS = {
 
 		remark         : 'remark',
 		definitionValue: 'definition_value',
+
+		emptyForm: 'empty_form',
 	},
 	submissionState    : {
 		initial: -1,
 		onGoing: 0,
 		done   : 1,
+	},
+	submissionError    : {
+		emptyForm: 'Please select a process and fill in the form before submission.',
 	},
 };
 

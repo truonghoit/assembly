@@ -10,6 +10,7 @@ import {ALARM_LIST_PROCESS, ASSEMBLY_API} from "../../../constants/constants";
 import callAxios                          from "../../../services/api";
 import LoadingSpinner                     from "../../../shared/components/loading_spinner/LoadingSpinner";
 import {ALARM_MASTER_PAGE_CONSTANTS}      from "../constants";
+import validate                           from './validate';
 
 class AlarmMasterForm extends Component {
 	static propTypes = {
@@ -21,10 +22,13 @@ class AlarmMasterForm extends Component {
 		super(props);
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.state  = ({
-			processList: [],
-			formData   : {
+			processList        : [],
+			formData           : {
 				[field.definitionValue]: '000',
 			},
+			editMode           : false,
+			submitButtonClicked: false,
+			submissionError    : '',
 		});
 	}
 
@@ -66,9 +70,11 @@ class AlarmMasterForm extends Component {
 
 		row.getElement().style.backgroundColor = "#f00";
 
-
 		let selectedRow = row._row.data;
 
+		this.setState({
+			submitButtonClicked: false,
+		});
 		this.props.onModelArticleClick(selectedRow);
 
 		let params = {
@@ -87,16 +93,10 @@ class AlarmMasterForm extends Component {
 		let {processList} = this.state;
 		processList.some(item => {
 			if (item[field.processCd] == selectedProcessCode) {
-				this.props.change(field.definitionValue, item[field.definitionValue]);
-
 				this.setState({
-					editMode: false,
-					formData: {
-						...this.state.formData,
-						[field.processCd]      : selectedProcessCode,
-						[field.definitionValue]: item[field.definitionValue],
-					},
+					submitButtonClicked: false,
 				});
+				this.props.change(field.definitionValue, item[field.definitionValue]);
 				this.props.onProcessClick(selectedProcessCode, item[field.definitionValue]);
 				return true;
 			}
@@ -112,11 +112,12 @@ class AlarmMasterForm extends Component {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.props.change(field.definitionValue, definitionValue);
 		this.setState({
-			formData: {
+			formData           : {
 				...this.state.formData,
 				[field.processCd]      : selectedProcessCode,
 				[field.definitionValue]: definitionValue,
 			},
+			submitButtonClicked: false,
 		});
 	};
 
@@ -132,29 +133,37 @@ class AlarmMasterForm extends Component {
 		let {field}    = ALARM_MASTER_PAGE_CONSTANTS;
 		let {formData} = this.state;
 
-		let temp_standard_from = formData[field.tempStandardFrom] ? formData[field.tempStandardFrom] : '';
-		let temp_standard_to   = formData[field.tempStandardTo] ? formData[field.tempStandardTo] : '';
-		let temp_yellow_first  = formData[field.tempYellowFirst] ? formData[field.tempYellowFirst] : '';
-		let temp_yellow_last   = formData[field.tempYellowLast] ? formData[field.tempYellowLast] : '';
-		let temp_red_first     = formData[field.tempRedFirst] ? formData[field.tempRedFirst] : '';
-		let temp_red_last      = formData[field.tempRedLast] ? formData[field.tempRedLast] : '';
+		let model_name   = formData[field.modelNm] ? formData[field.modelNm] : '';
+		let article_name = formData[field.articleNm] ? formData[field.articleNm] : '';
 
-		let pres_standard_from = formData[field.presStandardFrom] ? formData[field.presStandardFrom] : '';
-		let pres_standard_to   = formData[field.presStandardTo] ? formData[field.presStandardTo] : '';
-		let pres_yellow_first  = formData[field.presYellowFirst] ? formData[field.presYellowFirst] : '';
-		let pres_yellow_last   = formData[field.presYellowLast] ? formData[field.presYellowLast] : '';
-		let pres_red_first     = formData[field.presRedFirst] ? formData[field.presRedFirst] : '';
-		let pres_red_last      = formData[field.presRedLast] ? formData[field.presRedLast] : '';
+		let temp_standard_from = formData[field.tempStandardFrom] ? formData[field.tempStandardFrom] : '0';
+		let temp_standard_to   = formData[field.tempStandardTo] ? formData[field.tempStandardTo] : '0';
+		let temp_yellow_first  = formData[field.tempYellowFirst] ? formData[field.tempYellowFirst] : '0';
+		let temp_yellow_last   = formData[field.tempYellowLast] ? formData[field.tempYellowLast] : '0';
+		let temp_red_first     = formData[field.tempRedFirst] ? formData[field.tempRedFirst] : '0';
+		let temp_red_last      = formData[field.tempRedLast] ? formData[field.tempRedLast] : '0';
 
-		let cur_standard_from = formData[field.curStandardFrom] ? formData[field.curStandardFrom] : '';
-		let cur_standard_to   = formData[field.curStandardTo] ? formData[field.curStandardTo] : '';
-		let cur_yellow_first  = formData[field.curYellowFirst] ? formData[field.curYellowFirst] : '';
-		let cur_yellow_last   = formData[field.curYellowLast] ? formData[field.curYellowLast] : '';
-		let cur_red_first     = formData[field.curRedFirst] ? formData[field.curRedFirst] : '';
-		let cur_red_last      = formData[field.curRedLast] ? formData[field.curRedLast] : '';
+		let pres_standard_from = formData[field.presStandardFrom] ? formData[field.presStandardFrom] : '0';
+		let pres_standard_to   = formData[field.presStandardTo] ? formData[field.presStandardTo] : '0';
+		let pres_yellow_first  = formData[field.presYellowFirst] ? formData[field.presYellowFirst] : '0';
+		let pres_yellow_last   = formData[field.presYellowLast] ? formData[field.presYellowLast] : '0';
+		let pres_red_first     = formData[field.presRedFirst] ? formData[field.presRedFirst] : '0';
+		let pres_red_last      = formData[field.presRedLast] ? formData[field.presRedLast] : '0';
+
+		let cur_standard_from = formData[field.curStandardFrom] ? formData[field.curStandardFrom] : '0';
+		let cur_standard_to   = formData[field.curStandardTo] ? formData[field.curStandardTo] : '0';
+		let cur_yellow_first  = formData[field.curYellowFirst] ? formData[field.curYellowFirst] : '0';
+		let cur_yellow_last   = formData[field.curYellowLast] ? formData[field.curYellowLast] : '0';
+		let cur_red_first     = formData[field.curRedFirst] ? formData[field.curRedFirst] : '0';
+		let cur_red_last      = formData[field.curRedLast] ? formData[field.curRedLast] : '0';
 
 		let remark          = formData[field.remark] ? formData[field.remark] : '';
 		let definitionValue = formData[field.definitionValue] ? formData[field.definitionValue] : '000';
+
+		this.props.change(field.modelNm, model_name);
+		this.props.change(field.articleNm, article_name);
+
+		this.props.change(field.processCd, formData[field.processCd]);
 
 		this.props.change(field.tempStandardFrom, temp_standard_from);
 		this.props.change(field.tempStandardTo, temp_standard_to);
@@ -185,9 +194,11 @@ class AlarmMasterForm extends Component {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 
 		let {columnsModelArticle, dataModelArticle, handleSubmit, reset, onReset, submissionState} = this.props;
-		let {formData, processList}                                                                = this.state;
+		let {formData, processList, submitButtonClicked, submissionError}                          = this.state;
 
-		let definitionArray     = formData[field.definitionValue].split("");
+		let definitionArray     = formData[field.definitionValue]
+		                          ? formData[field.definitionValue].split("")
+		                          : [0, 0, 0];
 		let temperatureDisabled = parseInt(definitionArray[0]) === 0;
 		let pressureDisabled    = parseInt(definitionArray[1]) === 0;
 		let curingTimeDisabled  = parseInt(definitionArray[2]) === 0;
@@ -237,11 +248,13 @@ class AlarmMasterForm extends Component {
 								<div className="form__form-group-field">
 									<Field
 										name={field.modelNm}
-										component="input"
+										component={renderField}
 										type="text"
 										props={{
 											disabled: true,
-											value   : formData[field.modelNm] ? formData[field.modelNm] : ''
+											value   : formData[field.modelNm]
+											          ? formData[field.modelNm]
+											          : ''
 										}}
 										className={"marginLeft-20"}
 									/>
@@ -254,11 +267,13 @@ class AlarmMasterForm extends Component {
 								<div className="form__form-group-field">
 									<Field
 										name={field.articleNm}
-										component="input"
+										component={renderField}
 										type="text"
 										props={{
 											disabled: true,
-											value   : formData[field.articleNm] ? formData[field.articleNm] : ''
+											value   : formData[field.articleNm]
+											          ? formData[field.articleNm]
+											          : ''
 										}}
 									/>
 								</div>
@@ -266,6 +281,11 @@ class AlarmMasterForm extends Component {
 						</Col>
 
 						<Col md={3} lg={3}>
+							<Field
+								name={field.processCd}
+								component="input"
+								type="hidden"
+							/>
 						</Col>
 						<Col md={3} lg={3}>
 							<span className="form__form-group-label text-center text-uppercase">Temperature</span>
@@ -294,16 +314,29 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: temperatureDisabled,
-											value   : formData[field.tempStandardFrom]
+											value   : formData[field.processCd] && !temperatureDisabled
 											          ? formData[field.tempStandardFrom]
-											          : ''
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.tempStandardFrom]: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempStandardFrom]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -316,16 +349,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: temperatureDisabled,
-											value   : formData[field.tempStandardTo]
-											          ? formData[field.tempStandardTo]
-											          : ''
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? (
+												          formData[field.tempStandardTo] != undefined
+												          ? formData[field.tempStandardTo]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.tempStandardTo]: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempStandardTo]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -342,16 +392,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: pressureDisabled,
-											value   : formData[field.presStandardFrom]
-											          ? formData[field.presStandardFrom]
-											          : ''
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presStandardFrom] != undefined
+												          ? formData[field.presStandardFrom]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.presStandardFrom]: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presStandardFrom]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -364,16 +431,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: pressureDisabled,
-											value   : formData[field.presStandardTo]
-											          ? formData[field.presStandardTo]
-											          : ''
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presStandardTo] != undefined
+												          ? formData[field.presStandardTo]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.presStandardTo]: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presStandardTo]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -390,16 +474,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: curingTimeDisabled,
-											value   : formData[field.curStandardFrom]
-											          ? formData[field.curStandardFrom]
-											          : ''
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curStandardFrom] != undefined
+												          ? formData[field.curStandardFrom]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.curStandardFrom]: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curStandardFrom]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -412,14 +513,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: curingTimeDisabled,
-											value   : formData[field.curStandardTo] ? formData[field.curStandardTo] : ''
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curStandardTo] != undefined
+												          ? formData[field.curStandardTo]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.curStandardTo]: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curStandardTo]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -442,16 +562,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: temperatureDisabled,
-											value   : formData[field.tempYellowFirst]
-											          ? formData[field.tempYellowFirst]
-											          : ''
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? (
+												          formData[field.tempYellowFirst] != undefined
+												          ? formData[field.tempYellowFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.tempYellowFirst]: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempYellowFirst]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -464,16 +601,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: temperatureDisabled,
-											value   : formData[field.tempYellowLast]
-											          ? formData[field.tempYellowLast]
-											          : ''
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? (
+												          formData[field.tempYellowLast] != undefined
+												          ? formData[field.tempYellowLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.tempYellowLast]: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempYellowLast]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -490,16 +644,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: pressureDisabled,
-											value   : formData[field.presYellowFirst]
-											          ? formData[field.presYellowFirst]
-											          : ''
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presYellowFirst] != undefined
+												          ? formData[field.presYellowFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.presYellowFirst]: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presYellowFirst]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -512,16 +683,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: pressureDisabled,
-											value   : formData[field.presYellowLast]
-											          ? formData[field.presYellowLast]
-											          : ''
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presYellowLast] != undefined
+												          ? formData[field.presYellowLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.presYellowLast]: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presYellowLast]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -538,16 +726,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: curingTimeDisabled,
-											value   : formData[field.curYellowFirst]
-											          ? formData[field.curYellowFirst]
-											          : ''
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curYellowFirst] != undefined
+												          ? formData[field.curYellowFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.curYellowFirst]: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curYellowFirst]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -560,14 +765,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: curingTimeDisabled,
-											value   : formData[field.curYellowLast] ? formData[field.curYellowLast] : ''
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curYellowLast] != undefined
+												          ? formData[field.curYellowLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.curYellowLast]: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curYellowLast]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -590,14 +814,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: temperatureDisabled,
-											value   : formData[field.tempRedFirst] ? formData[field.tempRedFirst] : ''
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? (
+												          formData[field.tempRedFirst] != undefined
+												          ? formData[field.tempRedFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.tempRedFirst]: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempRedFirst]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -610,14 +853,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: temperatureDisabled,
-											value   : formData[field.tempRedLast] ? formData[field.tempRedLast] : ''
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? (
+												          formData[field.tempRedLast] != undefined
+												          ? formData[field.tempRedLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.tempRedLast]: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempRedLast]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -634,14 +896,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: pressureDisabled,
-											value   : formData[field.presRedFirst] ? formData[field.presRedFirst] : ''
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presRedFirst] != undefined
+												          ? formData[field.presRedFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.presRedFirst]: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presRedFirst]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -654,14 +935,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: pressureDisabled,
-											value   : formData[field.presRedLast] ? formData[field.presRedLast] : ''
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presRedLast] != undefined
+												          ? formData[field.presRedLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.presRedLast]: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presRedLast]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -678,14 +978,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: curingTimeDisabled,
-											value   : formData[field.curRedFirst] ? formData[field.curRedFirst] : ''
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curRedFirst] != undefined
+												          ? formData[field.curRedFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.curRedFirst]: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curRedFirst]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -698,14 +1017,33 @@ class AlarmMasterForm extends Component {
 										type="text"
 										props={{
 											disabled: curingTimeDisabled,
-											value   : formData[field.curRedLast] ? formData[field.curRedLast] : ''
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curRedLast] != undefined
+												          ? formData[field.curRedLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												[field.curRedLast]: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={e => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curRedLast]: e.target.value,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -723,33 +1061,42 @@ class AlarmMasterForm extends Component {
 								props={{
 									value: formData[field.remark] ? formData[field.remark] : ''
 								}}
-								onChange={e => this.setState({
-									formData: {
-										...formData,
-										[field.remark]: e.target.value,
+								onChange={e => {
+									if (submitButtonClicked) {
+										this.setState({
+											submitButtonClicked: false,
+										});
 									}
-								})}
+									if (submissionError) {
+										this.setState({
+											submissionError: '',
+										});
+									}
+									this.setState({
+										formData: {
+											...formData,
+											[field.remark]: e.target.value,
+										}
+									});
+								}}
 							/>
 							<Field
 								name={field.definitionValue}
-								component={renderField}
-								props={{
-									value: formData[field.definitionValue] ? formData[field.definitionValue] : ''
-								}}
+								component="input"
 								type="hidden"
-								onChange={e => this.setState({
-									formData: {
-										...formData,
-										[field.definitionValue]: e.target.value,
-									}
-								})}
 							/>
 						</Col>
 
 						<hr style={{height: 30}}/>
-						<Col md={12} lg={12} style={{display: 'flex', justifyItems: 'flex-end'}}>
+						<Col md={12} lg={12} style={{display: 'flex', justifyContent: 'flex-end'}}>
 							<ButtonToolbar className="form__button-toolbar">
-								<Button color="primary" type="submit">
+								<Button color="primary" type="submit" onClick={() => {
+									if (!submitButtonClicked) {
+										this.setState({
+											submitButtonClicked: true,
+										});
+									}
+								}}>
 									{(() => {
 										let {initial, onGoing, done} = ALARM_MASTER_PAGE_CONSTANTS.submissionState;
 										if (this.state.editMode) {
@@ -782,13 +1129,37 @@ class AlarmMasterForm extends Component {
 										: ''
 									}
 								</Button>
+								<Field
+									name={field.emptyForm}
+									type="hidden"
+									component={({meta: {error}}) => {
+										if (!this.state.submissionError && error) {
+											this.setState({
+												submissionError: error,
+											});
+										} else if (this.state.submissionError && !error) {
+											this.setState({
+												submissionError: '',
+											});
+										}
+										return null;
+									}}
+								/>
 								<Button type="button" onClick={() => {
 									reset();
+									if (submitButtonClicked) {
+										this.setState({
+											submitButtonClicked: false,
+										});
+									}
 									onReset();
 								}}>
 									Cancel
 								</Button>
 							</ButtonToolbar>
+						</Col>
+						<Col md={12} lg={12} style={{display: 'flex', justifyContent: 'flex-end', color: '#ad3f38'}}>
+							{submitButtonClicked && submissionError}
 						</Col>
 					</form>
 				</Col>
@@ -799,4 +1170,5 @@ class AlarmMasterForm extends Component {
 
 export default reduxForm({
 	form: ALARM_MASTER_PAGE_CONSTANTS.alarmMasterFormName,
+	validate,
 })(AlarmMasterForm);

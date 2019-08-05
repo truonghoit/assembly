@@ -18,7 +18,7 @@ class MasterAlarm extends Component {
 	constructor(props) {
 		super(props);
 
-		let {initial} = ALARM_MASTER_PAGE_CONSTANTS.submissionState;
+		let {field, submissionState} = ALARM_MASTER_PAGE_CONSTANTS;
 
 		this.child = React.createRef();
 
@@ -27,9 +27,11 @@ class MasterAlarm extends Component {
 			dataModelArticle   : defaultModelArticleTableData,
 			columnsAlarmSensor : alarmSensorTableColumns,
 			dataAlarmSensor    : defaultAlarmSensorTableData,
-			formData           : {},
+			formData           : {
+				[field.definitionValue]: '000',
+			},
 			editMode           : false,
-			submissionState    : initial,    // -1: Submit/Save, 0: Submitting/Saving, 1: Submitted/Saved
+			submissionState    : submissionState.initial,   // -1: Submit/Save, 0: Submitting/Saving, 1: Submitted/Saved
 		};
 	}
 
@@ -48,10 +50,10 @@ class MasterAlarm extends Component {
 
 				responseArray.map(item => {
 					item = {
-						[field.modelNm]  : item.model_nm.toString(),
-						[field.modelCd]  : item.model_cd.toString(),
-						[field.articleNm]: item.article_nm.toString(),
-						[field.articleNo]: item.article_no.toString(),
+						[field.modelNm]  : item.model_nm ? item.model_nm.toString() : '',
+						[field.modelCd]  : item.model_cd ? item.model_cd.toString() : '',
+						[field.articleNm]: item.article_nm ? item.article_nm.toString() : '',
+						[field.articleNo]: item.article_no ? item.article_no.toString() : '',
 					};
 					dataArray.push(item);
 				});
@@ -143,29 +145,89 @@ class MasterAlarm extends Component {
 
 	onProcessClick = (processCode, definitionValue) => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+
+		let temp_standard_from = '0';
+		let temp_standard_to   = '0';
+		let temp_yellow_first  = '0';
+		let temp_yellow_last   = '0';
+		let temp_red_first     = '0';
+		let temp_red_last      = '0';
+
+		let pres_standard_from = '0';
+		let pres_standard_to   = '0';
+		let pres_yellow_first  = '0';
+		let pres_yellow_last   = '0';
+		let pres_red_first     = '0';
+		let pres_red_last      = '0';
+
+		let cur_standard_from = '0';
+		let cur_standard_to   = '0';
+		let cur_yellow_first  = '0';
+		let cur_yellow_last   = '0';
+		let cur_red_first     = '0';
+		let cur_red_last      = '0';
+
+		for (let i = 0; i < definitionValue.length; ++i) {
+			switch (i) {
+				case 0:
+					if (definitionValue.charAt(i) === '0') {
+						temp_standard_from = '';
+						temp_standard_to   = '';
+						temp_yellow_first  = '';
+						temp_yellow_last   = '';
+						temp_red_first     = '';
+						temp_red_last      = '';
+					}
+					break;
+				case 1:
+					if (definitionValue.charAt(i) === '0') {
+						pres_standard_from = '';
+						pres_standard_to   = '';
+						pres_yellow_first  = '';
+						pres_yellow_last   = '';
+						pres_red_first     = '';
+						pres_red_last      = '';
+					}
+					break;
+				case 2:
+					if (definitionValue.charAt(i) === '0') {
+						cur_standard_from = '';
+						cur_standard_to   = '';
+						cur_yellow_first  = '';
+						cur_yellow_last   = '';
+						cur_red_first     = '';
+						cur_red_last      = '';
+					}
+					break;
+				default:
+					console.log("Error", "Wrong Definition Value Format");
+					break;
+			}
+		}
 		this.setState({
 			editMode: false,
 			formData: {
 				...this.state.formData,
 				[field.processCd]       : processCode,
-				[field.tempStandardFrom]: '',
-				[field.tempStandardTo]  : '',
-				[field.tempYellowFirst] : '',
-				[field.tempYellowLast]  : '',
-				[field.tempRedFirst]    : '',
-				[field.tempRedLast]     : '',
-				[field.presStandardFrom]: '',
-				[field.presStandardTo]  : '',
-				[field.presYellowFirst] : '',
-				[field.presYellowLast]  : '',
-				[field.presRedFirst]    : '',
-				[field.presRedLast]     : '',
-				[field.curStandardFrom] : '',
-				[field.curStandardTo]   : '',
-				[field.curYellowFirst]  : '',
-				[field.curYellowLast]   : '',
-				[field.curRedFirst]     : '',
-				[field.curRedLast]      : '',
+				[field.tempStandardFrom]: temp_standard_from,
+				[field.tempStandardTo]  : temp_standard_to,
+				[field.tempYellowFirst] : temp_yellow_first,
+				[field.tempYellowLast]  : temp_yellow_last,
+				[field.tempRedFirst]    : temp_red_first,
+				[field.tempRedLast]     : temp_red_last,
+				[field.presStandardFrom]: pres_standard_from,
+				[field.presStandardTo]  : pres_standard_to,
+				[field.presYellowFirst] : pres_yellow_first,
+				[field.presYellowLast]  : pres_yellow_last,
+				[field.presRedFirst]    : pres_red_first,
+				[field.presRedLast]     : pres_red_last,
+				[field.curStandardFrom] : cur_standard_from,
+				[field.curStandardTo]   : cur_standard_to,
+				[field.curYellowFirst]  : cur_yellow_first,
+				[field.curYellowLast]   : cur_yellow_last,
+				[field.curRedFirst]     : cur_red_first,
+				[field.curRedLast]      : cur_red_last,
+				[field.remark]          : '',
 				[field.definitionValue] : definitionValue,
 			},
 		});
@@ -228,146 +290,132 @@ class MasterAlarm extends Component {
 		let formData        = this.state.formData;
 		let method          = 'POST';
 		let url             = '/api/asc/masalarmsensor';
-		for (let i = 0; i < definitionValue.length; i++) {
-			if (definitionValue[i] > 0) {
-				let standard_from = 0;
-				let standard_to   = 0;
-				let yellow_first  = 0;
-				let yellow_last   = 0;
-				let red_first     = 0;
-				let red_last      = 0;
-				let sensor_type   = i + 1;
-				if (sensor_type == 1) {
-					standard_from = values[field.tempStandardFrom];
-					standard_to   = values[field.tempStandardTo];
-					yellow_first  = values[field.tempYellowFirst];
-					yellow_last   = values[field.tempYellowLast];
-					red_first     = values[field.tempRedFirst];
-					red_last      = values[field.tempRedLast];
-				} else if (sensor_type == 2) {
-					standard_from = values[field.presStandardFrom];
-					standard_to   = values[field.presStandardTo];
-					yellow_first  = values[field.presYellowFirst];
-					yellow_last   = values[field.presYellowLast];
-					red_first     = values[field.presRedFirst];
-					red_last      = values[field.presRedLast];
-				} else if (sensor_type == 3) {
-					standard_from = values[field.curStandardFrom];
-					standard_to   = values[field.curStandardTo];
-					yellow_first  = values[field.curYellowFirst];
-					yellow_last   = values[field.curYellowLast];
-					red_first     = values[field.curRedFirst];
-					red_last      = values[field.curRedLast];
-				}
-				let param = {
-					"status"       : this.state.editMode ? "UPDATE" : "INSERT",
-					"model_cd"     : formData[field.modelCd],
-					"article_no"   : formData[field.articleNo],
-					"process_cd"   : formData[field.processCd],
-					"sensor_type"  : sensor_type,   //1: temp, 2: pressure, 3: curing time
-					"standard_from": standard_from,
-					"standard_to"  : standard_to,
-					"yellow_first" : yellow_first,
-					"yellow_last"  : yellow_last,
-					"red_first"    : red_first,
-					"red_last"     : red_last,
-					"time_first"   : '0',
-					"time_last"    : '0',
-					"remark"       : values[field.remark] ? values[field.remark] : '',
-					"username"     : "truongho"
-				};
-				callAxios(method, url, param).then(response => {
-					//Update parent combobox items
-					try {
-						if (response.status == 200) {
-							this.loadModelArticleTable();
-							this.loadAlarmSensorTable();
+		if (values[field.processCd]) {
+			for (let i = 0; i < definitionValue.length; i++) {
+				if (definitionValue[i] > 0) {
+					let standard_from = 0;
+					let standard_to   = 0;
+					let yellow_first  = 0;
+					let yellow_last   = 0;
+					let red_first     = 0;
+					let red_last      = 0;
+					let sensor_type   = i + 1;
+					if (sensor_type == 1) {
+						standard_from = values[field.tempStandardFrom];
+						standard_to   = values[field.tempStandardTo];
+						yellow_first  = values[field.tempYellowFirst];
+						yellow_last   = values[field.tempYellowLast];
+						red_first     = values[field.tempRedFirst];
+						red_last      = values[field.tempRedLast];
+					} else if (sensor_type == 2) {
+						standard_from = values[field.presStandardFrom];
+						standard_to   = values[field.presStandardTo];
+						yellow_first  = values[field.presYellowFirst];
+						yellow_last   = values[field.presYellowLast];
+						red_first     = values[field.presRedFirst];
+						red_last      = values[field.presRedLast];
+					} else if (sensor_type == 3) {
+						standard_from = values[field.curStandardFrom];
+						standard_to   = values[field.curStandardTo];
+						yellow_first  = values[field.curYellowFirst];
+						yellow_last   = values[field.curYellowLast];
+						red_first     = values[field.curRedFirst];
+						red_last      = values[field.curRedLast];
+					}
+					let param = {
+						"status"       : this.state.editMode ? "UPDATE" : "INSERT",
+						"model_cd"     : formData[field.modelCd],
+						"article_no"   : formData[field.articleNo],
+						"process_cd"   : formData[field.processCd],
+						"sensor_type"  : sensor_type,   //1: temp, 2: pressure, 3: curing time
+						"standard_from": standard_from,
+						"standard_to"  : standard_to,
+						"yellow_first" : yellow_first,
+						"yellow_last"  : yellow_last,
+						"red_first"    : red_first,
+						"red_last"     : red_last,
+						"time_first"   : '0',
+						"time_last"    : '0',
+						"remark"       : values[field.remark] ? values[field.remark] : '',
+						"username"     : "truongho"
+					};
+					callAxios(method, url, param).then(response => {
+						//Update parent combobox items
+						try {
+							if (response.status == 200) {
+								this.loadModelArticleTable();
+								this.loadAlarmSensorTable();
 
-							//reload process loading
-							this.child.ref.current.wrapped.current.callChildLoadProcessList({
-								model_cd  : formData[field.modelCd],
-								article_no: formData[field.articleNo],
-							});
-							this.setState({
-								submissionState: done,
-							});
-							setTimeout(() => {
-								if (!this.state.editMode) {
-									this.setState({
-										formData: {
-											...this.state.formData,
+								//reload process loading
+								this.child.ref.current.wrapped.current.callChildLoadProcessList({
+									model_cd  : formData[field.modelCd],
+									article_no: formData[field.articleNo],
+								});
+								this.setState({
+									submissionState: done,
+								});
+								setTimeout(() => {
+									this.setState((state, props) => ({
+										formData       : {
+											...state.formData,
 											[field.tempStandardFrom]: values[field.tempStandardFrom],
 											[field.tempStandardTo]  : values[field.tempStandardTo],
 											[field.tempYellowFirst] : values[field.tempYellowFirst],
 											[field.tempYellowLast]  : values[field.tempYellowLast],
 											[field.tempRedFirst]    : values[field.tempRedFirst],
 											[field.tempRedLast]     : values[field.tempRedLast],
+
 											[field.presStandardFrom]: values[field.presStandardFrom],
 											[field.presStandardTo]  : values[field.presStandardTo],
 											[field.presYellowFirst] : values[field.presYellowFirst],
 											[field.presYellowLast]  : values[field.presYellowLast],
 											[field.presRedFirst]    : values[field.presRedFirst],
 											[field.presRedLast]     : values[field.presRedLast],
-											[field.curStandardFrom] : values[field.curStandardFrom],
-											[field.curStandardTo]   : values[field.curStandardTo],
-											[field.curYellowFirst]  : values[field.curYellowFirst],
-											[field.curYellowLast]   : values[field.curYellowLast],
-											[field.curRedFirst]     : values[field.curRedFirst],
-											[field.curRedLast]      : values[field.curRedLast],
-											[field.remark]          : values[field.remark],
-											[field.definitionValue] : values[field.definitionValue],
+
+											[field.curStandardFrom]: values[field.curStandardFrom],
+											[field.curStandardTo]  : values[field.curStandardTo],
+											[field.curYellowFirst] : values[field.curYellowFirst],
+											[field.curYellowLast]  : values[field.curYellowLast],
+											[field.curRedFirst]    : values[field.curRedFirst],
+											[field.curRedLast]     : values[field.curRedLast],
+
+											[field.remark]         : values[field.remark],
+											[field.definitionValue]: values[field.definitionValue],
 										},
-									});
-								}
-								this.setState({
-									submissionState: initial,
-									editMode       : false,
-								});
-							}, 1000);
+										submissionState: initial,
+										editMode       : false,
+									}));
+								}, 1000);
+							}
+						} catch (e) {
+							console.log("Error: ", e);
 						}
-					} catch (e) {
-						console.log("Error: ", e);
-					}
-				});
+					});
+				}
 			}
+		} else {
+			this.setState({
+				submissionState: initial,
+			});
 		}
 
 		event.preventDefault();
 	};
 
 	onReset = () => {
-		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
-		this.setState({
-			formData: {
-				...this.state.formData,
-				[field.processCd]: '',
+		let {field, submissionState} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.setState((state, props) => ({
+			formData       : {
+				[field.modelNm]  : state.formData[field.modelNm],
+				[field.modelCd]  : state.formData[field.modelCd],
+				[field.articleNm]: state.formData[field.articleNm],
+				[field.articleNo]: state.formData[field.articleNo],
 
-				[field.tempStandardFrom]: '',
-				[field.tempStandardTo]  : '',
-				[field.tempYellowFirst] : '',
-				[field.tempYellowLast]  : '',
-				[field.tempRedFirst]    : '',
-				[field.tempRedLast]     : '',
-
-				[field.presStandardFrom]: '',
-				[field.presStandardTo]  : '',
-				[field.presYellowFirst] : '',
-				[field.presYellowLast]  : '',
-				[field.presRedFirst]    : '',
-				[field.presRedLast]     : '',
-
-				[field.curStandardFrom]: '',
-				[field.curStandardTo]  : '',
-				[field.curYellowFirst] : '',
-				[field.curYellowLast]  : '',
-				[field.curRedFirst]    : '',
-				[field.curRedLast]     : '',
-
-				[field.remark]         : '',
 				[field.definitionValue]: '000',
 			},
-			editMode: false,
-		});
+			editMode       : false,
+			submissionState: submissionState.initial,
+		}));
 	};
 
 	componentDidMount() {
