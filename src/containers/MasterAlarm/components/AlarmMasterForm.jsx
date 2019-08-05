@@ -330,10 +330,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempStandardFrom]: newValue,
+													[field.tempStandardFrom]: newValue
+													                          ? (+newValue).toString()
+													                          : newValue,
 												}
 											});
 										}}
@@ -369,10 +376,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempStandardTo]: newValue,
+													[field.tempStandardTo]: newValue
+													                        ? (+newValue).toString()
+													                        : newValue,
 												}
 											});
 										}}
@@ -412,10 +426,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.presStandardFrom]: newValue,
+													[field.presStandardFrom]: newValue
+													                          ? (+newValue).toString()
+													                          : newValue,
 												}
 											});
 										}}
@@ -451,10 +472,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.presStandardTo]: newValue,
+													[field.presStandardTo]: newValue
+													                        ? (+newValue).toString()
+													                        : newValue,
 												}
 											});
 										}}
@@ -494,10 +522,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.curStandardFrom]: newValue,
+													[field.curStandardFrom]: newValue
+													                         ? (+newValue).toString()
+													                         : newValue,
 												}
 											});
 										}}
@@ -533,10 +568,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.curStandardTo]: newValue,
+													[field.curStandardTo]: newValue
+													                       ? (+newValue).toString()
+													                       : newValue,
 												}
 											});
 										}}
@@ -582,10 +624,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempYellowFirst]: newValue,
+													[field.tempYellowFirst]: newValue
+													                         ? (+newValue).toString()
+													                         : newValue,
 												}
 											});
 										}}
@@ -621,10 +670,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempYellowLast]: newValue,
+													[field.tempYellowLast]: newValue
+													                        ? (+newValue).toString()
+													                        : newValue,
 												}
 											});
 										}}
@@ -664,10 +720,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.presYellowFirst]: newValue,
+													[field.presYellowFirst]: newValue
+													                         ? (+newValue).toString()
+													                         : newValue,
 												}
 											});
 										}}
@@ -703,10 +766,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.presYellowLast]: newValue,
+													[field.presYellowLast]: newValue
+													                        ? (+newValue).toString()
+													                        : newValue,
 												}
 											});
 										}}
@@ -746,10 +816,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.curYellowFirst]: newValue,
+													[field.curYellowFirst]: newValue
+													                        ? (+newValue).toString()
+													                        : newValue,
 												}
 											});
 										}}
@@ -785,10 +862,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.curYellowLast]: newValue,
+													[field.curYellowLast]: newValue
+													                       ? (+newValue).toString()
+													                       : newValue,
 												}
 											});
 										}}
@@ -834,10 +918,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempRedFirst]: newValue,
+													[field.tempRedFirst]: newValue
+													                      ? (+newValue).toString()
+													                      : newValue,
 												}
 											});
 										}}
@@ -873,10 +964,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempRedLast]: newValue,
+													[field.tempRedLast]: newValue
+													                     ? (+newValue).toString()
+													                     : newValue,
 												}
 											});
 										}}
@@ -916,10 +1014,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.presRedFirst]: newValue,
+													[field.presRedFirst]: newValue
+													                      ? (+newValue).toString()
+													                      : newValue,
 												}
 											});
 										}}
@@ -955,10 +1060,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.presRedLast]: newValue,
+													[field.presRedLast]: newValue
+													                     ? (+newValue).toString()
+													                     : newValue,
 												}
 											});
 										}}
@@ -998,10 +1110,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.curRedFirst]: newValue,
+													[field.curRedFirst]: newValue
+													                     ? (+newValue).toString()
+													                     : newValue,
 												}
 											});
 										}}
@@ -1037,10 +1156,17 @@ class AlarmMasterForm extends Component {
 													submissionError: '',
 												});
 											}
+											// If the most recent input character of newValue is not a number
+											// Then remove it
+											if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												newValue = newValue.slice(0, -1);
+											}
 											this.setState({
 												formData: {
 													...formData,
-													[field.curRedLast]: newValue,
+													[field.curRedLast]: newValue
+													                    ? (+newValue).toString()
+													                    : newValue,
 												}
 											});
 										}}
