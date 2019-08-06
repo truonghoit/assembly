@@ -60,6 +60,7 @@ class ChartArea extends Component {
 						pointHoverRadius: 0,
 						fill: false,
 						lineTension: 0,
+						borderWidth: 1,
 					},
 					{
 						label          : "Line Standard 2",
@@ -70,6 +71,7 @@ class ChartArea extends Component {
 						pointHoverRadius: 0,
 						fill: false,
 						lineTension: 0,
+						borderWidth: 1,
 					},
 					{
 						label          : "Bar dataset",
@@ -118,6 +120,7 @@ class ChartArea extends Component {
 						pointHoverRadius: 0,
 						fill: false,
 						lineTension: 0,
+						borderWidth: 1,
 					},
 					{
 						label          : "Line Standard 2",
@@ -128,6 +131,7 @@ class ChartArea extends Component {
 						pointHoverRadius: 0,
 						fill: false,
 						lineTension: 0,
+						borderWidth: 1,
 					},
 					{
 						label          : "Bar dataset",
@@ -213,6 +217,7 @@ class ChartArea extends Component {
 						pointHoverRadius: 0,
 						fill: false,
 						lineTension: 0,
+						borderWidth: 1,
 					},
 					{
 						label          : "Line Standard 2",
@@ -223,6 +228,7 @@ class ChartArea extends Component {
 						pointHoverRadius: 0,
 						fill: false,
 						lineTension: 0,
+						borderWidth: 1,
 					},
 					{
 						label          : "preparing Time dataset",
@@ -273,8 +279,8 @@ class ChartArea extends Component {
 			}
 
 		}
-		return <div className="d-flex flex-wrap" style={{marginLeft: -15}}>
-					${chartArray}
+		return <div className="d-flex flex-wrap">
+					{chartArray}
 				</div>
 	}
 

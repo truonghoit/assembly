@@ -28,6 +28,7 @@ class SensingValue extends Component {
 			tempChartData : [],
 			pressureChartData : [],
 			curingChartData : [],
+			selectedProcess: {}
 		};
 		this.fillLeftBar();
 	}
@@ -85,10 +86,16 @@ class SensingValue extends Component {
 		});
 	}
 
-	getChartData = (processData) => {
+	getChartData = (processData=this.state.selectedProcess) => {
 		console.log("getChartData getChartData getChartData");
 		console.log("getChartData getChartData getChartData");
 		console.log("processData: ", processData);
+		console.log("state: ", this.state);
+		this.setState((state, props) => ({
+			selectedProcess: processData,
+		}));
+
+		let {filterArticle, filterFromDate, filterToDate, filterLine, filterModel} = this.state;
 		let definitionValue = processData.definition_value;
 		if (parseInt(definitionValue.charAt(0)) > 0){
 			//Get temp data
@@ -96,14 +103,21 @@ class SensingValue extends Component {
 			let url = ASSEMBLY_API + SENSING_TEMP;
 			let params = {
 				"factory": "",
-				"line": "",
+				"line": filterLine,
 				"process": processData.process_cd,
-				"from_date": 1563970019,
-				"to_date": 1564015974
+				"from_date": filterFromDate,
+				"to_date": filterToDate
 			}
+			console.log("112 112 112 112 112 112 112");
+			console.log("112 112 112 112 112 112 112");
+			console.log("112 112 112 112 112 112 112");
+			console.log("params: ", params);
+			console.log("url: ", url);
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
+					console.log("119 119 119 119 119");
+					console.log("SENSING_TEMP: ", data);
 					this.setState((state,props)=> ({
 						tempChartData: data
 					}));
@@ -116,16 +130,21 @@ class SensingValue extends Component {
 			//Get pressure data
 			let method = 'POST';
 			let url = ASSEMBLY_API + SENSING_PRESS;
+
 			let params = {
 				"factory": "",
-				"line": "",
+				"line": filterLine,
 				"process": processData.process_cd,
-				"from_date": 1563970019,
-				"to_date": 1564015974
+				"from_date": filterFromDate,//1563970019
+				"to_date": filterToDate//1562722712
 			}
+			console.log("params: ", params);
+			console.log("url: ", url);
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
+					console.log("144 144 144 144 144");
+					console.log("SENSING_PRESS: ", data);
 					this.setState((state,props)=> ({
 						pressureChartData: data
 					}));
@@ -139,16 +158,21 @@ class SensingValue extends Component {
 			//Get curing time data
 			let method = 'POST';
 			let url = ASSEMBLY_API + SENSING_TIME;
+
 			let params = {
 				"factory": "",
-				"line": "",
+				"line": filterLine,
 				"process": processData.process_cd,
-				"from_date": 1562722712,
-				"to_date": 1562722712
+				"from_date": filterFromDate,//1562722712
+				"to_date": filterToDate//1562722712
 			}
+			console.log("params: ", params);
+			console.log("url: ", url);
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
+					console.log("172 172 172 172 172");
+					console.log("SENSING_TIME: ", data);
 					this.setState((state,props)=> ({
 						curingChartData: data
 					}));
@@ -169,6 +193,13 @@ class SensingValue extends Component {
 			// filterLine: ""
 			// filterModel: ""
 			// filterToDate: 1563937949
+			let {filterArticle, filterFromDate, filterToDate, filterLine, filterModel} = this.state;
+			console.log("174 174 174 174 174 174 174");
+			console.log("174 174 174 174 174 174 174");
+			console.log("174 174 174 174 174 174 174");
+			console.log(`${filterArticle} - ${filterFromDate} - ${filterToDate} - ${filterLine} - {filterModel}`);
+			this.getChartData();
+
 		}
 	}
 
@@ -216,13 +247,13 @@ class SensingValue extends Component {
 					<MachineAlarmLeftBar processData={processData} getChartData={this.getChartData}/>
 					<Col md={10} lg={10} style={{marginTop: 30,}}>
 						{
-							tempChartData.length > 0 ? <ChartArea type="temp" chartData={tempChartData} />: ''
+							tempChartData && tempChartData.length > 0 ? <ChartArea type="temp" chartData={tempChartData} />: ''
 						}
 						{
-							pressureChartData.length > 0 ? <ChartArea type="pressure" chartData={pressureChartData} />: ''
+							pressureChartData && pressureChartData.length > 0 ? <ChartArea type="pressure" chartData={pressureChartData} />: ''
 						}
 						{
-							curingChartData.length > 0 ? <ChartArea type="curing" chartData={curingChartData}/>: ''
+							curingChartData && curingChartData.length > 0 ? <ChartArea type="curing" chartData={curingChartData}/>: ''
 						}
 					</Col>
 				</Row>
