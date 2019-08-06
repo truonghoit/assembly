@@ -1,112 +1,125 @@
-import React, {Component}                                           from 'react';
-import {change, Field, reduxForm}                                   from 'redux-form';
-import PropTypes                                                    from 'prop-types';
-import {Button, Card, CardBody, Container, Col, Row, ButtonToolbar} from 'reactstrap';
-import {renderField}                                                from "../../../shared/components/form/InputField";
-import DataTable                                                    from "../../../shared/components/data_table/DataTable";
-import {FontAwesomeIcon}                                            from "@fortawesome/react-fontawesome";
-import { faCircle, faPlay }                                         from '@fortawesome/free-solid-svg-icons'
+import React, {Component}                 from 'react';
+import {Field, reduxForm}                 from 'redux-form';
+import PropTypes                          from 'prop-types';
+import {Button, ButtonToolbar, Col, Row}  from 'reactstrap';
+import {renderField}                      from "../../../shared/components/form/InputField";
+import DataTable                          from "../../../shared/components/data_table/DataTable";
+import {FontAwesomeIcon}                  from "@fortawesome/react-fontawesome";
+import {faCircle, faPlay}                 from '@fortawesome/free-solid-svg-icons';
 import {ASSEMBLY_API, ALARM_LIST_PROCESS}                           from "../../../constants/urlConstants";
-import callAxios                                                    from "../../../services/api";
-import {MASTER_FORM_CONSTANTS}                                      from "../../MasterPage/components/MasterForm";
-import LoadingSpinner                                               from "../../../shared/components/loading_spinner/LoadingSpinner";
+import callAxios                          from "../../../services/api";
+import LoadingSpinner                     from "../../../shared/components/loading_spinner/LoadingSpinner";
+import {ALARM_MASTER_PAGE_CONSTANTS}      from "../constants";
+import validate                           from './validate';
 
 class AlarmMasterForm extends Component {
 	static propTypes = {
 		handleSubmit: PropTypes.func.isRequired,
-		reset: PropTypes.func.isRequired,
+		reset       : PropTypes.func.isRequired,
 	};
 
 	constructor(props) {
 		super(props);
-		this.state = ({
-			dataProcess: [],
-			formData: {},
-			selectedDefinition: [true, true, true],
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.state  = ({
+			processList        : [],
+			formData           : {
+				[field.definitionValue]: '000',
+			},
+			editMode           : false,
+			submitButtonClicked: false,
+			submissionError    : '',
 		});
 	}
 
-	callChildLoadProcess = (params) => {
-		this.loadListProcess(params);
-		//this.setDefinitionValue(params.definition_value, params.process_cd);
-	}
-
-	onModelArticleClick = (e, row) => {
-		if (this.props.onMounted){
-			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
-		}
-
-		row.getElement().style.backgroundColor = "#f00";
-
-
-		let selectedRow = row._row.data;
-
-		this.props.fillForm(selectedRow);
-
-		let params = {
-			model_cd: selectedRow.model_cd,
-			article_no: selectedRow.article_no,
-			resetForm: true
-		};
-
-		//this.resetFieldForm();
-		this.loadListProcess(params);
-	};
-
-	resetFieldForm = () => {
-		let formData = this.state.formData;
-		this.setState({
-			...formData,
-			definition_value:'000',
-			temp_standard_from: '',
-			temp_standard_to: '',
-			temp_yellow_first: '',
-			temp_yellow_last: '',
-			temp_red_first: '',
-			temp_red_last: '',
-			pres_standard_from: '',
-			pres_standard_to: '',
-			pres_yellow_first: '',
-			pres_yellow_last: '',
-			pres_red_first: '',
-			pres_red_last: '',
-			curr_standard_from: '',
-			curr_standard_to: '',
-			curr_yellow_first: '',
-			curr_yellow_last: '',
-			curr_red_first: '',
-			curr_red_last: '',
-		});
-	}
-
-	loadListProcess = (params) => {
+	loadProcessList = (params) => {
 		let method = 'POST';
-		let url = ASSEMBLY_API + ALARM_LIST_PROCESS;
+		let url    = ASSEMBLY_API + ALARM_LIST_PROCESS;
 
 		callAxios(method, url, params).then(response => {
 			try {
+				let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
 				let responseArray = response.data.data;
-				let dataArray = [];
+				let processList   = [];
 				responseArray.map(item => {
 					item = {
-						code: item.code.toString(),
-						name: item.name.toString(),
-						definition_value: item.definition_value.toString(),
+						[field.processCd]      : item.code.toString(),
+						[field.processNm]      : item.name.toString(),
+						[field.definitionValue]: item.definition_value.toString(),
 					};
-					dataArray.push(item);
+					processList.push(item);
 				});
 
 				this.setState({
-					dataProcess: dataArray,
+					processList: processList,
 				});
 			} catch (e) {
 				console.log("Error: ", e);
 			}
 		});
-		if (params.resetForm){
-			this.resetFieldForm();
+		if (params.resetForm) {
+			this.props.onReset();
 		}
-	}
+	};
+
+	onModelArticleClick = (e, row) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		if (this.props.onMounted) {
+			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
+		}
+
+		row.getElement().style.backgroundColor = "#f00";
+
+		let selectedRow = row._row.data;
+
+		this.setState({
+			submitButtonClicked: false,
+		});
+		this.props.onModelArticleClick(selectedRow);
+
+		let params = {
+			model_cd  : selectedRow[field.modelCd],
+			article_no: selectedRow[field.articleNo],
+			resetForm : true
+		};
+
+		this.loadProcessList(params);
+	};
+
+	onProcessClick = (row) => {
+		let selectedProcessCode = row.target.value;
+
+		let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
+		let {processList} = this.state;
+		processList.some(item => {
+			if (item[field.processCd] == selectedProcessCode) {
+				this.setState({
+					submitButtonClicked: false,
+				});
+				this.props.change(field.definitionValue, item[field.definitionValue]);
+				this.props.onProcessClick(selectedProcessCode, item[field.definitionValue]);
+				return true;
+			}
+			return false;
+		});
+	};
+
+	callChildLoadProcessList = (params) => {
+		this.loadProcessList(params);
+	};
+
+	onAlarmSensorTableRowClick = (selectedProcessCode, definitionValue) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.props.change(field.definitionValue, definitionValue);
+		this.setState({
+			formData           : {
+				...this.state.formData,
+				[field.processCd]      : selectedProcessCode,
+				[field.definitionValue]: definitionValue,
+			},
+			submitButtonClicked: false,
+		});
+	};
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (this.props.formData !== prevProps.formData) {
@@ -117,97 +130,81 @@ class AlarmMasterForm extends Component {
 		}
 
 		//When click row in the below table, have to dispatch value so that submit receives values
+		let {field}    = ALARM_MASTER_PAGE_CONSTANTS;
 		let {formData} = this.state;
 
-		let temp_standard_from  = formData.temp_standard_from   ? formData.temp_standard_from  :'';
-		let temp_standard_to    = formData.temp_standard_to     ? formData.temp_standard_to    :'';
-		let temp_yellow_first   = formData.temp_yellow_first    ? formData.temp_yellow_first   :'';
-		let temp_yellow_last    = formData.temp_yellow_last     ? formData.temp_yellow_last    :'';
-		let temp_red_first      = formData.temp_red_first       ? formData.temp_red_first      :'';
-		let temp_red_last       = formData.temp_red_last        ? formData.temp_red_last       :'';
+		let model_name   = formData[field.modelNm] ? formData[field.modelNm] : '';
+		let article_name = formData[field.articleNm] ? formData[field.articleNm] : '';
 
-		let pres_standard_from  = formData.pres_standard_from   ? formData.pres_standard_from  :'';
-		let pres_standard_to    = formData.pres_standard_to     ? formData.pres_standard_to    :'';
-		let pres_yellow_first   = formData.pres_yellow_first    ? formData.pres_yellow_first   :'';
-		let pres_yellow_last    = formData.pres_yellow_last     ? formData.pres_yellow_last    :'';
-		let pres_red_first      = formData.pres_red_first       ? formData.pres_red_first      :'';
-		let pres_red_last       = formData.pres_red_last        ? formData.pres_red_last       :'';
+		let temp_standard_from = formData[field.tempStandardFrom] ? formData[field.tempStandardFrom] : '0';
+		let temp_standard_to   = formData[field.tempStandardTo] ? formData[field.tempStandardTo] : '0';
+		let temp_yellow_first  = formData[field.tempYellowFirst] ? formData[field.tempYellowFirst] : '0';
+		let temp_yellow_last   = formData[field.tempYellowLast] ? formData[field.tempYellowLast] : '0';
+		let temp_red_first     = formData[field.tempRedFirst] ? formData[field.tempRedFirst] : '0';
+		let temp_red_last      = formData[field.tempRedLast] ? formData[field.tempRedLast] : '0';
 
-		let curr_standard_from  = formData.curr_standard_from   ? formData.curr_standard_from  :'';
-		let curr_standard_to    = formData.curr_standard_to     ? formData.curr_standard_to    :'';
-		let curr_yellow_first   = formData.curr_yellow_first    ? formData.curr_yellow_first   :'';
-		let curr_yellow_last    = formData.curr_yellow_last     ? formData.curr_yellow_last    :'';
-		let curr_red_first      = formData.curr_red_first       ? formData.curr_red_first      :'';
-		let curr_red_last       = formData.curr_red_last        ? formData.curr_red_last       :'';
+		let pres_standard_from = formData[field.presStandardFrom] ? formData[field.presStandardFrom] : '0';
+		let pres_standard_to   = formData[field.presStandardTo] ? formData[field.presStandardTo] : '0';
+		let pres_yellow_first  = formData[field.presYellowFirst] ? formData[field.presYellowFirst] : '0';
+		let pres_yellow_last   = formData[field.presYellowLast] ? formData[field.presYellowLast] : '0';
+		let pres_red_first     = formData[field.presRedFirst] ? formData[field.presRedFirst] : '0';
+		let pres_red_last      = formData[field.presRedLast] ? formData[field.presRedLast] : '0';
 
-		let remark = formData.remark ? formData.remark:'';
+		let cur_standard_from = formData[field.curStandardFrom] ? formData[field.curStandardFrom] : '0';
+		let cur_standard_to   = formData[field.curStandardTo] ? formData[field.curStandardTo] : '0';
+		let cur_yellow_first  = formData[field.curYellowFirst] ? formData[field.curYellowFirst] : '0';
+		let cur_yellow_last   = formData[field.curYellowLast] ? formData[field.curYellowLast] : '0';
+		let cur_red_first     = formData[field.curRedFirst] ? formData[field.curRedFirst] : '0';
+		let cur_red_last      = formData[field.curRedLast] ? formData[field.curRedLast] : '0';
 
-		this.props.dispatch(change("AlarmMasterForm", 'temp_standard_from', temp_standard_from));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_standard_to',   temp_standard_to));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_yellow_first',  temp_yellow_first));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_yellow_last',   temp_yellow_last));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_red_first',      temp_red_first));
-		this.props.dispatch(change("AlarmMasterForm", 'temp_red_last',        temp_red_last));
+		let remark          = formData[field.remark] ? formData[field.remark] : '';
+		let definitionValue = formData[field.definitionValue] ? formData[field.definitionValue] : '000';
 
-		this.props.dispatch(change("AlarmMasterForm", 'pres_standard_from', pres_standard_from));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_standard_to',   pres_standard_to));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_yellow_first',  pres_yellow_first));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_yellow_last',   pres_yellow_last));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_red_first',      pres_red_first));
-		this.props.dispatch(change("AlarmMasterForm", 'pres_red_last',        pres_red_last));
+		this.props.change(field.modelNm, model_name);
+		this.props.change(field.articleNm, article_name);
 
-		this.props.dispatch(change("AlarmMasterForm", 'curr_standard_from',     curr_standard_from));
-		this.props.dispatch(change("AlarmMasterForm", 'curr_standard_to',       curr_standard_to));
-		this.props.dispatch(change("AlarmMasterForm", 'curr_yellow_first',      curr_yellow_first));
-		this.props.dispatch(change("AlarmMasterForm", 'curr_yellow_last',       curr_yellow_last));
-		this.props.dispatch(change("AlarmMasterForm", 'curr_red_first',         curr_red_first));
-		this.props.dispatch(change("AlarmMasterForm", 'curr_red_last',          curr_red_last));
-		this.props.dispatch(change("AlarmMasterForm", 'remark', remark));
-	}
+		this.props.change(field.processCd, formData[field.processCd]);
 
-	onClickProcess = (row) => {
-		let processCode = row.target.value;
+		this.props.change(field.tempStandardFrom, temp_standard_from);
+		this.props.change(field.tempStandardTo, temp_standard_to);
+		this.props.change(field.tempYellowFirst, temp_yellow_first);
+		this.props.change(field.tempYellowLast, temp_yellow_last);
+		this.props.change(field.tempRedFirst, temp_red_first);
+		this.props.change(field.tempRedLast, temp_red_last);
 
-		let {dataProcess} = this.state;
-		let selectedDefinition = [true, true, true];
-		dataProcess.map(item => {
-			if (item.code == processCode){
-				let definitionArray = item.definition_value.split("");
-				let disableTemperature  = parseInt(definitionArray[0]) > 0?false:true;
-				let disablePressure     = parseInt(definitionArray[1]) > 0?false:true;
-				let disableCuringTime   = parseInt(definitionArray[2]) > 0?false:true;
-				selectedDefinition = [disableTemperature, disablePressure, disableCuringTime];
-			}
-		});
-		this.props.dispatch(change("AlarmMasterForm", "definition_value", selectedDefinition));
+		this.props.change(field.presStandardFrom, pres_standard_from);
+		this.props.change(field.presStandardTo, pres_standard_to);
+		this.props.change(field.presYellowFirst, pres_yellow_first);
+		this.props.change(field.presYellowLast, pres_yellow_last);
+		this.props.change(field.presRedFirst, pres_red_first);
+		this.props.change(field.presRedLast, pres_red_last);
 
-		this.setState({
-			selectedProcessCode: processCode,
-			selectedDefinition: selectedDefinition,
-			editMode: false,
-		});
-		this.props.setSelectedProcess(processCode);
-	}
+		this.props.change(field.curStandardFrom, cur_standard_from);
+		this.props.change(field.curStandardTo, cur_standard_to);
+		this.props.change(field.curYellowFirst, cur_yellow_first);
+		this.props.change(field.curYellowLast, cur_yellow_last);
+		this.props.change(field.curRedFirst, cur_red_first);
+		this.props.change(field.curRedLast, cur_red_last);
 
-	setDefinitionValue = (definitionValue, selectedCode) => {
-		let definitionArray = definitionValue.split("");
-		let disableTemperature  = parseInt(definitionArray[0]) > 0?false:true;
-		let disablePressure     = parseInt(definitionArray[1]) > 0?false:true;
-		let disableCuringTime   = parseInt(definitionArray[2]) > 0?false:true;
-		let selectedDefinition = [disableTemperature, disablePressure, disableCuringTime];
-		this.props.dispatch(change("AlarmMasterForm", "definition_value", selectedDefinition));
-		this.setState({
-			selectedProcessCode: selectedCode,
-			selectedDefinition: selectedDefinition,
-		});
+		this.props.change(field.remark, remark);
+		this.props.change(field.definitionValue, definitionValue);
 	}
 
 	render() {
-		let {handleSubmit, columnsModelArticle, dataModelArticle, onReset, submissionState} = this.props;
-		let {dataProcess, selectedProcessCode, selectedDefinition, editMode} = this.state;
-		let {formData} = this.state;
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+
+		let {columnsModelArticle, dataModelArticle, handleSubmit, reset, onReset, submissionState} = this.props;
+		let {formData, processList, submitButtonClicked, submissionError}                          = this.state;
+
+		let definitionArray     = formData[field.definitionValue]
+		                          ? formData[field.definitionValue].split("")
+		                          : [0, 0, 0];
+		let temperatureDisabled = parseInt(definitionArray[0]) === 0;
+		let pressureDisabled    = parseInt(definitionArray[1]) === 0;
+		let curingTimeDisabled  = parseInt(definitionArray[2]) === 0;
+
 		return (
-			<div style={{display:"flex"}}>
+			<div style={{display: "flex"}}>
 				<Col md={3} lg={3} style={{minHeight: 300}}>
 					<DataTable columns={columnsModelArticle} data={dataModelArticle} options={{
 						height: "500px",
@@ -216,21 +213,28 @@ class AlarmMasterForm extends Component {
 				</Col>
 				<Col md={2} lg={2} style={{marginLeft: -30, backgroundColor: '#1A2439'}}>
 					<div style={{display: "flex", flexDirection: "column"}}>
-						<span className="form__form-group-label text-uppercase" style={{paddingTop: 30, paddingLeft: 20, minHeight: 80}}>Process</span>
-						<ul className="list-group bg-transparent" style={{width:"100%"}} onClick={this.onClickProcess}>
+						<span className="form__form-group-label text-uppercase"
+						      style={{paddingTop: 30, paddingLeft: 20, minHeight: 80}}>Process</span>
+						<ul className="list-group bg-transparent" style={{width: "100%"}} onClick={this.onProcessClick}>
 							{
-								dataProcess.map(item => {
-									let itemClass = (item.code == selectedProcessCode)?'list-group-item border-0 selected-process-code':'list-group-item border-0 not-selected-process-code';
-									let innerData = (item.code == selectedProcessCode)?<div className={"d-flex"}>
-										<div style={{width: '90%'}}>{item.name}</div>
-										<div>
-											<FontAwesomeIcon style={{color: 'rgba(255, 255, 255,' +
-													' 0.54)', fontSize: 8, justifySelf:"flex-end"}} icon={faPlay} />
-										</div>
-
-									</div>:item.name;
-									return <li className={itemClass} key={item.code}
-									           value={item.code}>{innerData}</li>
+								processList.map(item => {
+									let itemClass = (item[field.processCd] == formData[field.processCd])
+									                ? 'list-group-item border-0 selected-process-code'
+									                : 'list-group-item border-0 not-selected-process-code';
+									let innerData = (item[field.processCd] == formData[field.processCd])
+									                ? <div className={"d-flex"}>
+										                <div style={{width: '90%'}}>{item[field.processNm]}</div>
+										                <div>
+											                <FontAwesomeIcon style={{
+												                color      : 'rgba(255, 255, 255, 0.54)',
+												                fontSize   : 8,
+												                justifySelf: "flex-end"
+											                }} icon={faPlay}/>
+										                </div>
+									                </div>
+									                : item[field.processNm];
+									return <li className={itemClass} key={item[field.processCd]}
+									           value={item[field.processCd]}>{innerData}</li>;
 								})
 							}
 						</ul>
@@ -243,14 +247,16 @@ class AlarmMasterForm extends Component {
 								<span className="form__form-group-label">Model</span>
 								<div className="form__form-group-field">
 									<Field
-										name="model_nm"
-										component="input"
+										name={field.modelNm}
+										component={renderField}
 										type="text"
 										props={{
 											disabled: true,
-											value: formData.model_nm ? formData.model_nm:''
+											value   : formData[field.modelNm]
+											          ? formData[field.modelNm]
+											          : ''
 										}}
-										className={"marginLeff-20"}
+										className={"marginLeft-20"}
 									/>
 								</div>
 							</div>
@@ -260,12 +266,14 @@ class AlarmMasterForm extends Component {
 								<span className="form__form-group-label">Article</span>
 								<div className="form__form-group-field">
 									<Field
-										name="article_nm"
-										component="input"
+										name={field.articleNm}
+										component={renderField}
 										type="text"
 										props={{
 											disabled: true,
-											value: formData.article_nm ? formData.article_nm:''
+											value   : formData[field.articleNm]
+											          ? formData[field.articleNm]
+											          : ''
 										}}
 									/>
 								</div>
@@ -273,9 +281,14 @@ class AlarmMasterForm extends Component {
 						</Col>
 
 						<Col md={3} lg={3}>
+							<Field
+								name={field.processCd}
+								component="input"
+								type="hidden"
+							/>
 						</Col>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label text-center text-uppercase" >Temperature</span>
+							<span className="form__form-group-label text-center text-uppercase">Temperature</span>
 						</Col>
 						<Col md={3} lg={3}>
 							<span className="form__form-group-label text-center text-uppercase">Pressure</span>
@@ -286,7 +299,8 @@ class AlarmMasterForm extends Component {
 
 						<hr style={{height: 30}}/>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label"><FontAwesomeIcon style={{color: '#03CF65', fontSize: 8}} icon={faCircle} /> Standard Value</span>
+							<span className="form__form-group-label"><FontAwesomeIcon
+								style={{color: '#03CF65', fontSize: 8}} icon={faCircle}/> Standard Value</span>
 						</Col>
 						<Col md={3} lg={3}>
 							<Row>
@@ -295,19 +309,50 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_standard_from"
+										name={field.tempStandardFrom}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value: formData.temp_standard_from ? formData.temp_standard_from : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? formData[field.tempStandardFrom]
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												temp_standard_from: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempStandardFrom]: newValue
+													                          ? newValue === '-'
+													                            ? newValue
+													                            : (+newValue).toString()
+													                          : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -315,19 +360,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_standard_to"
+										name={field.tempStandardTo}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value: formData.temp_standard_to ? formData.temp_standard_to : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? (
+												          formData[field.tempStandardTo] != undefined
+												          ? formData[field.tempStandardTo]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												temp_standard_to: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempStandardTo]: newValue
+													                        ? newValue === '-'
+													                          ? newValue
+													                          : (+newValue).toString()
+													                        : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -339,19 +419,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_standard_from"
+										name={field.presStandardFrom}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value: formData.pres_standard_from ? formData.pres_standard_from : ''
+											disabled: pressureDisabled,
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presStandardFrom] != undefined
+												          ? formData[field.presStandardFrom]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												pres_standard_from: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presStandardFrom]: newValue
+													                          ? newValue === '-'
+													                            ? newValue
+													                            : (+newValue).toString()
+													                          : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -359,19 +474,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_standard_to"
+										name={field.presStandardTo}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value: formData.pres_standard_to ? formData.pres_standard_to : ''
+											disabled: pressureDisabled,
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presStandardTo] != undefined
+												          ? formData[field.presStandardTo]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												pres_standard_to: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presStandardTo]: newValue
+													                        ? newValue === '-'
+													                          ? newValue
+													                          : (+newValue).toString()
+													                        : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -383,19 +533,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="curr_standard_from"
+										name={field.curStandardFrom}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value: formData.curr_standard_from ? formData.curr_standard_from : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curStandardFrom] != undefined
+												          ? formData[field.curStandardFrom]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												curr_standard_from: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curStandardFrom]: newValue
+													                         ? newValue === '-'
+													                           ? newValue
+													                           : (+newValue).toString()
+													                         : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -403,19 +588,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="curr_standard_to"
+										name={field.curStandardTo}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value: formData.curr_standard_to ? formData.curr_standard_to : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curStandardTo] != undefined
+												          ? formData[field.curStandardTo]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												curr_standard_to: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curStandardTo]: newValue
+													                       ? newValue === '-'
+													                         ? newValue
+													                         : (+newValue).toString()
+													                       : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -423,7 +643,8 @@ class AlarmMasterForm extends Component {
 
 						<hr style={{height: 30}}/>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label"><FontAwesomeIcon style={{color: '#FFD44F', fontSize: 8}} icon={faCircle} /> Yellow Range</span>
+							<span className="form__form-group-label"><FontAwesomeIcon
+								style={{color: '#FFD44F', fontSize: 8}} icon={faCircle}/> Yellow Range</span>
 						</Col>
 						<Col md={3} lg={3}>
 							<Row>
@@ -432,19 +653,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_yellow_first"
+										name={field.tempYellowFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value: formData.temp_yellow_first ? formData.temp_yellow_first : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? (
+												          formData[field.tempYellowFirst] != undefined
+												          ? formData[field.tempYellowFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												temp_yellow_first: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempYellowFirst]: newValue
+													                         ? newValue === '-'
+													                           ? newValue
+													                           : (+newValue).toString()
+													                         : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -452,19 +708,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_yellow_last"
+										name={field.tempYellowLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value: formData.temp_yellow_last ? formData.temp_yellow_last : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? (
+												          formData[field.tempYellowLast] != undefined
+												          ? formData[field.tempYellowLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												temp_yellow_last: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempYellowLast]: newValue
+													                        ? newValue === '-'
+													                          ? newValue
+													                          : (+newValue).toString()
+													                        : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -476,19 +767,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_yellow_first"
+										name={field.presYellowFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value: formData.pres_yellow_first ? formData.pres_yellow_first : ''
+											disabled: pressureDisabled,
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presYellowFirst] != undefined
+												          ? formData[field.presYellowFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												pres_yellow_first: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presYellowFirst]: newValue
+													                         ? newValue === '-'
+													                           ? newValue
+													                           : (+newValue).toString()
+													                         : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -496,19 +822,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_yellow_last"
+										name={field.presYellowLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value: formData.pres_yellow_last ? formData.pres_yellow_last : ''
+											disabled: pressureDisabled,
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presYellowLast] != undefined
+												          ? formData[field.presYellowLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												pres_yellow_last: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presYellowLast]: newValue
+													                        ? newValue === '-'
+													                          ? newValue
+													                          : (+newValue).toString()
+													                        : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -520,19 +881,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="curr_yellow_first"
+										name={field.curYellowFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value: formData.curr_yellow_first ? formData.curr_yellow_first : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curYellowFirst] != undefined
+												          ? formData[field.curYellowFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												curr_yellow_first: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curYellowFirst]: newValue
+													                        ? newValue === '-'
+													                          ? newValue
+													                          : (+newValue).toString()
+													                        : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -540,19 +936,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="curr_yellow_last"
+										name={field.curYellowLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value: formData.curr_yellow_last ? formData.curr_yellow_last : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curYellowLast] != undefined
+												          ? formData[field.curYellowLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												curr_yellow_last: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curYellowLast]: newValue
+													                       ? newValue === '-'
+													                         ? newValue
+													                         : (+newValue).toString()
+													                       : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -560,7 +991,8 @@ class AlarmMasterForm extends Component {
 
 						<hr style={{height: 30}}/>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label"><FontAwesomeIcon style={{color: '#F84E4E', fontSize: 8}} icon={faCircle} /> Red Range</span>
+							<span className="form__form-group-label"><FontAwesomeIcon
+								style={{color: '#F84E4E', fontSize: 8}} icon={faCircle}/> Red Range</span>
 						</Col>
 						<Col md={3} lg={3}>
 							<Row>
@@ -569,19 +1001,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_red_first"
+										name={field.tempRedFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value: formData.temp_red_first ? formData.temp_red_first : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? (
+												          formData[field.tempRedFirst] != undefined
+												          ? formData[field.tempRedFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												temp_red_first: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempRedFirst]: newValue
+													                      ? newValue === '-'
+													                        ? newValue
+													                        : (+newValue).toString()
+													                      : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -589,19 +1056,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="temp_red_last"
+										name={field.tempRedLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[0],
-											value: formData.temp_red_last ? formData.temp_red_last : ''
+											disabled: temperatureDisabled,
+											value   : formData[field.processCd] && !temperatureDisabled
+											          ? (
+												          formData[field.tempRedLast] != undefined
+												          ? formData[field.tempRedLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												temp_red_last: e.target.value,
+										placeholder={formData[field.processCd] && !temperatureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.tempRedLast]: newValue
+													                     ? newValue === '-'
+													                       ? newValue
+													                       : (+newValue).toString()
+													                     : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -613,19 +1115,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_red_first"
+										name={field.presRedFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value: formData.pres_red_first ? formData.pres_red_first : ''
+											disabled: pressureDisabled,
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presRedFirst] != undefined
+												          ? formData[field.presRedFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												pres_red_first: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presRedFirst]: newValue
+													                      ? newValue === '-'
+													                        ? newValue
+													                        : (+newValue).toString()
+													                      : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -633,19 +1170,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="pres_red_last"
+										name={field.presRedLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[1],
-											value: formData.pres_red_last ? formData.pres_red_last : ''
+											disabled: pressureDisabled,
+											value   : formData[field.processCd] && !pressureDisabled
+											          ? (
+												          formData[field.presRedLast] != undefined
+												          ? formData[field.presRedLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												pres_red_last: e.target.value,
+										placeholder={formData[field.processCd] && !pressureDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.presRedLast]: newValue
+													                     ? newValue === '-'
+													                       ? newValue
+													                       : (+newValue).toString()
+													                     : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -657,19 +1229,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="curr_red_first"
+										name={field.curRedFirst}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value: formData.curr_red_first ? formData.curr_red_first : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curRedFirst] != undefined
+												          ? formData[field.curRedFirst]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												curr_red_first: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curRedFirst]: newValue
+													                     ? newValue === '-'
+													                       ? newValue
+													                       : (+newValue).toString()
+													                     : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 								<Col md={2} lg={2}>
@@ -677,19 +1284,54 @@ class AlarmMasterForm extends Component {
 								</Col>
 								<Col md={4} lg={4}>
 									<Field
-										name="curr_red_last"
+										name={field.curRedLast}
 										component={renderField}
 										type="text"
 										props={{
-											disabled: selectedDefinition[2],
-											value: formData.curr_red_last ? formData.curr_red_last : ''
+											disabled: curingTimeDisabled,
+											value   : formData[field.processCd] && !curingTimeDisabled
+											          ? (
+												          formData[field.curRedLast] != undefined
+												          ? formData[field.curRedLast]
+												          : '0'
+											          )
+											          : '',
 										}}
-										onChange={e => this.setState({
-											formData: {
-												...formData,
-												curr_red_last: e.target.value,
+										placeholder={formData[field.processCd] && !curingTimeDisabled ? '0' : ''}
+										onChange={(event, newValue) => {
+											if (submitButtonClicked) {
+												this.setState({
+													submitButtonClicked: false,
+												});
 											}
-										})}
+											if (submissionError) {
+												this.setState({
+													submissionError: '',
+												});
+											}
+											// If the most recent input character of newValue is minus sign
+											if (newValue[newValue.length - 1] === '-') {
+												// But it's not at index 0
+												// Then remove it
+												if (newValue.length > 1) {
+													newValue = newValue.slice(0, -1);
+												}
+											} else if ('0123456789'.indexOf(newValue[newValue.length - 1]) === -1) {
+												// If the most recent input character of newValue is not a number
+												// Then remove it
+												newValue = newValue.slice(0, -1);
+											}
+											this.setState({
+												formData: {
+													...formData,
+													[field.curRedLast]: newValue
+													                    ? newValue === '-'
+													                      ? newValue
+													                      : (+newValue).toString()
+													                    : newValue,
+												}
+											});
+										}}
 									/>
 								</Col>
 							</Row>
@@ -700,78 +1342,112 @@ class AlarmMasterForm extends Component {
 						</Col>
 						<Col md={8} lg={8} style={{marginLeft: -80}}>
 							<Field
-								name="remark"
+								name={field.remark}
 								component={renderField}
 								type="text"
 								placeholder="Remark"
 								props={{
-									value: formData.remark ? formData.remark : ''
+									value: formData[field.remark] ? formData[field.remark] : ''
 								}}
-								onChange={e => this.setState({
-									formData: {
-										...formData,
-										remark: e.target.value,
+								onChange={e => {
+									if (submitButtonClicked) {
+										this.setState({
+											submitButtonClicked: false,
+										});
 									}
-								})}
+									if (submissionError) {
+										this.setState({
+											submissionError: '',
+										});
+									}
+									this.setState({
+										formData: {
+											...formData,
+											[field.remark]: e.target.value,
+										}
+									});
+								}}
 							/>
 							<Field
-								name="definition_value"
-								component={renderField}
-								props={{
-									value: formData.definition_value ? formData.definition_value : ''
-								}}
+								name={field.definitionValue}
+								component="input"
 								type="hidden"
-								onChange={e => this.setState({
-									formData: {
-										...formData,
-										definition_value: e.target.value,
-									}
-								})}
 							/>
 						</Col>
 
 						<hr style={{height: 30}}/>
-						<Col md={12} lg={12} style={{display:'flex', justifyItems: 'flex-end'}}>
+						<Col md={12} lg={12} style={{display: 'flex', justifyContent: 'flex-end'}}>
 							<ButtonToolbar className="form__button-toolbar">
-								<Button color="primary" type="submit">
+								<Button color="primary" type="submit" onClick={() => {
+									if (!submitButtonClicked) {
+										this.setState({
+											submitButtonClicked: true,
+										});
+									}
+								}}>
 									{(() => {
+										let {initial, onGoing, done} = ALARM_MASTER_PAGE_CONSTANTS.submissionState;
 										if (this.state.editMode) {
 											switch (submissionState) {
-												case -1:
+												case initial:
 													return 'Save';
-												case 0:
+												case onGoing:
 													return 'Saving';
-												case 1:
+												case done:
 													return 'Saved';
 												default:
 													return 'Save';
 											}
 										} else {
 											switch (submissionState) {
-												case -1:
+												case initial:
 													return 'Submit';
-												case 0:
+												case onGoing:
 													return 'Submitting';
-												case 1:
+												case done:
 													return 'Submitted';
 												default:
 													return 'Submit';
 											}
 										}
 									})()}
-									{submissionState === 0 ? <LoadingSpinner/> : ''}
+									{
+										submissionState === ALARM_MASTER_PAGE_CONSTANTS.submissionState.onGoing
+										? <LoadingSpinner/>
+										: ''
+									}
 								</Button>
+								<Field
+									name={field.emptyForm}
+									type="hidden"
+									component={({meta: {error}}) => {
+										if (!this.state.submissionError && error) {
+											this.setState({
+												submissionError: error,
+											});
+										} else if (this.state.submissionError && !error) {
+											this.setState({
+												submissionError: '',
+											});
+										}
+										return null;
+									}}
+								/>
 								<Button type="button" onClick={() => {
 									reset();
-									this.setState({
-										formData: {},
-										editMode: false,
-									});
+									if (submitButtonClicked) {
+										this.setState({
+											submitButtonClicked: false,
+										});
+									}
 									onReset();
 								}}>
 									Cancel
 								</Button>
 							</ButtonToolbar>
+						</Col>
+						<Col md={12} lg={12} style={{display: 'flex', justifyContent: 'flex-end', color: '#ad3f38'}}>
+							{submitButtonClicked && submissionError}
 						</Col>
 					</form>
 				</Col>
@@ -781,5 +1457,6 @@ class AlarmMasterForm extends Component {
 }
 
 export default reduxForm({
-	form: 'AlarmMasterForm',
+	form: ALARM_MASTER_PAGE_CONSTANTS.alarmMasterFormName,
+	validate,
 })(AlarmMasterForm);
