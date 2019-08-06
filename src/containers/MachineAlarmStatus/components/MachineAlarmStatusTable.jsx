@@ -161,7 +161,7 @@ class MachineAlarmStatusTable extends Component {
 							</td>
 			}
 		}
-		return columns;
+		return <tr>{columns}</tr>;
 	}
 
 	fillTableBody = data => {
