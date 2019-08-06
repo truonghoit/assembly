@@ -36,6 +36,25 @@ const validate = (values) => {
 			if (!values[field.tempRedLast]) {
 				errors[field.tempRedLast] = 'This shouldn\'t be empty';
 			}
+
+			if (values[field.tempStandardFrom] === '-') {
+				errors[field.tempStandardFrom] = 'Wrong number format';
+			}
+			if (values[field.tempStandardTo] === '-') {
+				errors[field.tempStandardTo] = 'Wrong number format';
+			}
+			if (values[field.tempYellowFirst] === '-') {
+				errors[field.tempYellowFirst] = 'Wrong number format';
+			}
+			if (values[field.tempYellowLast] === '-') {
+				errors[field.tempYellowLast] = 'Wrong number format';
+			}
+			if (values[field.tempRedFirst] === '-') {
+				errors[field.tempRedFirst] = 'Wrong number format';
+			}
+			if (values[field.tempRedLast] === '-') {
+				errors[field.tempRedLast] = 'Wrong number format';
+			}
 		}
 
 		if (!pressureDisabled) {
@@ -57,6 +76,25 @@ const validate = (values) => {
 			if (!values[field.presRedLast]) {
 				errors[field.presRedLast] = 'This shouldn\'t be empty';
 			}
+
+			if (values[field.presStandardFrom] === '-') {
+				errors[field.presStandardFrom] = 'Wrong number format';
+			}
+			if (values[field.presStandardTo] === '-') {
+				errors[field.presStandardTo] = 'Wrong number format';
+			}
+			if (values[field.presYellowFirst] === '-') {
+				errors[field.presYellowFirst] = 'Wrong number format';
+			}
+			if (values[field.presYellowLast] === '-') {
+				errors[field.presYellowLast] = 'Wrong number format';
+			}
+			if (values[field.presRedFirst] === '-') {
+				errors[field.presRedFirst] = 'Wrong number format';
+			}
+			if (values[field.presRedLast] === '-') {
+				errors[field.presRedLast] = 'Wrong number format';
+			}
 		}
 
 		if (!curingTimeDisabled) {
@@ -77,6 +115,25 @@ const validate = (values) => {
 			}
 			if (!values[field.curRedLast]) {
 				errors[field.curRedLast] = 'This shouldn\'t be empty';
+			}
+
+			if (values[field.curStandardFrom] === '-') {
+				errors[field.curStandardFrom] = 'Wrong number format';
+			}
+			if (values[field.curStandardTo] === '-') {
+				errors[field.curStandardTo] = 'Wrong number format';
+			}
+			if (values[field.curYellowFirst] === '-') {
+				errors[field.curYellowFirst] = 'Wrong number format';
+			}
+			if (values[field.curYellowLast] === '-') {
+				errors[field.curYellowLast] = 'Wrong number format';
+			}
+			if (values[field.curRedFirst] === '-') {
+				errors[field.curRedFirst] = 'Wrong number format';
+			}
+			if (values[field.curRedLast] === '-') {
+				errors[field.curRedLast] = 'Wrong number format';
 			}
 		}
 	} else {
