@@ -1,13 +1,8 @@
-import React, {Component} from 'react';
-import DateEditor from "react-tabulator/lib/editors/DateEditor";
-import MultiSelectEditor from "react-tabulator/lib/editors/MultiSelectEditor";
-import MultiValueFormatter from "react-tabulator/lib/formatters/MultiValueFormatter";
-import {Button, Card, CardBody, Col,} from 'reactstrap';
+import React, {Component}    from 'react';
 
 import "../../../scss/component/tabulator_midnight_custom.css"; // use Theme(s)
-
 // for React 16.4.x use: import { ReactTabulator }
-import {ReactTabulator, reactFormatter} from "react-tabulator";
+import {ReactTabulator}      from "react-tabulator";
 import MASTER_FORM_CONSTANTS from "../constants";
 
 let {field} = MASTER_FORM_CONSTANTS;
@@ -26,20 +21,20 @@ const columns = [
 	{title: "Sys Code(Y/N)", field: field.sysCodeYn, width: '10%', align: "center", formatter: "tickCross"},
 	{title: "Description", field: field.description, width: '9%', align: "center", headerFilter: "input"},
 ];
-const data = [
+const data    = [
 	{
-		[field.masCd.name]: "1",
-		[field.masCdNm.name]: "mas_cd_nm",
-		[field.catCd]: "12",
-		[field.catCdNm]: "red",
-		[field.parentMasCd]: "1234",
-		[field.parentMasNm]: "5",
+		[field.masCd.name]        : "1",
+		[field.masCdNm.name]      : "mas_cd_nm",
+		[field.catCd]             : "12",
+		[field.catCdNm]           : "red",
+		[field.parentMasCd]       : "1234",
+		[field.parentMasNm]       : "5",
 		[field.processingSeq.name]: "243",
-		[field.definitionValue]: "111",
-		[field.virtualYn]: "true",
-		[field.activeYn]: "false",
-		[field.sysCodeYn]: true,
-		[field.description]: "Hello",
+		[field.definitionValue]   : "111",
+		[field.virtualYn]         : "true",
+		[field.activeYn]          : "false",
+		[field.sysCodeYn]         : true,
+		[field.description]       : "Hello",
 	},
 ];
 
@@ -47,7 +42,7 @@ class DataTable extends Component {
 	state = {
 		data: []
 	};
-	ref = null;
+	ref   = null;
 
 	rowClick = (e, row) => {
 		//console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
@@ -57,9 +52,9 @@ class DataTable extends Component {
 
 	render() {
 		let {tableData} = this.props;
-		tableData = tableData ? tableData : [];
-		const options = {
-			height: "40em",
+		tableData       = tableData ? tableData : [];
+		const options   = {
+			height     : "40em",
 			movableRows: false
 		};
 		return (

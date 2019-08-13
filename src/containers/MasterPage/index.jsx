@@ -1,34 +1,29 @@
-import React, {Component}                    from 'react';
-import {Card, CardBody, Col, Container, Row} from 'reactstrap';
-import MasterForm                            from "./components/MasterForm";
-import callAxios                             from "../../services/api";
-import {
-	ASSEMBLY_API,
-	CATEGORY_ROUTE,
-	MAS_CODE_ROUTE,
-	PARENT_ROUTE
-}                                            from "../../constants/urlConstants";
-import DataTable                             from "./components/DataTable";
-import {reduxForm}                           from "redux-form";
-import MASTER_FORM_CONSTANTS                 from "./constants";
+import React, {Component}                                           from 'react';
+import {Card, CardBody, Col, Container, Row}                        from 'reactstrap';
+import MasterForm                                                   from "./components/MasterForm";
+import callAxios                                                    from "../../services/api";
+import {ASSEMBLY_API, CATEGORY_ROUTE, MAS_CODE_ROUTE, PARENT_ROUTE} from "../../constants/urlConstants";
+import DataTable                                                    from "./components/DataTable";
+import {reduxForm}                                                  from "redux-form";
+import MASTER_FORM_CONSTANTS                                        from "./constants";
 
 class MasterPage extends Component {
 	constructor(props) {
 		super(props);
 		let {initial} = MASTER_FORM_CONSTANTS.submissionState;
-		this.state = {
+		this.state    = {
 			categoryCodeOptions: [{
 				value: "",
 				label: "---",
 			}],
-			parentCodeOptions: [{
+			parentCodeOptions  : [{
 				value: "",
 				label: "---",
 			}],
-			formData: {},
-			editMode: false,
-			submissionState: initial,    // -1: Failed, 0: Submit/Save, 1: Submitting/Saving, 2: Submitted/Saved
-			connectionError: '',
+			formData           : {},
+			editMode           : false,
+			submissionState    : initial,    // -1: Failed, 0: Submit/Save, 1: Submitting/Saving, 2: Submitted/Saved
+			connectionError    : '',
 		};
 	}
 
@@ -40,24 +35,24 @@ class MasterPage extends Component {
 
 		event.preventDefault();
 
-		const {field} = MASTER_FORM_CONSTANTS;
+		const {field}        = MASTER_FORM_CONSTANTS;
 		let definition_value = `${values[field.temperature]}${values[field.pressure]}${values[field.curingTime]}`;
 
 		let method = 'POST';
-		let url = '/api/asc/mascode';
-		let param = {
-			"status": this.state.editMode ? "UPDATE" : "INSERT",
-			"mas_cd": values[field.masCd.name],
-			"cate_cd": values[field.catCd],
-			"mas_cd_nm": values[field.masCdNm.name],
-			"parent_mas_cd": values[field.parentMasCd],
-			"processing_seq": values[field.processingSeq.name],
+		let url    = '/api/asc/mascode';
+		let param  = {
+			"status"          : this.state.editMode ? "UPDATE" : "INSERT",
+			"mas_cd"          : values[field.masCd.name],
+			"cate_cd"         : values[field.catCd],
+			"mas_cd_nm"       : values[field.masCdNm.name],
+			"parent_mas_cd"   : values[field.parentMasCd],
+			"processing_seq"  : values[field.processingSeq.name],
 			"definition_value": definition_value,
-			"virtual_yn": values[field.virtualYn],
-			"active_yn": values[field.activeYn],
-			"sys_code_yn": values[field.sysCodeYn],
-			"username": "truongho",
-			"remark": values[field.description]
+			"virtual_yn"      : values[field.virtualYn],
+			"active_yn"       : values[field.activeYn],
+			"sys_code_yn"     : values[field.sysCodeYn],
+			"username"        : "truongho",
+			"remark"          : values[field.description]
 		};
 		setTimeout(() => {
 			callAxios(method, url, param).then(response => {
@@ -78,66 +73,66 @@ class MasterPage extends Component {
 				} else {
 					this.setState({
 						submissionState: failed,
-					})
+					});
 				}
-				let gotError = false;
+				let gotError  = false;
 				let tableData = response.data.data.map(rowData => {
 					if (rowData.outvalue) {    // Got Error/Duplicate Mas Code Found
 						gotError = true;
 					}
 					return {
-						[field.masCd.name]: rowData.mas_cd,
-						[field.masCdNm.name]: rowData.mas_cd_nm,
-						[field.catCdNm]: rowData.cate_nm,
-						[field.catCd]: rowData.cate_cd,
-						[field.parentMasNm]: rowData.parent_cd_nm,
-						[field.parentMasCd]: rowData.parent_mas_cd,
+						[field.masCd.name]        : rowData.mas_cd,
+						[field.masCdNm.name]      : rowData.mas_cd_nm,
+						[field.catCdNm]           : rowData.cate_nm,
+						[field.catCd]             : rowData.cate_cd,
+						[field.parentMasNm]       : rowData.parent_cd_nm,
+						[field.parentMasCd]       : rowData.parent_mas_cd,
 						[field.processingSeq.name]: rowData.processing_seq,
-						[field.definitionValue]: rowData.definition_value,
-						[field.virtualYn]: rowData.virtual_yn,
-						[field.activeYn]: rowData.active_yn,
-						[field.sysCodeYn]: rowData.sys_code_yn,
-						[field.description]: rowData.remark,
+						[field.definitionValue]   : rowData.definition_value,
+						[field.virtualYn]         : rowData.virtual_yn,
+						[field.activeYn]          : rowData.active_yn,
+						[field.sysCodeYn]         : rowData.sys_code_yn,
+						[field.description]       : rowData.remark,
 					};
 				});
 				if (!this.state.editMode && gotError) { // Is in Insert Mode and Duplicated Mas Code found
 					this.setState({
-						formData: {
+						formData       : {
 							...this.state.formData,
-							[field.masCd.name]: values[field.masCd.name],
-							[field.masCdNm.name]: values[field.masCdNm.name],
+							[field.masCd.name]                  : values[field.masCd.name],
+							[field.masCdNm.name]                : values[field.masCdNm.name],
 							[field.hiddenMasCdDuplicatedChecker]: true,
-							[field.catCdNm]: values[field.catCdNm],
-							[field.catCd]: values[field.catCd],
-							[field.parentMasNm]: values[field.parentMasNm],
-							[field.parentMasCd]: values[field.parentMasCd],
-							[field.processingSeq.name]: values[field.processingSeq.name],
-							[field.definitionValue]: definition_value,
-							[field.virtualYn]: values[field.virtualYn],
-							[field.activeYn]: values[field.activeYn],
-							[field.sysCodeYn]: values[field.sysCodeYn],
-							[field.description]: values[field.description],
+							[field.catCdNm]                     : values[field.catCdNm],
+							[field.catCd]                       : values[field.catCd],
+							[field.parentMasNm]                 : values[field.parentMasNm],
+							[field.parentMasCd]                 : values[field.parentMasCd],
+							[field.processingSeq.name]          : values[field.processingSeq.name],
+							[field.definitionValue]             : definition_value,
+							[field.virtualYn]                   : values[field.virtualYn],
+							[field.activeYn]                    : values[field.activeYn],
+							[field.sysCodeYn]                   : values[field.sysCodeYn],
+							[field.description]                 : values[field.description],
 						},
 						submissionState: failed,
 					});
 				} else {    // Is in Insert OR Edit Mode and got NO error
 					this.setState({
-						formData: {
+						formData       : {
 							...this.state.formData,
-							[field.masCd.name]: values[field.masCd.name],
-							[field.masCdNm.name]: values[field.masCdNm.name],
-							[field.catCdNm]: values[field.catCdNm],
-							[field.catCd]: values[field.catCd],
-							[field.parentMasNm]: values[field.parentMasNm],
-							[field.parentMasCd]: values[field.parentMasCd],
+							[field.masCd.name]        : values[field.masCd.name],
+							[field.masCdNm.name]      : values[field.masCdNm.name],
+							[field.catCdNm]           : values[field.catCdNm],
+							[field.catCd]             : values[field.catCd],
+							[field.parentMasNm]       : values[field.parentMasNm],
+							[field.parentMasCd]       : values[field.parentMasCd],
 							[field.processingSeq.name]: values[field.processingSeq.name],
-							[field.definitionValue]: definition_value,
-							[field.virtualYn]: values[field.virtualYn],
-							[field.activeYn]: values[field.activeYn],
-							[field.sysCodeYn]: values[field.sysCodeYn],
-							[field.description]: values[field.description],
+							[field.definitionValue]   : definition_value,
+							[field.virtualYn]         : values[field.virtualYn],
+							[field.activeYn]          : values[field.activeYn],
+							[field.sysCodeYn]         : values[field.sysCodeYn],
+							[field.description]       : values[field.description],
 						},
-						tableData: tableData,
+						tableData      : tableData,
 						submissionState: done,
 					});
 				}
@@ -158,14 +153,14 @@ class MasterPage extends Component {
 						connectionError: '',
 					});
 				}, 2000);
-			})
+			});
 		}, 1000);
 	};
 
 	loadComboBoxes = () => {
 		let method = 'POST';
-		let url = ASSEMBLY_API + CATEGORY_ROUTE;
-		let param = {
+		let url    = ASSEMBLY_API + CATEGORY_ROUTE;
+		let param  = {
 			"dropdownlist-name": "cate"
 		};
 
@@ -183,7 +178,7 @@ class MasterPage extends Component {
 			});
 		}).catch(reason => console.log("Error: ", reason));
 
-		url = ASSEMBLY_API + PARENT_ROUTE;
+		url   = ASSEMBLY_API + PARENT_ROUTE;
 		param = {
 			"dropdownlist-name": "parent"
 		};
@@ -205,26 +200,26 @@ class MasterPage extends Component {
 
 	loadDataTable = () => {
 		let method = 'POST';
-		let url = ASSEMBLY_API + MAS_CODE_ROUTE;
+		let url    = ASSEMBLY_API + MAS_CODE_ROUTE;
 
 		callAxios(method, url, {}).then(response => {
 			let responseArray = response.data.data;
-			let tableData = [];
-			const {field} = MASTER_FORM_CONSTANTS;
+			let tableData     = [];
+			const {field}     = MASTER_FORM_CONSTANTS;
 			for (let i = 0; i < responseArray.length; i++) {
 				let item = {
-					[field.masCd.name]: responseArray[i].mas_cd,
-					[field.masCdNm.name]: responseArray[i].mas_cd_nm,
-					[field.catCdNm]: responseArray[i].cate_nm,
-					[field.catCd]: responseArray[i].cate_cd,
-					[field.parentMasNm]: responseArray[i].parent_cd_nm,
-					[field.parentMasCd]: responseArray[i].parent_mas_cd,
+					[field.masCd.name]        : responseArray[i].mas_cd,
+					[field.masCdNm.name]      : responseArray[i].mas_cd_nm,
+					[field.catCdNm]           : responseArray[i].cate_nm,
+					[field.catCd]             : responseArray[i].cate_cd,
+					[field.parentMasNm]       : responseArray[i].parent_cd_nm,
+					[field.parentMasCd]       : responseArray[i].parent_mas_cd,
 					[field.processingSeq.name]: responseArray[i].processing_seq,
-					[field.definitionValue]: responseArray[i].definition_value,
-					[field.virtualYn]: responseArray[i].virtual_yn,
-					[field.activeYn]: responseArray[i].active_yn,
-					[field.sysCodeYn]: responseArray[i].sys_code_yn,
-					[field.description]: responseArray[i].remark,
+					[field.definitionValue]   : responseArray[i].definition_value,
+					[field.virtualYn]         : responseArray[i].virtual_yn,
+					[field.activeYn]          : responseArray[i].active_yn,
+					[field.sysCodeYn]         : responseArray[i].sys_code_yn,
+					[field.description]       : responseArray[i].remark,
 				};
 				tableData.push(item);
 			}
@@ -236,8 +231,8 @@ class MasterPage extends Component {
 
 	fillForm = (selectedRow) => {
 		this.setState({
-			formData: selectedRow,
-			editMode: true,
+			formData       : selectedRow,
+			editMode       : true,
 			submissionState: MASTER_FORM_CONSTANTS.submissionState.initial,
 		});
 	};
@@ -246,7 +241,7 @@ class MasterPage extends Component {
 		this.setState({
 			formData: {},
 			editMode: false,
-		})
+		});
 	};
 
 	componentDidMount() {
@@ -256,10 +251,10 @@ class MasterPage extends Component {
 
 	render() {
 		let {
-			parentCodeOptions, categoryCodeOptions,
-			tableData, formData,
-			editMode, submissionState, connectionError
-		} = this.state;
+			    parentCodeOptions, categoryCodeOptions,
+			    tableData, formData,
+			    editMode, submissionState, connectionError
+		    } = this.state;
 		return (
 			<Container className="dashboard">
 				<Card>

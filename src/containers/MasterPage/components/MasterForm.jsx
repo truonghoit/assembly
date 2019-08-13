@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
-import {change, Field, reduxForm} from 'redux-form';
-import PropTypes from 'prop-types';
-import {Button, Card, CardBody, Col,} from 'reactstrap';
-import renderCheckBoxField from '../../../shared/components/form/CheckBox';
-import renderSelectField from '../../../shared/components/form/Select';
-import validate from './validate';
-import {renderField} from "../../../shared/components/form/InputField";
-import LoadingSpinner from "../../../shared/components/loading_spinner/LoadingSpinner";
+import React, {Component}    from 'react';
+import {Field, reduxForm}    from 'redux-form';
+import PropTypes             from 'prop-types';
+import {Button, Col,}        from 'reactstrap';
+import renderCheckBoxField   from '../../../shared/components/form/CheckBox';
+import renderSelectField     from '../../../shared/components/form/Select';
+import validate              from './validate';
+import {renderField}         from "../../../shared/components/form/InputField";
+import LoadingSpinner        from "../../../shared/components/loading_spinner/LoadingSpinner";
 import MASTER_FORM_CONSTANTS from "../constants";
 
 class MasterForm extends Component {
 	static propTypes = {
 		handleSubmit: PropTypes.func.isRequired,
-		reset: PropTypes.func.isRequired,
+		reset       : PropTypes.func.isRequired,
 	};
 
 	constructor(props) {
@@ -22,12 +22,12 @@ class MasterForm extends Component {
 				value: "",
 				label: "---",
 			}],
-			parentCodeOptions: [{
+			parentCodeOptions  : [{
 				value: "",
 				label: "---",
 			}],
-			editMode: false,
-			formData: {},
+			editMode           : false,
+			formData           : {},
 		};
 	}
 
@@ -41,7 +41,7 @@ class MasterForm extends Component {
 		}
 
 		let {formData} = this.state;
-		const {field} = MASTER_FORM_CONSTANTS;
+		const {field}  = MASTER_FORM_CONSTANTS;
 		this.props.change(field.masCd.name, formData[field.masCd.name] ? formData[field.masCd.name] : '');
 		this.props.change(field.masCdNm.name, formData[field.masCdNm.name] ? formData[field.masCdNm.name] : '');
 
@@ -71,18 +71,18 @@ class MasterForm extends Component {
 
 	render() {
 		let {
-			handleSubmit, reset,
-			parentCodeOptions, categoryCodeOptions,
-			onReset, submissionState, connectionError
-		} = this.props;
+			    handleSubmit, reset,
+			    parentCodeOptions, categoryCodeOptions,
+			    onReset, submissionState, connectionError
+		    }          = this.props;
 		let {formData} = this.state;
-		const {field} = MASTER_FORM_CONSTANTS;
+		const {field}  = MASTER_FORM_CONSTANTS;
 
 		let definitionValue = formData[field.definitionValue] ? formData[field.definitionValue] : "000";
 		let definitionArray = definitionValue.split('');
-		let temperature = definitionArray.length > 0 ? definitionArray[0] : '0';
-		let pressure = definitionArray.length > 1 ? definitionArray[1] : '0';
-		let curingTime = definitionArray.length > 2 ? definitionArray[2] : '0';
+		let temperature     = definitionArray.length > 0 ? definitionArray[0] : '0';
+		let pressure        = definitionArray.length > 1 ? definitionArray[1] : '0';
+		let curingTime      = definitionArray.length > 2 ? definitionArray[2] : '0';
 
 		return (
 			<Col md={12} lg={12}>
@@ -96,7 +96,7 @@ class MasterForm extends Component {
 									component={renderField}
 									props={{
 										disabled: this.state.editMode === true,
-										value: formData[field.masCd.name] ? formData[field.masCd.name] : ''
+										value   : formData[field.masCd.name] ? formData[field.masCd.name] : ''
 									}}
 									type="text"
 									className="form__form-group-field-100"
@@ -163,9 +163,9 @@ class MasterForm extends Component {
 											formData: {
 												...formData,
 												[field.catCdNm]: selectedOption.label,
-												[field.catCd]: selectedOption.value,
+												[field.catCd]  : selectedOption.value,
 											}
-										})
+										});
 									}}
 								/>
 							</div>
@@ -177,7 +177,7 @@ class MasterForm extends Component {
 							component={renderField}
 							props={{
 								disabled: true,
-								value: formData[field.catCd] ? formData[field.catCd] : ''
+								value   : formData[field.catCd] ? formData[field.catCd] : ''
 							}}
 							className="marginLeft-15"
 							type="text"
@@ -235,7 +235,7 @@ class MasterForm extends Component {
 							component={renderField}
 							props={{
 								disabled: true,
-								value: formData[field.parentMasCd] ? formData[field.parentMasCd] : ''
+								value   : formData[field.parentMasCd] ? formData[field.parentMasCd] : ''
 							}}
 							className="marginLeft-15"
 							type="text"
@@ -271,8 +271,8 @@ class MasterForm extends Component {
 									component={renderField}
 									props={{
 										value: formData[field.processingSeq.name] != undefined
-											? formData[field.processingSeq.name]
-											: '0'
+										       ? formData[field.processingSeq.name]
+										       : '0'
 									}}
 									className="round_corner form__form-group-field-100"
 									onChange={(event, newValue) => this.setState({
@@ -285,7 +285,7 @@ class MasterForm extends Component {
 							</div>
 						</div>
 					</Col>
-					<Col md={3} lg={3} style={{marginLeft:-15}}>
+					<Col md={3} lg={3} style={{marginLeft: -15}}>
 						<div style={{display: 'flex', flexDirection: "row", justifyContent: "space-between"}}>
 							<div style={{display: 'flex',}}>
 								<Field
@@ -297,7 +297,7 @@ class MasterForm extends Component {
 									}}
 									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
-										let value = newValue[1];  // Only get latest character user typed
+										let value                = newValue[1];  // Only get latest character user typed
 										if (value > definitionValueRange[definitionValueRange.length - 1]) {
 											value = definitionValueRange[definitionValueRange.length - 1];
 										} else if ( // Is a character OR less than 'definitionValueRange[0]'
@@ -326,7 +326,7 @@ class MasterForm extends Component {
 									}}
 									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
-										let value = newValue[1];  // Only get latest character user typed
+										let value                = newValue[1];  // Only get latest character user typed
 										if (value > definitionValueRange[definitionValueRange.length - 1]) {
 											value = definitionValueRange[definitionValueRange.length - 1];
 										} else if ( // Is a character OR less than 'definitionValueRange[0]'
@@ -355,7 +355,7 @@ class MasterForm extends Component {
 									}}
 									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
-										let value = newValue[1];  // Only get latest character user typed
+										let value                = newValue[1];  // Only get latest character user typed
 										if (value > definitionValueRange[definitionValueRange.length - 1]) {
 											value = definitionValueRange[definitionValueRange.length - 1];
 										} else if ( // Is a character OR less than 'definitionValueRange[0]'
@@ -378,7 +378,8 @@ class MasterForm extends Component {
 					</Col>
 					<Col md={2} lg={2}>
 					</Col>
-					<Col md={3} lg={3} style={{marginLeft:15
+					<Col md={3} lg={3} style={{
+						marginLeft: 15
 					}}>
 						<div className="form__form-group-field">
 							<Field
@@ -460,8 +461,8 @@ class MasterForm extends Component {
 							}
 							{
 								submissionState === MASTER_FORM_CONSTANTS.submissionState.onGoing
-									? <LoadingSpinner/>
-									: ''
+								? <LoadingSpinner/>
+								: ''
 							}
 						</Button>
 						<Button type="button" onClick={() => {

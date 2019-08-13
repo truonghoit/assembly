@@ -2,7 +2,7 @@ import MASTER_FORM_CONSTANTS from "../constants";
 
 const validate = (values) => {
 	const {field} = MASTER_FORM_CONSTANTS;
-	const errors = {};
+	const errors  = {};
 	if (!values[field.masCd.name] || (values[field.masCd.name] && !values[field.masCd.name].trim())) {
 		errors[field.masCd.name] = 'Mas Code field shouldn\'t be empty';
 	} else if (/\s/g.test(values[field.masCd.name])) {
