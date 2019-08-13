@@ -18,6 +18,8 @@ const validate = (values) => {
 
 	if (!values[field.masCdNm.name] || (values[field.masCdNm.name] && !values[field.masCdNm.name].trim())) {
 		errors[field.masCdNm.name] = 'General Name field shouldn\'t be empty';
+	} else if (/[!@#$%^=\[\]{};\\|.<>?]+/.test(values[field.masCdNm.name])) {
+		errors[field.masCdNm.name] = 'General Name field shouldn\'t include special characters';
 	} else if (values[field.masCdNm.name].length > field.masCdNm.maxLength) {
 		errors[field.masCdNm.name] = `General Name field shouldn\'t exceed ${field.masCdNm.maxLength} characters`;
 	}
