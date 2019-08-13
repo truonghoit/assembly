@@ -297,11 +297,12 @@ class MasterForm extends Component {
 									}}
 									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
-										let value                = newValue[1];  // Only get latest character user typed
+										let value                = +newValue;
 										if (value > definitionValueRange[definitionValueRange.length - 1]) {
 											value = definitionValueRange[definitionValueRange.length - 1];
 										} else if ( // Is a character OR less than 'definitionValueRange[0]'
-											!(value in definitionValueRange) || value < definitionValueRange[0]
+											isNaN(value) || !(value in definitionValueRange)
+											|| value < definitionValueRange[0]
 										) {
 											value = definitionValueRange[0];
 										}
@@ -326,11 +327,12 @@ class MasterForm extends Component {
 									}}
 									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
-										let value                = newValue[1];  // Only get latest character user typed
+										let value                = +newValue;
 										if (value > definitionValueRange[definitionValueRange.length - 1]) {
 											value = definitionValueRange[definitionValueRange.length - 1];
 										} else if ( // Is a character OR less than 'definitionValueRange[0]'
-											!(value in definitionValueRange) || value < definitionValueRange[0]
+											isNaN(value) || !(value in definitionValueRange)
+											|| value < definitionValueRange[0]
 										) {
 											value = definitionValueRange[0];
 										}
@@ -355,11 +357,12 @@ class MasterForm extends Component {
 									}}
 									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
-										let value                = newValue[1];  // Only get latest character user typed
+										let value                = +newValue;
 										if (value > definitionValueRange[definitionValueRange.length - 1]) {
 											value = definitionValueRange[definitionValueRange.length - 1];
 										} else if ( // Is a character OR less than 'definitionValueRange[0]'
-											!(value in definitionValueRange) || value < definitionValueRange[0]
+											isNaN(value) || !(value in definitionValueRange)
+											|| value < definitionValueRange[0]
 										) {
 											value = definitionValueRange[0];
 										}
