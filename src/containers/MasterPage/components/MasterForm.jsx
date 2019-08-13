@@ -407,7 +407,7 @@ class MasterForm extends Component {
 							<div className="form__form-group-field">
 								<Field
 									name={field.description}
-									component="input"
+									component="textarea"
 									type="text"
 									props={{
 										value: formData[field.description] ? formData[field.description] : ''
