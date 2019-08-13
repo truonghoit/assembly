@@ -19,7 +19,7 @@ const columns = [
 	{title: "Virtual(Y/N)", field: field.virtualYn, width: '10%', align: "center", formatter: "tickCross"},
 	{title: "Active(Y/N)", field: field.activeYn, width: '10%', align: "center", formatter: "tickCross"},
 	{title: "Sys Code(Y/N)", field: field.sysCodeYn, width: '10%', align: "center", formatter: "tickCross"},
-	{title: "Description", field: field.description, width: '9%', align: "center", headerFilter: "input"},
+	{title: "Description", field: field.description.name, width: '9%', align: "center", headerFilter: "input"},
 ];
 const data    = [
 	{
@@ -34,7 +34,7 @@ const data    = [
 		[field.virtualYn]         : "true",
 		[field.activeYn]          : "false",
 		[field.sysCodeYn]         : true,
-		[field.description]       : "Hello",
+		[field.description.name]  : "Hello",
 	},
 ];
 

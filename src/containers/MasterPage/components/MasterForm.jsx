@@ -66,7 +66,9 @@ class MasterForm extends Component {
 		this.props.change(field.activeYn, formData[field.activeYn]);
 		this.props.change(field.sysCodeYn, formData[field.sysCodeYn]);
 
-		this.props.change(field.description, formData[field.description] ? formData[field.description] : '');
+		this.props.change(field.description.name, formData[field.description.name]
+		                                          ? formData[field.description.name]
+		                                          : '');
 	}
 
 	render() {
@@ -406,18 +408,23 @@ class MasterForm extends Component {
 							<span className="form__form-group-label">Description</span>
 							<div className="form__form-group-field">
 								<Field
-									name={field.description}
+									name={field.description.name}
 									component="textarea"
 									type="text"
 									props={{
-										value: formData[field.description] ? formData[field.description] : ''
+										value: formData[field.description.name] ? formData[field.description.name] : ''
 									}}
-									onChange={(event, newValue) => this.setState({
-										formData: {
-											...formData,
-											[field.description]: newValue,
+									onChange={(event, newValue) => {
+										if (newValue.length > field.description.maxLength) {
+											newValue = newValue.slice(0, -1);
 										}
-									})}
+										this.setState({
+											formData: {
+												...formData,
+												[field.description.name]: newValue,
+											}
+										});
+									}}
 								/>
 							</div>
 						</div>

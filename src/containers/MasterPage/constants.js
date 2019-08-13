@@ -31,7 +31,10 @@ const MASTER_FORM_CONSTANTS = {
 		pressure       : 'pressure',
 		curingTime     : 'curingTime',
 
-		description: 'remark',
+		description: {
+			name     : 'remark',
+			maxLength: 400,
+		},
 	},
 	definitionValueRange: [0, 1, 2, 3, 4, 5, 6, 7, 8],
 	submissionState     : {

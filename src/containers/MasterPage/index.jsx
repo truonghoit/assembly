@@ -52,7 +52,7 @@ class MasterPage extends Component {
 			"active_yn"       : values[field.activeYn],
 			"sys_code_yn"     : values[field.sysCodeYn],
 			"username"        : "truongho",
-			"remark"          : values[field.description]
+			"remark"          : values[field.description.name]
 		};
 		setTimeout(() => {
 			callAxios(method, url, param).then(response => {
@@ -92,7 +92,7 @@ class MasterPage extends Component {
 						[field.virtualYn]         : rowData.virtual_yn,
 						[field.activeYn]          : rowData.active_yn,
 						[field.sysCodeYn]         : rowData.sys_code_yn,
-						[field.description]       : rowData.remark,
+						[field.description.name]  : rowData.remark,
 					};
 				});
 				if (!this.state.editMode && gotError) { // Is in Insert Mode and Duplicated Mas Code found
@@ -111,7 +111,7 @@ class MasterPage extends Component {
 							[field.virtualYn]                   : values[field.virtualYn],
 							[field.activeYn]                    : values[field.activeYn],
 							[field.sysCodeYn]                   : values[field.sysCodeYn],
-							[field.description]                 : values[field.description],
+							[field.description.name]            : values[field.description.name],
 						},
 						submissionState: failed,
 					});
@@ -130,7 +130,7 @@ class MasterPage extends Component {
 							[field.virtualYn]         : values[field.virtualYn],
 							[field.activeYn]          : values[field.activeYn],
 							[field.sysCodeYn]         : values[field.sysCodeYn],
-							[field.description]       : values[field.description],
+							[field.description.name]  : values[field.description.name],
 						},
 						tableData      : tableData,
 						submissionState: done,
@@ -219,7 +219,7 @@ class MasterPage extends Component {
 					[field.virtualYn]         : responseArray[i].virtual_yn,
 					[field.activeYn]          : responseArray[i].active_yn,
 					[field.sysCodeYn]         : responseArray[i].sys_code_yn,
-					[field.description]       : responseArray[i].remark,
+					[field.description.name]  : responseArray[i].remark,
 				};
 				tableData.push(item);
 			}
