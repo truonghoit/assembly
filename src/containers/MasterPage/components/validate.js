@@ -31,7 +31,7 @@ const validate = (values) => {
 		errors[field.processingSeq.name] = 'Process Sequence field shouldn\'t be empty';
 	} else if (/\s/g.test(values[field.processingSeq.name])) {
 		errors[field.processingSeq.name] = 'White space isn\'t allowed';
-	} else if (!/^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/i.test(values[field.processingSeq.name])) {
+	} else if (!/^(0|[1-9][0-9]*)$/i.test(values[field.processingSeq.name])) {
 		errors[field.processingSeq.name] = 'Process Sequence should be number';
 	} else if (values[field.processingSeq.name].length > field.processingSeq.maxLength) {
 		errors[field.processingSeq.name] = `Process Sequence shouldn\'t exceed ${field.processingSeq.maxLength} characters`;

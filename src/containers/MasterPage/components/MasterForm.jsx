@@ -277,12 +277,17 @@ class MasterForm extends Component {
 										       : '0'
 									}}
 									className="round_corner form__form-group-field-100"
-									onChange={(event, newValue) => this.setState({
-										formData: {
-											...formData,
-											[field.processingSeq.name]: newValue,
+									onChange={(event, newValue) => {
+										if (/^0+[0-9]*$/.test(newValue)) {
+											newValue = +newValue;
 										}
-									})}
+										this.setState({
+											formData: {
+												...formData,
+												[field.processingSeq.name]: newValue,
+											}
+										});
+									}}
 								/>
 							</div>
 						</div>
