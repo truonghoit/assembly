@@ -46,7 +46,7 @@ class LeadTimeDetail extends Component {
 			leadDetailData: [],
 			leadDetailFooter: {totalQTyLastRow: [], totalLTLastRow: []},
 			filterFromDate: changeDateToUnix(new Date()),
-			filterToDate  : changeDateToUnix(new Date()),
+			filterToDate  : changeDateToUnix(new Date(), "end"),
 			filterLine    : '',
 			filterModel   : '',
 			filterArticle : '',
@@ -233,7 +233,7 @@ class LeadTimeDetail extends Component {
 	handleFilterToDateChange  = (newValue) => {
 		this.setState({
 			...this.state,
-			filterToDate: changeDateToUnix(newValue),
+			filterToDate: changeDateToUnix(newValue, "end"),
 		});
 	}
 	handleFilterLineChange    = (newValue) => {

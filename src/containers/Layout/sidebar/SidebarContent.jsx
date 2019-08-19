@@ -28,6 +28,7 @@ class SidebarContent extends Component {
 	            <SidebarLink title="Alarm History" route="/pages/alarm-history" onClick={this.hideSidebar} />
 	            <SidebarLink title="Machine Alarm Status" route="/pages/machine-alarm-status" onClick={this.hideSidebar} />
 	            <SidebarLink title="Sensing Value" route="/pages/sensing-value" onClick={this.hideSidebar} />
+	            <SidebarLink title="Learning Curve" route="/pages/learning-curve" onClick={this.hideSidebar} />
           </SidebarCategory>
         </ul>
       </div>
