@@ -25,7 +25,7 @@ class DatePickerField extends PureComponent {
 
   render() {
     const { startDate } = this.state;
-    const { disabled, selected} = this.props;
+    const { disabled, selected, meta} = this.props;
     return (
       <div className="date-picker">
         <DatePicker
@@ -37,14 +37,17 @@ class DatePickerField extends PureComponent {
           disabled={true===disabled}
           selected={selected}
         />
+	      {
+		      meta.touched && meta.error && <span className="form__form-group-error">{meta.error}</span>
+	      }
       </div>
     );
   }
 }
 
 const renderDatePickerField = (props) => {
-  const { input } = props;
-  return <DatePickerField {...input} disabled={props.disabled} selected={props.selected}/>;
+  const { input, meta} = props;
+  return <DatePickerField {...input} meta={meta} disabled={props.disabled} selected={props.selected}/>;
 };
 
 renderDatePickerField.propTypes = {

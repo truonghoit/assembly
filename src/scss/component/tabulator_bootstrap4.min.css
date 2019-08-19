@@ -212,7 +212,7 @@
 }
 
 .tabulator-row:nth-child(even) {
-    background-color: #2C3034 !important;
+    background-color: #2C3034;
 }
 
 .tabulator .tabulator-header .tabulator-frozen-rows-holder {

@@ -19,6 +19,10 @@ export const SENSING_VALUE = 'search/process_machine-alarm-status';
 export const SENSING_TEMP = 'search/sensing-temp';
 export const SENSING_PRESS = 'search/sensing-press';
 export const SENSING_TIME = 'search/sensing-time';
+export const LEARNING_CURVE_PROCESS = 'search/learning-curve-status';
+export const LEARNING_CURVE_MODEL = 'search/model-learning-curve-status';
+export const LEARNING_CURVE_CHART = 'search/chart-learning-curve-status';
+export const LEARNING_CURVE_PROCESS_UPDATE = 'maslearningcurve';
 
 
 
