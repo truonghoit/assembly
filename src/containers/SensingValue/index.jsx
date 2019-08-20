@@ -20,7 +20,7 @@ class SensingValue extends Component {
 
 		this.state = {
 			filterFromDate: changeDateToUnix(new Date()),
-			filterToDate  : changeDateToUnix(new Date()),
+			filterToDate  : changeDateToUnix(new Date(), "end"),
 			filterLine    : '',
 			filterModel   : '',
 			filterArticle : '',
@@ -87,10 +87,6 @@ class SensingValue extends Component {
 	}
 
 	getChartData = (processData=this.state.selectedProcess) => {
-		console.log("getChartData getChartData getChartData");
-		console.log("getChartData getChartData getChartData");
-		console.log("processData: ", processData);
-		console.log("state: ", this.state);
 		this.setState((state, props) => ({
 			selectedProcess: processData,
 		}));
@@ -108,16 +104,9 @@ class SensingValue extends Component {
 				"from_date": filterFromDate,
 				"to_date": filterToDate
 			}
-			console.log("112 112 112 112 112 112 112");
-			console.log("112 112 112 112 112 112 112");
-			console.log("112 112 112 112 112 112 112");
-			console.log("params: ", params);
-			console.log("url: ", url);
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
-					console.log("119 119 119 119 119");
-					console.log("SENSING_TEMP: ", data);
 					this.setState((state,props)=> ({
 						tempChartData: data
 					}));
@@ -138,13 +127,9 @@ class SensingValue extends Component {
 				"from_date": filterFromDate,//1563970019
 				"to_date": filterToDate//1562722712
 			}
-			console.log("params: ", params);
-			console.log("url: ", url);
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
-					console.log("144 144 144 144 144");
-					console.log("SENSING_PRESS: ", data);
 					this.setState((state,props)=> ({
 						pressureChartData: data
 					}));
@@ -166,13 +151,9 @@ class SensingValue extends Component {
 				"from_date": filterFromDate,//1562722712
 				"to_date": filterToDate//1562722712
 			}
-			console.log("params: ", params);
-			console.log("url: ", url);
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
-					console.log("172 172 172 172 172");
-					console.log("SENSING_TIME: ", data);
 					this.setState((state,props)=> ({
 						curingChartData: data
 					}));
@@ -188,16 +169,7 @@ class SensingValue extends Component {
 		    || prevState.filterToDate !== this.state.filterToDate
 		    || prevState.filterLine !== this.state.filterLine || prevState.filterModel !== this.state.filterModel
 		    || prevState.filterArticle !== this.state.filterArticle){
-			//filterArticle: ""
-			// filterFromDate: 1563160349
-			// filterLine: ""
-			// filterModel: ""
-			// filterToDate: 1563937949
 			let {filterArticle, filterFromDate, filterToDate, filterLine, filterModel} = this.state;
-			console.log("174 174 174 174 174 174 174");
-			console.log("174 174 174 174 174 174 174");
-			console.log("174 174 174 174 174 174 174");
-			console.log(`${filterArticle} - ${filterFromDate} - ${filterToDate} - ${filterLine} - {filterModel}`);
 			this.getChartData();
 
 		}
@@ -217,17 +189,17 @@ class SensingValue extends Component {
 	}
 	handleFilterLineChange    = (newValue) => {
 		this.setState((state, props) => ({
-			filterLine: changeDateToUnix(newValue),
+			filterLine: newValue.value,
 		}));
 	}
 	handleFilterModelChange   = (newValue) => {
 		this.setState((state, props) => ({
-			filterModel: changeDateToUnix(newValue),
+			filterModel: newValue.value,
 		}));
 	}
 	handleFilterArticleChange = (newValue) => {
 		this.setState((state, props) => ({
-			filterArticle: changeDateToUnix(newValue),
+			filterArticle: newValue.value,
 		}));
 	}
 
