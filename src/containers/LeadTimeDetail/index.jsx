@@ -259,7 +259,7 @@ class LeadTimeDetail extends Component {
 		let {chartData, chartLabels, leadDetailData, leadDetailFooter} = this.state;
 		return (
 			<Container className="dashboard">
-				<h3>Dashboard/Production Lead Time</h3>
+				<h3>Dashboard/Production Lead Time Detail</h3>
 				<hr/>
 				<FilterRange handleFilterFromDateChange={this.handleFilterFromDateChange}
 				             handleFilterToDateChange={this.handleFilterToDateChange}
