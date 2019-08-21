@@ -9,8 +9,6 @@ class ChartArea extends Component {
 	}
 
 	drawChartItem = (chartData) => {
-		console.log("drawChartItem: ");
-		console.log("chartData: ", chartData);
 		let bgColor = '';
 		let chartType = 'bar';
 
@@ -24,7 +22,9 @@ class ChartArea extends Component {
 		defectDataArray[4] = chartData[7]?chartData[7]:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		defectDataArray[5] = chartData[8]?chartData[8]:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-
+		console.log("25 25 25 25 25 25 25 25 25 25");
+		console.log("25 25 25 25 25 25 25 25 25 25");
+		console.log("defectDataArray: ", defectDataArray);
 		/*chartLabels = ["7:30", "8:30", "9:30", "10:30"];
 		chartTypeArray = ["HO KEO (BONDING)", "LEM KEO (OVER-CEMENT)", "LEM NUOC XU LY(OVER-PRIMER)", "DO (DIRTY)"];
 		defectDataArray[0] = [1, 4, 2, 4];
@@ -33,7 +33,6 @@ class ChartArea extends Component {
 		defectDataArray[3] = [5, 1, 7, 9];
 		defectDataArray[4] = [2, 3, 5, 8];
 		defectDataArray[5] = [6, 8, 4, 7];*/
-		console.log("defectDataArray: ", defectDataArray);
 		let chartOptions = {
 			legend: {
 				display : true,
@@ -135,13 +134,11 @@ class ChartArea extends Component {
 		let datasets = initialData.datasets;
 
 		return  <Col style={{backgroundColor: bgColor, marginRight: 10, marginBottom: 10, borderRadius: 5}}>
-					<MixedLineBarChart style={{width: 1000, height: 200}} labels={labels} data={datasets} chartOptions={chartOptions} chartInitialData={initialData} labels={chartLabels} type={chartType} />
+					<MixedLineBarChart style={{width: 1000, height: 200}} labels={labels} data={datasets} chartOptions={chartOptions} chartInitialData={initialData} labels={chartLabels} type={chartType} showLegend={true} />
 				</Col>
 	}
 
 	fillChartContent = (chartData) => {
-		console.log("fillChartContent");
-		console.log("chartData: ", chartData);
 		let chartArray = [];
 		/*for (let i = 0; i < chartData.length; i++){
 			let dataItem = chartData[i][`graph_${i+1}`];

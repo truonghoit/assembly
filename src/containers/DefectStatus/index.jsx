@@ -1,13 +1,14 @@
 import React, {Component}                   from "react";
 import {reduxForm}                          from "redux-form";
 import {Col, Container, Row}                from "reactstrap";
-import FilterRange                         from "../../shared/components/filter_range/FilterRange";
-import LeadTable                           from "../LeadTime/components/LeadTable";
-import ChartArea                           from "./components/ChartArea";
-import DefectDataTable                     from "./components/DefectDataTable";
-import {changeDateToUnix}                  from "../../shared/utils/Utilities";
-import {ASSEMBLY_API, DEFECT_CHART_STATUS} from "../../constants/urlConstants";
-import callAxios                           from "../../services/api";
+import FilterRange                                              from "../../shared/components/filter_range/FilterRange";
+import LeadTable                                                from "../LeadTime/components/LeadTable";
+import ChartArea                                                from "./components/ChartArea";
+import DefectDataTable                                          from "./components/DefectDataTable";
+import {changeDateToUnix}                                       from "../../shared/utils/Utilities";
+import {ASSEMBLY_API, DEFECT_CHART_STATUS, DEFECT_WORKING_HOUR} from "../../constants/urlConstants";
+import callAxios                                                from "../../services/api";
+import MixedLineBarChart                                        from "../../shared/components/chart/MixedLineBarChart";
 
 class DefectStatus extends Component {
 	constructor(props) {
@@ -20,7 +21,8 @@ class DefectStatus extends Component {
 			filterModel   : '',
 			filterArticle : '',
 			chartData: [],
-			defectDataArray: []
+			defectDataArray: [],
+			defectWorkingHourArray: [],
 		}
 	}
 
@@ -57,13 +59,14 @@ class DefectStatus extends Component {
 		    || prevState.filterToDate !== this.state.filterToDate
 		    || prevState.filterLine !== this.state.filterLine || prevState.filterModel !== this.state.filterModel
 		    || prevState.filterArticle !== this.state.filterArticle){
-			let {filterArticle, filterFromDate, filterToDate, filterLine, filterModel} = this.state;
 			this.getChartData();
+			this.getDefectTableData();
 		}
 	}
 
 	componentDidMount(){
 		this.getChartData();
+		this.getDefectTableData();
 	}
 
 	getChartData(){
@@ -91,8 +94,33 @@ class DefectStatus extends Component {
 		});
 	}
 
+	getDefectTableData = () => {
+		let {filterFromDate, filterToDate, filterLine, filterModel, filterArticle} = this.state;
+		let method = 'POST';
+		let url    = ASSEMBLY_API + DEFECT_WORKING_HOUR;
+		let params = {
+			"factory": "",
+			"line": "",
+			"process": "",
+			"model":"",
+			"article_no":"",
+			"from_date": filterFromDate,
+			"to_date": filterToDate
+		};
+		callAxios(method, url, params).then(response => {
+			try {
+				let defectWorkingHourArray = response.data.data;
+				this.setState((state, props) => ({
+					defectWorkingHourArray: defectWorkingHourArray,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
 	render(){
-		let {defectDataArray} = this.state;
+		let {defectDataArray, defectWorkingHourArray} = this.state;
 		return (
 			<Container className="dashboard">
 				<h3>Dashboard/Defect Status</h3>
@@ -115,13 +143,13 @@ class DefectStatus extends Component {
 				</Row>
 				<Row>
 					<Col md={12} lg={12}>
-						<ChartArea type="temp" chartData={defectDataArray} />
+						<ChartArea type="temp" chartData={defectDataArray} showLegend={true} />
 					</Col>
 				</Row>
 				<hr />
 				<Row>
 					<Col md={12} lg={12}>
-						<DefectDataTable />
+						<DefectDataTable defectWorkingHourArray={defectWorkingHourArray} />
 					</Col>
 				</Row>
 			</Container>

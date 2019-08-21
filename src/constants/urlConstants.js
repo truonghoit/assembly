@@ -24,6 +24,7 @@ export const LEARNING_CURVE_MODEL = 'search/model-learning-curve-status';
 export const LEARNING_CURVE_CHART = 'search/chart-learning-curve-status';
 export const LEARNING_CURVE_PROCESS_UPDATE = 'maslearningcurve';
 export const DEFECT_CHART_STATUS = 'search/defect-chart-status';
+export const DEFECT_WORKING_HOUR = 'search/defect-working-hour';
 
 
 
