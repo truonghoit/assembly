@@ -446,6 +446,10 @@ class MasterForm extends Component {
 											case failed:
 												return 'Failed';
 											case initial:
+												this.props.change(
+													field.hiddenMasCdDuplicatedChecker,
+													formData[field.hiddenMasCdDuplicatedChecker]
+												);
 												return 'Save';
 											case onGoing:
 												return 'Saving';

@@ -119,18 +119,19 @@ class MasterPage extends Component {
 					this.setState({
 						formData       : {
 							...this.state.formData,
-							[field.masCd.name]        : values[field.masCd.name],
-							[field.masCdNm.name]      : values[field.masCdNm.name],
-							[field.catCdNm]           : values[field.catCdNm],
-							[field.catCd]             : values[field.catCd],
-							[field.parentMasNm]       : values[field.parentMasNm],
-							[field.parentMasCd]       : values[field.parentMasCd],
-							[field.processingSeq.name]: values[field.processingSeq.name],
-							[field.definitionValue]   : definition_value,
-							[field.virtualYn]         : values[field.virtualYn],
-							[field.activeYn]          : values[field.activeYn],
-							[field.sysCodeYn]         : values[field.sysCodeYn],
-							[field.description.name]  : values[field.description.name],
+							[field.masCd.name]                  : values[field.masCd.name],
+							[field.masCdNm.name]                : values[field.masCdNm.name],
+							[field.hiddenMasCdDuplicatedChecker]: false,
+							[field.catCdNm]                     : values[field.catCdNm],
+							[field.catCd]                       : values[field.catCd],
+							[field.parentMasNm]                 : values[field.parentMasNm],
+							[field.parentMasCd]                 : values[field.parentMasCd],
+							[field.processingSeq.name]          : values[field.processingSeq.name],
+							[field.definitionValue]             : definition_value,
+							[field.virtualYn]                   : values[field.virtualYn],
+							[field.activeYn]                    : values[field.activeYn],
+							[field.sysCodeYn]                   : values[field.sysCodeYn],
+							[field.description.name]            : values[field.description.name],
 						},
 						tableData      : tableData,
 						submissionState: done,
@@ -230,8 +231,13 @@ class MasterPage extends Component {
 	};
 
 	fillForm = (selectedRow) => {
+		const {field} = MASTER_FORM_CONSTANTS;
+
 		this.setState({
-			formData       : selectedRow,
+			formData       : {
+				...selectedRow,
+				[field.hiddenMasCdDuplicatedChecker]: false,
+			},
 			editMode       : true,
 			submissionState: MASTER_FORM_CONSTANTS.submissionState.initial,
 		});
