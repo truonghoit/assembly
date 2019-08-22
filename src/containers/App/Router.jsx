@@ -13,6 +13,7 @@ import MachineAlarmStatus from "../MachineAlarmStatus/index";
 import SensingValue from "../SensingValue/index";
 import LearningCurve from "../LearningCurve/index";
 import DefectStatus from "../DefectStatus/index";
+import DefectSummary from "../DefectSummary/index";
 
 const Pages = () => (
 	<Switch>
@@ -25,6 +26,7 @@ const Pages = () => (
 		<Route path="/pages/sensing-value" component={SensingValue} />
 		<Route path="/pages/learning-curve" component={LearningCurve} />
 		<Route path="/pages/defect-status" component={DefectStatus} />
+		<Route path="/pages/defect-summary" component={DefectSummary} />
 	</Switch>
 );
 
