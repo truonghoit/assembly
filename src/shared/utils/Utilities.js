@@ -9,3 +9,21 @@ export const changeDateToUnix = (inputDate, flag = "start") => {
 	}
 	return result;
 }
+
+export const findThreeLargest = (array) => {
+	let first = 0, second = 0, third = 0;
+	for (let i = 0; i < array.length; i++){
+		let x = array[i];
+		if (x > first){
+			third = second;
+			second = first;
+			first = x;
+		} else if (x > second){
+			third = second;
+			second = x;
+		} else if (x > third){
+			third = x;
+		}
+	}
+	return [first, second, third];
+}

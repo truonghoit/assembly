@@ -110,7 +110,7 @@ class DefectSummary extends Component {
 		let {selectedHour, filterType, defectData} = this.state;
 		return (
 			<Container className="dashboard">
-				<h3>Dashboard/Defect Status</h3>
+				<h3>Dashboard/Defect Summary</h3>
 
 				<div style={{paddingTop: 30}}></div>
 				<FilterRange handleFilterFromDateChange={this.handleFilterFromDateChange}

@@ -39,7 +39,7 @@ class MachineAlarmLeftBar extends Component {
                 if (selectedProcess.process_cd == dataItem.process_cd){
                     bgColor = '#1D2F56';
                 }
-                divArray[i] =   <div className="d-flex flex-column mt-1" key={dataItem.process_cd} onClick={this.handleProcessClick.bind(this, dataItem)}>
+                divArray[i] =   <div className="d-flex flex-column mt-1" key={dataItem.process_cd} onClick={this.handleProcessClick.bind(this, dataItem)} >
                                     <div className="d-flex flex-column justify-content-center" style={{backgroundColor: bgColor, paddingTop: 10, paddingBottom: 10}}>
                                         <div className="d-flex justify-content-around" style={{color:'#BEBEBE'}}>
                                             {dataItem.process_nm.toUpperCase()}

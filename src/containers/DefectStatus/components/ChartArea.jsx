@@ -22,9 +22,6 @@ class ChartArea extends Component {
 		defectDataArray[4] = chartData[7]?chartData[7]:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		defectDataArray[5] = chartData[8]?chartData[8]:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-		console.log("25 25 25 25 25 25 25 25 25 25");
-		console.log("25 25 25 25 25 25 25 25 25 25");
-		console.log("defectDataArray: ", defectDataArray);
 		/*chartLabels = ["7:30", "8:30", "9:30", "10:30"];
 		chartTypeArray = ["HO KEO (BONDING)", "LEM KEO (OVER-CEMENT)", "LEM NUOC XU LY(OVER-PRIMER)", "DO (DIRTY)"];
 		defectDataArray[0] = [1, 4, 2, 4];

@@ -1,9 +1,11 @@
-import {Component} from "react";
-import React       from "react";
-import {Col, Row}  from "reactstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Component}                                              from "react";
+import React                                                    from "react";
+import {Col, Row}                                               from "reactstrap";
+import {FontAwesomeIcon}                                        from "@fortawesome/react-fontawesome";
 import { faCalendarDay, faFileExcel, faNewspaper, faClipboard } from '@fortawesome/free-solid-svg-icons'
-import {FILTER_TYPE} from '../constants';
+import {FILTER_TYPE}                                            from '../constants';
+import DataExporter
+                                                                from "../../../shared/components/data_table/DataExporter";
 
 class FilterTypeBar extends Component {
 
@@ -23,7 +25,7 @@ class FilterTypeBar extends Component {
 								<div style={{color: filterType===FILTER_TYPE.article?'#0CD0EB':'#BEBEBE', paddingLeft:10, paddingRight: 10}} onClick={this.handleTypeClick.bind(this, 'article')}><FontAwesomeIcon icon={faNewspaper}/><span style={{paddingLeft:5}}>ARTICLE</span></div>
 							</Col>
 		filterTypeArray[3] = <Col key='excel' md={1} lg={1}>
-								<div key='excel' className="filter-div-excel" style={{paddingLeft:10, paddingRight: 10}}><FontAwesomeIcon icon={faFileExcel}/><span style={{paddingLeft:5}}>EXCEL</span></div>
+								<div key='excel' className="filter-div-excel" style={{paddingLeft:10, paddingRight: 10}}><DataExporter /></div>
 							</Col>
 		return filterTypeArray;
 	}

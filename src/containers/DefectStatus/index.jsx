@@ -9,6 +9,7 @@ import {changeDateToUnix}                                       from "../../shar
 import {ASSEMBLY_API, DEFECT_CHART_STATUS, DEFECT_WORKING_HOUR} from "../../constants/urlConstants";
 import callAxios                                                from "../../services/api";
 import MixedLineBarChart                                        from "../../shared/components/chart/MixedLineBarChart";
+import DataExporter                                             from "../../shared/components/data_table/DataExporter";
 
 class DefectStatus extends Component {
 	constructor(props) {
@@ -138,7 +139,7 @@ class DefectStatus extends Component {
 						<span style={{color: '#BEBEBE'}}>Total Working Hour: 92 Hours</span>
 					</Col>
 					<Col md={2} lg={2}>
-						<span style={{color: '#BEBEBE'}}>EXCEL</span>
+						<DataExporter />
 					</Col>
 				</Row>
 				<Row>
@@ -149,7 +150,7 @@ class DefectStatus extends Component {
 				<hr />
 				<Row>
 					<Col md={12} lg={12}>
-						<DefectDataTable defectWorkingHourArray={defectWorkingHourArray} />
+						<DefectDataTable defectWorkingHourArray={defectWorkingHourArray}/>
 					</Col>
 				</Row>
 			</Container>
