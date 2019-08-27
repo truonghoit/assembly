@@ -37,6 +37,7 @@ class DefectDataTable extends Component {
 						<td style={{textAlign:'center', backgroundColor: '#082738'}}>TOTAL</td>
 					</tr>
 				</thead>
+		this.excelData = [];
 		this.excelData[0] = [firstColumn, "HO KEO (BONDING)", "LEM KEO (OVER-CEMENT)", "LEM NUOC XU LY (OVER-PRIMER)", "DO (DIRTY)", "NHAN (WRINKLE)", "LOI KHAC (ETC)", "TOTAL"];
 		return tHead;
 	}
@@ -106,8 +107,6 @@ class DefectDataTable extends Component {
 
 	fillBody = (defectData) => {
 		let rowArray = [];
-		this.excelData[0] = ["DATE", "HO KEO (BONDING)", "LEM KEO (OVER-CEMENT)", "LEM NUOC XU LY (OVER-PRIMER)", "DO (DIRTY)",
-		                     "NHAN (WRINKLE)", "LOI KHAC (ETC)", "TOTAL"];
 		for (let i = 0; i < defectData.length; i++){
 			rowArray[i] = this.fillRow(defectData[i], i);
 		}
