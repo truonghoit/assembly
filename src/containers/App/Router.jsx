@@ -14,6 +14,7 @@ import SensingValue from "../SensingValue/index";
 import LearningCurve from "../LearningCurve/index";
 import DefectStatus from "../DefectStatus/index";
 import DefectSummary from "../DefectSummary/index";
+import Overview from "../Overview/index";
 
 const Pages = () => (
 	<Switch>
@@ -27,6 +28,7 @@ const Pages = () => (
 		<Route path="/pages/learning-curve" component={LearningCurve} />
 		<Route path="/pages/defect-status" component={DefectStatus} />
 		<Route path="/pages/defect-summary" component={DefectSummary} />
+		<Route path="/pages/overview" component={Overview} />
 	</Switch>
 );
 

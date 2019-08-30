@@ -31,6 +31,7 @@ class SidebarContent extends Component {
 	            <SidebarLink title="Learning Curve" route="/pages/learning-curve" onClick={this.hideSidebar} />
 	            <SidebarLink title="Defect Status" route="/pages/defect-status" onClick={this.hideSidebar} />
 	            <SidebarLink title="Defect Summary" route="/pages/defect-summary" onClick={this.hideSidebar} />
+	            <SidebarLink title="Overview" route="/pages/overview" onClick={this.hideSidebar} />
           </SidebarCategory>
         </ul>
       </div>
