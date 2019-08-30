@@ -34,7 +34,7 @@ class ProductivityTable extends Component {
 				</div>
 				<div style={{marginTop: 30, width: "60%"}}>
 					<div>
-						<div className="progress-wrap progress-wrap--small progress-wrap--lime-gradient progress-wrap--label-top">
+						<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top">
 							<div className="d-flex">
 								<Col md={7} lg={7} style={{marginLeft: -15}}>
 									LINE BALANCING
@@ -51,7 +51,7 @@ class ProductivityTable extends Component {
 					</div>
 					<div className="d-flex flex-row">
 						<div style={{width: '40%', marginTop: 30}}>
-							<div className="progress-wrap progress-wrap--small progress-wrap--lime-gradient progress-wrap--label-top">
+							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top">
 								<div className="d-flex">
 									<Col md={8} lg={8} style={{marginLeft: -15}}>
 										STICHING
@@ -65,7 +65,7 @@ class ProductivityTable extends Component {
 							</div>
 						</div>
 						<div style={{width: '60%', marginTop: 70}}>
-							<div className="progress-wrap progress-wrap--small progress-wrap--lime-gradient progress-wrap--label-top" style={{selfAlign: 'flex-end'}}>
+							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top" style={{selfAlign: 'flex-end'}}>
 								<div className="d-flex">
 									<Col md={7} lg={7} style={{marginLeft: -15}}>
 										SHOE MAKING

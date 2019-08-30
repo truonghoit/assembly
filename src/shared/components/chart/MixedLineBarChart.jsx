@@ -51,10 +51,10 @@ const initOptions = {
 		yAxes: [
 			{
 				gridLines: {
-					color        : '#696F76',
+					color        : '#535353',
 					display      : true,
 					drawBorder   : false,
-					zeroLineColor: '#696F76',
+					zeroLineColor: '#535353',
 				},
 				ticks    : {
 					beginAtZero: true,

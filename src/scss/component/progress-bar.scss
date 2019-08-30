@@ -10,7 +10,7 @@
     height: fit-content;
     border-radius: 10px;
     box-shadow: none;
-    background-color: #dddddd;
+    background-color: #0E3666;
     margin-bottom: 0;
   }
 
@@ -155,6 +155,16 @@
 
     .progress__label {
       color: $color-green;
+    }
+  }
+
+  &.progress-wrap--alarm-green {
+    .progress-bar {
+      background-color: #03CF65;
+    }
+
+    .progress__label {
+      color: $color-alarm-green;
     }
   }
 
