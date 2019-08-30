@@ -12,7 +12,7 @@ class MiniRightBar extends Component {
 	render(){
 		return (
 			<div style={{width:'40%', backgroundColor:'#082738', height:180, paddingTop: 25, paddingLeft: 10, paddingRight: 10}}>
-				<div className="progress-wrap progress-wrap--small progress-wrap--lime-gradient progress-wrap--label-top">
+				<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top">
 					<div className="d-flex">
 						<Col md={9} lg={9} style={{marginLeft: -15, color: '#FFFFFF'}}>
 							QTY

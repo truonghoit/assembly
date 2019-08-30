@@ -195,7 +195,7 @@ class Overview extends Component {
 									<div style={{color: '#FF9356'}}>Attach Sole with Upper</div>
 								</div>
 							</div>
-							<div className="progress-wrap progress-wrap--small progress-wrap--lime-gradient progress-wrap--label-top mt-5">
+							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top mt-5">
 								<div className="d-flex">
 									<Col md={7} lg={7} style={{marginLeft: -15}}>
 										LINE BALANCING
@@ -209,7 +209,7 @@ class Overview extends Component {
 								<Progress value={92}>
 								</Progress>
 							</div>
-							<div className="progress-wrap progress-wrap--small progress-wrap--lime-gradient progress-wrap--label-top  mt-5">
+							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top  mt-5">
 								<div className="d-flex">
 									<Col md={7} lg={7} style={{marginLeft: -15}}>
 										PPH
@@ -223,7 +223,7 @@ class Overview extends Component {
 								<Progress value={92}>
 								</Progress>
 							</div>
-							<div className="progress-wrap progress-wrap--small progress-wrap--lime-gradient progress-wrap--label-top  mt-3">
+							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top  mt-3">
 								<div className="d-flex">
 									<Col md={7} lg={7} style={{marginLeft: -15}}>
 										RFT
@@ -237,7 +237,7 @@ class Overview extends Component {
 								<Progress value={92}>
 								</Progress>
 							</div>
-							<div className="progress-wrap progress-wrap--small progress-wrap--lime-gradient progress-wrap--label-top  mt-3">
+							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top  mt-3">
 								<div className="d-flex">
 									<Col md={7} lg={7} style={{marginLeft: -15}}>
 										EFF
