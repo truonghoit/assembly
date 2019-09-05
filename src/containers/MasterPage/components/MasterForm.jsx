@@ -38,6 +38,9 @@ class MasterForm extends Component {
 				formData: this.props.formData,
 				editMode: this.props.editMode,
 			});
+			if (Object.keys(this.props.formData).length === 0 && this.props.formData.constructor === Object) {
+				this.props.reset()  // Prevent error showing after form submission (clear all fields)
+			}
 		}
 
 		let {formData} = this.state;
