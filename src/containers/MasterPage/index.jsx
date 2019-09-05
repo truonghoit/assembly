@@ -6,6 +6,7 @@ import {ASSEMBLY_API, CATEGORY_ROUTE, MAS_CODE_ROUTE, PARENT_ROUTE} from "../../
 import DataTable                                                    from "./components/DataTable";
 import {reduxForm}                                                  from "redux-form";
 import MASTER_FORM_CONSTANTS                                        from "./constants";
+import {CATEGORY_CODES_REQUIRE_PARENT_CODE}                         from "../../constants/variableConstants";
 
 class MasterPage extends Component {
 	constructor(props) {
@@ -77,7 +78,7 @@ class MasterPage extends Component {
 				}
 				let gotError  = false;
 				let tableData = response.data.data.map(rowData => {
-					if (rowData.outvalue) {    // Got Error/Duplicate Mas Code Found
+					if (rowData.outvalue) {    // Got Error/Duplicated Mas Code Found
 						gotError = true;
 					}
 					return {
@@ -158,7 +159,7 @@ class MasterPage extends Component {
 		}, 1000);
 	};
 
-	loadComboBoxes = () => {
+	loadCategoryCodeOptions = () => {
 		let method = 'POST';
 		let url    = ASSEMBLY_API + CATEGORY_ROUTE;
 		let param  = {
@@ -178,23 +179,42 @@ class MasterPage extends Component {
 				),
 			});
 		}).catch(reason => console.log("Error: ", reason));
+	};
 
-		url   = ASSEMBLY_API + PARENT_ROUTE;
-		param = {
-			"dropdownlist-name": "parent"
+	loadParentCodeOptions = (currentChildFormData, catName, catCode) => {
+		const {field} = MASTER_FORM_CONSTANTS;
+
+		let method = 'POST';
+		let url    = ASSEMBLY_API + PARENT_ROUTE;
+		let param  = {
+			"dropdownlist-name": "parent",
+			"code"             : catCode
 		};
 
+		let firstOption;
+		if (!(catCode in CATEGORY_CODES_REQUIRE_PARENT_CODE)) {
+			firstOption = [{
+				value: "",
+				label: "---",
+			}];
+		} else {
+			firstOption = [];
+		}
 		callAxios(method, url, param).then(response => {
 			this.setState({
-				parentCodeOptions: [{
-					value: "",
-					label: "---",
-				}].concat(
+				parentCodeOptions: firstOption.concat(
 					response.data.data.map(parentCode => ({
 						value: parentCode.code.toString(),
 						label: parentCode.name.toString(),
 					}))
 				),
+				formData         : {
+					...currentChildFormData,
+					[field.catCdNm]    : catName,
+					[field.catCd]      : catCode,
+					[field.parentMasCd]: firstOption.length > 0 ? firstOption[0].value : response.data.data[0].code,
+					[field.parentMasNm]: firstOption.length > 0 ? firstOption[0].label : response.data.data[0].name,
+				},
 			});
 		}).catch(reason => console.log("Error: ", reason));
 	};
@@ -251,7 +271,7 @@ class MasterPage extends Component {
 	};
 
 	componentDidMount() {
-		this.loadComboBoxes();
+		this.loadCategoryCodeOptions();
 		this.loadDataTable();
 	}
 
@@ -267,6 +287,7 @@ class MasterPage extends Component {
 					<CardBody>
 						<Row>
 							<MasterForm parentCodeOptions={parentCodeOptions}
+							            loadParentCodeOptions={this.loadParentCodeOptions}
 							            categoryCodeOptions={categoryCodeOptions}
 							            onSubmit={this.handleSubmit}
 							            formData={formData}

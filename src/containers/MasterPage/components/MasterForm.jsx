@@ -74,7 +74,7 @@ class MasterForm extends Component {
 	render() {
 		let {
 			    handleSubmit, reset,
-			    parentCodeOptions, categoryCodeOptions,
+			    parentCodeOptions, loadParentCodeOptions, categoryCodeOptions,
 			    onReset, submissionState, connectionError
 		    }          = this.props;
 		let {formData} = this.state;
@@ -161,13 +161,7 @@ class MasterForm extends Component {
 									placeholder={formData[field.catCdNm] ? formData[field.catCdNm] : '---'}
 									className="form__form-group-field-100"
 									onChange={selectedOption => {
-										this.setState({
-											formData: {
-												...formData,
-												[field.catCdNm]: selectedOption.label,
-												[field.catCd]  : selectedOption.value,
-											}
-										});
+										loadParentCodeOptions(formData, selectedOption.label, selectedOption.value);
 									}}
 								/>
 							</div>
