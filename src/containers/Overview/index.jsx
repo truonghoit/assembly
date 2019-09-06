@@ -37,6 +37,11 @@ class Overview extends Component {
 			qipDefectData:[],
 			packingData:[],
 			backpackMoldingData:[],
+			toeMoldingData:[],
+			heatChamberData:[],
+			cementingData:[],
+			attachSoleWithUpperData:[],
+			chillerData:[],
 		};
 	}
 
@@ -259,6 +264,131 @@ class Overview extends Component {
 		});
 	}
 
+	getToeMoldingData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_TEMP_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					toeMoldingData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	getHeatChamberData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_TEMP_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					heatChamberData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	getCementingData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_TEMP_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					cementingData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	getAttachSoleWithUpperData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_TEMP_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					attachSoleWithUpperData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	getChillerData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_TEMP_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					chillerData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
 	componentDidMount(){
 		this.getComputerStichingData();
 		this.getNormalStichingData();
@@ -267,10 +397,15 @@ class Overview extends Component {
 		this.getQipDefectData();
 		this.getPackingData();
 		this.getBackPackMoldingData();
+		this.getToeMoldingData();
+		this.getHeatChamberData();
+		this.getCementingData();
+		this.getAttachSoleWithUpperData();
+		this.getChillerData();
 	}
 
 	render() {
-		let {computerStichingData, normalStichingData, preStichingData, strobelData, qipDefectData, packingData, backPackMoldingData} = this.state;
+		let {computerStichingData, normalStichingData, preStichingData, strobelData, qipDefectData, packingData, backPackMoldingData, toeMoldingData, heatChamberData, cementingData, attachSoleWithUpperData, chillerData} = this.state;
 		return (
 			<Container className="dashboard">
 				<h3>Dashboard/Overview</h3>
@@ -290,13 +425,13 @@ class Overview extends Component {
 						</Row>
 						<Row>
 							<BackpackMolding backPackMoldingData={backPackMoldingData}/>
-							<ToeMolding />
+							<ToeMolding toeMoldingData={toeMoldingData} />
 							<Strobel strobelData={strobelData}/>
 						</Row>
 						<Row>
-							<HeartChamber />
-							<Cememting />
-							<AttachSoleWithUpper />
+							<HeartChamber heatChamberData={heatChamberData}/>
+							<Cememting cementingData={cementingData}/>
+							<AttachSoleWithUpper attachSoleWithUpperData={attachSoleWithUpperData}/>
 						</Row>
 					</Col>
 					<Col md={3} lg={3} style={{marginBottom: 15, marginLeft: -16, color: '#FFFFFF'}}>
@@ -306,7 +441,7 @@ class Overview extends Component {
 				<Row>
 					<Col md={9} lg={9}>
 						<Row>
-							<Chiller />
+							<Chiller chillerData={chillerData}/>
 							<MetalDetect />
 							<QIPDetect qipDefectData={qipDefectData} />
 						</Row>

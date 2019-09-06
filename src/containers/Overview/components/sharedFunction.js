@@ -129,3 +129,42 @@ export const countCuring = (data) => {
 	}
 	return result;
 }
+
+export const handleLeftPanel = (backPackMoldingData) => {
+	let tempGreen = 0,
+	    tempYellow = 0,
+	    tempRed = 0,
+	    presGreen = 0,
+	    presYellow = 0,
+	    presRed = 0,
+	    timerGreen = 0,
+	    timerYellow = 0,
+	    timerRed = 0;
+	backPackMoldingData.forEach(item => {
+		if (item.sensor_type.toUpperCase() === "Curing".toUpperCase()){
+			timerGreen  = item.sensor_no_green
+			timerYellow = item.sensor_no_red
+			timerRed    = item.sensor_no_yellow
+		} else if (item.sensor_type.toUpperCase() === "Temp".toUpperCase()){
+			tempGreen   = item.sensor_no_green;
+			tempYellow  = item.sensor_no_red;
+			tempRed     = item.sensor_no_yellow;
+		} else if (item.sensor_type.toUpperCase() === "Pres".toUpperCase()){
+			presGreen   = item.sensor_no_green;
+			presYellow  = item.sensor_no_red;
+			presRed     = item.sensor_no_yellow;
+		}
+	});
+	let tempPresTimeItem = {
+		tempGreen: tempGreen,
+		tempYellow: tempYellow,
+		tempRed: tempRed,
+		presGreen: presGreen,
+		presYellow: presYellow,
+		presRed: presRed,
+		timerGreen: timerGreen,
+		timerYellow: timerYellow,
+		timerRed: timerRed
+	}
+	return tempPresTimeItem;
+}

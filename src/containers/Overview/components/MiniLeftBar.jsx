@@ -26,6 +26,7 @@ class MiniLeftBar extends Component {
 		 || this.props.presGreen != prevProps.presGreen|| this.props.presYellow != prevProps.presYellow || this.props.presRed != prevProps.presRed
 		 || this.props.timerGreen != prevProps.timerGreen || this.props.timerYellow != prevProps.timerYellow || this.props.timerRed != prevProps.timerRed){
 			let {process, tempPressTimer, tempGreen, tempYellow, tempRed, presGreen, presYellow, presRed, timerGreen, timerYellow, timerRed} = this.props;
+			console.log("tempGreen 29 29 29 29 29 29 29 tempGreen: ", tempGreen);
 			this.setState((state, props) => ({
 				tempGreen: tempGreen,
 				tempYellow: tempYellow,
@@ -43,6 +44,7 @@ class MiniLeftBar extends Component {
 	render(){
 		let {process, tempPressTimer} = this.props;
 		let {tempGreen, tempYellow, tempRed, presGreen, presYellow, presRed, timerGreen, timerYellow, timerRed} = this.state;
+		console.log("tempGreen 47: ", tempGreen);
 		let temperature = tempPressTimer.charAt(0);
 		let pressure    = tempPressTimer.charAt(1);
 		let timer       = tempPressTimer.charAt(2);
