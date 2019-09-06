@@ -7,9 +7,29 @@ import React from "react";
 class MiniRightBar extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			qty: 0,
+			cycle: 0,
+			prep: 0,
+			curing: 0
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot){
+		if (this.props.qty != prevProps.qty || this.props.cycle != prevProps.cycle
+			|| this.props.prep != prevProps.prep || this.props.curing != prevProps.curing){
+			let {qty, cycle, prep, curing} = this.props;
+			this.setState((state, props) => ({
+				qty: qty,
+				cycle: cycle,
+				prep: prep,
+				curing: curing,
+			}));
+		}
 	}
 
 	render(){
+		let {qty, cycle, prep, curing} = this.state;
 		return (
 			<div style={{width:'40%', backgroundColor:'#082738', height:180, paddingTop: 25, paddingLeft: 10, paddingRight: 10}}>
 				<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top">
@@ -18,7 +38,7 @@ class MiniRightBar extends Component {
 							QTY
 						</Col>
 						<Col md={3} lg={3} style={{color: '#FFFFFF'}}>
-							92%
+							{qty}%
 						</Col>
 					</div>
 					<Progress value={92}>
@@ -29,19 +49,19 @@ class MiniRightBar extends Component {
 						Cycle
 					</Col>
 					<Col md={3} lg={3} style={{color: '#FFFFFF'}}>
-						72s
+						{cycle}s
 					</Col>
 					<Col md={9} lg={9} style={{marginLeft: -15, color: '#FFFFFF', paddingTop: 10}}>
 						<span style={{color:'#2880E9', fontSize: 8}}><FontAwesomeIcon icon={faSquareFull} /></span> Prep
 					</Col>
 					<Col md={3} lg={3} style={{color: '#FFFFFF', paddingTop: 10}}>
-						27s
+						{prep}s
 					</Col>
 					<Col md={9} lg={9} style={{marginLeft: -15, color: '#FFFFFF', paddingTop: 5}}>
 						<span style={{color:'#2880E9', fontSize: 8}}><FontAwesomeIcon icon={faSquareFull} /></span> Curing
 					</Col>
 					<Col md={3} lg={3} style={{color: '#FFFFFF', paddingTop: 5}}>
-						45s
+						{curing}s
 					</Col>
 				</div>
 			</div>

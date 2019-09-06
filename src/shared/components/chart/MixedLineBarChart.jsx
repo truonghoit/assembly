@@ -121,8 +121,6 @@ export default class MixedLineBarChart extends PureComponent {
 	componentDidMount(){
 		const ctx    = this.canvas.getContext('2d');
 		let {type, chartInitialData, chartOptions} = this.props;
-		console.log("componentDidMount: ");
-		console.log("chartInitialData: ", chartInitialData);
 		if (!type){
 			type = 'bar';
 		}

@@ -1,14 +1,25 @@
 import React, {Component}              from 'react';
 import FilterRange
                                        from "../../shared/components/filter_range/FilterRange";
-import {Col, Container, Progress, Row} from 'reactstrap';
-import {changeDateToUnix}              from "../../shared/utils/Utilities";
-import MixedLineBarChart               from "../../shared/components/chart/MixedLineBarChart";
-import {FontAwesomeIcon}               from "@fortawesome/react-fontawesome";
-import {faCircle, faSquareFull}        from '@fortawesome/free-solid-svg-icons'
-import MiniRightBar                    from "./components/MiniRightBar";
-import MiniLeftBar                     from "./components/MiniLeftBar";
-import DoughnutChart                   from "../../shared/components/chart/DoughnutChart";
+import {Col, Container, Row} from 'reactstrap';
+import {changeDateToUnix}       from "../../shared/utils/Utilities";
+import ComputerStiching    from "./components/ComputerStiching";
+import NormalStiching      from "./components/NormalStiching";
+import PreStiching         from "./components/PreStiching";
+import BackpackMolding     from "./components/BackpackMolding";
+import ToeMolding          from "./components/ToeMolding";
+import Strobel                             from "./components/Strobel";
+import HeartChamber                        from "./components/HeartChamber";
+import Cememting                           from "./components/Cememting";
+import AttachSoleWithUpper                                             from "./components/AttachSoleWithUpper";
+import Chiller                                                         from "./components/Chiller";
+import MetalDetect                                                     from "./components/MetalDetect";
+import QIPDetect                                                       from "./components/QIPDetect";
+import Packing                                                         from "./components/Packing";
+import LineProductivity                                                from "./components/LineProductivity";
+import {PROCESS_CHART_DASHBOARD, ASSEMBLY_API, PROCESS_TEMP_DASHBOARD} from "../../constants/urlConstants";
+import {ALARM_MASTER_PAGE_CONSTANTS}                                   from "../MasterAlarm/constants";
+import callAxios                                                       from "../../services/api";
 
 class Overview extends Component {
 	constructor(props) {
@@ -18,7 +29,14 @@ class Overview extends Component {
 			filterToDate:changeDateToUnix(new Date(), "end"),
 			filterLine:'',
 			filterModel:'',
-			filterArticle:''
+			filterArticle:'',
+			computerStichingData:[],
+			normalStichingData:[],
+			preStichingData:[],
+			strobelData:[],
+			qipDefectData:[],
+			packingData:[],
+			backpackMoldingData:[],
 		};
 	}
 
@@ -65,32 +83,194 @@ class Overview extends Component {
 		});
 	}
 
-	render() {
-		/*let customChartTooltips = {
-			callbacks: {
-				label: function (tooltipItem, data) {
-					let label = 'Actual: ';
 
-					let sumActualProduction = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-					if (sumActualProduction) {
-						label += Utilities.changeNumberFormat(sumActualProduction);
+	getComputerStichingData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_CHART_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
 
-						let percentage = Utilities.changeNumberFormat(
-							(sumActualProduction / totalActualProduction) * 100
-						);
-						label += ` (${percentage}%)`;
-					} else {
-						label += 'N/A';
-					}
-
-					return label;
-				},
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					computerStichingData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
 			}
-		};*/
-		let chartData = [{
-			data: [50, 50],
-			backgroundColor: ['#0CD0EB', '#005FCE']
-		}];
+		});
+	}
+
+	getNormalStichingData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_CHART_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					normalStichingData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	getPreStichingData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_CHART_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					preStichingData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	getStrobelData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_CHART_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					strobelData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	getQipDefectData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_CHART_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					qipDefectData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	getPackingData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_CHART_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					packingData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	getBackPackMoldingData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_TEMP_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1562722712,
+			"to_date": 1562722712
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					backPackMoldingData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	componentDidMount(){
+		this.getComputerStichingData();
+		this.getNormalStichingData();
+		this.getPreStichingData();
+		this.getStrobelData();
+		this.getQipDefectData();
+		this.getPackingData();
+		this.getBackPackMoldingData();
+	}
+
+	render() {
+		let {computerStichingData, normalStichingData, preStichingData, strobelData, qipDefectData, packingData, backPackMoldingData} = this.state;
 		return (
 			<Container className="dashboard">
 				<h3>Dashboard/Overview</h3>
@@ -104,222 +284,35 @@ class Overview extends Component {
 				<Row>
 					<Col md={9} lg={9}>
 						<Row>
-							<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
-								<div className="d-flex">
-									<div className="d-flex flex-column" style={{width:'60%', backgroundColor:'#002F49', height: 180, paddingTop: 10, paddingLeft: 10, paddingRight: 10}}>
-										<span style={{color: '#FFFFFF', marginBottom: 15}}>Computer Stiching</span>
-										<MixedLineBarChart />
-									</div>
-									<MiniRightBar/>
-								</div>
-							</div>
-							<div style={{backgroundColor: 'yellow', width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
-								<div className="d-flex">
-									<div className="d-flex flex-column" style={{width:'60%', backgroundColor:'#002F49', height: 180, paddingTop: 10, paddingLeft: 10, paddingRight: 10}}>
-										<span style={{color: '#FFFFFF', marginBottom: 15}}>Normal Stiching</span>
-										<MixedLineBarChart />
-									</div>
-									<MiniRightBar/>
-								</div>
-							</div>
-							<div style={{backgroundColor: 'purple', width: '32%', height: 180, marginBottom: 15}}>
-								<div className="d-flex">
-									<div className="d-flex flex-column" style={{width:'60%', backgroundColor:'#002F49', height: 180, paddingTop: 10, paddingLeft: 10, paddingRight: 10}}>
-										<span style={{color: '#FFFFFF', marginBottom: 15}}>Pre. Stiching</span>
-										<MixedLineBarChart />
-									</div>
-									<MiniRightBar/>
-								</div>
-							</div>
+							<ComputerStiching computerStichingData={computerStichingData}/>
+							<NormalStiching normalStichingData={normalStichingData}/>
+							<PreStiching preStichingData={preStichingData} />
 						</Row>
 						<Row>
-							<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
-								<div className="d-flex">
-									<MiniLeftBar process="Backpack Molding" tempPressTimer="111"/>
-									<MiniRightBar/>
-								</div>
-							</div>
-							<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
-								<div className="d-flex">
-									<MiniLeftBar process="Toe Molding" tempPressTimer="111"/>
-									<MiniRightBar/>
-								</div>
-							</div>
-							<div style={{width: '32%', height: 180, marginBottom: 15}}>
-								<div className="d-flex">
-									<div className="d-flex flex-column" style={{width:'60%', backgroundColor:'#002F49', height: 180, paddingTop: 10, paddingLeft: 10, paddingRight: 10}}>
-										<span style={{color: '#FFFFFF', marginBottom: 15}}>Strobel</span>
-										<MixedLineBarChart />
-									</div>
-									<MiniRightBar/>
-								</div>
-							</div>
+							<BackpackMolding backPackMoldingData={backPackMoldingData}/>
+							<ToeMolding />
+							<Strobel strobelData={strobelData}/>
 						</Row>
 						<Row>
-							<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
-								<div className="d-flex">
-									<MiniLeftBar process="Heat Chamber" tempPressTimer="100"/>
-									<MiniRightBar/>
-								</div>
-							</div>
-							<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
-								<div className="d-flex">
-									<MiniLeftBar process="Cementing" tempPressTimer="100"/>
-									<MiniRightBar/>
-								</div>
-							</div>
-							<div style={{width: '32%', height: 180, marginBottom: 15, marginRight: 15}}>
-								<div className="d-flex">
-									<MiniLeftBar process="Attach Sole With Upper" tempPressTimer="011"/>
-									<MiniRightBar/>
-								</div>
-							</div>
+							<HeartChamber />
+							<Cememting />
+							<AttachSoleWithUpper />
 						</Row>
 					</Col>
 					<Col md={3} lg={3} style={{marginBottom: 15, marginLeft: -16, color: '#FFFFFF'}}>
-						<div style={{height: '100%', paddingLeft: 15, paddingRight: 15, backgroundColor: '#232529'}}>
-							<div className="d-flex flex-wrap">
-								<Col md={12} lg={12} style={{marginTop: 30, marginLeft: 70, color: '#FFFFFF', fontSize: 18}}><span>LINE PRODUCTIVITY</span></Col>
-								<div className="d-flex mt-5" style={{width: '100%', justifyContent: 'space-around'}}>
-									<div className="d-flex flex-column text-white">
-										<div md={12} lg={12} className="bold-text h3">1425</div>
-										<div md={12} lg={12}>pairs/day</div>
-									</div>
-									<div className="d-flex flex-column  text-white">
-										<div md={12} lg={12} className="bold-text h3">22</div>
-										<div md={12} lg={12}>mins/pair</div>
-									</div>
-								</div>
-								<div className="d-flex text-white" style={{marginTop: 30, width: '100%', justifyContent: 'space-around'}}>
-									<div className="bold-text">CCR Process</div>
-									<div style={{color: '#FF9356'}}>Attach Sole with Upper</div>
-								</div>
-							</div>
-							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top mt-5">
-								<div className="d-flex">
-									<Col md={7} lg={7} style={{marginLeft: -15}}>
-										LINE BALANCING
-									</Col>
-									<Col md={3} lg={3}>
-									</Col>
-									<Col md={2} lg={2} style={{marginLeft: 20}}>
-										92.08%
-									</Col>
-								</div>
-								<Progress value={92}>
-								</Progress>
-							</div>
-							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top  mt-5">
-								<div className="d-flex">
-									<Col md={7} lg={7} style={{marginLeft: -15}}>
-										PPH
-									</Col>
-									<Col md={3} lg={3}>
-									</Col>
-									<Col md={2} lg={2} style={{marginLeft: 20}}>
-										92.08%
-									</Col>
-								</div>
-								<Progress value={92}>
-								</Progress>
-							</div>
-							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top  mt-3">
-								<div className="d-flex">
-									<Col md={7} lg={7} style={{marginLeft: -15}}>
-										RFT
-									</Col>
-									<Col md={3} lg={3}>
-									</Col>
-									<Col md={2} lg={2} style={{marginLeft: 20}}>
-										92.08%
-									</Col>
-								</div>
-								<Progress value={92}>
-								</Progress>
-							</div>
-							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top  mt-3">
-								<div className="d-flex">
-									<Col md={7} lg={7} style={{marginLeft: -15}}>
-										EFF
-									</Col>
-									<Col md={3} lg={3}>
-									</Col>
-									<Col md={2} lg={2} style={{marginLeft: 20}}>
-										92.08%
-									</Col>
-								</div>
-								<Progress value={92}>
-								</Progress>
-							</div>
-						</div>
+						<LineProductivity />
 					</Col>
 				</Row>
 				<Row>
 					<Col md={9} lg={9}>
 						<Row>
-							<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
-								<div className="d-flex">
-									<MiniLeftBar process="Chiller" tempPressTimer="100"/>
-									<MiniRightBar/>
-								</div>
-							</div>
-							<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
-								<div className="d-flex">
-									<div className="d-flex" style={{paddingTop: -600, width:'60%', backgroundColor:'#002F49', height: 180, paddingLeft: 10, paddingRight: 10}}>
-										<div className="d-flex flex-column" style={{flex: '0 0 70%', paddingTop: 10}}>
-											<span style={{color: '#FFFFFF'}}>Metal Detect</span>
-											<div style={{height: 30}}></div>
-											<DoughnutChart labels={['Defect']} data={chartData}
-											               centerText={"10"}
-											               showLegend={false}
-											/>
-										</div>
-										<div className="d-flex" style={{flex: '0 0 30%'}}>
-											<div className="d-flex flex-column" style={{marginTop: 52}}>
-												<div>
-													<span style={{color: '#0CD0EB', fontSize: 8}}><FontAwesomeIcon icon={faSquareFull} /></span>
-													<span style={{color: '#BEBEBE'}}> Detect</span>
-												</div>
-													<span style={{color: '#FFFFFF', paddingLeft: 30}}>68</span>
-											</div>
-										</div>
-									</div>
-									<MiniRightBar/>
-								</div>
-							</div>
-							<div style={{width: '32%', height: 180, marginBottom: 15, marginRight: 15}}>
-								<div className="d-flex">
-									<div className="d-flex flex-column" style={{width:'60%', backgroundColor:'#002F49', height: 180, paddingTop: 10, paddingLeft: 10, paddingRight: 10}}>
-										<span style={{color: '#FFFFFF', marginBottom: 15}}>QIP DEFECT</span>
-										<MixedLineBarChart />
-									</div>
-									<div className="d-flex flex-column" style={{flex: '0 0 40%', paddingTop: 10, backgroundColor:'#082738'}}>
-										<span style={{color: '#FFFFFF', paddingLeft: 10}}>Total of Defect</span>
-										<div style={{height: 30}}></div>
-										<DoughnutChart labels={['Defect']} data={chartData}
-										               centerText={"1498"}
-										               showLegend={false}
-										/>
-									</div>
-								</div>
-							</div>
+							<Chiller />
+							<MetalDetect />
+							<QIPDetect qipDefectData={qipDefectData} />
 						</Row>
 					</Col>
 					<Col md={3} lg={3} style={{marginBottom: 15, marginLeft: -16}}>
-						<div className="d-flex" style={{height: '100%'}}>
-							<div className="d-flex flex-column" style={{width:'60%', backgroundColor:'#002F49', height: 180, paddingTop: 10, paddingLeft: 10, paddingRight: 10}}>
-								<span style={{color: '#FFFFFF', marginBottom: 15}}>Packing</span>
-								<MixedLineBarChart />
-							</div>
-							<div className="d-flex flex-column" style={{width:'40%', backgroundColor:'#082738', height:180, paddingTop: 25, paddingLeft: 10, paddingRight: 10}}>
-								<div style={{color: '#FFFFFF', paddingTop: 10}}>
-									<span style={{color:'#2880E9', fontSize: 8}}><FontAwesomeIcon icon={faSquareFull} /></span> Packing
-								</div>
-								<div style={{color: '#FFFFFF', paddingTop: 10}}>
-									<span style={{color:'#005FCE', fontSize: 8}}><FontAwesomeIcon icon={faSquareFull} /></span> Target
-								</div>
-							</div>
-						</div>
+						<Packing packingData={packingData} />
 					</Col>
 				</Row>
 			</Container>

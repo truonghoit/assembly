@@ -7,10 +7,42 @@ import React from "react";
 class MiniLeftBar extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			tempPressTimer: '000',
+			tempGreen: 0,
+			tempYellow: 0,
+			tempRed: 0,
+			presGreen: 0,
+			presYellow: 0,
+			presRed: 0,
+			timerGreen: 0,
+			timerYellow: 0,
+			timerRed: 0
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot){
+		if (this.props.tempGreen != prevProps.tempGreen || this.props.tempYellow != prevProps.tempYellow || this.props.tempRed != prevProps.tempRed
+		 || this.props.presGreen != prevProps.presGreen|| this.props.presYellow != prevProps.presYellow || this.props.presRed != prevProps.presRed
+		 || this.props.timerGreen != prevProps.timerGreen || this.props.timerYellow != prevProps.timerYellow || this.props.timerRed != prevProps.timerRed){
+			let {process, tempPressTimer, tempGreen, tempYellow, tempRed, presGreen, presYellow, presRed, timerGreen, timerYellow, timerRed} = this.props;
+			this.setState((state, props) => ({
+				tempGreen: tempGreen,
+				tempYellow: tempYellow,
+				tempRed: tempRed,
+				presGreen: presGreen,
+				presYellow: presYellow,
+				presRed: presRed,
+				timerGreen: timerGreen,
+				timerYellow: timerYellow,
+				timerRed: timerRed
+			}));
+		}
 	}
 
 	render(){
 		let {process, tempPressTimer} = this.props;
+		let {tempGreen, tempYellow, tempRed, presGreen, presYellow, presRed, timerGreen, timerYellow, timerRed} = this.state;
 		let temperature = tempPressTimer.charAt(0);
 		let pressure    = tempPressTimer.charAt(1);
 		let timer       = tempPressTimer.charAt(2);
@@ -24,13 +56,13 @@ class MiniLeftBar extends Component {
 								Temperature
 							</div>
 							<div style={{marginLeft: 10, color: '#FFFFFF', flex: '0 0 20%'}}>
-								<span style={{color:'#03CF65', fontSize: 10}}>157 <FontAwesomeIcon icon={faCircle} /></span>
+								<span style={{color:'#03CF65', fontSize: 10}}>{tempGreen} <FontAwesomeIcon icon={faCircle} /></span>
 							</div>
 							<div style={{color: '#FFFFFF', flex: '0 0 20%'}}>
-								<span style={{color:'#FFD44F', fontSize: 10}}>12 <FontAwesomeIcon icon={faCircle} /></span>
+								<span style={{color:'#FFD44F', fontSize: 10}}>{tempYellow} <FontAwesomeIcon icon={faCircle} /></span>
 							</div>
 							<div style={{color: '#FFFFFF', flex: '0 0 20%'}}>
-								<span style={{color:'#F84E4E', fontSize: 10}}>3 <FontAwesomeIcon icon={faCircle} /></span>
+								<span style={{color:'#F84E4E', fontSize: 10}}>{tempRed} <FontAwesomeIcon icon={faCircle} /></span>
 							</div>
 						</div>
 					: ''
@@ -42,13 +74,13 @@ class MiniLeftBar extends Component {
 								Pressure
 							</div>
 							<div style={{marginLeft: 10, color: '#FFFFFF', flex: '0 0 20%'}}>
-								<span style={{color:'#03CF65', fontSize: 10}}>157 <FontAwesomeIcon icon={faCircle} /></span>
+								<span style={{color:'#03CF65', fontSize: 10}}>{presGreen} <FontAwesomeIcon icon={faCircle} /></span>
 							</div>
 							<div style={{color: '#FFFFFF', flex: '0 0 20%'}}>
-								<span style={{color:'#FFD44F', fontSize: 10}}>12 <FontAwesomeIcon icon={faCircle} /></span>
+								<span style={{color:'#FFD44F', fontSize: 10}}>{presYellow} <FontAwesomeIcon icon={faCircle} /></span>
 							</div>
 							<div style={{color: '#FFFFFF', flex: '0 0 20%'}}>
-								<span style={{color:'#F84E4E', fontSize: 10}}>3 <FontAwesomeIcon icon={faCircle} /></span>
+								<span style={{color:'#F84E4E', fontSize: 10}}>{presRed} <FontAwesomeIcon icon={faCircle} /></span>
 							</div>
 						</div>
 					: ''
@@ -60,13 +92,13 @@ class MiniLeftBar extends Component {
 								Timer
 							</div>
 							<div style={{marginLeft: 10, color: '#FFFFFF', flex: '0 0 20%'}}>
-								<span style={{color:'#03CF65', fontSize: 10}}>157 <FontAwesomeIcon icon={faCircle} /></span>
+								<span style={{color:'#03CF65', fontSize: 10}}>{timerGreen} <FontAwesomeIcon icon={faCircle} /></span>
 							</div>
 							<div style={{color: '#FFFFFF', flex: '0 0 20%'}}>
-								<span style={{color:'#FFD44F', fontSize: 10}}>12 <FontAwesomeIcon icon={faCircle} /></span>
+								<span style={{color:'#FFD44F', fontSize: 10}}>{timerYellow} <FontAwesomeIcon icon={faCircle} /></span>
 							</div>
 							<div style={{color: '#FFFFFF', flex: '0 0 20%'}}>
-								<span style={{color:'#F84E4E', fontSize: 10}}>3 <FontAwesomeIcon icon={faCircle} /></span>
+								<span style={{color:'#F84E4E', fontSize: 10}}>{timerRed} <FontAwesomeIcon icon={faCircle} /></span>
 							</div>
 						</div>
 					: ''
