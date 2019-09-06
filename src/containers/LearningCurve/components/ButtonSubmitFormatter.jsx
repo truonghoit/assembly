@@ -18,7 +18,6 @@ class ButtonSubmitFormatter extends Component {
 
 	render(){
 		let rowData = this.props.cell._cell.row.data;
-		console.log("rowData 21: ", rowData);
 		/*model_cd: "MU534"
 		model_nm: "PRINCESS WIDE D"*/
 		let modelSubmissionStatus = -1;

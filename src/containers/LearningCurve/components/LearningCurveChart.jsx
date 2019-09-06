@@ -3,7 +3,6 @@ import {withRouter}      from "react-router-dom";
 import MixedLineBarChart from "../../../shared/components/chart/MixedLineBarChart";
 import React             from "react";
 import {chartOptions}    from '../constants';
-import {ARRAY_ARTICLES}  from "../../../constants/variableConstants";
 
 class LearningCurveChart extends Component {
 	constructor(props) {
