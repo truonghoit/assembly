@@ -77,7 +77,7 @@ class FilterRangeForLearningCurve extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let dataArray  = response.data.data;
-				let arrayLines = ARRAY_LINES;
+				let arrayLines = [];
 				dataArray.forEach(element => {
 					arrayLines.push(
 						{value: element.code, label: element.name}
@@ -86,12 +86,17 @@ class FilterRangeForLearningCurve extends Component {
 
 				this.setState({
 					...this.state,
-					arrayLines: arrayLines,
+					selectedLine: arrayLines.length > 0 ? arrayLines[0] : ARRAY_LINES[0],
+					arrayLines: arrayLines.length > 0 ? arrayLines : ARRAY_LINES,
 				});
 
 				this.props.dispatch(
 					changeFilterLine(arrayLines)
 				);
+
+				if (arrayLines.length > 0) {
+					this.handleFilterLineChange(arrayLines[0]);
+				}
 			} catch (e) {
 				console.log("Error: ", e);
 			}
@@ -113,23 +118,28 @@ class FilterRangeForLearningCurve extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let dataArray   = response.data.data;
-				let arrayModels = [
-					{value: '', label: '---'}
-				];
+				let arrayModels = [];
 				dataArray.forEach(element => {
-					arrayModels.push(
-						{value: element.code, label: element.name}
-					);
+					if (element.code.toString().trim() && element.name.toString().trim()) {
+						arrayModels.push(
+							{value: element.code, label: element.name}
+						);
+					}
 				});
 
 				this.setState({
 					...this.state,
-					arrayModels: arrayModels,
+					selectedModel: arrayModels.length > 0 ? arrayModels[0] : ARRAY_MODELS[0],
+					arrayModels: arrayModels.length > 0 ? arrayModels : ARRAY_MODELS,
 				});
 
 				this.props.dispatch(
 					changeFilterModel(arrayModels)
 				);
+
+				if (arrayModels.length > 0) {
+					this.handleFilterModelChange(arrayModels[0]);
+				}
 			} catch (e) {
 				console.log("Error: ", e);
 			}
