@@ -28,6 +28,8 @@ export const DEFECT_WORKING_HOUR = 'search/defect-working-hour';
 export const DEFECT_SUMMARY      = 'search/defect-summary-table';
 export const PROCESS_CHART_DASHBOARD = 'search/process_chart_dashboard';
 export const PROCESS_TEMP_DASHBOARD = 'search/process_temp_dashboard';
+export const LINE_PRODUCTIVITY = 'search/process_line_productivity_dashboard';
+export const PROCESS_MACHINE_DASHBOARD = 'search/process_machine_dashboard';
 
 
 

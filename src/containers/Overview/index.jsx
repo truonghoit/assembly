@@ -12,14 +12,20 @@ import Strobel                             from "./components/Strobel";
 import HeartChamber                        from "./components/HeartChamber";
 import Cememting                           from "./components/Cememting";
 import AttachSoleWithUpper                                             from "./components/AttachSoleWithUpper";
-import Chiller                                                         from "./components/Chiller";
-import MetalDetect                                                     from "./components/MetalDetect";
-import QIPDetect                                                       from "./components/QIPDetect";
-import Packing                                                         from "./components/Packing";
-import LineProductivity                                                from "./components/LineProductivity";
-import {PROCESS_CHART_DASHBOARD, ASSEMBLY_API, PROCESS_TEMP_DASHBOARD} from "../../constants/urlConstants";
-import {ALARM_MASTER_PAGE_CONSTANTS}                                   from "../MasterAlarm/constants";
-import callAxios                                                       from "../../services/api";
+import Chiller                       from "./components/Chiller";
+import MetalDetect                   from "./components/MetalDetect";
+import QIPDetect                     from "./components/QIPDetect";
+import Packing                       from "./components/Packing";
+import LineProductivity              from "./components/LineProductivity";
+import {
+	PROCESS_CHART_DASHBOARD,
+	ASSEMBLY_API,
+	PROCESS_TEMP_DASHBOARD,
+	LINE_PRODUCTIVITY,
+	PROCESS_MACHINE_DASHBOARD
+}                                    from "../../constants/urlConstants";
+import {ALARM_MASTER_PAGE_CONSTANTS} from "../MasterAlarm/constants";
+import callAxios                     from "../../services/api";
 
 class Overview extends Component {
 	constructor(props) {
@@ -42,6 +48,8 @@ class Overview extends Component {
 			cementingData:[],
 			attachSoleWithUpperData:[],
 			chillerData:[],
+			lineProductivityData:[],
+			metalDetect: [],
 		};
 	}
 
@@ -389,6 +397,54 @@ class Overview extends Component {
 		});
 	}
 
+	getLineProductivityData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + LINE_PRODUCTIVITY;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20105",
+			"model":"",
+			"article_no":"",
+			"from_date": 1565233732,
+			"to_date": 1565233732
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				this.setState((state, props) => ({
+					lineProductivityData: data,
+				}));
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	getMetalDetectData = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + PROCESS_MACHINE_DASHBOARD;
+		let params  = {
+			"factory": "",
+			"line": "",
+			"process": "20116",
+			"model":"",
+			"article_no":"",
+			"from_date": 1564453935,
+			"to_date": 1564453935
+		};
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let data = response.data.data;
+				console.log("data 440: ", data);
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
 	componentDidMount(){
 		this.getComputerStichingData();
 		this.getNormalStichingData();
@@ -402,10 +458,12 @@ class Overview extends Component {
 		this.getCementingData();
 		this.getAttachSoleWithUpperData();
 		this.getChillerData();
+		this.getLineProductivityData();
+		this.getMetalDetectData();
 	}
 
 	render() {
-		let {computerStichingData, normalStichingData, preStichingData, strobelData, qipDefectData, packingData, backPackMoldingData, toeMoldingData, heatChamberData, cementingData, attachSoleWithUpperData, chillerData} = this.state;
+		let {computerStichingData, normalStichingData, preStichingData, strobelData, qipDefectData, packingData, backPackMoldingData, toeMoldingData, heatChamberData, cementingData, attachSoleWithUpperData, chillerData, lineProductivityData} = this.state;
 		return (
 			<Container className="dashboard">
 				<h3>Dashboard/Overview</h3>
@@ -435,7 +493,7 @@ class Overview extends Component {
 						</Row>
 					</Col>
 					<Col md={3} lg={3} style={{marginBottom: 15, marginLeft: -16, color: '#FFFFFF'}}>
-						<LineProductivity />
+						<LineProductivity lineProductivityData={lineProductivityData}/>
 					</Col>
 				</Row>
 				<Row>
