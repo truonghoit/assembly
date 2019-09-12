@@ -45,6 +45,8 @@ class FilterRangeForLearningCurve extends Component {
 			arrayArticles        : ARRAY_ARTICLES,
 			//selectedArticle      : ARRAY_ARTICLES[0],
 			formData             : {},
+			selectedFromDate     : new Date(),
+			selectedToDate       : new Date(),
 		};
 
 		this.fillComboboxes();
@@ -190,7 +192,7 @@ class FilterRangeForLearningCurve extends Component {
 		this.props.handleFilterFromDateChange(value);
 		this.setState({
 			...this.state,
-			selectedFromDate: changeDateToUnix(value),
+			selectedFromDate: value,
 		});
 	}
 
@@ -198,7 +200,7 @@ class FilterRangeForLearningCurve extends Component {
 		this.props.handleFilterToDateChange(value);
 		this.setState({
 			...this.state,
-			selectedToDate: changeDateToUnix(value, "end"),
+			selectedToDate: value,
 		});
 	}
 
@@ -239,8 +241,8 @@ class FilterRangeForLearningCurve extends Component {
 				...this.state,
 				disableFromDatePicker: true,
 				disableToDatePicker  : true,
-				selectedFromDate     : changeDateToUnix(new Date()),
-				selectedToDate       : changeDateToUnix(new Date(), "end"),
+				selectedFromDate     : new Date(),
+				selectedToDate       : new Date(),
 			});
 		} else {
 			this.setState({
