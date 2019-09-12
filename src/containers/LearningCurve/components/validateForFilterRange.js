@@ -1,4 +1,3 @@
-
 const validate = (values) => {
 	const errors = {};
 	if (!values.basicTargetQty || (values.basicTargetQty && !values.basicTargetQty.toString().trim())) {

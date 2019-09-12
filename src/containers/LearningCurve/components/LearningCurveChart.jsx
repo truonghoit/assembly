@@ -1,23 +1,22 @@
-import {Component}       from "react";
-import {withRouter}      from "react-router-dom";
-import MixedLineBarChart from "../../../shared/components/chart/MixedLineBarChart";
-import React             from "react";
-import {chartOptions}    from '../constants';
+import React, {Component} from "react";
+import {withRouter}       from "react-router-dom";
+import MixedLineBarChart  from "../../../shared/components/chart/MixedLineBarChart";
+import {chartOptions}     from '../constants';
 
 class LearningCurveChart extends Component {
 	constructor(props) {
 		super(props);
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot){
+	componentDidUpdate(prevProps, prevState, snapshot) {
 		let {chartData} = this.props;
 		this.drawChart(chartData);
 	}
 
 	drawChart = (chartData) => {
 		/*0: (4) ["31", "01", "02", "05"]
-		1: [3480]
-		2: (4) [18, 18, 18, 18]*/
+		 1: [3480]
+		 2: (4) [18, 18, 18, 18]*/
 		let labels = [];
 		if (chartData.length >= 2) {
 			labels                = chartData[0];
@@ -48,8 +47,8 @@ class LearningCurveChart extends Component {
 			];
 		}
 		let chartOptions = chartOptions;
-		return <MixedLineBarChart chartOptions={chartOptions} data={chartData} labels={labels} />
-	}
+		return <MixedLineBarChart chartOptions={chartOptions} data={chartData} labels={labels}/>;
+	};
 
 	render() {
 		let {chartInitialData, chartOptions, chartData} = this.props;
@@ -58,4 +57,5 @@ class LearningCurveChart extends Component {
 		return this.drawChart(chartData);
 	}
 }
+
 export default withRouter(LearningCurveChart);

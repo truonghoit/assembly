@@ -1,14 +1,14 @@
-import React, {Component}           from "react";
-import {reduxForm}                  from "redux-form";
-import {Col, Container, Row}        from "reactstrap";
-import FilterRange                  from "../../shared/components/filter_range/FilterRange";
-import {changeDateToUnix}           from "../../shared/utils/Utilities";
-import HourBar                      from "./components/HourBar";
-import DefectDataTable              from "./components/DefectDataTable";
-import FilterTypeBar                from "./components/FilterTypeBar";
+import React, {Component}             from "react";
+import {reduxForm}                    from "redux-form";
+import {Container}                    from "reactstrap";
+import FilterRange                    from "../../shared/components/filter_range/FilterRange";
+import {changeDateToUnix}             from "../../shared/utils/Utilities";
+import HourBar                        from "./components/HourBar";
+import DefectDataTable                from "./components/DefectDataTable";
+import FilterTypeBar                  from "./components/FilterTypeBar";
 import {ASSEMBLY_API, DEFECT_SUMMARY} from "../../constants/urlConstants";
-import callAxios                    from "../../services/api";
-import {FILTER_TYPE}                    from "./constants";
+import callAxios                      from "../../services/api";
+import {FILTER_TYPE}                  from "./constants";
 
 class DefectSummary extends Component {
 	constructor(props) {
@@ -23,90 +23,92 @@ class DefectSummary extends Component {
 			defectData    : [],
 			selectedHour  : 'All',
 			filterType    : FILTER_TYPE.date,
-		}
+		};
 	}
 
 	handleTypeFilterChange = (type) => {
 		this.setState((state, props) => ({
 			filterType: type,
 		}));
-	}
+	};
 
 	handleHourFilterChange = (selectedHour) => {
 		this.setState((state, props) => ({
 			selectedHour: selectedHour,
 		}));
-	}
+	};
 
 	handleFilterFromDateChange = (newValue) => {
 		this.setState((state, props) => ({
 			filterFromDate: changeDateToUnix(newValue),
 		}));
 
-	}
+	};
 
 	handleFilterToDateChange  = (newValue) => {
 		this.setState((state, props) => ({
 			filterToDate: changeDateToUnix(newValue, "end"),
 		}));
-	}
+	};
 	handleFilterLineChange    = (newValue) => {
 		this.setState((state, props) => ({
 			filterLine: newValue.value,
 		}));
-	}
+	};
 	handleFilterModelChange   = (newValue) => {
 		this.setState((state, props) => ({
 			filterModel: newValue.value,
 		}));
-	}
+	};
 	handleFilterArticleChange = (newValue) => {
 		this.setState((state, props) => ({
 			filterArticle: newValue.value,
 		}));
-	}
+	};
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (prevState.filterArticle !== this.state.filterArticle || prevState.filterFromDate !== this.state.filterFromDate
+		if (prevState.filterArticle !== this.state.filterArticle || prevState.filterFromDate
+		    !== this.state.filterFromDate
 		    || prevState.filterToDate !== this.state.filterToDate
 		    || prevState.filterLine !== this.state.filterLine || prevState.filterModel !== this.state.filterModel
-		    || prevState.filterArticle !== this.state.filterArticle || prevState.selectedHour !== this.state.selectedHour
-			|| prevState.filterType !== this.state.filterType){
+		    || prevState.filterArticle !== this.state.filterArticle || prevState.selectedHour
+		    !== this.state.selectedHour
+		    || prevState.filterType !== this.state.filterType) {
 			this.getDataTable();
 		}
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		this.getDataTable();
 	}
 
 	getDataTable = () => {
 		let {filterType, selectedHour, filterFromDate, filterToDate, filterLine, filterModel, filterArticle} = this.state;
-		let method = 'POST';
-		let url = ASSEMBLY_API + DEFECT_SUMMARY;
+		let method                                                                                           = 'POST';
+		let url                                                                                              = ASSEMBLY_API
+		                                                                                                       + DEFECT_SUMMARY;
 
 		let params = {
-			"factory": "",
-			"line": filterLine,
-			"process": "",
-			"model":filterModel,
-			"article_no":filterArticle,
-			"from_date": filterFromDate,
-			"to_date": filterToDate,
-			"time": selectedHour,
-			"data_type": filterType
-		}
+			"factory"   : "",
+			"line"      : filterLine,
+			"process"   : "",
+			"model"     : filterModel,
+			"article_no": filterArticle,
+			"from_date" : filterFromDate,
+			"to_date"   : filterToDate,
+			"time"      : selectedHour,
+			"data_type" : filterType
+		};
 		callAxios(method, url, params).then(response => {
 			let data = response.data.data;
 			this.setState((state, props) => ({
 				defectData: data,
 			}));
 		});
-	}
+	};
 
 
-
-	render(){
+	render() {
 		let {selectedHour, filterType, defectData} = this.state;
 		return (
 			<Container className="dashboard">
@@ -120,9 +122,9 @@ class DefectSummary extends Component {
 				             handleFilterArticleChange={this.handleFilterArticleChange}/>
 
 				<div style={{paddingTop: 30}}></div>
-				<FilterTypeBar filterType={filterType} handleTypeFilterChange={this.handleTypeFilterChange} />
+				<FilterTypeBar filterType={filterType} handleTypeFilterChange={this.handleTypeFilterChange}/>
 
-				<HourBar selectedHour={selectedHour} handleHourFilterChange={this.handleHourFilterChange} />
+				<HourBar selectedHour={selectedHour} handleHourFilterChange={this.handleHourFilterChange}/>
 
 				<div style={{paddingTop: 10}}></div>
 				<DefectDataTable defectData={defectData} filterType={filterType}/>
@@ -131,6 +133,7 @@ class DefectSummary extends Component {
 		);
 	}
 }
+
 export default reduxForm({
 	form: "DefectSummary"
 })(DefectSummary);

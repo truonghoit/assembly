@@ -15,18 +15,18 @@ class LeadTime extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			leadData       : [],
-			ccrProcess     : {
+			leadData        : [],
+			ccrProcess      : {
 				min_process_crr      : '', prod_qty_day: 0, prod_time_pair: 0,
 				line_balancing_stitch: 0, line_balancing_shoe_make: 0, line_balancing_all: 0
 			},
-			workingHourData: [],
+			workingHourData : [],
 			workingHourLabel: [],
-			filterFromDate:changeDateToUnix(new Date(), "start"),
-			filterToDate:changeDateToUnix(new Date(), "end"),
-			filterLine:'',
-			filterModel:'',
-			filterArticle:''
+			filterFromDate  : changeDateToUnix(new Date(), "start"),
+			filterToDate    : changeDateToUnix(new Date(), "end"),
+			filterLine      : '',
+			filterModel     : '',
+			filterArticle   : ''
 		};
 		/*leadData: [
 		 { mas_cd_nm:'', pair_qty: 0, lead_time: 0, prod_qty_day: 0, prod_time_pair: 0, ccr_yn: 0, min_process_crr: ''},
@@ -36,10 +36,11 @@ class LeadTime extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (prevState.filterArticle !== this.state.filterArticle || prevState.filterFromDate !== this.state.filterFromDate
+		if (prevState.filterArticle !== this.state.filterArticle || prevState.filterFromDate
+		    !== this.state.filterFromDate
 		    || prevState.filterToDate !== this.state.filterToDate
 		    || prevState.filterLine !== this.state.filterLine || prevState.filterModel !== this.state.filterModel
-			|| prevState.filterArticle !== this.state.filterArticle){
+		    || prevState.filterArticle !== this.state.filterArticle) {
 			//filterArticle: ""
 			// filterFromDate: 1563160349
 			// filterLine: ""
@@ -52,9 +53,10 @@ class LeadTime extends Component {
 
 	retrieveLeadTableData = () => {
 		let {filterFromDate, filterToDate, filterLine, filterModel, filterArticle} = this.state;
-		let method = 'POST';
-		let url    = ASSEMBLY_API + PRODUCTION_LEAD_TIME;
-		let params = {
+		let method                                                                 = 'POST';
+		let url                                                                    = ASSEMBLY_API
+		                                                                             + PRODUCTION_LEAD_TIME;
+		let params                                                                 = {
 			"factory"   : "",
 			"line"      : filterLine,
 			"model"     : filterModel,
@@ -76,21 +78,21 @@ class LeadTime extends Component {
 				console.log("Error: ", e);
 			}
 		});
-	}
+	};
 
 	handleWorkingData = (workingHourData) => {
 		try {
-			if (workingHourData && workingHourData[0].chart_data){
+			if (workingHourData && workingHourData[0].chart_data) {
 				let labels = [];
-				let data = [];
-				workingHourData.map(item=>{
+				let data   = [];
+				workingHourData.map(item => {
 					labels.push(item[0]);
 					data.push(item[1]);
 				});
 				this.setState({
 					...this.state,
-					workingHourData: [{
-						data: data,
+					workingHourData : [{
+						data           : data,
 						backgroundColor: "#2880E9",
 					}],
 					workingHourLabel: labels
@@ -98,14 +100,15 @@ class LeadTime extends Component {
 			} else {
 				this.setState({
 					...this.state,
-					workingHourData: [{
-						data: [0, 0, 0, 0, 0,
-						       0, 0, 0, 0, 0,
-						       0, 0, 0, 0, 0,
-						       0],
+					workingHourData : [{
+						data           : [0, 0, 0, 0, 0,
+						                  0, 0, 0, 0, 0,
+						                  0, 0, 0, 0, 0,
+						                  0],
 						backgroundColor: "#2880E9",
 					}],
-					workingHourLabel: ["Computer Stiching", "Normal Stiching", "Backpack Molding", "Toe Molding", "Strobel",
+					workingHourLabel: ["Computer Stiching", "Normal Stiching", "Backpack Molding", "Toe Molding",
+					                   "Strobel",
 					                   "Lasting", "Heel Lasting", "Heat Chamber", "Negative Gage", "Cementing",
 					                   "Attach Sole With Upper", "Chiller", "Delasting", "Metal Detect", "QIP Defect",
 					                   "Packing"]
@@ -114,13 +117,14 @@ class LeadTime extends Component {
 		} catch (e) {
 			console.log("Error: ", e);
 		}
-	}
+	};
 
 	retrieveWorkingHourData = () => {
 		let {filterFromDate, filterToDate, filterLine, filterModel, filterArticle} = this.state;
-		let method = 'POST';
-		let url    = ASSEMBLY_API + WORKING_HOUR_LEAD_TIME;
-		let params = {
+		let method                                                                 = 'POST';
+		let url                                                                    = ASSEMBLY_API
+		                                                                             + WORKING_HOUR_LEAD_TIME;
+		let params                                                                 = {
 			"factory"   : "",
 			"line"      : filterLine,
 			"model"     : filterModel,
@@ -137,42 +141,42 @@ class LeadTime extends Component {
 				console.log("Error: ", e);
 			}
 		});
-	}
+	};
 
-	handleFilterFromDateChange    = (newValue) => {
+	handleFilterFromDateChange = (newValue) => {
 		this.setState({
 			...this.state,
-			filterFromDate:changeDateToUnix(newValue, "start"),
+			filterFromDate: changeDateToUnix(newValue, "start"),
 		});
-	}
+	};
 
-	handleFilterToDateChange    = (newValue) => {
+	handleFilterToDateChange  = (newValue) => {
 		this.setState({
 			...this.state,
-			filterToDate:changeDateToUnix(newValue, "end"),
+			filterToDate: changeDateToUnix(newValue, "end"),
 		});
-	}
+	};
 	handleFilterModelChange   = (newValue) => {
 		this.setState({
 			...this.state,
-			filterModel:newValue.value,
+			filterModel  : newValue.value,
 			filterArticle: ""
 		});
-	}
+	};
 	handleFilterLineChange    = (newValue) => {
 		this.setState({
 			...this.state,
-			filterLine:newValue.value,
-			filterModel:"",
+			filterLine   : newValue.value,
+			filterModel  : "",
 			filterArticle: ""
 		});
-	}
+	};
 	handleFilterArticleChange = (newValue) => {
 		this.setState({
 			...this.state,
-			filterArticle:newValue.value,
+			filterArticle: newValue.value,
 		});
-	}
+	};
 
 	findCcrProcess = (leadData) => {
 		let ccrProcess = {
@@ -180,20 +184,20 @@ class LeadTime extends Component {
 			line_balancing_stitch: 0, line_balancing_shoe_make: 0, line_balancing_all: 0
 		};
 		try {
-			let exit       = false, i = 0;
+			let exit = false, i = 0;
 			do {
 				if (leadData[i].min_process_crr != "") {
 					exit       = true;
 					ccrProcess = leadData[i];
 				}
 				i++;
-			} while (i < leadData.length && !exit)
-		} catch(e){
+			} while (i < leadData.length && !exit);
+		} catch (e) {
 			console.log("Error: ", e);
 		}
 
 		return ccrProcess;
-	}
+	};
 
 	render() {
 		let {leadData, ccrProcess, workingHourData, workingHourLabel} = this.state;
@@ -219,7 +223,8 @@ class LeadTime extends Component {
 							</Col>
 							<hr/>
 							<Col md={12} lg={12} style={{backgroundColor: '#232529'}}>
-								<WorkingHourTable workingHourData={workingHourData} workingHourLabel={workingHourLabel}/>
+								<WorkingHourTable workingHourData={workingHourData}
+								                  workingHourLabel={workingHourLabel}/>
 							</Col>
 						</div>
 					</Col>

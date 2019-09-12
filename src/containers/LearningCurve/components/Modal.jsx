@@ -1,25 +1,25 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Button, ButtonToolbar, Modal } from 'reactstrap';
-import classNames from 'classnames';
-import {LEARNING_CURVE_CONSTANTS} from './../constants';
+import React, {PureComponent}         from 'react';
+import PropTypes                      from 'prop-types';
+import {Button, ButtonToolbar, Modal} from 'reactstrap';
+import classNames                     from 'classnames';
+import {LEARNING_CURVE_CONSTANTS}     from './../constants';
 
 export default class ModalComponent extends PureComponent {
 	static propTypes = {
-		title: PropTypes.string,
-		type: PropTypes.string,
+		title  : PropTypes.string,
+		type   : PropTypes.string,
 		message: PropTypes.string,
-		color: PropTypes.string.isRequired,
+		color  : PropTypes.string.isRequired,
 		colored: PropTypes.bool,
-		header: PropTypes.bool,
-		btn: PropTypes.string.isRequired,
+		header : PropTypes.bool,
+		btn    : PropTypes.string.isRequired,
 	};
 
 	static defaultProps = {
-		title: '',
+		title  : '',
 		message: '',
 		colored: false,
-		header: false,
+		header : false,
 	};
 
 	constructor() {
@@ -35,19 +35,19 @@ export default class ModalComponent extends PureComponent {
 		this.setState((prevState, props) => ({
 			modal: !prevState.modal
 		}));
-		if (button === 'ok'){
+		if (button === 'ok') {
 			this.props.onOkClicked();
-        }
-	}
+		}
+	};
 
 	render() {
 		const {
 			      color, btn, title, message, colored, header, type, style, submissionState
-		      } = this.props;
-		const { modal } = this.state;
+		      }         = this.props;
+		const {modal}   = this.state;
 		let Icon;
 		let displayText = 'Submit';
-		switch (submissionState){
+		switch (submissionState) {
 			case LEARNING_CURVE_CONSTANTS.submissionState.initial:
 				displayText = 'Submit';
 				break;
@@ -61,23 +61,23 @@ export default class ModalComponent extends PureComponent {
 
 		switch (color) {
 			case 'primary':
-				Icon = <span className="lnr lnr-pushpin modal__title-icon" />;
+				Icon = <span className="lnr lnr-pushpin modal__title-icon"/>;
 				break;
 			case 'success':
-				Icon = <span className="lnr lnr-thumbs-up modal__title-icon" />;
+				Icon = <span className="lnr lnr-thumbs-up modal__title-icon"/>;
 				break;
 			case 'warning':
-				Icon = <span className="lnr lnr-flag modal__title-icon" />;
+				Icon = <span className="lnr lnr-flag modal__title-icon"/>;
 				break;
 			case 'danger':
-				Icon = <span className="lnr lnr-cross-circle modal__title-icon" />;
+				Icon = <span className="lnr lnr-cross-circle modal__title-icon"/>;
 				break;
 			default:
 				break;
 		}
 		const modalClass = classNames({
 			'modal-dialog--colored': colored,
-			'modal-dialog--header': header,
+			'modal-dialog--header' : header,
 		});
 
 		return (
@@ -90,7 +90,7 @@ export default class ModalComponent extends PureComponent {
 					className={`modal-dialog--${color} ${modalClass}`}
 				>
 					<div className="modal__header">
-						<button className="lnr lnr-cross modal__close-btn" type="button" onClick={this.toggle} />
+						<button className="lnr lnr-cross modal__close-btn" type="button" onClick={this.toggle}/>
 						{/*{header ? '' : Icon}*/}
 						<h4 className="bold-text  modal__title">{title}</h4>
 					</div>
@@ -99,7 +99,8 @@ export default class ModalComponent extends PureComponent {
 					</div>
 					<ButtonToolbar className="modal__footer">
 						<Button id="cancel" onClick={this.toggle.bind(this, "cancel")}>Cancel</Button>{' '}
-						<Button id="ok" outline={colored} color={color} type={type} onClick={this.toggle.bind(this, "ok")}>Ok</Button>
+						<Button id="ok" outline={colored} color={color} type={type}
+						        onClick={this.toggle.bind(this, "ok")}>Ok</Button>
 					</ButtonToolbar>
 				</Modal>
 			</div>

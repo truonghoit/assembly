@@ -4,21 +4,20 @@ import {Field, reduxForm}                          from 'redux-form';
 import renderRadioButtonField                      from '../../../shared/components/form/RadioButton';
 import renderDatePickerField                       from '../../../shared/components/form/DatePicker';
 import renderSelectField                           from "../../../shared/components/form/Select";
-import {faCalendarAlt}                             from '@fortawesome/free-solid-svg-icons'
+import {faCalendarAlt}                             from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon}                           from "@fortawesome/react-fontawesome";
 import {Col, Row}                                  from 'reactstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import {ARRAY_ARTICLES, ARRAY_LINES, ARRAY_MODELS} from "../../../constants/variableConstants";
 import {ASSEMBLY_API, FILTER_LINE, FILTER_MODEL}   from "../../../constants/urlConstants";
 import {changeFilterLine, changeFilterModel}       from "../../../redux/actions/filterActions";
-import callAxios                  from "../../../services/api";
-import {connect}                  from "react-redux";
-import PropTypes                  from 'prop-types';
-import validate                   from "./validateForFilterRange";
-import {renderField}              from "../../../shared/components/form/InputField";
-import {LEARNING_CURVE_CONSTANTS} from "./../constants";
-import Modal                      from "./../components/Modal";
-import {changeDateToUnix}         from "../../../shared/utils/Utilities";
+import callAxios                                   from "../../../services/api";
+import {connect}                                   from "react-redux";
+import PropTypes                                   from 'prop-types';
+import validate                                    from "./validateForFilterRange";
+import {renderField}                               from "../../../shared/components/form/InputField";
+import {LEARNING_CURVE_CONSTANTS}                  from "./../constants";
+import Modal                                       from "./../components/Modal";
 
 
 let {field} = LEARNING_CURVE_CONSTANTS;
@@ -67,7 +66,7 @@ class FilterRangeForLearningCurve extends Component {
 		this.fillLineCombobox();
 		this.fillModelCombobox();
 		//this.fillArticleCombobox();
-	}
+	};
 
 	fillLineCombobox = () => {
 		let method = 'POST';
@@ -89,7 +88,7 @@ class FilterRangeForLearningCurve extends Component {
 				this.setState({
 					...this.state,
 					selectedLine: arrayLines.length > 0 ? arrayLines[0] : ARRAY_LINES[0],
-					arrayLines: arrayLines.length > 0 ? arrayLines : ARRAY_LINES,
+					arrayLines  : arrayLines.length > 0 ? arrayLines : ARRAY_LINES,
 				});
 
 				this.props.dispatch(
@@ -103,7 +102,7 @@ class FilterRangeForLearningCurve extends Component {
 				console.log("Error: ", e);
 			}
 		});
-	}
+	};
 
 	fillModelCombobox = (selectedLine = null) => {
 		let selectedLineCode = "";
@@ -132,7 +131,7 @@ class FilterRangeForLearningCurve extends Component {
 				this.setState({
 					...this.state,
 					selectedModel: arrayModels.length > 0 ? arrayModels[0] : ARRAY_MODELS[0],
-					arrayModels: arrayModels.length > 0 ? arrayModels : ARRAY_MODELS,
+					arrayModels  : arrayModels.length > 0 ? arrayModels : ARRAY_MODELS,
 				});
 
 				this.props.dispatch(
@@ -146,7 +145,7 @@ class FilterRangeForLearningCurve extends Component {
 				console.log("Error: ", e);
 			}
 		});
-	}
+	};
 
 	/*fillArticleCombobox = (selectedModel = null) => {
 	 let method = 'POST';
@@ -194,7 +193,7 @@ class FilterRangeForLearningCurve extends Component {
 			...this.state,
 			selectedFromDate: value,
 		});
-	}
+	};
 
 	handleFilterToDateChange = (value) => {
 		this.props.handleFilterToDateChange(value);
@@ -202,7 +201,7 @@ class FilterRangeForLearningCurve extends Component {
 			...this.state,
 			selectedToDate: value,
 		});
-	}
+	};
 
 	handleFilterLineChange = (value) => {
 		this.props.handleFilterLineChange(value);
@@ -215,7 +214,7 @@ class FilterRangeForLearningCurve extends Component {
 			selectedModel: ARRAY_MODELS[0],
 			//selectedArticle: ARRAY_ARTICLES[0]
 		});
-	}
+	};
 
 	handleFilterModelChange = (value) => {
 		this.props.handleFilterModelChange(value);
@@ -225,7 +224,7 @@ class FilterRangeForLearningCurve extends Component {
 			selectedModel: value,
 			//selectedArticle: ARRAY_ARTICLES[0]
 		});
-	}
+	};
 
 	/*handleFilterArticleChange = (value) => {
 	 this.props.handleFilterArticleChange(value);
@@ -251,18 +250,18 @@ class FilterRangeForLearningCurve extends Component {
 				disableToDatePicker  : false,
 			});
 		}
-	}
+	};
 
 	onOkClicked = () => {
 		this.props.changeIsOKClicked(true);
 		this.props.handleSubmit();
-	}
+	};
 
 	render() {
-		let {arrayLines, arrayModels, formData} = this.state;
-		let {handleSubmit, selectedProcess, submissionState}                      = this.props;
-		let message = `You're about to submit new value for target quantity
-		for model: ${selectedProcess[field.modelNo]} process: ${selectedProcess[field.processCode]}`
+		let {arrayLines, arrayModels, formData}              = this.state;
+		let {handleSubmit, selectedProcess, submissionState} = this.props;
+		let message                                          = `You're about to submit new value for target quantity
+		for model: ${selectedProcess[field.modelNo]} process: ${selectedProcess[field.processCode]}`;
 		return (
 			<form className="form form--preview d-flex" style={{paddingLeft: 20}} onSubmit={handleSubmit}>
 				<div style={{width: '100%', marginBottom: 40,}}>

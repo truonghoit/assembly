@@ -4,7 +4,7 @@ import {Field, reduxForm}                                         from 'redux-fo
 import renderRadioButtonField                                     from '../form/RadioButton';
 import renderDatePickerField                                      from '../form/DatePicker';
 import renderSelectField                                          from "../form/Select";
-import {faCalendarAlt}                                            from '@fortawesome/free-solid-svg-icons'
+import {faCalendarAlt}                                            from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon}                                          from "@fortawesome/react-fontawesome";
 import {Col, Row}                                                 from 'reactstrap';
 import "react-datepicker/dist/react-datepicker.css";
@@ -19,11 +19,11 @@ import validate                                                   from "./valida
 class FilterRange extends Component {
 
 	static propTypes = {
-		handleFilterFromDateChange  : PropTypes.func.isRequired,
-		handleFilterToDateChange    : PropTypes.func.isRequired,
-		handleFilterModelChange  : PropTypes.func.isRequired,
-		handleFilterLineChange   : PropTypes.func.isRequired,
-		handleFilterArticleChange: PropTypes.func.isRequired,
+		handleFilterFromDateChange: PropTypes.func.isRequired,
+		handleFilterToDateChange  : PropTypes.func.isRequired,
+		handleFilterModelChange   : PropTypes.func.isRequired,
+		handleFilterLineChange    : PropTypes.func.isRequired,
+		handleFilterArticleChange : PropTypes.func.isRequired,
 	};
 
 	constructor(props) {
@@ -46,7 +46,7 @@ class FilterRange extends Component {
 		this.fillLineCombobox();
 		this.fillModelCombobox();
 		this.fillArticleCombobox();
-	}
+	};
 
 	fillLineCombobox = () => {
 		let method = 'POST';
@@ -77,7 +77,7 @@ class FilterRange extends Component {
 				console.log("Error: ", e);
 			}
 		});
-	}
+	};
 
 	fillModelCombobox = (selectedLine = null) => {
 		let selectedLineCode = "";
@@ -115,7 +115,7 @@ class FilterRange extends Component {
 				console.log("Error: ", e);
 			}
 		});
-	}
+	};
 
 	fillArticleCombobox = (selectedModel = null) => {
 		let method = 'POST';
@@ -155,7 +155,7 @@ class FilterRange extends Component {
 				console.log("Error: ", e);
 			}
 		});
-	}
+	};
 
 	handleFilterFromDateChange = (value) => {
 		console.log("handleFilterFromDateChange");
@@ -165,7 +165,7 @@ class FilterRange extends Component {
 			...this.state,
 			selectedFromDate: value,
 		});
-	}
+	};
 
 	handleFilterToDateChange = (value) => {
 		console.log("handleFilterToDateChange");
@@ -175,7 +175,7 @@ class FilterRange extends Component {
 			...this.state,
 			selectedToDate: value,
 		});
-	}
+	};
 
 	handleFilterLineChange = (value) => {
 		this.props.handleFilterLineChange(value);
@@ -189,7 +189,7 @@ class FilterRange extends Component {
 			selectedModel  : ARRAY_MODELS[0],
 			selectedArticle: ARRAY_ARTICLES[0]
 		});
-	}
+	};
 
 	handleFilterModelChange = (value) => {
 		this.props.handleFilterModelChange(value);
@@ -199,7 +199,7 @@ class FilterRange extends Component {
 			selectedModel  : value,
 			selectedArticle: ARRAY_ARTICLES[0]
 		});
-	}
+	};
 
 	handleFilterArticleChange = (value) => {
 		this.props.handleFilterArticleChange(value);
@@ -207,7 +207,7 @@ class FilterRange extends Component {
 			...this.state,
 			selectedArticle: value,
 		});
-	}
+	};
 
 	onCheckboxChange = (value) => {
 		if (parseInt(value) === 1) {
@@ -225,7 +225,7 @@ class FilterRange extends Component {
 				disableToDatePicker  : false,
 			});
 		}
-	}
+	};
 
 	render() {
 		let {handleSubmit}                           = this.props;

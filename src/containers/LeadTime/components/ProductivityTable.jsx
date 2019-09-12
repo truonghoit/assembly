@@ -1,7 +1,5 @@
-import {Component} from "react";
-import {reduxForm} from "redux-form";
-import React from "react";
-import {Col, Progress} from "reactstrap";
+import React, {Component} from "react";
+import {Col, Progress}    from "reactstrap";
 
 class ProductivityTable extends Component {
 	constructor(props) {
@@ -26,15 +24,17 @@ class ProductivityTable extends Component {
 							<div md={12} lg={12}>mins/pair</div>
 						</Col>
 					</div>
-					<hr />
+					<hr/>
 					<div>
 						<Col md={12} lg={12}><span>CCR PROCESS</span></Col>
-						<Col md={12} lg={12} className="d-flex mt-1"><span style={{color: '#FF9356'}}>{ccrProcess.min_process_crr}</span></Col>
+						<Col md={12} lg={12} className="d-flex mt-1"><span
+							style={{color: '#FF9356'}}>{ccrProcess.min_process_crr}</span></Col>
 					</div>
 				</div>
 				<div style={{marginTop: 30, width: "60%"}}>
 					<div>
-						<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top">
+						<div
+							className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top">
 							<div className="d-flex">
 								<Col md={7} lg={7} style={{marginLeft: -15}}>
 									LINE BALANCING
@@ -51,7 +51,8 @@ class ProductivityTable extends Component {
 					</div>
 					<div className="d-flex flex-row">
 						<div style={{width: '40%', marginTop: 30}}>
-							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top">
+							<div
+								className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top">
 								<div className="d-flex">
 									<Col md={8} lg={8} style={{marginLeft: -15}}>
 										STICHING
@@ -65,7 +66,9 @@ class ProductivityTable extends Component {
 							</div>
 						</div>
 						<div style={{width: '60%', marginTop: 70}}>
-							<div className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top" style={{selfAlign: 'flex-end'}}>
+							<div
+								className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top"
+								style={{selfAlign: 'flex-end'}}>
 								<div className="d-flex">
 									<Col md={7} lg={7} style={{marginLeft: -15}}>
 										SHOE MAKING

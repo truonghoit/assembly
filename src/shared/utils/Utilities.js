@@ -4,26 +4,26 @@ import moment from "moment";
 //flag: end  => get 23:59 of the input date
 export const changeDateToUnix = (inputDate, flag = "start") => {
 	let result = moment(inputDate).startOf("date").unix();
-	if (flag == "end"){
+	if (flag == "end") {
 		result = moment(inputDate).endOf("date").unix();
 	}
 	return result;
-}
+};
 
 export const findThreeLargest = (array) => {
 	let first = 0, second = 0, third = 0;
-	for (let i = 0; i < array.length; i++){
+	for (let i = 0; i < array.length; i++) {
 		let x = array[i];
-		if (x > first){
-			third = second;
+		if (x > first) {
+			third  = second;
 			second = first;
-			first = x;
-		} else if (x > second){
-			third = second;
+			first  = x;
+		} else if (x > second) {
+			third  = second;
 			second = x;
-		} else if (x > third){
+		} else if (x > third) {
 			third = x;
 		}
 	}
 	return [first, second, third];
-}
+};

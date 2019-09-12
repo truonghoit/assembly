@@ -11,9 +11,9 @@ class DataExporter extends Component {
 		console.log("exportExcelFile");
 		console.log("props: ", props);
 		let defectStatusData = null, defectSummaryData = null;
-		let location = props.location; //defect-status: /pages/defect-status
-		let excelData = props.excelData;//defect-status-data: .defectStatusData
-		switch (location.pathname){
+		let location         = props.location; //defect-status: /pages/defect-status
+		let excelData        = props.excelData;//defect-status-data: .defectStatusData
+		switch (location.pathname) {
 			case "/pages/defect-status":
 				defectStatusData = excelData.defectStatusData;
 				break;
@@ -21,19 +21,19 @@ class DataExporter extends Component {
 				defectSummaryData = excelData.defectSummaryData;
 				break;
 		}
-		let fileName = "dataExport";
-		let workbook = new Excel.Workbook();
-		workbook.creator = 'truongho@snaglobal.net';
+		let fileName            = "dataExport";
+		let workbook            = new Excel.Workbook();
+		workbook.creator        = 'truongho@snaglobal.net';
 		workbook.lastModifiedBy = 'truongho@snaglobal.net';
-		workbook.created = new Date();
-		workbook.modified = new Date();
+		workbook.created        = new Date();
+		workbook.modified       = new Date();
 
 		//Add sheet
-		if (defectStatusData){
+		if (defectStatusData) {
 			this.addDefectStatusToExcelTable(workbook, defectStatusData);
 		}
 
-		if (defectSummaryData){
+		if (defectSummaryData) {
 			this.addDefectSummaryToExcelTable(workbook, defectSummaryData);
 		}
 
@@ -47,45 +47,45 @@ class DataExporter extends Component {
 			        : 'Smart_Sensing_Chart_Data.xlsx' // Excel File Name
 		        ))
 		        .catch(err => console.log('Error writing excel export', err));
-	}
+	};
 
 	addDefectStatusToExcelTable = (workbook, defectStatusData) => {
 		console.log("defectStatusData: ", defectStatusData);
 		let worksheet = workbook.addWorksheet('Station_Status_Data');
 
 		let middleCenterAlignment = {vertical: 'middle', horizontal: 'center'};
-		let middleRightAlignment = {vertical: 'middle', horizontal: 'right'};
-		let middleLeftAlignment = {vertical: 'middle', horizontal: 'left'};
+		let middleRightAlignment  = {vertical: 'middle', horizontal: 'right'};
+		let middleLeftAlignment   = {vertical: 'middle', horizontal: 'left'};
 
 		worksheet.mergeCells('A1:R1');
-		worksheet.getCell('A1').font = {
+		worksheet.getCell('A1').font      = {
 			bold: true,
 		};
 		worksheet.getCell('A1').alignment = middleCenterAlignment;
-		worksheet.getCell('A1').value = "DEFECT STATUS";
+		worksheet.getCell('A1').value     = "DEFECT STATUS";
 
-		for (let i = 0; i < defectStatusData.length; i++){
-			let rowData = defectStatusData[i];
+		for (let i = 0; i < defectStatusData.length; i++) {
+			let rowData    = defectStatusData[i];
 			let currentRow = worksheet.getRow(i + 2);
-			for (let j = 0; j < rowData.length; j++){
+			for (let j = 0; j < rowData.length; j++) {
 				let currentCol = j + 1;
 
 				currentRow.getCell(currentCol).border = {
-					top: currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
-					left: currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
+					top   : currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
+					left  : currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
 					bottom: currentRow === 3 + defectStatusData.length ? {style: 'thick'} : {style: 'thin'},
-					right: currentRow === 1 + defectStatusData[0].length ? {style: 'thick'} : {style: 'thin'}
+					right : currentRow === 1 + defectStatusData[0].length ? {style: 'thick'} : {style: 'thin'}
 				};
 
-				if (currentRow._number === 2){
+				if (currentRow._number === 2) {
 					currentRow.getCell(currentCol).font = {
 						bold: true,
 					};
 				}
-				if (currentCol === 1){
-					worksheet.getColumn(currentCol).width = 30;
+				if (currentCol === 1) {
+					worksheet.getColumn(currentCol).width    = 30;
 					currentRow.getCell(currentCol).alignment = middleLeftAlignment;
-					currentRow.getCell(currentCol).font = {
+					currentRow.getCell(currentCol).font      = {
 						bold: true,
 					};
 				} else {
@@ -95,44 +95,44 @@ class DataExporter extends Component {
 
 			}
 		}
-	}
+	};
 
 	addDefectSummaryToExcelTable = (workbook, defectSummaryData) => {
 		console.log("defectSummaryData: ", defectSummaryData);
 		let worksheet = workbook.addWorksheet('defectSummaryData');
 
 		let middleCenterAlignment = {vertical: 'middle', horizontal: 'center'};
-		let middleRightAlignment = {vertical: 'middle', horizontal: 'right'};
-		let middleLeftAlignment = {vertical: 'middle', horizontal: 'left'};
+		let middleRightAlignment  = {vertical: 'middle', horizontal: 'right'};
+		let middleLeftAlignment   = {vertical: 'middle', horizontal: 'left'};
 
 		worksheet.mergeCells('A1:H1');
-		worksheet.getCell('A1').font = {
+		worksheet.getCell('A1').font      = {
 			bold: true,
 		};
 		worksheet.getCell('A1').alignment = middleCenterAlignment;
-		worksheet.getCell('A1').value = "DEFECT SUMMARY";
+		worksheet.getCell('A1').value     = "DEFECT SUMMARY";
 
-		for (let i = 0; i < defectSummaryData.length; i++){
-			let rowData = defectSummaryData[i];
+		for (let i = 0; i < defectSummaryData.length; i++) {
+			let rowData    = defectSummaryData[i];
 			let currentRow = worksheet.getRow(i + 2);
-			for (let j = 0; j < rowData.length; j++){
-				let currentCol = j + 1;
-				worksheet.getColumn(currentCol).width = 30;
+			for (let j = 0; j < rowData.length; j++) {
+				let currentCol                           = j + 1;
+				worksheet.getColumn(currentCol).width    = 30;
 				currentRow.getCell(currentCol).alignment = middleCenterAlignment;
 
 				currentRow.getCell(currentCol).border = {
-					top: currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
-					left: currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
+					top   : currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
+					left  : currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
 					bottom: currentRow === 3 + defectSummaryData.length ? {style: 'thick'} : {style: 'thin'},
-					right: currentRow === 1 + defectSummaryData[0].length ? {style: 'thick'} : {style: 'thin'}
+					right : currentRow === 1 + defectSummaryData[0].length ? {style: 'thick'} : {style: 'thin'}
 				};
 
-				if (currentRow._number === 2){
+				if (currentRow._number === 2) {
 					currentRow.getCell(currentCol).font = {
 						bold: true,
 					};
 				}
-				if (currentCol === 1){
+				if (currentCol === 1) {
 					currentRow.getCell(currentCol).font = {
 						bold: true,
 					};
@@ -141,12 +141,12 @@ class DataExporter extends Component {
 
 			}
 		}
-	}
+	};
 
 	render() {
-		return  <span className="filter-div-excel" onClick={() => this.exportExcelFile(this.props)}>
-					<FontAwesomeIcon icon={faFileExcel}/><span style={{paddingLeft:5}}>EXCEL</span>
-				</span>
+		return <span className="filter-div-excel" onClick={() => this.exportExcelFile(this.props)}>
+					<FontAwesomeIcon icon={faFileExcel}/><span style={{paddingLeft: 5}}>EXCEL</span>
+				</span>;
 	}
 }
 

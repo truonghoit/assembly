@@ -56,8 +56,8 @@ class WorkingHourTable extends Component {
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (this.props !== prevProps) {
 			let {workingHourData, workingHourLabel} = this.props;
-			this.myChart.data = {
-				labels: workingHourLabel,
+			this.myChart.data                       = {
+				labels  : workingHourLabel,
 				datasets: workingHourData
 			};
 			this.myChart.update();

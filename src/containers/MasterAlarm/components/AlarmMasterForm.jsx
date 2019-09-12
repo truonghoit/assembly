@@ -6,7 +6,7 @@ import {renderField}                      from "../../../shared/components/form/
 import DataTable                          from "../../../shared/components/data_table/DataTable";
 import {FontAwesomeIcon}                  from "@fortawesome/react-fontawesome";
 import {faCircle, faPlay}                 from '@fortawesome/free-solid-svg-icons';
-import {ASSEMBLY_API, ALARM_LIST_PROCESS}                           from "../../../constants/urlConstants";
+import {ALARM_LIST_PROCESS, ASSEMBLY_API} from "../../../constants/urlConstants";
 import callAxios                          from "../../../services/api";
 import LoadingSpinner                     from "../../../shared/components/loading_spinner/LoadingSpinner";
 import {ALARM_MASTER_PAGE_CONSTANTS}      from "../constants";

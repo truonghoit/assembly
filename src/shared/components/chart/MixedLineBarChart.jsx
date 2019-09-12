@@ -15,11 +15,11 @@ let initialData = {
 	],
 	datasets: [
 		{
-			label          : "Line dataset",
-			data           : [0, 0, 0, 0, 0, 0, 0],
-			type           : 'line',
+			label      : "Line dataset",
+			data       : [0, 0, 0, 0, 0, 0, 0],
+			type       : 'line',
 			borderColor: "#EBEDF1",
-			fill: false,
+			fill       : false,
 			lineTension: 0,
 		},
 		{
@@ -34,9 +34,9 @@ const initOptions = {
 	legend: {
 		display : false,
 		position: 'left',
-		labels: {
-			boxWidth: 60,
-			fontSize: 20,
+		labels  : {
+			boxWidth : 60,
+			fontSize : 20,
 			fontColor: '#BEBEBE'
 		}
 	},
@@ -103,13 +103,13 @@ export default class MixedLineBarChart extends PureComponent {
 				//     datasets: data
 				// };
 				// This works too
-				 this.myChart.data = {
+				this.myChart.data = {
 					labels  : labels,
 					datasets: data
 				};
 
 				this.myChart.options.legend.display = !!showLegend;
-				this.myChart.type = "bar";
+				this.myChart.type                   = "bar";
 				if (type) {
 					this.myChart.type = type;
 				}
@@ -118,16 +118,16 @@ export default class MixedLineBarChart extends PureComponent {
 		}
 	}
 
-	componentDidMount(){
-		const ctx    = this.canvas.getContext('2d');
+	componentDidMount() {
+		const ctx                                  = this.canvas.getContext('2d');
 		let {type, chartInitialData, chartOptions} = this.props;
 		console.log("componentDidMount: ");
 		console.log("chartInitialData: ", chartInitialData);
-		if (!type){
+		if (!type) {
 			type = 'bar';
 		}
-		let data = chartInitialData?chartInitialData:initialData;//see initialData to know format of data
-		let options = chartOptions?chartOptions:initOptions;//see initOptions to know format of options
+		let data     = chartInitialData ? chartInitialData : initialData;//see initialData to know format of data
+		let options  = chartOptions ? chartOptions : initOptions;//see initOptions to know format of options
 		this.myChart = new Chart(ctx, {
 			type   : type,
 			data   : data,

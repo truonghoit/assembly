@@ -1,14 +1,12 @@
-import React, {Component}                   from "react";
-import {reduxForm}                          from "redux-form";
-import {Col, Container, Row}                from "reactstrap";
+import React, {Component}                                       from "react";
+import {reduxForm}                                              from "redux-form";
+import {Col, Container, Row}                                    from "reactstrap";
 import FilterRange                                              from "../../shared/components/filter_range/FilterRange";
-import LeadTable                                                from "../LeadTime/components/LeadTable";
 import ChartArea                                                from "./components/ChartArea";
 import DefectDataTable                                          from "./components/DefectDataTable";
 import {changeDateToUnix}                                       from "../../shared/utils/Utilities";
 import {ASSEMBLY_API, DEFECT_CHART_STATUS, DEFECT_WORKING_HOUR} from "../../constants/urlConstants";
 import callAxios                                                from "../../services/api";
-import MixedLineBarChart                                        from "../../shared/components/chart/MixedLineBarChart";
 import DataExporter                                             from "../../shared/components/data_table/DataExporter";
 
 class DefectStatus extends Component {
@@ -16,15 +14,15 @@ class DefectStatus extends Component {
 		super(props);
 
 		this.state = {
-			filterFromDate: changeDateToUnix(new Date()),
-			filterToDate  : changeDateToUnix(new Date(), "end"),
-			filterLine    : '',
-			filterModel   : '',
-			filterArticle : '',
-			chartData: [],
-			defectDataArray: [],
+			filterFromDate        : changeDateToUnix(new Date()),
+			filterToDate          : changeDateToUnix(new Date(), "end"),
+			filterLine            : '',
+			filterModel           : '',
+			filterArticle         : '',
+			chartData             : [],
+			defectDataArray       : [],
 			defectWorkingHourArray: [],
-		}
+		};
 	}
 
 	handleFilterFromDateChange = (newValue) => {
@@ -32,56 +30,57 @@ class DefectStatus extends Component {
 			filterFromDate: changeDateToUnix(newValue),
 		}));
 
-	}
+	};
 
 	handleFilterToDateChange  = (newValue) => {
 		this.setState((state, props) => ({
 			filterToDate: changeDateToUnix(newValue, "end"),
 		}));
-	}
+	};
 	handleFilterLineChange    = (newValue) => {
 		this.setState((state, props) => ({
 			filterLine: newValue.value,
 		}));
-	}
+	};
 	handleFilterModelChange   = (newValue) => {
 		this.setState((state, props) => ({
 			filterModel: newValue.value,
 		}));
-	}
+	};
 	handleFilterArticleChange = (newValue) => {
 		this.setState((state, props) => ({
 			filterArticle: newValue.value,
 		}));
-	}
+	};
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (prevState.filterArticle !== this.state.filterArticle || prevState.filterFromDate !== this.state.filterFromDate
+		if (prevState.filterArticle !== this.state.filterArticle || prevState.filterFromDate
+		    !== this.state.filterFromDate
 		    || prevState.filterToDate !== this.state.filterToDate
 		    || prevState.filterLine !== this.state.filterLine || prevState.filterModel !== this.state.filterModel
-		    || prevState.filterArticle !== this.state.filterArticle){
+		    || prevState.filterArticle !== this.state.filterArticle) {
 			this.getChartData();
 			this.getDefectTableData();
 		}
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		this.getChartData();
 		this.getDefectTableData();
 	}
 
-	getChartData(){
+	getChartData() {
 		let {filterFromDate, filterToDate, filterLine, filterModel, filterArticle} = this.state;
-		let method = 'POST';
-		let url    = ASSEMBLY_API + DEFECT_CHART_STATUS;
-		let params = {
-			"factory": "",
-			"line": "",
-			"process": "",
-			"model":"",
-			"article_no":"",
-			"from_date": filterFromDate,
-			"to_date": filterToDate
+		let method                                                                 = 'POST';
+		let url                                                                    = ASSEMBLY_API + DEFECT_CHART_STATUS;
+		let params                                                                 = {
+			"factory"   : "",
+			"line"      : "",
+			"process"   : "",
+			"model"     : "",
+			"article_no": "",
+			"from_date" : filterFromDate,
+			"to_date"   : filterToDate
 		};
 		callAxios(method, url, params).then(response => {
 			try {
@@ -97,16 +96,16 @@ class DefectStatus extends Component {
 
 	getDefectTableData = () => {
 		let {filterFromDate, filterToDate, filterLine, filterModel, filterArticle} = this.state;
-		let method = 'POST';
-		let url    = ASSEMBLY_API + DEFECT_WORKING_HOUR;
-		let params = {
-			"factory": "",
-			"line": "",
-			"process": "",
-			"model":"",
-			"article_no":"",
-			"from_date": filterFromDate,
-			"to_date": filterToDate
+		let method                                                                 = 'POST';
+		let url                                                                    = ASSEMBLY_API + DEFECT_WORKING_HOUR;
+		let params                                                                 = {
+			"factory"   : "",
+			"line"      : "",
+			"process"   : "",
+			"model"     : "",
+			"article_no": "",
+			"from_date" : filterFromDate,
+			"to_date"   : filterToDate
 		};
 		callAxios(method, url, params).then(response => {
 			try {
@@ -118,9 +117,9 @@ class DefectStatus extends Component {
 				console.log("Error: ", e);
 			}
 		});
-	}
+	};
 
-	render(){
+	render() {
 		let {defectDataArray, defectWorkingHourArray} = this.state;
 		return (
 			<Container className="dashboard">
@@ -139,15 +138,15 @@ class DefectStatus extends Component {
 						<span style={{color: '#BEBEBE'}}>Total Working Hour: 92 Hours</span>
 					</Col>
 					<Col md={2} lg={2}>
-						<DataExporter />
+						<DataExporter/>
 					</Col>
 				</Row>
 				<Row>
 					<Col md={12} lg={12}>
-						<ChartArea type="temp" chartData={defectDataArray} showLegend={true} />
+						<ChartArea type="temp" chartData={defectDataArray} showLegend={true}/>
 					</Col>
 				</Row>
-				<hr />
+				<hr/>
 				<Row>
 					<Col md={12} lg={12}>
 						<DefectDataTable defectWorkingHourArray={defectWorkingHourArray}/>
@@ -158,6 +157,7 @@ class DefectStatus extends Component {
 		);
 	}
 }
+
 export default reduxForm({
 	form: "DefectStatus"
 })(DefectStatus);

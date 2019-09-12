@@ -1,4 +1,3 @@
-
 const validate = (values) => {
 	const errors = {};
 	if (!values.filterFromDate || (values.filterFromDate && !values.filterFromDate.toString().trim())) {
