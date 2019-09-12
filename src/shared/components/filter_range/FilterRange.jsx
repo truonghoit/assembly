@@ -8,7 +8,7 @@ import {faCalendarAlt}                                            from '@fortawe
 import {FontAwesomeIcon}                                          from "@fortawesome/react-fontawesome";
 import {Col, Row}                                                 from 'reactstrap';
 import "react-datepicker/dist/react-datepicker.css";
-import {ARRAY_ARTICLES, ARRAY_LINES, ARRAY_MODELS}                from "../../../constants/variableConstants";
+import {ARRAY_ARTICLES, ARRAY_LINES, ARRAY_MODELS}                from "../../../constants/propertyConstants";
 import {ASSEMBLY_API, FILTER_ARTICLE, FILTER_LINE, FILTER_MODEL}  from "../../../constants/urlConstants";
 import {changeFilterArticle, changeFilterLine, changeFilterModel} from "../../../redux/actions/filterActions";
 import callAxios                                                  from "../../../services/api";

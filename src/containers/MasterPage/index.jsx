@@ -6,7 +6,7 @@ import {ASSEMBLY_API, CATEGORY_ROUTE, MAS_CODE_ROUTE, PARENT_ROUTE} from "../../
 import DataTable                                                    from "./components/DataTable";
 import {reduxForm}                                                  from "redux-form";
 import MASTER_FORM_CONSTANTS                                        from "./constants";
-import {CATEGORY_CODES_REQUIRE_PARENT_CODE}                         from "../../constants/variableConstants";
+import {CATEGORY_CODES_REQUIRE_PARENT_CODE}                         from "../../constants/propertyConstants";
 
 class MasterPage extends Component {
 	constructor(props) {

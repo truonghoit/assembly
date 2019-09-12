@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import "../../../scss/component/tabulator_midnight_custom.css"; // use Theme(s)
 // for React 16.4.x use: import { ReactTabulator }
-import {ARROW_ICON}       from "../../../constants/variableConstants";
+import {ARROW_ICON}       from "../../../constants/propertyConstants";
 import {Table}            from "reactstrap";
 
 //			// {"status":200,"data":[{"alarm_date":"2019.07.09","factory_cd":"AS2","line_cd":"2030",

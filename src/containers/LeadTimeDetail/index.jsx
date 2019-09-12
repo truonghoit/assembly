@@ -7,7 +7,7 @@ import LeadDetailTable                             from './Components/LeadDetail
 import MixedLineBarChart                           from "../../shared/components/chart/MixedLineBarChart";
 import {ASSEMBLY_API, PRODUCTION_LEAD_TIME_DETAIL} from "../../constants/urlConstants";
 import callAxios                                   from "../../services/api";
-import {DAY_WORKING_SECONDS}                       from "../../constants/variableConstants";
+import {DAY_WORKING_SECONDS}                       from "../../constants/propertyConstants";
 
 class LeadTimeDetail extends Component {
 	constructor(props) {
