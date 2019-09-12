@@ -15,6 +15,7 @@ import callAxios                                                  from "../../..
 import {connect}                                                  from "react-redux";
 import PropTypes                                                  from 'prop-types';
 import validate                                                   from "./validateForFilterRange";
+import moment                                                     from "moment";
 
 class FilterRange extends Component {
 
@@ -158,23 +159,23 @@ class FilterRange extends Component {
 	};
 
 	handleFilterFromDateChange = (value) => {
-		console.log("handleFilterFromDateChange");
-		console.log("value: ", value);
-		this.props.handleFilterFromDateChange(value);
-		this.setState({
-			...this.state,
-			selectedFromDate: value,
-		});
+		if (moment(value.toISOString()).isSameOrBefore(this.state.selectedToDate)) {
+			this.props.handleFilterFromDateChange(value);
+			this.setState({
+				...this.state,
+				selectedFromDate: value,
+			});
+		}
 	};
 
 	handleFilterToDateChange = (value) => {
-		console.log("handleFilterToDateChange");
-		console.log("value: ", value);
-		this.props.handleFilterToDateChange(value);
-		this.setState({
-			...this.state,
-			selectedToDate: value,
-		});
+		if (moment(value.toISOString()).isSameOrAfter(this.state.selectedFromDate)) {
+			this.props.handleFilterToDateChange(value);
+			this.setState({
+				...this.state,
+				selectedToDate: value,
+			});
+		}
 	};
 
 	handleFilterLineChange = (value) => {
@@ -215,8 +216,8 @@ class FilterRange extends Component {
 				...this.state,
 				disableFromDatePicker: true,
 				disableToDatePicker  : true,
-				selectedFromDate     : new Date(),
-				selectedToDate       : new Date(),
+				selectedFromDate     : new Date(moment().startOf("day").toISOString()),
+				selectedToDate       : new Date(moment().endOf("day").toISOString()),
 			});
 		} else {
 			this.setState({
