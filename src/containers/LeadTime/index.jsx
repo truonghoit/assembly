@@ -79,7 +79,6 @@ class LeadTime extends Component {
 	}
 
 	handleWorkingData = (workingHourData) => {
-		console.log("workingHourData 86: ", workingHourData);
 		try {
 			if (workingHourData && workingHourData[0].chart_data){
 				let labels = [];

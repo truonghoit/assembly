@@ -9,7 +9,7 @@ class LeadTable extends Component {
 		super(props);
 	}
 
-	fillRow = (data, firstCol) => {
+	fillRow = (index, data, firstCol) => {
 		if (firstCol){
 			let rowSpan = 1;
 			if (firstCol == "STICHING"){
@@ -28,7 +28,7 @@ class LeadTable extends Component {
 			if (min_process_crr){
 				color = "#FF9356";
 			}
-			return  <tr>
+			return  <tr key={index}>
 						<td rowSpan={rowSpan}style={{verticalAlign: 'middle', color: color}}>{firstCol}</td><td style={{color: color}}>{data?data.mas_cd_nm:0}</td><td style={{color: color}}>{data?data.pair_qty:0}</td><td style={{color: color}}>{data?data.lead_time:0}</td>
 					</tr>
 		} else {
@@ -40,7 +40,7 @@ class LeadTable extends Component {
 			if (min_process_crr){
 				color = "#FF9356";
 			}
-			return  <tr>
+			return  <tr key={index}>
 						<td style={{color: color}}>{data?data.mas_cd_nm:0}</td><td style={{color: color}}>{data?data.pair_qty:0}</td><td style={{color: color}}>{data?data.lead_time:0}</td>
 					</tr>
 		}
@@ -55,60 +55,93 @@ class LeadTable extends Component {
 			let minPairLeadTime = 0, minPairStiching = 0, minPairShoeMaking = 0;
 			let minLeadTimeLeadTime = 0, minLeadTimeStiching = 0, minLeadTimeShoeMaking = 0;
 			if (leadData.length > 0){
-				minPairLeadTime = Math.min( leadData[1].pair_qty, leadData[2].pair_qty,
-					leadData[3].pair_qty, leadData[4].pair_qty, leadData[5].pair_qty,
-					leadData[6].pair_qty, leadData[7].pair_qty, leadData[7].pair_qty,
-					leadData[9].pair_qty, leadData[10].pair_qty, leadData[11].pair_qty,
-					leadData[12].pair_qty, leadData[13].pair_qty, leadData[14].pair_qty,
-					leadData[15].pair_qty, leadData[16].pair_qty);
-				minPairStiching = Math.min( leadData[1].pair_qty, leadData[2].pair_qty,
-					leadData[3].pair_qty, leadData[4].pair_qty, leadData[5].pair_qty);
-				minPairShoeMaking = Math.min(leadData[6].pair_qty, leadData[7].pair_qty, leadData[7].pair_qty,
-					leadData[9].pair_qty, leadData[10].pair_qty, leadData[11].pair_qty,
-					leadData[12].pair_qty, leadData[13].pair_qty, leadData[14].pair_qty,
-					leadData[15].pair_qty, leadData[16].pair_qty);
+				let pairQty1 = leadData[1]?leadData[1].pair_qty:0;
+				let pairQty2 = leadData[2]?leadData[1].pair_qty:0;
+				let pairQty3 = leadData[3]?leadData[1].pair_qty:0;
+				let pairQty4 = leadData[4]?leadData[1].pair_qty:0;
+				let pairQty5 = leadData[5]?leadData[1].pair_qty:0;
+				let pairQty6 = leadData[6]?leadData[1].pair_qty:0;
+				let pairQty7 = leadData[7]?leadData[1].pair_qty:0;
+				let pairQty8 = leadData[8]?leadData[1].pair_qty:0;
+				let pairQty9 = leadData[9]?leadData[1].pair_qty:0;
+				let pairQty10 = leadData[10]?leadData[1].pair_qty:0;
+				let pairQty11 = leadData[11]?leadData[1].pair_qty:0;
+				let pairQty12 = leadData[12]?leadData[1].pair_qty:0;
+				let pairQty13 = leadData[13]?leadData[1].pair_qty:0;
+				let pairQty14 = leadData[14]?leadData[1].pair_qty:0;
+				let pairQty15 = leadData[15]?leadData[1].pair_qty:0;
+				let pairQty16 = leadData[16]?leadData[1].pair_qty:0;
+
+				let leadTime1 = leadData[1]?leadData[1].lead_time:0;
+				let leadTime2 = leadData[2]?leadData[2].lead_time:0;
+				let leadTime3 = leadData[3]?leadData[3].lead_time:0;
+				let leadTime4 = leadData[4]?leadData[4].lead_time:0;
+				let leadTime5 = leadData[5]?leadData[5].lead_time:0;
+				let leadTime6 = leadData[6]?leadData[6].lead_time:0;
+				let leadTime7 = leadData[7]?leadData[7].lead_time:0;
+				let leadTime8 = leadData[8]?leadData[8].lead_time:0;
+				let leadTime9 = leadData[9]?leadData[9].lead_time:0;
+				let leadTime10 = leadData[10]?leadData[10].lead_time:0;
+				let leadTime11 = leadData[11]?leadData[11].lead_time:0;
+				let leadTime12 = leadData[12]?leadData[12].lead_time:0;
+				let leadTime13 = leadData[13]?leadData[13].lead_time:0;
+				let leadTime14 = leadData[14]?leadData[14].lead_time:0;
+				let leadTime15 = leadData[15]?leadData[15].lead_time:0;
+				let leadTime16 = leadData[16]?leadData[16].lead_time:0;
+				minPairLeadTime = Math.min( pairQty1, pairQty2,
+					pairQty3, pairQty4, pairQty5,
+					pairQty6, pairQty7, pairQty8,
+					pairQty9, pairQty10, pairQty11,
+					pairQty12, pairQty13, pairQty14,
+					pairQty15, pairQty16);
+				minPairStiching = Math.min( pairQty1, pairQty2,
+					pairQty3, pairQty4, pairQty5);
+				minPairShoeMaking = Math.min(pairQty6, pairQty7, pairQty8,
+					pairQty9, pairQty10, pairQty11,
+					pairQty12, pairQty13, pairQty14,
+					pairQty15, pairQty16);
 
 				minLeadTimeLeadTime =   (
-					                        leadData[1].lead_time + leadData[2].lead_time + leadData[3].lead_time + leadData[4].lead_time + leadData[5].lead_time +
-					                        leadData[6].lead_time + leadData[7].lead_time + leadData[7].lead_time + leadData[9].lead_time + leadData[10].lead_time +
-					                        leadData[11].lead_time + leadData[12].lead_time + leadData[13].lead_time + leadData[14].lead_time + leadData[15].lead_time + leadData[16].lead_time)/60;
+					                        leadTime1 + leadTime2 + leadTime3 + leadTime4 + leadTime5 +
+					                        leadTime6 + leadTime7 + leadTime8 + leadTime9 + leadTime10 +
+					                        leadTime11 + leadTime12 + leadTime13 + leadTime14 + leadTime15 + leadTime16)/60;
 
-				minLeadTimeStiching =  (leadData[1].lead_time + leadData[2].lead_time + leadData[3].lead_time + leadData[4].lead_time + leadData[5].lead_time)/60;
-				minLeadTimeShoeMaking   =  (leadData[6].lead_time + leadData[7].lead_time + leadData[7].lead_time +
-				                            leadData[9].lead_time + leadData[10].lead_time + leadData[11].lead_time +
-				                            leadData[12].lead_time + leadData[13].lead_time + leadData[14].lead_time +
-				                            leadData[15].lead_time + leadData[16].lead_time)/60;
+				minLeadTimeStiching =  (leadTime1 + leadTime2 + leadTime3 + leadTime4 + leadTime5)/60;
+				minLeadTimeShoeMaking   =  (leadTime6 + leadTime7 + leadTime8 +
+				                            leadTime9 + leadTime10 + leadTime11 +
+				                            leadTime12 + leadTime13 + leadTime14 +
+				                            leadTime15 + leadTime16)/60;
 			}
 
 
-			rowData[0] = this.fillRow(leadData[0], parentCategrories[0]);
-			rowData[1] = this.fillRow(leadData[1]);
-			rowData[2] = this.fillRow(leadData[2]);
-			rowData[3] = this.fillRow(leadData[3]);
-			rowData[4] = this.fillRow(leadData[4]);
-			rowData[5] = this.fillRow(leadData[5]);
-			rowData[6] = this.fillRow(leadData[6], parentCategrories[1]);
-			rowData[7] = this.fillRow(leadData[7]);
-			rowData[8] = this.fillRow(leadData[8]);
-			rowData[9] = this.fillRow(leadData[9]);
-			rowData[10] = this.fillRow(leadData[10]);
-			rowData[11] = this.fillRow(leadData[11]);
-			rowData[12] = this.fillRow(leadData[12]);
-			rowData[13] = this.fillRow(leadData[13]);
-			rowData[14] = this.fillRow(leadData[14]);
-			rowData[15] = this.fillRow(leadData[15]);
-			rowData[16] = this.fillRow(leadData[16]);
-			rowData[17] = this.fillRow({
+			rowData[0] = leadData[0]?this.fillRow(0, leadData[0], parentCategrories[0]):null;
+			rowData[1] = leadData[1]?this.fillRow(1, leadData[1]):null;
+			rowData[2] = leadData[2]?this.fillRow(2, leadData[2]):null;
+			rowData[3] = leadData[3]?this.fillRow(3, leadData[3]):null;
+			rowData[4] = leadData[4]?this.fillRow(4, leadData[4]):null;
+			rowData[5] = leadData[5]?this.fillRow(5, leadData[5]):null;
+			rowData[6] = leadData[6]?this.fillRow(6, leadData[6], parentCategrories[1]):null;
+			rowData[7] = leadData[7]?this.fillRow(7, leadData[7]):null;
+			rowData[8] = leadData[8]?this.fillRow(8, leadData[8]):null;
+			rowData[9] = leadData[9]?this.fillRow(9, leadData[9]):null;
+			rowData[10] = leadData[10]?this.fillRow(10, leadData[10]):null;
+			rowData[11] = leadData[11]?this.fillRow(11, leadData[11]):null;
+			rowData[12] = leadData[12]?this.fillRow(12, leadData[12]):null;
+			rowData[13] = leadData[13]?this.fillRow(13, leadData[13]):null;
+			rowData[14] = leadData[14]?this.fillRow(14, leadData[14]):null;
+			rowData[15] = leadData[15]?this.fillRow(15, leadData[15]):null;
+			rowData[16] = leadData[16]?this.fillRow(16, leadData[16]):null;
+			rowData[17] = this.fillRow(17, {
 				"mas_cd_nm" : "ASC Lead Time",
 				"pair_qty" : minPairLeadTime,
 				"lead_time" :   minLeadTimeLeadTime
 			}, parentCategrories[2]);
-			rowData[18] = this.fillRow({
+			rowData[18] = this.fillRow(18, {
 				"mas_cd_nm" : "Stiching",
 				"pair_qty" : minPairStiching,
 				"lead_time" :   minLeadTimeStiching
 			});
-			rowData[19] = this.fillRow({
+			rowData[19] = this.fillRow(19, {
 				"mas_cd_nm" : "Shoe Making",
 				"pair_qty" : minPairShoeMaking,
 				"lead_time" :   minLeadTimeShoeMaking
