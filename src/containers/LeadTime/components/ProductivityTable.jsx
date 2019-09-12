@@ -55,7 +55,7 @@ class ProductivityTable extends Component {
 								className="progress-wrap progress-wrap--small progress-wrap--alarm-green progress-wrap--label-top">
 								<div className="d-flex">
 									<Col md={8} lg={8} style={{marginLeft: -15}}>
-										STICHING
+										STITCHING
 									</Col>
 									<Col md={2} lg={2} style={{marginLeft: 20}}>
 										{parseFloat(ccrProcess.line_balancing_stitch).toFixed(2)}%

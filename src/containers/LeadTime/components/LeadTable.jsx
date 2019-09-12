@@ -9,7 +9,7 @@ class LeadTable extends Component {
 	fillRow = (index, data, firstCol) => {
 		if (firstCol) {
 			let rowSpan = 1;
-			if (firstCol == "STICHING") {
+			if (firstCol == "STITCHING") {
 				rowSpan = 6;
 			} else if (firstCol == 'SHOE MAKING') {
 				rowSpan = 11;
@@ -51,7 +51,7 @@ class LeadTable extends Component {
 	fillTable = (leadData) => {
 		let table = null;
 		try {
-			let parentCategrories = ['STICHING', 'SHOE MAKING', 'LEAD TIME'];
+			let parentCategrories = ['STITCHING', 'SHOE MAKING', 'LEAD TIME'];
 			let rowData           = [];
 
 			let minPairLeadTime     = 0, minPairStiching = 0, minPairShoeMaking = 0;
@@ -139,7 +139,7 @@ class LeadTable extends Component {
 				"lead_time": minLeadTimeLeadTime
 			}, parentCategrories[2]);
 			rowData[18] = this.fillRow(18, {
-				"mas_cd_nm": "Stiching",
+				"mas_cd_nm": "Stitching",
 				"pair_qty" : minPairStiching,
 				"lead_time": minLeadTimeStiching
 			});

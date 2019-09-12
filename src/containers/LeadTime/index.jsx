@@ -107,11 +107,10 @@ class LeadTime extends Component {
 						                  0],
 						backgroundColor: "#2880E9",
 					}],
-					workingHourLabel: ["Computer Stiching", "Normal Stiching", "Backpack Molding", "Toe Molding",
-					                   "Strobel",
-					                   "Lasting", "Heel Lasting", "Heat Chamber", "Negative Gage", "Cementing",
-					                   "Attach Sole With Upper", "Chiller", "Delasting", "Metal Detect", "QIP Defect",
-					                   "Packing"]
+					workingHourLabel: ["Computer Stitching", "Normal Stitching", "Backpack Molding", "Toe Molding",
+					                   "Strobel", "Lasting", "Heel Lasting", "Heat Chamber", "Negative Gage",
+					                   "Cementing", "Attach Sole With Upper", "Chiller", "Delasting", "Metal Detect",
+					                   "QIP Defect", "Packing"]
 				});
 			}
 		} catch (e) {
