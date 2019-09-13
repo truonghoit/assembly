@@ -103,11 +103,11 @@ class Overview extends Component {
 		let params  = {
 			"factory": "",
 			"line": "",
-			"process": "20105",
+			"process": "20103",
 			"model":"",
 			"article_no":"",
-			"from_date": 1562722712,
-			"to_date": 1562722712
+			"from_date": 1568107963,
+			"to_date": 1568107963
 		};
 
 		callAxios(method, url, params).then(response => {
@@ -128,11 +128,11 @@ class Overview extends Component {
 		let params  = {
 			"factory": "",
 			"line": "",
-			"process": "20105",
+			"process": "20104",
 			"model":"",
 			"article_no":"",
-			"from_date": 1562722712,
-			"to_date": 1562722712
+			"from_date": 1568107963,
+			"to_date": 1568107963
 		};
 
 		callAxios(method, url, params).then(response => {
@@ -153,16 +153,18 @@ class Overview extends Component {
 		let params  = {
 			"factory": "",
 			"line": "",
-			"process": "20105",
+			"process": "20101",
 			"model":"",
 			"article_no":"",
-			"from_date": 1562722712,
-			"to_date": 1562722712
+			"from_date": 1568107963,
+			"to_date": 1568107963
 		};
 
 		callAxios(method, url, params).then(response => {
 			try {
 				let data = response.data.data;
+				console.log("getPreStichingData");
+				console.log("data: ", data);
 				this.setState((state, props) => ({
 					preStichingData: data,
 				}));
@@ -178,7 +180,7 @@ class Overview extends Component {
 		let params  = {
 			"factory": "",
 			"line": "",
-			"process": "20105",
+			"process": "20107",
 			"model":"",
 			"article_no":"",
 			"from_date": 1562722712,
