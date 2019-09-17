@@ -1,9 +1,9 @@
-import {Component}       from "react";
-import React             from "react";
-import MixedLineBarChart from "../../../shared/components/chart/MixedLineBarChart";
-import MiniRightBar      from "./MiniRightBar";
-import {Col}             from "reactstrap";
-import {countPrep, countCuring, drawChartItem}       from "./sharedFunction";
+import {Component}                                              from "react";
+import React                                                    from "react";
+import MixedLineBarChart                                        from "../../../shared/components/chart/MixedLineBarChart";
+import MiniRightBar                                             from "./MiniRightBar";
+import {Col}                                                    from "reactstrap";
+import {countPrep, countCuring, drawChartItem, countQtyPercent} from "./sharedFunction";
 
 class Strobel extends Component {
 	constructor(props) {
@@ -28,6 +28,7 @@ class Strobel extends Component {
 		let prep    = countPrep(strobelData);
 		let curing  = countCuring(strobelData);
 		let cycle   = prep + curing;
+		let qty     = countQtyPercent(strobelData);
 		return (
 			<div style={{width: '32%', height: 180, marginBottom: 15}}>
 				<div className="d-flex">
@@ -35,7 +36,7 @@ class Strobel extends Component {
 						<span style={{color: '#FFFFFF', marginBottom: 15}}>Strobel</span>
 						{chart}
 					</div>
-					<MiniRightBar prep={prep} curing={curing} cycle={cycle}/>
+					<MiniRightBar prep={prep} curing={curing} cycle={cycle} qty={qty}/>
 				</div>
 			</div>
 		);

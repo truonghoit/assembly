@@ -1,7 +1,7 @@
-import {Component}       from "react";
-import React             from "react";
-import MiniRightBar      from "./MiniRightBar";
-import {countPrep, countCuring, drawChartItem}       from "./sharedFunction";
+import {Component}                                              from "react";
+import React                                                    from "react";
+import MiniRightBar                                             from "./MiniRightBar";
+import {countPrep, countCuring, drawChartItem, countQtyPercent} from "./sharedFunction";
 
 class ComputerStiching extends Component {
 	constructor(props) {
@@ -22,9 +22,11 @@ class ComputerStiching extends Component {
 
 	render(){
 		let {computerStichingData} = this.state;
+		console.log("computerStichingData: ", computerStichingData);
 		let chart   = drawChartItem(computerStichingData);
 		let prep    = countPrep(computerStichingData);
 		let curing  = countCuring(computerStichingData);
+		let qty     = countQtyPercent(computerStichingData);
 		let cycle   = prep + curing;
 		return (
 			<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
@@ -33,7 +35,7 @@ class ComputerStiching extends Component {
 						<span style={{color: '#FFFFFF', marginBottom: 15}}>Computer Stiching</span>
 						{chart}
 					</div>
-					<MiniRightBar prep={prep} curing={curing} cycle={cycle}/>
+					<MiniRightBar prep={prep} curing={curing} cycle={cycle} qty={qty}/>
 				</div>
 			</div>
 		);

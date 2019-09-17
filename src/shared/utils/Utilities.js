@@ -27,3 +27,10 @@ export const findThreeLargest = (array) => {
 	}
 	return [first, second, third];
 }
+
+export const countTotal = (array) => {
+	let result = array.reduce((total, current) => {
+		return total += current;
+	})
+	return result;
+}

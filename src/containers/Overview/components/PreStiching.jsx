@@ -1,9 +1,9 @@
-import {Component}       from "react";
-import React             from "react";
-import MixedLineBarChart from "../../../shared/components/chart/MixedLineBarChart";
-import MiniRightBar      from "./MiniRightBar";
-import {Col}             from "reactstrap";
-import {countPrep, countCuring, drawChartItem}       from "./sharedFunction";
+import {Component}                                              from "react";
+import React                                                    from "react";
+import MixedLineBarChart                                        from "../../../shared/components/chart/MixedLineBarChart";
+import MiniRightBar                                             from "./MiniRightBar";
+import {Col}                                                    from "reactstrap";
+import {countPrep, countCuring, drawChartItem, countQtyPercent} from "./sharedFunction";
 
 class PreStiching extends Component {
 	constructor(props) {
@@ -28,6 +28,7 @@ class PreStiching extends Component {
 		let prep    = countPrep(preStichingData);
 		let curing  = countCuring(preStichingData);
 		let cycle   = prep + curing;
+		let qty     = countQtyPercent(preStichingData);
 		return (
 			<div style={{backgroundColor: 'purple', width: '32%', height: 180, marginBottom: 15}}>
 				<div className="d-flex">
@@ -35,7 +36,7 @@ class PreStiching extends Component {
 						<span style={{color: '#FFFFFF', marginBottom: 15}}>Pre. Stiching</span>
 						{chart}
 					</div>
-					<MiniRightBar prep={prep} curing={curing} cycle={cycle}/>
+					<MiniRightBar prep={prep} curing={curing} cycle={cycle} qty={qty}/>
 				</div>
 			</div>
 		);

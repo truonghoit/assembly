@@ -13,18 +13,33 @@ class MetalDetect extends Component {
 
 	render(){
 		let chartData = [{
-			data: [50, 50],
+			data: [0, 0],
 			backgroundColor: ['#0CD0EB', '#005FCE']
 		}];
+		let {metalDetectData} = this.props;
+		let detectQty = 0, passQty = 0, total = 0;
+		console.log("metalDetectData 20 20 20 20: ", metalDetectData);
+		try {
+			detectQty = metalDetectData.detect_qty;
+			passQty = metalDetectData.pass_qty;
+			total = detectQty + passQty;
+			chartData = [{
+				data           : [detectQty, passQty],
+				backgroundColor: ['#0CD0EB', '#005FCE']
+			}];
+		} catch (e){
+
+		}
+
 		return (
 			<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
 				<div className="d-flex">
 					<div className="d-flex" style={{paddingTop: -600, width:'60%', backgroundColor:'#002F49', height: 180, paddingLeft: 10, paddingRight: 10}}>
 						<div className="d-flex flex-column" style={{flex: '0 0 70%', paddingTop: 10}}>
 							<span style={{color: '#FFFFFF'}}>Metal Detect</span>
-							<div style={{height: 30}}></div>
+							<div style={{height: 22}}></div>
 							<DoughnutChart labels={['Defect']} data={chartData}
-							               centerText={"10"}
+							               centerText={total.toString()}
 							               showLegend={false}
 							/>
 						</div>
@@ -34,11 +49,12 @@ class MetalDetect extends Component {
 									<span style={{color: '#0CD0EB', fontSize: 8}}><FontAwesomeIcon icon={faSquareFull} /></span>
 									<span style={{color: '#BEBEBE'}}> Detect</span>
 								</div>
-								<span style={{color: '#FFFFFF', paddingLeft: 30}}>68</span>
+								<span style={{color: '#FFFFFF', paddingLeft: 30}}>{detectQty}</span>
 							</div>
 						</div>
 					</div>
-					<MiniRightBar/>
+					<div style={{width:'40%', backgroundColor:'#082738', height:180, paddingTop: 25, paddingLeft: 10, paddingRight: 10}}>
+					</div>
 				</div>
 			</div>
 		);

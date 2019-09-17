@@ -130,6 +130,14 @@ export const countCuring = (data) => {
 	return result;
 }
 
+export const countQtyPercent = (data) => {
+	let result = 0;
+	if (data[5] && data[5].length > 0) {
+		result = data[5] * 100;
+	}
+	return result;
+}
+
 export const handleLeftPanel = (backPackMoldingData) => {
 	let tempGreen = 0,
 	    tempYellow = 0,
@@ -168,3 +176,28 @@ export const handleLeftPanel = (backPackMoldingData) => {
 	}
 	return tempPresTimeItem;
 }
+
+
+//Apply for backpack Molding, Toe Molding, Heat Chamber, Cementing, Attach Sole With Upper, Chiller
+export const handleRightPanel = (data) => {
+	let qty = 0, cycle = 0, prep = 0, curing = 0;
+	try {
+		let actual  = data[0].actual_pair_qty;
+		let target  = data[0].kpi_target_qty_day?data[0].kpi_target_qty_day:1;
+		qty         = actual/target;
+		prep       = data[0].preparing_time;
+		curing       = data[0].curing_time;
+		cycle       = prep + curing;
+	} catch (e){
+		console.log("e: ", e);
+	}
+	return {
+		qty: qty,
+		cycle: cycle,
+		prep: prep,
+		curing: curing
+	}
+}
+
+
+

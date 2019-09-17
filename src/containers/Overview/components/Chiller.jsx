@@ -1,8 +1,8 @@
-import {Component}       from "react";
-import React             from "react";
-import MiniRightBar      from "./MiniRightBar";
-import MiniLeftBar       from "./MiniLeftBar";
-import {handleLeftPanel} from "./sharedFunction";
+import {Component}                         from "react";
+import React                               from "react";
+import MiniRightBar                        from "./MiniRightBar";
+import MiniLeftBar                         from "./MiniLeftBar";
+import {handleLeftPanel, handleRightPanel} from "./sharedFunction";
 
 class Chiller extends Component {
 	constructor(props) {
@@ -24,6 +24,7 @@ class Chiller extends Component {
 	render(){
 		let {chillerData} = this.state;
 		let tempPresTimeItem = handleLeftPanel(chillerData);
+		let rightPanelItem = handleRightPanel(chillerData);
 		return (
 			<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
 				<div className="d-flex">
@@ -37,7 +38,7 @@ class Chiller extends Component {
 					             timerGreen = {tempPresTimeItem.timerGreen}
 					             timerYellow = {tempPresTimeItem.timerYellow}
 					             timerRed = {tempPresTimeItem.timerRed}/>
-					<MiniRightBar/>
+					<MiniRightBar qty={rightPanelItem.qty} prep={rightPanelItem.prep} curing={rightPanelItem.curing} cycle={rightPanelItem.cycle}/>
 				</div>
 			</div>
 		);
