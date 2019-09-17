@@ -20,7 +20,7 @@ class SidebarContent extends Component {
 		return (
 			<div className="sidebar__content">
 				<ul className="sidebar__block">
-					<SidebarCategory title="Example Pages" icon="diamond">
+					<SidebarCategory title="Categories" icon="diamond">
 						<SidebarLink title="Master page" route="/pages/master-page" onClick={this.hideSidebar}/>
 						<SidebarLink title="Alarm master" route="/pages/alarm-master" onClick={this.hideSidebar}/>
 						<SidebarLink title="Lead time" route="/pages/lead-time" onClick={this.hideSidebar}/>
