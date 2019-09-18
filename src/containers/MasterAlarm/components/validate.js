@@ -37,22 +37,22 @@ const validate = (values) => {
 				errors[field.tempRedLast] = 'This shouldn\'t be empty';
 			}
 
-			if (values[field.tempStandardFrom] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempStandardFrom])) {
 				errors[field.tempStandardFrom] = 'Wrong number format';
 			}
-			if (values[field.tempStandardTo] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempStandardTo])) {
 				errors[field.tempStandardTo] = 'Wrong number format';
 			}
-			if (values[field.tempYellowFirst] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempYellowFirst])) {
 				errors[field.tempYellowFirst] = 'Wrong number format';
 			}
-			if (values[field.tempYellowLast] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempYellowLast])) {
 				errors[field.tempYellowLast] = 'Wrong number format';
 			}
-			if (values[field.tempRedFirst] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempRedFirst])) {
 				errors[field.tempRedFirst] = 'Wrong number format';
 			}
-			if (values[field.tempRedLast] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempRedLast])) {
 				errors[field.tempRedLast] = 'Wrong number format';
 			}
 		}
@@ -77,22 +77,22 @@ const validate = (values) => {
 				errors[field.presRedLast] = 'This shouldn\'t be empty';
 			}
 
-			if (values[field.presStandardFrom] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presStandardFrom])) {
 				errors[field.presStandardFrom] = 'Wrong number format';
 			}
-			if (values[field.presStandardTo] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presStandardTo])) {
 				errors[field.presStandardTo] = 'Wrong number format';
 			}
-			if (values[field.presYellowFirst] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presYellowFirst])) {
 				errors[field.presYellowFirst] = 'Wrong number format';
 			}
-			if (values[field.presYellowLast] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presYellowLast])) {
 				errors[field.presYellowLast] = 'Wrong number format';
 			}
-			if (values[field.presRedFirst] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presRedFirst])) {
 				errors[field.presRedFirst] = 'Wrong number format';
 			}
-			if (values[field.presRedLast] === '-') {
+			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presRedLast])) {
 				errors[field.presRedLast] = 'Wrong number format';
 			}
 		}

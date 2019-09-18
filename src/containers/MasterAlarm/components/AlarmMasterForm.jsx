@@ -23,12 +23,16 @@ class AlarmMasterForm extends Component {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.state  = ({
 			processList        : [],
+			dataProcess        : [],
 			formData           : {
 				[field.definitionValue]: '000',
 			},
 			editMode           : false,
 			submitButtonClicked: false,
 			submissionError    : '',
+			selectedModel      : '',
+			selectedArticle    : '',
+			selectedProcess    : '',
 		});
 	}
 
@@ -36,11 +40,24 @@ class AlarmMasterForm extends Component {
 		let method = 'POST';
 		let url    = ASSEMBLY_API + ALARM_LIST_PROCESS;
 
+		console.log("loadProcessList");
+		console.log("loadProcessList");
+		console.log("loadProcessList");
+		console.log("loadProcessList");
+		console.log("loadProcessList");
+		console.log("params: ", params);
+
 		callAxios(method, url, params).then(response => {
 			try {
 				let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
 				let responseArray = response.data.data;
+				console.log("54 54 54 54 54 54 54 54");
+				console.log("54 54 54 54 54 54 54 54");
+				console.log("54 54 54 54 54 54 54 54");
+				console.log("54 54 54 54 54 54 54 54");
+				console.log("responseArray: ", responseArray);
 				let processList   = [];
+				let dataProcess   = [];
 				responseArray.map(item => {
 					item = {
 						[field.processCd]      : item.code.toString(),
@@ -48,10 +65,16 @@ class AlarmMasterForm extends Component {
 						[field.definitionValue]: item.definition_value.toString(),
 					};
 					processList.push(item);
+					dataProcess.push(item);
 				});
-
+				console.log("58 58 58 58 58 58 58 58");
+				console.log("58 58 58 58 58 58 58 58");
+				console.log("58 58 58 58 58 58 58 58");
+				console.log("58 58 58 58 58 58 58 58");
+				console.log("dataProcess: ", dataProcess);
 				this.setState({
 					processList: processList,
+					dataProcess: dataProcess,
 				});
 			} catch (e) {
 				console.log("Error: ", e);
@@ -84,8 +107,40 @@ class AlarmMasterForm extends Component {
 		this.loadProcessList(params);
 	};
 
-	onProcessClick = (row) => {
-		let selectedProcessCode = row.target.value;
+	onModelClick = (data) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		if (this.props.onMounted) {
+			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
+		}
+
+		let selectedRow = data;
+
+		this.setState((state, props) => ({
+			submitButtonClicked: false,
+			selectedModel: data.model_cd
+		}));
+		this.props.onModelClick(selectedRow);
+		this.props.loadArticleTable(selectedRow);
+	};
+
+	onArticleClick = (data) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.setState((state, props) => ({
+			submitButtonClicked: false,
+			selectedArticle: data.article_no
+		}));
+		let selectedRow = data;
+		this.props.onArticleClick(selectedRow);
+		let params = {
+			model_cd  : this.state.selectedModel,
+			article_no: this.state.selectedArticle,
+			resetForm : true
+		};
+		this.loadProcessList(params);
+	}
+
+	onProcessClick = (data) => {
+		let selectedProcessCode = data.process_cd;
 
 		let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
 		let {processList} = this.state;
@@ -191,9 +246,13 @@ class AlarmMasterForm extends Component {
 	render() {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 
-		let {columnsModelArticle, dataModelArticle, handleSubmit, reset, onReset, submissionState} = this.props;
-		let {formData, processList, submitButtonClicked, submissionError}                          = this.state;
-
+		let {columnsModelArticle, columnsModel, columnsArticle, dataModelArticle, columnsProcess, dataModel, dataArticle, handleSubmit, reset, onReset, submissionState} = this.props;
+		let {formData, processList, dataProcess, submitButtonClicked, submissionError}                          = this.state;
+		console.log("processList processList processList ");
+		console.log("processList processList processList ");
+		console.log("processList processList processList ");
+		console.log("processList: ", processList);
+		console.log("dataProcess: ", dataProcess);
 		let definitionArray     = formData[field.definitionValue]
 		                          ? formData[field.definitionValue].split("")
 		                          : [0, 0, 0];
@@ -202,23 +261,31 @@ class AlarmMasterForm extends Component {
 		let curingTimeDisabled  = parseInt(definitionArray[2]) === 0;
 
 		return (
-			<div style={{display: "flex"}}>
-				<Col md={3} lg={3} style={{minHeight: 300}}>
-					<DataTable columns={columnsModelArticle} data={dataModelArticle} options={{
+			<div style={{display: "flex", marginLeft: 18}}>
+				<Col md={1.5} lg={1.5} style={{minHeight: 300, minWidth: 200}}>
+					{/*<DataTable columns={columnsModelArticle} data={dataModelArticle} options={{
 						height: "500px",
 						border: "none",
-					}} onRowClick={this.onModelArticleClick} id="modelTable"/>
-
-					{/*<DataTable id="modelTable" columns={columnsModel} data={dataModel}
+					}} onRowClick={this.onModelArticleClick} id="modelTable"/>*/}
+						<DataTable id="modelTable" columns={columnsModel} data={dataModel}
+						           options={{
+							           height         : "40em",
+							           columnVertAlign: "bottom"
+						           }}
+						           onRowClick={this.onModelClick}
+						/>
+				</Col>
+				<Col md={1.5} lg={1.5} style={{minHeight: 300, minWidth: 220}}>
+					<DataTable id="articleTable" columns={columnsArticle} data={dataArticle}
 					           options={{
 						           height         : "40em",
 						           columnVertAlign: "bottom"
 					           }}
-					           onRowClick={this.onModelRowClick}
-					/>*/}
+					           onRowClick={this.onArticleClick}
+					/>
 				</Col>
-				<Col md={2} lg={2} style={{marginLeft: -30, backgroundColor: '#1A2439'}}>
-					<div style={{display: "flex", flexDirection: "column"}}>
+				<Col md={1.5} lg={1.5} style={{minHeight: 300, minWidth: 220}}>
+					{/*<div style={{display: "flex", flexDirection: "column"}}>
 						<span className="form__form-group-label text-uppercase"
 						      style={{paddingTop: 30, paddingLeft: 20, minHeight: 80}}>Process</span>
 						<ul className="list-group bg-transparent" style={{width: "100%"}} onClick={this.onProcessClick}>
@@ -244,7 +311,15 @@ class AlarmMasterForm extends Component {
 								})
 							}
 						</ul>
-					</div>
+
+					</div>*/}
+					<DataTable id="processTable" columns={columnsProcess} data={dataProcess}
+					           options={{
+						           height         : "40em",
+						           columnVertAlign: "bottom"
+					           }}
+					           onRowClick={this.onProcessClick}
+					/>
 				</Col>
 				<Col md={7} lg={7} style={{backgroundColor: '#1E2229'}}>
 					<form className="form form--horizontal" onSubmit={handleSubmit}>
@@ -337,7 +412,7 @@ class AlarmMasterForm extends Component {
 												});
 											}
 											// If the most recent input character of newValue is minus sign
-											if (newValue[newValue.length - 1] === '-') {
+											/*if (newValue[newValue.length - 1] === '-') {
 												// But it's not at index 0
 												// Then remove it
 												if (newValue.length > 1) {
@@ -347,15 +422,14 @@ class AlarmMasterForm extends Component {
 												// If the most recent input character of newValue is not a number
 												// Then remove it
 												newValue = newValue.slice(0, -1);
-											}
+											}*/
+											/*if (!/^(([-]?[0-9]{1,3}([.][0-9]{1,2})?)|([-]?[0-9]{1,3}[.]?))$/i.test(newValue)) {
+												newValue = newValue.slice(0, -1);
+											}*/
 											this.setState({
 												formData: {
 													...formData,
-													[field.tempStandardFrom]: newValue
-													                          ? newValue === '-'
-													                            ? newValue
-													                            : (+newValue).toString()
-													                          : newValue,
+													[field.tempStandardFrom]: newValue,
 												}
 											});
 										}}

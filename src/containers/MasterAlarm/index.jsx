@@ -3,14 +3,20 @@ import {Col, Container, Row}                             from 'reactstrap';
 import AlarmMasterForm                                   from "./components/AlarmMasterForm";
 import {reduxForm}                                       from "redux-form";
 import DataTable                                         from "../../shared/components/data_table/DataTable";
-import {ALARM_MODEL_ARTICLE, ALARM_SENSOR, ASSEMBLY_API} from "../../constants/urlConstants";
+import {ALARM_MODEL_ARTICLE, ALARM_SENSOR, ASSEMBLY_API, ALARM_ARTICLE} from "../../constants/urlConstants";
 import callAxios                                         from "../../services/api";
 import {
 	ALARM_MASTER_PAGE_CONSTANTS,
 	alarmSensorTableColumns,
 	defaultAlarmSensorTableData,
 	defaultModelArticleTableData,
-	modelArticleTableColumns
+	defaultModelTableData,
+	defaultArticleTableData,
+	defaultProcessTableData,
+	modelArticleTableColumns,
+	modelTableColumns,
+	articleTableColumns,
+	processTableColumns
 }                                                        from "./constants";
 
 class MasterAlarm extends Component {
@@ -24,7 +30,13 @@ class MasterAlarm extends Component {
 
 		this.state = {
 			columnsModelArticle: modelArticleTableColumns,
+			columnsModel       : modelTableColumns,
+			columnsArticle     : articleTableColumns,
+			columnsProcess     : processTableColumns,
 			dataModelArticle   : defaultModelArticleTableData,
+			dataModel          : defaultModelTableData,
+			dataArticle        : defaultArticleTableData,
+			dataProcess        : defaultProcessTableData,
 			columnsAlarmSensor : alarmSensorTableColumns,
 			dataAlarmSensor    : defaultAlarmSensorTableData,
 			formData           : {
@@ -65,6 +77,96 @@ class MasterAlarm extends Component {
 			}
 		});
 	};
+
+	loadModelTable = () => {
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + ALARM_MODEL_ARTICLE;
+		let params  = {
+			"value_yn": 0
+		};
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let responseArray = response.data.data;
+				let dataArray     = [];
+				console.log("89 89 89 89 89 89 89");
+				console.log("89 89 89 89 89 89 89");
+				console.log("89 89 89 89 89 89 89");
+				console.log("responseArray: ", responseArray);
+				responseArray.map(item => {
+					item = {
+						[field.modelNm]  : item.model_nm ? item.model_nm.toString() : '',
+						[field.modelCd]  : item.model_cd ? item.model_cd.toString() : '',
+					};
+					dataArray.push(item);
+				});
+				this.setState({
+					dataModel: dataArray,
+				});
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+	}
+
+	loadArticleTable = (data) => {
+		console.log("110 110 110 110 110 110 110 110 110 110 110 110 110 110");
+		console.log("110 110 110 110 110 110 110 110 110 110 110 110 110 110");
+		console.log("110 110 110 110 110 110 110 110 110 110 110 110 110 110");
+		console.log("110 110 110 110 110 110 110 110 110 110 110 110 110 110");
+		console.log("loadArticleTable");
+		console.log("data: ", data);
+		let method  = 'POST';
+		let url     = ASSEMBLY_API + ALARM_ARTICLE;
+		let params  = {
+			"model_cd": data.model_cd?data.model_cd:''
+		};
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+
+		callAxios(method, url, params).then(response => {
+			try {
+				let responseArray = response.data.data;
+				console.log("responseArray: ", responseArray);
+				let dataArray     = [];
+				responseArray.map(item => {
+					item = {
+						[field.articleNm]: item.article_nm ? item.article_nm.toString() : '',
+						[field.articleNo]: item.article_no ? item.article_no.toString() : '',
+					};
+					dataArray.push(item);
+				});
+				this.setState({
+					dataArticle: dataArray,
+				});
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});
+
+		/*callAxios(method, url, params).then(response => {
+			try {
+				let responseArray = response.data.data;
+				let dataArray     = [];
+				console.log("89 89 89 89 89 89 89");
+				console.log("89 89 89 89 89 89 89");
+				console.log("89 89 89 89 89 89 89");
+				console.log("responseArray: ", responseArray);
+				responseArray.map(item => {
+					item = {
+						[field.modelNm]  : item.model_nm ? item.model_nm.toString() : '',
+						[field.modelCd]  : item.model_cd ? item.model_cd.toString() : '',
+					};
+					dataArray.push(item);
+				});
+				this.setState({
+					dataModel: dataArray,
+				});
+			} catch (e) {
+				console.log("Error: ", e);
+			}
+		});*/
+	}
 
 	loadAlarmSensorTable = () => {
 		let method  = 'POST';
@@ -142,6 +244,38 @@ class MasterAlarm extends Component {
 			submissionState: ALARM_MASTER_PAGE_CONSTANTS.submissionState.initial,
 		});
 	};
+
+	onModelClick = (selectedRow) => {
+		console.log("onModelClick");
+		console.log("selectedRow: ", selectedRow);
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.setState({
+			formData       : {
+				...this.state.formData,
+				[field.modelNm]        : selectedRow[field.modelNm],
+				[field.modelCd]        : selectedRow[field.modelCd],
+				[field.definitionValue]: '000',
+			},
+			editMode       : false,
+			submissionState: ALARM_MASTER_PAGE_CONSTANTS.submissionState.initial,
+		});
+	};
+
+	onArticleClick = (selectedRow) => {
+		console.log("onArticleClick");
+		console.log("selectedRow: ", selectedRow);
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.setState({
+			formData       : {
+				...this.state.formData,
+				[field.articleNm]      : selectedRow[field.articleNm],
+				[field.articleNo]      : selectedRow[field.articleNo],
+				[field.definitionValue]: '000',
+			},
+			editMode       : false,
+			submissionState: ALARM_MASTER_PAGE_CONSTANTS.submissionState.initial,
+		});
+	}
 
 	onProcessClick = (processCode, definitionValue) => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
@@ -344,6 +478,7 @@ class MasterAlarm extends Component {
 						try {
 							if (response.status == 200) {
 								this.loadModelArticleTable();
+								this.loadModelTable();
 								this.loadAlarmSensorTable();
 
 								//reload process loading
@@ -420,24 +555,38 @@ class MasterAlarm extends Component {
 
 	componentDidMount() {
 		this.loadModelArticleTable();
+		this.loadModelTable();
 		this.loadAlarmSensorTable();
 	}
 
 	render() {
-		let {columnsModelArticle, dataModelArticle, columnsAlarmSensor, dataAlarmSensor, formData, editMode, submissionState} = this.state;
+		let {columnsModelArticle, columnsModel, columnsArticle, columnsProcess, dataModelArticle, dataModel, dataArticle, dataProcess, columnsAlarmSensor, dataAlarmSensor, formData, editMode, submissionState} = this.state;
+		console.log("532 532 532 532");
+		console.log("532 532 532 532");
+		console.log("532 532 532 532");
+		console.log("dataArticle: ", dataArticle);
 		return (
 			<Container className="dashboard">
 				<Row>
 					<AlarmMasterForm ref={node => this.child = node}
 					                 columnsModelArticle={columnsModelArticle}
+					                 columnsModel={columnsModel}
+					                 columnsArticle={columnsArticle}
+					                 columnsProcess={columnsProcess}
 					                 dataModelArticle={dataModelArticle}
+					                 dataModel={dataModel}
+					                 dataArticle={dataArticle}
+					                 dataProcess={dataProcess}
 					                 onModelArticleClick={this.onModelArticleClick}
+					                 onModelClick={this.onModelClick}
+					                 onArticleClick={this.onArticleClick}
 					                 onProcessClick={this.onProcessClick}
 					                 formData={formData}
 					                 onSubmit={this.handleSubmit}
 					                 onReset={this.onReset}
 					                 editMode={editMode}
 					                 submissionState={submissionState}
+					                 loadArticleTable={this.loadArticleTable}
 					/>
 				</Row>
 				<Row style={{marginTop: 50}}>

@@ -78,12 +78,66 @@ export const modelArticleTableColumns = [
 	{title: "Article No", field: ALARM_MASTER_PAGE_CONSTANTS.field.articleNo, visible: false},
 ];
 
+export const modelTableColumns = [
+	{
+		title       : "MODEL",
+		field       : ALARM_MASTER_PAGE_CONSTANTS.field.modelNm,
+		width       : '100%',
+		align       : "center",
+		headerFilter: "input"
+	},
+	{title: "Model Code", field: ALARM_MASTER_PAGE_CONSTANTS.field.modelCd, visible: false},
+];
+
+export const articleTableColumns = [
+	{
+		title       : "ARTICLE",
+		field       : ALARM_MASTER_PAGE_CONSTANTS.field.articleNm,
+		width       : '100%',
+		align       : "center",
+		headerFilter: "input"
+	},
+	{title: "Article No", field: ALARM_MASTER_PAGE_CONSTANTS.field.articleNo, visible: false},
+];
+
+export const processTableColumns = [
+	{
+		title       : "PROCESS",
+		field       : ALARM_MASTER_PAGE_CONSTANTS.field.processNm,
+		width       : '100%',
+		align       : "center",
+		headerFilter: "input"
+	},
+	{title: "Process No", field: ALARM_MASTER_PAGE_CONSTANTS.field.processCd, visible: false},
+];
+
 export const defaultModelArticleTableData = [
 	{
 		[ALARM_MASTER_PAGE_CONSTANTS.field.modelNm]  : "",
 		[ALARM_MASTER_PAGE_CONSTANTS.field.modelCd]  : "",
 		[ALARM_MASTER_PAGE_CONSTANTS.field.articleNm]: "",
 		[ALARM_MASTER_PAGE_CONSTANTS.field.articleNo]: "",
+	},
+];
+
+export const defaultModelTableData = [
+	{
+		[ALARM_MASTER_PAGE_CONSTANTS.field.modelNm]  : "",
+		[ALARM_MASTER_PAGE_CONSTANTS.field.modelCd]  : "",
+	},
+];
+
+export const defaultArticleTableData = [
+	{
+		[ALARM_MASTER_PAGE_CONSTANTS.field.articleNm]: "",
+		[ALARM_MASTER_PAGE_CONSTANTS.field.articleNo]: "",
+	},
+];
+
+export const defaultProcessTableData = [
+	{
+		[ALARM_MASTER_PAGE_CONSTANTS.field.processNm]: "",
+		[ALARM_MASTER_PAGE_CONSTANTS.field.processCd]: "",
 	},
 ];
 
