@@ -1,14 +1,13 @@
-import React, {Component}                   from 'react';
-import {Field, reduxForm}                   from 'redux-form';
-import PropTypes                            from 'prop-types';
-import {Button, Col,}                       from 'reactstrap';
-import renderCheckBoxField                  from '../../../shared/components/form/CheckBox';
-import renderSelectField                    from '../../../shared/components/form/Select';
-import validate                             from './validate';
-import {renderField}                        from "../../../shared/components/form/InputField";
-import LoadingSpinner                       from "../../../shared/components/loading_spinner/LoadingSpinner";
-import MASTER_FORM_CONSTANTS                from "../constants";
-import {MAS_CD_PROCESS_FIXED_NO_OF_SENSORS} from "../../../constants/propertyConstants";
+import React, {Component}    from 'react';
+import {Field, reduxForm}    from 'redux-form';
+import PropTypes             from 'prop-types';
+import {Button, Col,}        from 'reactstrap';
+import renderCheckBoxField   from '../../../shared/components/form/CheckBox';
+import renderSelectField     from '../../../shared/components/form/Select';
+import validate              from './validate';
+import {renderField}         from "../../../shared/components/form/InputField";
+import LoadingSpinner        from "../../../shared/components/loading_spinner/LoadingSpinner";
+import MASTER_FORM_CONSTANTS from "../constants";
 
 class MasterForm extends Component {
 	static propTypes = {
@@ -308,7 +307,9 @@ class MasterForm extends Component {
 									component={renderField}
 									props={{
 										disabled: formData[field.sysCodeYn] === 1
-										          || MAS_CD_PROCESS_FIXED_NO_OF_SENSORS.includes(parseInt(formData[field.masCd.name])),
+										          || field.masCd
+										                  .processFixedNoOfSensors
+										                  .includes(parseInt(formData[field.masCd.name])),
 										style   : {width: 35, marginRight: 5},
 										value   : temperature,
 									}}
@@ -340,7 +341,9 @@ class MasterForm extends Component {
 									component={renderField}
 									props={{
 										disabled: formData[field.sysCodeYn] === 1
-										          || MAS_CD_PROCESS_FIXED_NO_OF_SENSORS.includes(parseInt(formData[field.masCd.name])),
+										          || field.masCd
+										                  .processFixedNoOfSensors
+										                  .includes(parseInt(formData[field.masCd.name])),
 										style   : {width: 35, marginRight: 5},
 										value   : pressure,
 									}}
@@ -372,7 +375,9 @@ class MasterForm extends Component {
 									component={renderField}
 									props={{
 										disabled: formData[field.sysCodeYn] === 1
-										          || MAS_CD_PROCESS_FIXED_NO_OF_SENSORS.includes(parseInt(formData[field.masCd.name])),
+										          || field.masCd
+										                  .processFixedNoOfSensors
+										                  .includes(parseInt(formData[field.masCd.name])),
 										style   : {width: 35, marginRight: 5},
 										value   : curingTime,
 									}}

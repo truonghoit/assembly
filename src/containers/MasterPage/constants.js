@@ -4,6 +4,7 @@ const MASTER_FORM_CONSTANTS = {
 		masCd                       : {
 			name     : 'masCd',
 			maxLength: 20,
+			processFixedNoOfSensors: [20105, 20106, 20107, 20108, 20109, 20110, 20111],
 		},
 		hiddenMasCdDuplicatedChecker: 'hiddenMasCdDuplicatedChecker',
 		masCdNm                     : {
