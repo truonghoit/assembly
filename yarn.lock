@@ -8552,17 +8552,17 @@ react-smooth-scrollbar@^8.0.6:
   resolved "https://registry.yarnpkg.com/react-smooth-scrollbar/-/react-smooth-scrollbar-8.0.6.tgz#179072e6a547b3af589ea303c50fd86366275edc"
   integrity sha512-yWiIC4L8DwfIRkLL+PdXq5rysEm6trxHzRk1Rx82bzuu2aWDcHhT+l1vXH/73Re/zHmGjBgrxts/wIrwC6yYJA==
 
-react-tabulator@^0.9.1:
-  version "0.9.1"
-  resolved "http://13.209.77.15:8090/react-tabulator/-/react-tabulator-0.9.1.tgz#2c9f19b73de1fe47abd7ac9149b2c0c951043c8d"
-  integrity sha512-KLkO17TZbGKzwaCPD8c84cG94OkSpU0zyvlhOleKJELQWcHEL99+63DEamEaXOsguDfxM474lxu3K+jqG2bW/Q==
+react-tabulator@^0.9.6:
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/react-tabulator/-/react-tabulator-0.9.6.tgz#a9db728382783f0e941fcad65233402cdcdfcf3e"
+  integrity sha512-zsZkpqeShv521UQBdx6arCnCt7CNBWZgsLlXZp6Vam7V/1LECgILzBrv0MlgBhW58kt2m560pDMAfrKV1esv0w==
   dependencies:
     "@types/react-tag-autocomplete" "^5.6.0"
     date-fns v2.0.0-alpha.25
     dotenv "^6.1.0"
     pick-react-known-prop "^0.1.5"
     react-tag-autocomplete "^5.7.1"
-    tabulator-tables "^4.2.3"
+    tabulator-tables "^4.4.1"
 
 react-tag-autocomplete@^5.7.1:
   version "5.11.1"
@@ -9777,10 +9777,10 @@ symbol-tree@^3.2.2:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
   integrity sha1-rifbOPZgp64uHDt9G8KQgZuFGeY=
 
-tabulator-tables@^4.2.3:
-  version "4.2.7"
-  resolved "http://13.209.77.15:8090/tabulator-tables/-/tabulator-tables-4.2.7.tgz#e1b00a34d362d4178c8c76b16f80372110557d6e"
-  integrity sha512-dVR/qnzApleVCzSrltRXTenRs6tLGZO570D3V0kOELohecfiMTDGYJbexUEHx6pQ5I5wjwVga9d2cL/CnDB6hw==
+tabulator-tables@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/tabulator-tables/-/tabulator-tables-4.4.1.tgz#f2947f50593d37a10fb487faa11bb1b0e3cb8c1c"
+  integrity sha512-SE2BMdsjPNPfTqQ+jFZOx7lGZPtftg9FPyd//wxgjziGFCrChHs8CGxBp0bIWy8znTFFAGfY6Ro4Q5dS1GGEKA==
 
 tapable@^1.0.0, tapable@^1.1.0:
   version "1.1.1"
