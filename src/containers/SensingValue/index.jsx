@@ -201,6 +201,7 @@ class SensingValue extends Component {
 
 	render() {
 		let {tempChartData, pressureChartData, curingChartData, processData} = this.state;
+		console.log("curingChartData: ", curingChartData);
 		return (
 			<Container className="dashboard">
 				<h3>DASHBOARD / SENSING VALUE</h3>
