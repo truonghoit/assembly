@@ -82,7 +82,7 @@ class LeadTime extends Component {
 
 	handleWorkingData = (workingHourData) => {
 		try {
-			if (workingHourData && workingHourData[0].chart_data) {
+			if (workingHourData) {
 				let labels = [];
 				let data   = [];
 				workingHourData.map(item => {
