@@ -163,7 +163,7 @@ class MasterPage extends Component {
 		};
 
 		let firstOption;
-		if (!(catCode in CATEGORY_CODES_REQUIRE_PARENT_CODE)) {
+		if (!(CATEGORY_CODES_REQUIRE_PARENT_CODE.includes(parseInt(catCode)))) {
 			firstOption = [{
 				value: "",
 				label: "---",
