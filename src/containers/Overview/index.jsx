@@ -499,7 +499,9 @@ class Overview extends Component {
 				             handleFilterToDateChange={this.handleFilterToDateChange}
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
-				             handleFilterArticleChange={this.handleFilterArticleChange}/>
+				             handleFilterArticleChange={this.handleFilterArticleChange}
+				             screenname="overview"
+				/>
 				<hr/>
 				<Row>
 					<Col md={9} lg={9}>

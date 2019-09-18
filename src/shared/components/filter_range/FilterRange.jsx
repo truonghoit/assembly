@@ -59,7 +59,7 @@ class FilterRange extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let dataArray  = response.data.data;
-				let arrayLines = ARRAY_LINES;
+				let arrayLines = [...ARRAY_LINES];
 				dataArray.forEach(element => {
 					arrayLines.push(
 						{value: element.code, label: element.name}
@@ -81,6 +81,8 @@ class FilterRange extends Component {
 	};
 
 	fillModelCombobox = (selectedLine = null) => {
+		let {screenname} = this.props;
+		screenname = screenname?screenname:'overview';
 		let selectedLineCode = "";
 		if (selectedLine) {
 			selectedLineCode = selectedLine.value;
@@ -89,7 +91,8 @@ class FilterRange extends Component {
 		let url    = ASSEMBLY_API + FILTER_MODEL;
 		let params = {
 			"dropdownlist-name": "model",
-			"code"             : selectedLineCode
+			"code"             : selectedLineCode,
+			"screenname":screenname
 		};
 
 		callAxios(method, url, params).then(response => {
@@ -182,7 +185,6 @@ class FilterRange extends Component {
 		this.props.handleFilterLineChange(value);
 
 		this.fillModelCombobox(value);
-		console.log("handleFilterLineChange 180: ", this.state);
 
 		this.setState({
 			...this.state,

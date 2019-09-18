@@ -119,7 +119,9 @@ class DefectSummary extends Component {
 				             handleFilterToDateChange={this.handleFilterToDateChange}
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
-				             handleFilterArticleChange={this.handleFilterArticleChange}/>
+				             handleFilterArticleChange={this.handleFilterArticleChange}
+				             screenname="defectsummary"
+				/>
 
 				<div style={{paddingTop: 30}}></div>
 				<FilterTypeBar filterType={filterType} handleTypeFilterChange={this.handleTypeFilterChange}/>

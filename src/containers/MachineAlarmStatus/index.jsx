@@ -100,7 +100,9 @@ class MachineAlarmStatus extends Component {
 				             handleFilterToDateChange={this.handleFilterToDateChange}
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
-				             handleFilterArticleChange={this.handleFilterArticleChange}/>
+				             handleFilterArticleChange={this.handleFilterArticleChange}
+				             screenname="machinealarmstatus"
+				/>
 				<hr/>
 				<Col md={12} lg={12}>
 					<MachineAlarmStatusTable data={machineAlarmData}/>

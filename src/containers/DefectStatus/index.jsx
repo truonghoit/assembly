@@ -129,7 +129,9 @@ class DefectStatus extends Component {
 				             handleFilterToDateChange={this.handleFilterToDateChange}
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
-				             handleFilterArticleChange={this.handleFilterArticleChange}/>
+				             handleFilterArticleChange={this.handleFilterArticleChange}
+				             screenname="defectstatus"
+				/>
 				<hr/>
 				<Row>
 					<Col md={5} lg={5}>

@@ -292,8 +292,8 @@ class LearningCurve extends Component {
 		});
 	};
 
-	onProcessRowClick = (e, row) => {
-		let selectedRow = row._row.data;
+	onProcessRowClick = (data) => {
+		let selectedRow = data;
 		this.loadLearningCurveChart(selectedRow);
 		this.setState((state, props) => ({
 			formData       : {
@@ -303,6 +303,10 @@ class LearningCurve extends Component {
 			selectedProcess: selectedRow,
 		}));
 	};
+
+	onModelArticleClick = (data) => {
+
+	}
 
 	handleSubmit = (values) => {
 		if (this.isOKClicked && Object.keys(this.state.selectedProcess).length !== 0) {
@@ -417,6 +421,7 @@ class LearningCurve extends Component {
 				             changeIsOKClicked={this.changeIsOKClicked}
 				             selectedProcess={selectedProcess}
 				             submissionState={submissionState}
+				             screenname="learningcurve"
 				/>
 				<hr/>
 				<div className="form form--preview d-flex" style={{minheight: 600, marginTop: -35, paddingLeft: 20}}>
@@ -424,7 +429,7 @@ class LearningCurve extends Component {
 					<div style={{position: 'relative', width: '48%', minHeight: 600, backgroundColor: '#1E2229'}}>
 						<Row>
 							<Col md={5} lg={5} style={{minHeight: 300}}>
-								<DataTable columns={processTableColumns} data={processTableData} options={{
+								<DataTable id="processTable" columns={processTableColumns} data={processTableData} options={{
 									border: "none",
 								}}
 								           onRowClick={this.onProcessRowClick}/>
@@ -443,7 +448,7 @@ class LearningCurve extends Component {
 					<div style={{position: 'relative', width: '48%', minHeight: 600, backgroundColor: '#1E2229'}}>
 						<Row>
 							<Col md={12} lg={12}>
-								<DataTable columns={modelTableColumns} data={modelTableData} options={{
+								<DataTable id="learningCurve" columns={modelTableColumns} data={modelTableData} options={{
 									border: "none",
 								}} onRowClick={this.onModelArticleClick}/>
 							</Col>

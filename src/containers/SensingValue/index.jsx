@@ -210,7 +210,9 @@ class SensingValue extends Component {
 				             handleFilterToDateChange={this.handleFilterToDateChange}
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
-				             handleFilterArticleChange={this.handleFilterArticleChange}/>
+				             handleFilterArticleChange={this.handleFilterArticleChange}
+				             screenname="sensingvalue"
+				/>
 				<hr/>
 				<Row>
 					<MachineAlarmLeftBar processData={processData} getChartData={this.getChartData}/>

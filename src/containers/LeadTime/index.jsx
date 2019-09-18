@@ -209,7 +209,9 @@ class LeadTime extends Component {
 				             handleFilterToDateChange={this.handleFilterToDateChange}
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
-				             handleFilterArticleChange={this.handleFilterArticleChange}/>
+				             handleFilterArticleChange={this.handleFilterArticleChange}
+				             screenname="leadtime"
+				/>
 				<hr/>
 				<Row>
 					<Col md={6} lg={6}>
