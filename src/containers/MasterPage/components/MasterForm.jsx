@@ -132,7 +132,7 @@ class MasterForm extends Component {
 									component={renderField}
 									props={{
 										disabled: formData[field.sysCodeYn] === 1,
-										value: formData[field.masCdNm.name] ? formData[field.masCdNm.name] : ''
+										value   : formData[field.masCdNm.name] ? formData[field.masCdNm.name] : ''
 									}}
 									type="text"
 									className="form__form-group-field-100"
@@ -279,9 +279,9 @@ class MasterForm extends Component {
 									component={renderField}
 									props={{
 										disabled: formData[field.sysCodeYn] === 1,
-										value: formData[field.processingSeq.name] != undefined
-										       ? formData[field.processingSeq.name]
-										       : '0'
+										value   : formData[field.processingSeq.name] != undefined
+										          ? formData[field.processingSeq.name]
+										          : '0'
 									}}
 									className="round_corner form__form-group-field-100"
 									onChange={(event, newValue) => {
@@ -307,8 +307,8 @@ class MasterForm extends Component {
 									component={renderField}
 									props={{
 										disabled: formData[field.sysCodeYn] === 1,
-										style: {width: 35, marginRight: 5},
-										value: temperature,
+										style   : {width: 35, marginRight: 5},
+										value   : temperature,
 									}}
 									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
@@ -338,8 +338,8 @@ class MasterForm extends Component {
 									component={renderField}
 									props={{
 										disabled: formData[field.sysCodeYn] === 1,
-										style: {width: 35, marginRight: 5},
-										value: pressure,
+										style   : {width: 35, marginRight: 5},
+										value   : pressure,
 									}}
 									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
@@ -369,8 +369,8 @@ class MasterForm extends Component {
 									component={renderField}
 									props={{
 										disabled: formData[field.sysCodeYn] === 1,
-										style: {width: 35, marginRight: 5},
-										value: curingTime,
+										style   : {width: 35, marginRight: 5},
+										value   : curingTime,
 									}}
 									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
@@ -431,7 +431,9 @@ class MasterForm extends Component {
 									type="text"
 									props={{
 										disabled: formData[field.sysCodeYn] === 1,
-										value: formData[field.description.name] ? formData[field.description.name] : ''
+										value   : formData[field.description.name]
+										          ? formData[field.description.name]
+										          : ''
 									}}
 									onChange={(event, newValue) => {
 										if (newValue.length > field.description.maxLength) {

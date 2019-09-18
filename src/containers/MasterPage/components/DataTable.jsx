@@ -1,12 +1,11 @@
 import React, {Component}    from 'react';
-
 //import "../../../scss/component/tabulator_midnight_custom.css"; // use Theme(s)
-import   "../../../scss/component/tabulator_bootstrap4.min.css"; // use Theme(s)
+import "../../../scss/component/tabulator_bootstrap4.min.css"; // use Theme(s)
 // for React 16.4.x use: import { ReactTabulator }
-import {ReactTabulator}      from "react-tabulator";
 import MASTER_FORM_CONSTANTS from "../constants";
+
 var Tabulator = require('tabulator-tables');
-let {field} = MASTER_FORM_CONSTANTS;
+let {field}   = MASTER_FORM_CONSTANTS;
 
 const columns = [
 	{title: "Mas Code", field: field.masCd.name, width: '10%', align: "center", headerFilter: "input"},
@@ -49,18 +48,18 @@ class DataTable extends Component {
 		};
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		let {tableData, onRowClick} = this.props;
-		tableData       = tableData ? tableData : [];
-		let _this = this;
-		this.table = new Tabulator("#dataTable", {
-			height     : "40em",
-			movableRows: false,
-			selectable:true, //make rows selectable
-			columns:columns,
-			data:tableData,
+		tableData                   = tableData ? tableData : [];
+		let _this                   = this;
+		this.table                  = new Tabulator("#dataTable", {
+			height             : "40em",
+			movableRows        : false,
+			selectable         : true, //make rows selectable
+			columns            : columns,
+			data               : tableData,
 			rowSelectionChanged: (data, rows) => {
-				for (let i = 0; i < rows.length - 1; i++){
+				for (let i = 0; i < rows.length - 1; i++) {
 					let row = rows[i];
 					row.deselect();
 				}
@@ -73,15 +72,15 @@ class DataTable extends Component {
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		let {tableData, onRowClick} = this.props;
-		tableData       = tableData ? tableData : [];
+		tableData                   = tableData ? tableData : [];
 
-		if (prevProps.tableData !== this.props.tableData){
+		if (prevProps.tableData !== this.props.tableData) {
 			this.table.replaceData(tableData);
 		}
 	}
 
 	render() {
-		const options   = {
+		const options = {
 			height     : "40em",
 			movableRows: false
 		};
