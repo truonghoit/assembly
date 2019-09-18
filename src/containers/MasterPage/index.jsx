@@ -57,21 +57,7 @@ class MasterPage extends Component {
 		};
 		setTimeout(() => {
 			callAxios(method, url, param).then(response => {
-				//Update parent combobox items
-				if (response) {
-					let parentArray = this.state.parentCodeOptions;
-					parentArray.shift();//remove first element
-					parentArray.unshift({//add the new created element into combo box
-						value: "",
-						label: "---",
-					}, {
-						value: values[field.masCd.name],
-						label: values[field.masCdNm.name],
-					});
-					this.setState({
-						parentCodeOptions: parentArray,
-					});
-				} else {
+				if (response == undefined) {
 					this.setState({
 						submissionState: failed,
 					});
