@@ -64,7 +64,9 @@ class DataTable extends Component {
 					let row = rows[i];
 					row.deselect();
 				}
-				_this.props.fillForm(data[data.length - 1]);
+				if (rows.length > 0) {
+					_this.props.fillForm(data[data.length - 1]);
+				}
 			},
 		});
 	}
