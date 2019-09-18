@@ -393,6 +393,9 @@ class MasterForm extends Component {
 								name={field.sysCodeYn}
 								component={renderCheckBoxField}
 								label="Sys Code(Y/N)"
+								props={{
+									disabled: true,
+								}}
 								checked={formData[field.sysCodeYn] === 1}
 								onChange={(event, newValue) => {
 									this.setState({
