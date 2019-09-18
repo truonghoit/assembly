@@ -462,7 +462,7 @@ class MasterForm extends Component {
 					<Col md={8} lg={8}>
 					</Col>
 					<div className="form__form-group-field justify-content-center">
-						<Button color="primary" type="submit">
+						<Button color="primary" type="submit" disabled={formData[field.sysCodeYn] === 1}>
 							{
 								(() => {
 									let {failed, initial, onGoing, done} = MASTER_FORM_CONSTANTS.submissionState;
@@ -509,7 +509,7 @@ class MasterForm extends Component {
 								: ''
 							}
 						</Button>
-						<Button type="button" onClick={() => {
+						<Button type="button" disabled={formData[field.sysCodeYn] === 1} onClick={() => {
 							reset();
 							this.setState({
 								formData: {},
