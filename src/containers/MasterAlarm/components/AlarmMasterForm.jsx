@@ -208,6 +208,14 @@ class AlarmMasterForm extends Component {
 						height: "500px",
 						border: "none",
 					}} onRowClick={this.onModelArticleClick} id="modelTable"/>
+
+					{/*<DataTable id="modelTable" columns={columnsModel} data={dataModel}
+					           options={{
+						           height         : "40em",
+						           columnVertAlign: "bottom"
+					           }}
+					           onRowClick={this.onModelRowClick}
+					/>*/}
 				</Col>
 				<Col md={2} lg={2} style={{marginLeft: -30, backgroundColor: '#1A2439'}}>
 					<div style={{display: "flex", flexDirection: "column"}}>
@@ -286,13 +294,13 @@ class AlarmMasterForm extends Component {
 							/>
 						</Col>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label text-center text-uppercase">Temperature</span>
+							<span className="form__form-group-label text-center text-uppercase ml-4">Temperature</span>
 						</Col>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label text-center text-uppercase">Pressure</span>
+							<span className="form__form-group-label text-center text-uppercase ml-4">Pressure</span>
 						</Col>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label text-center text-uppercase">Curing Time</span>
+							<span className="form__form-group-label text-center text-uppercase ml-4">Curing Time</span>
 						</Col>
 
 						<hr style={{height: 30}}/>
@@ -300,7 +308,7 @@ class AlarmMasterForm extends Component {
 							<span className="form__form-group-label"><FontAwesomeIcon
 								style={{color: '#03CF65', fontSize: 8}} icon={faCircle}/> Standard Value</span>
 						</Col>
-						<Col md={3} lg={3}>
+						<Col md={3} lg={3} style={{borderRight: '3px solid #535353'}}>
 							<Row>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
@@ -410,7 +418,8 @@ class AlarmMasterForm extends Component {
 								</Col>
 							</Row>
 						</Col>
-						<Col md={3} lg={3}>
+
+						<Col md={3} lg={3} style={{borderRight: '3px solid #535353'}}>
 							<Row>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
@@ -644,7 +653,7 @@ class AlarmMasterForm extends Component {
 							<span className="form__form-group-label"><FontAwesomeIcon
 								style={{color: '#FFD44F', fontSize: 8}} icon={faCircle}/> Yellow Range</span>
 						</Col>
-						<Col md={3} lg={3}>
+						<Col md={3} lg={3} style={{borderRight: '3px solid #535353'}}>
 							<Row>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
@@ -758,7 +767,7 @@ class AlarmMasterForm extends Component {
 								</Col>
 							</Row>
 						</Col>
-						<Col md={3} lg={3}>
+						<Col md={3} lg={3} style={{borderRight: '3px solid #535353'}}>
 							<Row>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
@@ -992,7 +1001,7 @@ class AlarmMasterForm extends Component {
 							<span className="form__form-group-label"><FontAwesomeIcon
 								style={{color: '#F84E4E', fontSize: 8}} icon={faCircle}/> Red Range</span>
 						</Col>
-						<Col md={3} lg={3}>
+						<Col md={3} lg={3}  style={{borderRight: '3px solid #535353'}}>
 							<Row>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
@@ -1106,7 +1115,7 @@ class AlarmMasterForm extends Component {
 								</Col>
 							</Row>
 						</Col>
-						<Col md={3} lg={3}>
+						<Col md={3} lg={3} style={{borderRight: '3px solid #535353'}}>
 							<Row>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
@@ -1338,7 +1347,7 @@ class AlarmMasterForm extends Component {
 						<hr style={{height: 30}}/>
 						<Col md={4} lg={4}>
 						</Col>
-						<Col md={8} lg={8} style={{marginLeft: -80}}>
+						<Col md={8} lg={8} style={{marginLeft: -80, marginTop: 20}}>
 							<Field
 								name={field.remark}
 								component={renderField}
