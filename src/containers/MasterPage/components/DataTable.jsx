@@ -1,10 +1,11 @@
 import React, {Component}    from 'react';
 
-import "../../../scss/component/tabulator_midnight_custom.css"; // use Theme(s)
+//import "../../../scss/component/tabulator_midnight_custom.css"; // use Theme(s)
+import   "../../../scss/component/tabulator_bootstrap4.min.css"; // use Theme(s)
 // for React 16.4.x use: import { ReactTabulator }
 import {ReactTabulator}      from "react-tabulator";
 import MASTER_FORM_CONSTANTS from "../constants";
-
+var Tabulator = require('tabulator-tables');
 let {field} = MASTER_FORM_CONSTANTS;
 
 const columns = [
@@ -39,32 +40,59 @@ const data    = [
 ];
 
 class DataTable extends Component {
-	state = {
-		data: []
-	};
-	ref   = null;
 
-	rowClick = (e, row) => {
-		//console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
-		let selectedRow = row._row.data;
-		this.props.fillForm(selectedRow);
-	};
+	constructor(props) {
+		super(props);
+		this.ref   = null;
+		this.state = {
+			data: [],
+		};
+	}
+
+	componentDidMount(){
+		let {tableData, onRowClick} = this.props;
+		tableData       = tableData ? tableData : [];
+		let _this = this;
+		this.table = new Tabulator("#dataTable", {
+			height     : "40em",
+			movableRows: false,
+			selectable:true, //make rows selectable
+			columns:columns,
+			data:tableData,
+			rowSelectionChanged: (data, rows) => {
+				for (let i = 0; i < rows.length - 1; i++){
+					let row = rows[i];
+					row.deselect();
+				}
+				_this.props.fillForm(data[data.length - 1]);
+			},
+		});
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		let {tableData, onRowClick} = this.props;
+		tableData       = tableData ? tableData : [];
+
+		if (prevProps.tableData !== this.props.tableData){
+			this.table.replaceData(tableData);
+		}
+	}
 
 	render() {
-		let {tableData} = this.props;
-		tableData       = tableData ? tableData : [];
 		const options   = {
 			height     : "40em",
 			movableRows: false
 		};
+		/*return <ReactTabulator
+		 selectable="true"
+		 ref={ref => this.ref = ref}
+		 columns={columns}
+		 data={tableData}
+		 rowClick={this.changeRowSelectionColor}
+		 options={options}
+		 />*/
 		return (
-			<ReactTabulator
-				ref={ref => (this.ref = ref)}
-				columns={columns}
-				data={tableData}
-				rowClick={this.rowClick}
-				options={options}
-			/>
+			<div id="dataTable"></div>
 		);
 	}
 }
