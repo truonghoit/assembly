@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {ReactTabulator}   from "react-tabulator";
 import "../../../scss/component/tabulator_bootstrap4.min.css";
 import PropTypes          from "prop-types";
+var Tabulator = require('tabulator-tables');
 
 export default class DataTable extends Component {
 	static propTypes    = {
@@ -39,9 +40,45 @@ export default class DataTable extends Component {
 		this.ref = null;
 	}
 
+	componentDidMount(){
+		let {data, onRowClick, columns, id} = this.props;
+		data       = data ? data : [];
+		let _this = this;
+		this.table = new Tabulator(`#${id}`, {
+			height     : "40em",
+			movableRows: false,
+			selectable:true, //make rows selectable
+			columns:columns,
+			data:data,
+			rowSelectionChanged: (data, rows) => {
+				for (let i = 0; i < rows.length - 1; i++){
+					let row = rows[i];
+					row.deselect();
+				}
+				if (data.length > 0){
+					_this.props.onRowClick(data[data.length - 1]);
+				}
+			},
+		});
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+
+		let {data, onRowClick} = this.props;
+		data       = data ? data : [];
+
+		if (prevProps.data !== this.props.data){
+			console.log("componentDidUpdate componentDidUpdate componentDidUpdate");
+			console.log("componentDidUpdate componentDidUpdate componentDidUpdate");
+			console.log("componentDidUpdate componentDidUpdate componentDidUpdate");
+			console.log("tableData: ", data);
+			this.table.replaceData(data);
+		}
+	}
+
 	render() {
-		let {columns, data, options, onRowClick} = this.props;
-		return (
+		let {columns, data, options, onRowClick, id} = this.props;
+		/*return (
 			<ReactTabulator
 				ref={ref => this.ref = ref}
 				columns={columns}
@@ -49,6 +86,9 @@ export default class DataTable extends Component {
 				options={options}
 				rowClick={onRowClick}
 			/>
+		);*/
+		return (
+			<div id={id}></div>
 		);
 	}
 }

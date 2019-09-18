@@ -233,9 +233,9 @@ class MasterAlarm extends Component {
 		});
 	};
 
-	onAlarmSensorTableRowClick = (e, row) => {
+	onAlarmSensorTableRowClick = (data) => {
 		let {field, submissionState} = ALARM_MASTER_PAGE_CONSTANTS;
-		let selectedRow              = row._row.data;
+		let selectedRow              = data;
 		this.setState({
 			editMode       : true,
 			submissionState: submissionState.initial,
@@ -442,7 +442,7 @@ class MasterAlarm extends Component {
 				</Row>
 				<Row style={{marginTop: 50}}>
 					<Col md={12} lg={12}>
-						<DataTable columns={columnsAlarmSensor} data={dataAlarmSensor}
+						<DataTable id="mainTable" columns={columnsAlarmSensor} data={dataAlarmSensor}
 						           options={{
 							           height         : "40em",
 							           columnVertAlign: "bottom"

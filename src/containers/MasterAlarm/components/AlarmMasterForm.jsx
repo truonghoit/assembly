@@ -62,15 +62,13 @@ class AlarmMasterForm extends Component {
 		}
 	};
 
-	onModelArticleClick = (e, row) => {
+	onModelArticleClick = (data) => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		if (this.props.onMounted) {
 			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
 		}
 
-		row.getElement().style.backgroundColor = "#f00";
-
-		let selectedRow = row._row.data;
+		let selectedRow = data;
 
 		this.setState({
 			submitButtonClicked: false,
@@ -209,7 +207,7 @@ class AlarmMasterForm extends Component {
 					<DataTable columns={columnsModelArticle} data={dataModelArticle} options={{
 						height: "500px",
 						border: "none",
-					}} onRowClick={this.onModelArticleClick}/>
+					}} onRowClick={this.onModelArticleClick} id="modelTable"/>
 				</Col>
 				<Col md={2} lg={2} style={{marginLeft: -30, backgroundColor: '#1A2439'}}>
 					<div style={{display: "flex", flexDirection: "column"}}>
