@@ -24,7 +24,7 @@ const validate = (values) => {
 		errors[field.masCdNm.name] = `General Name field shouldn\'t exceed ${field.masCdNm.maxLength} characters`;
 	}
 
-	if (!values[field.catCd]) {
+	if (!values[field.catCd.name]) {
 		errors[field.catCdNm] = 'Please select a category';
 	}
 	if (values[field.processingSeq.name] == undefined) {

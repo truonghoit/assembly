@@ -50,7 +50,7 @@ class MasterForm extends Component {
 		this.props.change(field.masCdNm.name, formData[field.masCdNm.name] ? formData[field.masCdNm.name] : '');
 
 		this.props.change(field.catCdNm, formData[field.catCdNm] ? formData[field.catCdNm] : '---');
-		this.props.change(field.catCd, formData[field.catCd] ? formData[field.catCd] : '');
+		this.props.change(field.catCd.name, formData[field.catCd.name] ? formData[field.catCd.name] : '');
 
 		this.props.change(field.parentMasNm, formData[field.parentMasNm] ? formData[field.parentMasNm] : '---');
 		this.props.change(field.parentMasCd, formData[field.parentMasCd] ? formData[field.parentMasCd] : '');
@@ -160,7 +160,7 @@ class MasterForm extends Component {
 									props={{
 										disabled: formData[field.sysCodeYn] === 1,
 										selected: {
-											value: formData[field.catCd] ? formData[field.catCd] : '',
+											value: formData[field.catCd.name] ? formData[field.catCd.name] : '',
 											label: formData[field.catCdNm] ? formData[field.catCdNm] : '---',
 										},
 									}}
@@ -175,11 +175,11 @@ class MasterForm extends Component {
 					</Col>
 					<Col md={3} lg={3}>
 						<Field
-							name={field.catCd}
+							name={field.catCd.name}
 							component={renderField}
 							props={{
 								disabled: true,
-								value   : formData[field.catCd] ? formData[field.catCd] : ''
+								value   : formData[field.catCd.name] ? formData[field.catCd.name] : ''
 							}}
 							className="marginLeft-15"
 							type="text"

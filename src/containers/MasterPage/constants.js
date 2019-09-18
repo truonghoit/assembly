@@ -12,7 +12,10 @@ const MASTER_FORM_CONSTANTS = {
 		},
 
 		catCdNm: 'cateCdName',
-		catCd  : 'cateCd',
+		catCd  : {
+			name                    : 'cateCd',
+			catCdsRequireParentMasCd: [102, 302],
+		},
 
 		parentMasNm: 'parentMasName',
 		parentMasCd: 'parentMasCd',

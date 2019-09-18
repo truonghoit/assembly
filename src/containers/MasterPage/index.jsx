@@ -6,7 +6,6 @@ import {ASSEMBLY_API, CATEGORY_ROUTE, MAS_CODE_ROUTE, PARENT_ROUTE} from "../../
 import DataTable                                                    from "./components/DataTable";
 import {reduxForm}                                                  from "redux-form";
 import MASTER_FORM_CONSTANTS                                        from "./constants";
-import {CATEGORY_CODES_REQUIRE_PARENT_CODE}                         from "../../constants/propertyConstants";
 
 class MasterPage extends Component {
 	constructor(props) {
@@ -44,7 +43,7 @@ class MasterPage extends Component {
 		let param  = {
 			"status"          : this.state.editMode ? "UPDATE" : "INSERT",
 			"mas_cd"          : values[field.masCd.name],
-			"cate_cd"         : values[field.catCd],
+			"cate_cd"         : values[field.catCd.name],
 			"mas_cd_nm"       : values[field.masCdNm.name],
 			"parent_mas_cd"   : values[field.parentMasCd],
 			"processing_seq"  : values[field.processingSeq.name],
@@ -71,7 +70,7 @@ class MasterPage extends Component {
 						[field.masCd.name]        : rowData.mas_cd,
 						[field.masCdNm.name]      : rowData.mas_cd_nm,
 						[field.catCdNm]           : rowData.cate_nm,
-						[field.catCd]             : rowData.cate_cd,
+						[field.catCd.name]        : rowData.cate_cd,
 						[field.parentMasNm]       : rowData.parent_cd_nm,
 						[field.parentMasCd]       : rowData.parent_mas_cd,
 						[field.processingSeq.name]: rowData.processing_seq,
@@ -90,7 +89,7 @@ class MasterPage extends Component {
 							[field.masCdNm.name]                : values[field.masCdNm.name],
 							[field.hiddenMasCdDuplicatedChecker]: true,
 							[field.catCdNm]                     : values[field.catCdNm],
-							[field.catCd]                       : values[field.catCd],
+							[field.catCd.name]                  : values[field.catCd.name],
 							[field.parentMasNm]                 : values[field.parentMasNm],
 							[field.parentMasCd]                 : values[field.parentMasCd],
 							[field.processingSeq.name]          : values[field.processingSeq.name],
@@ -163,7 +162,7 @@ class MasterPage extends Component {
 		};
 
 		let firstOption;
-		if (!(CATEGORY_CODES_REQUIRE_PARENT_CODE.includes(parseInt(catCode)))) {
+		if (!(field.catCd.catCdsRequireParentMasCd.includes(parseInt(catCode)))) {
 			firstOption = [{
 				value: "",
 				label: "---",
@@ -182,7 +181,7 @@ class MasterPage extends Component {
 				formData         : {
 					...currentChildFormData,
 					[field.catCdNm]    : catName,
-					[field.catCd]      : catCode,
+					[field.catCd.name] : catCode,
 					[field.parentMasCd]: firstOption.length > 0 ? firstOption[0].value : response.data.data[0].code,
 					[field.parentMasNm]: firstOption.length > 0 ? firstOption[0].label : response.data.data[0].name,
 				},
@@ -203,7 +202,7 @@ class MasterPage extends Component {
 					[field.masCd.name]        : responseArray[i].mas_cd,
 					[field.masCdNm.name]      : responseArray[i].mas_cd_nm,
 					[field.catCdNm]           : responseArray[i].cate_nm,
-					[field.catCd]             : responseArray[i].cate_cd,
+					[field.catCd.name]        : responseArray[i].cate_cd,
 					[field.parentMasNm]       : responseArray[i].parent_cd_nm,
 					[field.parentMasCd]       : responseArray[i].parent_mas_cd,
 					[field.processingSeq.name]: responseArray[i].processing_seq,

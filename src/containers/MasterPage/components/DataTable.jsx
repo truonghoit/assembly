@@ -10,7 +10,7 @@ let {field}   = MASTER_FORM_CONSTANTS;
 const columns = [
 	{title: "Mas Code", field: field.masCd.name, width: '10%', align: "center", headerFilter: "input"},
 	{title: "General Name", field: field.masCdNm.name, width: '10%', align: "center", headerFilter: "input"},
-	{title: "Category Code", field: field.catCd, headerFilter: "input", visible: false},
+	{title: "Category Code", field: field.catCd.name, headerFilter: "input", visible: false},
 	{title: "Category", field: field.catCdNm, width: '10%', align: "center", headerFilter: "input"},
 	{title: "Parent Code", field: field.parentMasCd, headerFilter: "input", visible: false},
 	{title: "Parent", field: field.parentMasNm, width: '10%', align: "center", headerFilter: "input"},
@@ -25,7 +25,7 @@ const data    = [
 	{
 		[field.masCd.name]        : "1",
 		[field.masCdNm.name]      : "mas_cd_nm",
-		[field.catCd]             : "12",
+		[field.catCd.name]        : "12",
 		[field.catCdNm]           : "red",
 		[field.parentMasCd]       : "1234",
 		[field.parentMasNm]       : "5",
