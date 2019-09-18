@@ -18,6 +18,7 @@ class SelectField extends PureComponent {
 				label: PropTypes.string,
 			}),
 		]).isRequired,
+		disabled   : PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -32,7 +33,7 @@ class SelectField extends PureComponent {
 
 	render() {
 		const {
-			      value, name, placeholder, options,
+			      value, name, placeholder, options, disabled
 		      } = this.props;
 
 		return (
@@ -45,6 +46,7 @@ class SelectField extends PureComponent {
 				className="react-select"
 				placeholder={placeholder}
 				classNamePrefix="react-select"
+				isDisabled={disabled}
 			/>
 		);
 	}
@@ -52,7 +54,7 @@ class SelectField extends PureComponent {
 
 const renderSelectField = (props) => {
 	const {
-		      input, meta, options, placeholder, className, selected
+		      input, meta, options, placeholder, className, selected, disabled
 	      } = props;
 	return (
 		<div className={className}>
@@ -61,6 +63,7 @@ const renderSelectField = (props) => {
 				options={options}
 				placeholder={placeholder}
 				value={selected}
+				disabled={disabled}
 			/>
 			{meta.touched && meta.error && <span className="form__form-group-error">{meta.error}</span>}
 		</div>

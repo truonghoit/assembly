@@ -100,7 +100,7 @@ class MasterForm extends Component {
 									name={field.masCd.name}
 									component={renderField}
 									props={{
-										disabled: this.state.editMode === true,
+										disabled: this.state.editMode === true || formData[field.sysCodeYn] === 1,
 										value   : formData[field.masCd.name] ? formData[field.masCd.name] : ''
 									}}
 									type="text"
@@ -131,6 +131,7 @@ class MasterForm extends Component {
 									name={field.masCdNm.name}
 									component={renderField}
 									props={{
+										disabled: formData[field.sysCodeYn] === 1,
 										value: formData[field.masCdNm.name] ? formData[field.masCdNm.name] : ''
 									}}
 									type="text"
@@ -156,6 +157,7 @@ class MasterForm extends Component {
 									component={renderSelectField}
 									options={categoryCodeOptions}
 									props={{
+										disabled: formData[field.sysCodeYn] === 1,
 										selected: {
 											value: formData[field.catCd] ? formData[field.catCd] : '',
 											label: formData[field.catCdNm] ? formData[field.catCdNm] : '---',
@@ -189,6 +191,9 @@ class MasterForm extends Component {
 								name={field.virtualYn}
 								component={renderCheckBoxField}
 								label="Virtual(Y/N)"
+								props={{
+									disabled: formData[field.sysCodeYn] === 1,
+								}}
 								checked={formData[field.virtualYn] === 1}
 								onChange={(event, newValue) => {
 									this.setState({
@@ -210,6 +215,7 @@ class MasterForm extends Component {
 									component={renderSelectField}
 									options={parentCodeOptions}
 									props={{
+										disabled: formData[field.sysCodeYn] === 1,
 										selected: {
 											value: formData[field.parentMasCd] ? formData[field.parentMasCd] : '',
 											label: formData[field.parentMasNm] ? formData[field.parentMasNm] : '---',
@@ -247,6 +253,9 @@ class MasterForm extends Component {
 								name={field.activeYn}
 								component={renderCheckBoxField}
 								label="Active(Y/N)"
+								props={{
+									disabled: formData[field.sysCodeYn] === 1,
+								}}
 								checked={formData[field.activeYn] === 1}
 								onChange={(event, newValue) => {
 									this.setState({
@@ -269,6 +278,7 @@ class MasterForm extends Component {
 									type="text"
 									component={renderField}
 									props={{
+										disabled: formData[field.sysCodeYn] === 1,
 										value: formData[field.processingSeq.name] != undefined
 										       ? formData[field.processingSeq.name]
 										       : '0'
@@ -296,6 +306,7 @@ class MasterForm extends Component {
 									name={field.temperature}
 									component={renderField}
 									props={{
+										disabled: formData[field.sysCodeYn] === 1,
 										style: {width: 35, marginRight: 5},
 										value: temperature,
 									}}
@@ -326,6 +337,7 @@ class MasterForm extends Component {
 									name={field.pressure}
 									component={renderField}
 									props={{
+										disabled: formData[field.sysCodeYn] === 1,
 										style: {width: 35, marginRight: 5},
 										value: pressure,
 									}}
@@ -356,6 +368,7 @@ class MasterForm extends Component {
 									name={field.curingTime}
 									component={renderField}
 									props={{
+										disabled: formData[field.sysCodeYn] === 1,
 										style: {width: 35, marginRight: 5},
 										value: curingTime,
 									}}
@@ -417,6 +430,7 @@ class MasterForm extends Component {
 									component="textarea"
 									type="text"
 									props={{
+										disabled: formData[field.sysCodeYn] === 1,
 										value: formData[field.description.name] ? formData[field.description.name] : ''
 									}}
 									onChange={(event, newValue) => {
