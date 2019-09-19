@@ -11,98 +11,98 @@ class LeadDetailTable extends Component {
 			return (<tr>
 				<td>{data.process_nm}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_0730 && data.flag_Qty_0730 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_0730 && data.flag_Qty_0730 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_0730}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_0730}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_0830 && data.flag_Qty_0830 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_0830 && data.flag_Qty_0830 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_0830}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_0830}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_0930 && data.flag_Qty_0930 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_0930 && data.flag_Qty_0930 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_0930}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_0930}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_1030 && data.flag_Qty_1030 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_1030 && data.flag_Qty_1030 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_1030}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_1030}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_1130 && data.flag_Qty_1130 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_1130 && data.flag_Qty_1130 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_1130}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_1130}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_1230 && data.flag_Qty_1230 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_1230 && data.flag_Qty_1230 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_1230}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_1230}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_1330 && data.flag_Qty_1330 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_1330 && data.flag_Qty_1330 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_1330}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_1330}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_1430 && data.flag_Qty_1430 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_1430 && data.flag_Qty_1430 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_1430}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_1430}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_1530 && data.flag_Qty_1530 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_1530 && data.flag_Qty_1530 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_1530}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_1530}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_1630 && data.flag_Qty_1630 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_1630 && data.flag_Qty_1630 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_1630}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_1630}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_1730 && data.flag_Qty_1730 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_1730 && data.flag_Qty_1730 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_1730}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_1730}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_1830 && data.flag_Qty_1830 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_1830 && data.flag_Qty_1830 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_1830}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_1830}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_1930 && data.flag_Qty_1930 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_1930 && data.flag_Qty_1930 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_1930}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_1930}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_2030 && data.flag_Qty_2030 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_2030 && data.flag_Qty_2030 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_2030}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_2030}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_2130 && data.flag_Qty_2130 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_2130 && data.flag_Qty_2130 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_2130}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_2130}</td>
 				<td style={{
-					textAlign: 'center',
-					color    : data.flag_Qty_2230 != "" ? '#FF9C64' : '#BEBEBE',
+					textAlign : 'center',
+					color     : data.flag_Qty_2230 != "" ? '#FF9C64' : '#BEBEBE',
 					borderLeft: '3px solid #BEBEBE'
 				}}>{data.Qty_2230}</td>
 				<td style={{textAlign: 'center', borderRight: '3px solid #BEBEBE'}}>{data.LT_2230}</td>
