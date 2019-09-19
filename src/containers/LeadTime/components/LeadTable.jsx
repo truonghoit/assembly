@@ -7,6 +7,10 @@ class LeadTable extends Component {
 	}
 
 	fillRow = (index, data, firstCol) => {
+		let unit = "sec";
+		if (index > 16) {
+			unit = "min"
+		}
 		if (data === null || data === undefined){
 			data = {
 				mas_cd_nm: 0,
@@ -17,9 +21,9 @@ class LeadTable extends Component {
 		if (firstCol) {
 			let rowSpan = 1;
 			if (firstCol == "STITCHING") {
-				rowSpan = 6;
+				rowSpan = 3;
 			} else if (firstCol == 'SHOE MAKING') {
-				rowSpan = 11;
+				rowSpan = 14;
 			} else if (firstCol == 'LEAD TIME') {
 				rowSpan = 3;
 			}
@@ -36,7 +40,7 @@ class LeadTable extends Component {
 				<td rowSpan={rowSpan} style={{verticalAlign: 'middle', color: color}}>{firstCol}</td>
 				<td style={{color: color}}>{data ? data.mas_cd_nm : 0}</td>
 				<td style={{color: color}}>{data ? data.pair_qty : 0}</td>
-				<td style={{color: color}}>{data ? data.lead_time : 0}</td>
+				<td style={{color: color}}>{data ? data.lead_time : 0} ({unit})</td>
 			</tr>;
 		} else {
 			let min_process_crr = 0;
@@ -50,7 +54,7 @@ class LeadTable extends Component {
 			return <tr key={index}>
 				<td style={{color: color}}>{data ? data.mas_cd_nm : 0}</td>
 				<td style={{color: color}}>{data ? data.pair_qty : 0}</td>
-				<td style={{color: color}}>{data ? data.lead_time : 0}</td>
+				<td style={{color: color}}>{data ? data.lead_time : 0} ({unit})</td>
 			</tr>;
 		}
 	};
@@ -122,19 +126,13 @@ class LeadTable extends Component {
 				                         leadTime12 + leadTime13 + leadTime14 +
 				                         leadTime15 + leadTime16) / 60;
 			}
-
-			console.log("118 118 118 118 118 118 118");
-			console.log("118 118 118 118 118 118 118");
-			console.log("118 118 118 118 118 118 118");
-			console.log("118 118 118 118 118 118 118");
-			console.log("leadData: ", leadData);
 			rowData[0]  = this.fillRow(0, leadData[0], parentCategrories[0]);
 			rowData[1]  = this.fillRow(1, leadData[1]);
 			rowData[2]  = this.fillRow(2, leadData[2]);
-			rowData[3]  = this.fillRow(3, leadData[3]);
+			rowData[3]  = this.fillRow(3, leadData[3], parentCategrories[1]);
 			rowData[4]  = this.fillRow(4, leadData[4]);
 			rowData[5]  = this.fillRow(5, leadData[5]);
-			rowData[6]  = this.fillRow(6, leadData[6], parentCategrories[1]);
+			rowData[6]  = this.fillRow(6, leadData[6]);
 			rowData[7]  = this.fillRow(7, leadData[7]);
 			rowData[8]  = this.fillRow(8, leadData[8]);
 			rowData[9]  = this.fillRow(9, leadData[9]);
@@ -315,8 +313,8 @@ class LeadTable extends Component {
 
 	render() {
 		let {leadData} = this.props;
-		let newLeadDataArray = this.handleLeadData(leadData);
-		let tableBody  = this.fillTable(newLeadDataArray);
+		//let newLeadDataArray = this.handleLeadData(leadData);
+		let tableBody  = this.fillTable(leadData);
 		return (
 			<Table responsive hover style={{backgroundColor: '#232529', color: 'white'}}>
 				<thead>
