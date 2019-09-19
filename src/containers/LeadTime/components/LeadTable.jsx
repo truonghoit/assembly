@@ -7,6 +7,13 @@ class LeadTable extends Component {
 	}
 
 	fillRow = (index, data, firstCol) => {
+		if (data === null || data === undefined){
+			data = {
+				mas_cd_nm: 0,
+				pair_qty: 0,
+				lead_time: 0,
+			}
+		}
 		if (firstCol) {
 			let rowSpan = 1;
 			if (firstCol == "STITCHING") {
@@ -49,6 +56,7 @@ class LeadTable extends Component {
 	};
 
 	fillTable = (leadData) => {
+		console.log("fillTable: ", leadData);
 		let table = null;
 		try {
 			let parentCategrories = ['STITCHING', 'SHOE MAKING', 'LEAD TIME'];
@@ -115,24 +123,28 @@ class LeadTable extends Component {
 				                         leadTime15 + leadTime16) / 60;
 			}
 
-
-			rowData[0]  = leadData[0] ? this.fillRow(0, leadData[0], parentCategrories[0]) : null;
-			rowData[1]  = leadData[1] ? this.fillRow(1, leadData[1]) : null;
-			rowData[2]  = leadData[2] ? this.fillRow(2, leadData[2]) : null;
-			rowData[3]  = leadData[3] ? this.fillRow(3, leadData[3]) : null;
-			rowData[4]  = leadData[4] ? this.fillRow(4, leadData[4]) : null;
-			rowData[5]  = leadData[5] ? this.fillRow(5, leadData[5]) : null;
-			rowData[6]  = leadData[6] ? this.fillRow(6, leadData[6], parentCategrories[1]) : null;
-			rowData[7]  = leadData[7] ? this.fillRow(7, leadData[7]) : null;
-			rowData[8]  = leadData[8] ? this.fillRow(8, leadData[8]) : null;
-			rowData[9]  = leadData[9] ? this.fillRow(9, leadData[9]) : null;
-			rowData[10] = leadData[10] ? this.fillRow(10, leadData[10]) : null;
-			rowData[11] = leadData[11] ? this.fillRow(11, leadData[11]) : null;
-			rowData[12] = leadData[12] ? this.fillRow(12, leadData[12]) : null;
-			rowData[13] = leadData[13] ? this.fillRow(13, leadData[13]) : null;
-			rowData[14] = leadData[14] ? this.fillRow(14, leadData[14]) : null;
-			rowData[15] = leadData[15] ? this.fillRow(15, leadData[15]) : null;
-			rowData[16] = leadData[16] ? this.fillRow(16, leadData[16]) : null;
+			console.log("118 118 118 118 118 118 118");
+			console.log("118 118 118 118 118 118 118");
+			console.log("118 118 118 118 118 118 118");
+			console.log("118 118 118 118 118 118 118");
+			console.log("leadData: ", leadData);
+			rowData[0]  = this.fillRow(0, leadData[0], parentCategrories[0]);
+			rowData[1]  = this.fillRow(1, leadData[1]);
+			rowData[2]  = this.fillRow(2, leadData[2]);
+			rowData[3]  = this.fillRow(3, leadData[3]);
+			rowData[4]  = this.fillRow(4, leadData[4]);
+			rowData[5]  = this.fillRow(5, leadData[5]);
+			rowData[6]  = this.fillRow(6, leadData[6], parentCategrories[1]);
+			rowData[7]  = this.fillRow(7, leadData[7]);
+			rowData[8]  = this.fillRow(8, leadData[8]);
+			rowData[9]  = this.fillRow(9, leadData[9]);
+			rowData[10] = this.fillRow(10, leadData[10]);
+			rowData[11] = this.fillRow(11, leadData[11]);
+			rowData[12] = this.fillRow(12, leadData[12]);
+			rowData[13] = this.fillRow(13, leadData[13]);
+			rowData[14] = this.fillRow(14, leadData[14]);
+			rowData[15] = this.fillRow(15, leadData[15]);
+			rowData[16] = this.fillRow(16, leadData[16]);
 			rowData[17] = this.fillRow(17, {
 				"mas_cd_nm": "ASC Lead Time",
 				"pair_qty" : minPairLeadTime,
@@ -165,9 +177,146 @@ class LeadTable extends Component {
 		return table;
 	};
 
+	handleLeadData = (leadData) => {
+		/*
+		 20101	201	Preparing Stitching
+		 20102	201	Load-In Material
+		 20103	201	Computer Stitching
+		 20104	201	Normal Stitching
+		 20105	201	Packpart Molding
+		 20106	201	Toe Molding
+		 20107	201	Strobel
+		 20108	201	Lasting
+		 20109	201	Heel Lasting
+		 20110	201	Heat Chamber
+		 20111	201	Negartive Gage
+		 20112	201	Cementing
+		 20113	201	Attach Sole with Upper
+		 20114	201	Chiller
+		 20115	201	DeLasting
+		 20116	201	Metal Detector
+		 20117	201	QIP Defect
+		 20118	201	Packing
+		 */
+		let newLeadDataArray = [
+			{
+				"mas_cd_nm": "Pre. Stiching",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20101"
+			},
+			{
+				"mas_cd_nm": "Computer Stiching",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20103"
+			},
+			{
+				"mas_cd_nm": "Normal Stiching",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20104"
+			},
+			{
+				"mas_cd_nm": "Backpack Molding",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20105"
+			},
+			{
+				"mas_cd_nm": "Toe Molding",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20106"
+			},
+			{
+				"mas_cd_nm": "Strobel",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20107"
+			},
+			{
+				"mas_cd_nm": "Lasting",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20108"
+			},
+			{
+				"mas_cd_nm": "Heal Lasting",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20109"
+			},
+			{
+				"mas_cd_nm": "Heat Chamber",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20110"
+			},
+			{
+				"mas_cd_nm": "Negative Gage",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20111"
+			},
+			{
+				"mas_cd_nm": "Cementing",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20112"
+			},
+			{
+				"mas_cd_nm": "Attach Sole With Upper",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20113"
+			},
+			{
+				"mas_cd_nm": "Chiller",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20114"
+			},
+			{
+				"mas_cd_nm": "Delasting",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20115"
+			},
+			{
+				"mas_cd_nm": "Metal Detect",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20116"
+			},
+			{
+				"mas_cd_nm": "QIP Defect",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20117"
+			},
+			{
+				"mas_cd_nm": "Packing",
+				"pair_qty" : 0,
+				"lead_time": 0,
+				"process_cd": "20118"
+			}
+		];
+		for (let i = 0; i < newLeadDataArray.length; i++){
+			for (let j = 0; j < leadData.length; j++){
+				if (leadData[j].process_cd.toString() === newLeadDataArray[i].process_cd.toString()){
+					newLeadDataArray[i].pair_qty    =  leadData[j].pair_qty;
+					newLeadDataArray[i].lead_time   =  leadData[j].lead_time;
+				}
+			}
+		}
+		return newLeadDataArray;
+	}
+
 	render() {
 		let {leadData} = this.props;
-		let tableBody  = this.fillTable(leadData);
+		let newLeadDataArray = this.handleLeadData(leadData);
+		let tableBody  = this.fillTable(newLeadDataArray);
 		return (
 			<Table responsive hover style={{backgroundColor: '#232529', color: 'white'}}>
 				<thead>
