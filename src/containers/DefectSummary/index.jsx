@@ -100,10 +100,11 @@ class DefectSummary extends Component {
 			"data_type" : filterType
 		};
 		callAxios(method, url, params).then(response => {
-			let data = response.data.data;
-			this.setState((state, props) => ({
-				defectData: data,
-			}));
+			if (response && response.data && response.data.data) {
+				this.setState((state, props) => ({
+					defectData: response.data.data,
+				}));
+			}
 		});
 	};
 
