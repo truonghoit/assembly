@@ -67,6 +67,7 @@ class WorkingHourTable extends Component {
 	render() {
 		return (
 			<div style={{minHeight: 720}}>
+				<div className="mt-3 ml-2"><span style={{color: '#fff', marginTop: 15}}>LEAD TIME/PAIR</span></div>
 				<canvas width={750} height={720} ref={(element) => this.canvas = element}/>
 			</div>
 

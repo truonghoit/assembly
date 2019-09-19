@@ -145,18 +145,18 @@ class LeadTable extends Component {
 			rowData[16] = this.fillRow(16, leadData[16]);
 			rowData[17] = this.fillRow(17, {
 				"mas_cd_nm": "ASC Lead Time",
-				"pair_qty" : minPairLeadTime,
-				"lead_time": minLeadTimeLeadTime
+				"pair_qty" : minPairLeadTime.toFixed(2),
+				"lead_time": minLeadTimeLeadTime.toFixed(2)
 			}, parentCategrories[2]);
 			rowData[18] = this.fillRow(18, {
 				"mas_cd_nm": "Stitching",
-				"pair_qty" : minPairStiching,
-				"lead_time": minLeadTimeStiching
+				"pair_qty" : minPairStiching.toFixed(2),
+				"lead_time": minLeadTimeStiching.toFixed(2)
 			});
 			rowData[19] = this.fillRow(19, {
 				"mas_cd_nm": "Shoe Making",
-				"pair_qty" : minPairShoeMaking,
-				"lead_time": minLeadTimeShoeMaking
+				"pair_qty" : minPairShoeMaking.toFixed(2),
+				"lead_time": minLeadTimeShoeMaking.toFixed(2)
 			});
 
 			table =

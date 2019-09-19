@@ -135,7 +135,7 @@ class LeadTime extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let workingHourDataArray = response.data.data;
-				this.handleWorkingData(workingHourDataArray);
+				//this.handleWorkingData(workingHourDataArray);
 			} catch (e) {
 				console.log("Error: ", e);
 			}
@@ -375,7 +375,6 @@ class LeadTime extends Component {
 	}
 
 	findWorkingHour = (leadData) => {
-		console.log("leadData 378: ", leadData);
 		let workingHourData = [];
 		let workingHourLabel = [];
 		for (let i = 1; i < leadData.length; i++){
@@ -383,21 +382,20 @@ class LeadTime extends Component {
 			workingHourData.push(leadData[i].lead_time);
 			workingHourLabel.push(leadData[i].mas_cd_nm);
 		}
-		console.log("workingHourData: ", workingHourData);
-		console.log("workingHourLabel: ", workingHourLabel);
 		return {
-			workingHourData: workingHourData,
+			workingHourData: [{backgroundColor: "#2880E9",
+								data: workingHourData
+								}],
 			workingHourLabel: workingHourLabel
 		}
 	}
 
 	render() {
-		let {leadData, ccrProcess, workingHourData, workingHourLabel} = this.state;
-		console.log("leadData: aaaaaaaaaaaaaa", leadData);
+		let {leadData, ccrProcess} = this.state;
 		leadData = this.handleLeadData(leadData);
 		//let ccrProcess = this.findCcrProcess(leadData);
 		ccrProcess = this.findPerformance(leadData, ccrProcess);
-		//let workingHourItem = this.findWorkingHour(leadData);
+		let workingHourItem = this.findWorkingHour(leadData);
 
 		return (
 			<Container className="dashboard">
@@ -422,8 +420,8 @@ class LeadTime extends Component {
 							</Col>
 							<hr/>
 							<Col md={12} lg={12} style={{backgroundColor: '#232529'}}>
-								<WorkingHourTable workingHourData={workingHourData}
-								                  workingHourLabel={workingHourLabel}/>
+								<WorkingHourTable workingHourData={workingHourItem.workingHourData}
+								                  workingHourLabel={workingHourItem.workingHourLabel}/>
 							</Col>
 						</div>
 					</Col>
