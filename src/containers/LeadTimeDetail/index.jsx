@@ -53,7 +53,6 @@ class LeadTimeDetail extends Component {
 			chartLabels     : labels,
 			chartData       : chartData,
 		};
-		this.loadLeadDetailTable();
 	}
 
 	handleTableArray = (leadDetailData) => {
@@ -213,7 +212,6 @@ class LeadTimeDetail extends Component {
 			chartLabels: chartLabels,
 			chartData  : chartData
 		});
-
 	};
 
 	loadLeadDetailTable = () => {
@@ -252,7 +250,6 @@ class LeadTimeDetail extends Component {
 			...this.state,
 			filterFromDate: changeDateToUnix(newValue),
 		});
-
 	};
 
 	handleFilterToDateChange  = (newValue) => {
@@ -279,6 +276,16 @@ class LeadTimeDetail extends Component {
 			filterArticle: newValue.value,
 		});
 	};
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (prevState.filterFromDate !== this.state.filterFromDate
+		    || prevState.filterToDate !== this.state.filterToDate
+		    || prevState.filterLine !== this.state.filterLine
+		    || prevState.filterModel !== this.state.filterModel
+		    || prevState.filterArticle !== this.state.filterArticle) {
+			this.loadLeadDetailTable();
+		}
+	}
 
 	render() {
 		let {chartData, chartLabels, leadDetailData, leadDetailFooter} = this.state;
