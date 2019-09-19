@@ -366,7 +366,11 @@ class LearningCurve extends Component {
 
 		callAxios(method, url, params).then(response => {
 			try {
-				let chartData = response.data.data;
+				let chartData = response.data.data
+				console.log("370 370 370");
+				console.log("370 370 370");
+				console.log("370 370 370");
+				console.log("chartData: ", chartData);
 				this.setState((state, props) => ({
 					chartData: chartData,
 				}));

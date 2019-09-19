@@ -114,7 +114,8 @@ class FilterRangeForLearningCurve extends Component {
 		let url    = ASSEMBLY_API + FILTER_MODEL;
 		let params = {
 			"dropdownlist-name": "model",
-			"code"             : selectedLineCode
+			"code"             : selectedLineCode,
+			"screenname":"learningcurve"
 		};
 
 		callAxios(method, url, params).then(response => {
