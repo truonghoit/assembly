@@ -81,8 +81,8 @@ class FilterRange extends Component {
 	};
 
 	fillModelCombobox = (selectedLine = null) => {
-		let {screenname} = this.props;
-		screenname = screenname?screenname:'overview';
+		let {screenName}     = this.props;
+		screenName           = screenName ? screenName : 'overview';
 		let selectedLineCode = "";
 		if (selectedLine) {
 			selectedLineCode = selectedLine.value;
@@ -92,7 +92,7 @@ class FilterRange extends Component {
 		let params = {
 			"dropdownlist-name": "model",
 			"code"             : selectedLineCode,
-			"screenname":screenname
+			"screenName"       : screenName
 		};
 
 		callAxios(method, url, params).then(response => {
@@ -230,8 +230,46 @@ class FilterRange extends Component {
 		}
 	};
 
+	modelFilter = (arrayModels) => (
+		<Col md={2} lg={2} style={{marginLeft: -40}}>
+			<Row>
+				<Col md={2} lg={2}>
+					<span className="form__form-group-label">Model: </span>
+				</Col>
+				<Col md={9} lg={9} style={{marginLeft: 10, marginTop: -12}}>
+					<Field
+						name="filterModel"
+						component={renderSelectField}
+						options={arrayModels}
+						onChange={this.handleFilterModelChange}
+						selected={this.state.selectedModel}
+					/>
+				</Col>
+			</Row>
+		</Col>
+	);
+
+	articleFilter = (arrayArticles) => (
+		<Col md={2} lg={2}>
+			<Row>
+				<Col md={2} lg={2}>
+					<span className="form__form-group-label">Article: </span>
+				</Col>
+				<Col md={9} lg={9} style={{marginLeft: 10, marginTop: -12}}>
+					<Field
+						name="filterArticle"
+						component={renderSelectField}
+						options={arrayArticles}
+						onChange={this.handleFilterArticleChange}
+						selected={this.state.selectedArticle}
+					/>
+				</Col>
+			</Row>
+		</Col>
+	);
+
 	render() {
-		let {handleSubmit}                           = this.props;
+		let {handleSubmit, screenName}               = this.props;
 		let {arrayLines, arrayModels, arrayArticles} = this.state;
 		return (
 			<form className="form form--preview" onSubmit={handleSubmit} style={{paddingLeft: 20}}>
@@ -316,38 +354,18 @@ class FilterRange extends Component {
 						</Col>
 					</Row>
 				</Col>
-				<Col md={2} lg={2} style={{marginLeft: -40}}>
-					<Row>
-						<Col md={2} lg={2}>
-							<span className="form__form-group-label">Model: </span>
-						</Col>
-						<Col md={9} lg={9} style={{marginLeft: 10, marginTop: -12}}>
-							<Field
-								name="filterModel"
-								component={renderSelectField}
-								options={arrayModels}
-								onChange={this.handleFilterModelChange}
-								selected={this.state.selectedModel}
-							/>
-						</Col>
-					</Row>
-				</Col>
-				<Col md={2} lg={2}>
-					<Row>
-						<Col md={2} lg={2}>
-							<span className="form__form-group-label">Article: </span>
-						</Col>
-						<Col md={9} lg={9} style={{marginLeft: 10, marginTop: -12}}>
-							<Field
-								name="filterArticle"
-								component={renderSelectField}
-								options={arrayArticles}
-								onChange={this.handleFilterArticleChange}
-								selected={this.state.selectedArticle}
-							/>
-						</Col>
-					</Row>
-				</Col>
+				{
+					screenName ? screenName === "alarmhistory"
+					             ? null
+					             : this.modelFilter()
+					           : this.modelFilter()
+				}
+				{
+					screenName ? screenName === "alarmhistory"
+					             ? null
+					             : this.articleFilter()
+					           : this.articleFilter()
+				}
 			</form>
 		);
 	}

@@ -114,7 +114,7 @@ class AlarmHistory extends Component {
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
 				             handleFilterArticleChange={this.handleFilterArticleChange}
-				             screenname="alarmhistory"
+				             screenName="alarmhistory"
 				/>
 				<hr/>
 				<Col md={12} lg={12}>
