@@ -36,10 +36,10 @@ class LeadTime extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (prevState.filterArticle !== this.state.filterArticle || prevState.filterFromDate
-		    !== this.state.filterFromDate
+		if (prevState.filterFromDate !== this.state.filterFromDate
 		    || prevState.filterToDate !== this.state.filterToDate
-		    || prevState.filterLine !== this.state.filterLine || prevState.filterModel !== this.state.filterModel
+		    || prevState.filterLine !== this.state.filterLine
+		    || prevState.filterModel !== this.state.filterModel
 		    || prevState.filterArticle !== this.state.filterArticle) {
 			//filterArticle: ""
 			// filterFromDate: 1563160349
