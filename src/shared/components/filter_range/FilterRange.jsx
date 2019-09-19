@@ -59,7 +59,7 @@ class FilterRange extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let dataArray  = response.data.data;
-				let arrayLines = [...ARRAY_LINES];
+				let arrayLines = [];
 				dataArray.forEach(element => {
 					arrayLines.push(
 						{value: element.code, label: element.name}
@@ -68,12 +68,23 @@ class FilterRange extends Component {
 
 				this.setState({
 					...this.state,
-					arrayLines: arrayLines,
+					arrayLines: arrayLines.length > 0 ? arrayLines : ARRAY_LINES,
 				});
 
 				this.props.dispatch(
 					changeFilterLine(arrayLines)
 				);
+
+				if (this.props.screenName === 'alarmhistory') {
+					this.setState((state) => ({
+						...state,
+						selectedLine: arrayLines.length > 0 ? arrayLines[0] : ARRAY_LINES[0],
+					}));
+
+					if (arrayLines.length > 0) {
+						this.handleFilterLineChange(arrayLines[0]);
+					}
+				}
 			} catch (e) {
 				console.log("Error: ", e);
 			}
@@ -184,7 +195,9 @@ class FilterRange extends Component {
 	handleFilterLineChange = (value) => {
 		this.props.handleFilterLineChange(value);
 
-		this.fillModelCombobox(value);
+		if (this.props.screenName !== 'alarmhistory') {
+			this.fillModelCombobox(value);
+		}
 
 		this.setState({
 			...this.state,
