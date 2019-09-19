@@ -57,20 +57,26 @@ class SensingValue extends Component {
 		 chartLabels   : labels,
 		 chartData     : chartData,
 		 });*/
+		let {filterArticle, filterFromDate, filterToDate, filterLine, filterModel} = this.state;
 		let method = 'POST';
 		let url    = ASSEMBLY_API + SENSING_VALUE;
 		let params = {
 			"factory"  : "",
 			"line"     : "",
 			"process"  : "",
-			"from_date": 1562660433,
-			"to_date"  : 1562660433
-		};
+			"from_date": filterFromDate,
+			"to_date"  : filterToDate
+			/*"from_date": 1533700403,
+			 "to_date"  : 1565322803*/
+		}
+		console.log("url: ", url);
+		console.log("params: ", params);
 
 		callAxios(method, url, params).then(response => {
 			try {
 				let data            = response.data.data;
 				let selectedProcess = data[0];
+				console.log("data 77: ", data);
 				this.setState((state, props) => ({
 					processData: data,
 				}));
@@ -88,7 +94,9 @@ class SensingValue extends Component {
 
 		let {filterArticle, filterFromDate, filterToDate, filterLine, filterModel} = this.state;
 		let definitionValue                                                        = processData.definition_value;
-		if (parseInt(definitionValue.charAt(0)) > 0) {
+		console.log("91 91 91 91 91 91 91");
+		console.log("definitionValue: ", definitionValue);
+		if (definitionValue !== null && definitionValue !== undefined && parseInt(definitionValue.charAt(0)) > 0) {
 			//Get temp data
 			let method = 'POST';
 			let url    = ASSEMBLY_API + SENSING_TEMP;
@@ -110,7 +118,7 @@ class SensingValue extends Component {
 				}
 			});
 		}
-		if (parseInt(definitionValue.charAt(1)) > 0) {
+		if (definitionValue !== null && definitionValue !== undefined && parseInt(definitionValue.charAt(1)) > 0) {
 			//Get pressure data
 			let method = 'POST';
 			let url    = ASSEMBLY_API + SENSING_PRESS;
@@ -134,7 +142,7 @@ class SensingValue extends Component {
 			});
 		}
 
-		if (parseInt(definitionValue.charAt(2)) > 0) {
+		if (definitionValue !== null && definitionValue !== undefined && parseInt(definitionValue.charAt(2)) > 0) {
 			//Get curing time data
 			let method = 'POST';
 			let url    = ASSEMBLY_API + SENSING_TIME;
@@ -166,6 +174,7 @@ class SensingValue extends Component {
 		    || prevState.filterLine !== this.state.filterLine || prevState.filterModel !== this.state.filterModel
 		    || prevState.filterArticle !== this.state.filterArticle) {
 			let {filterArticle, filterFromDate, filterToDate, filterLine, filterModel} = this.state;
+			this.fillLeftBar();
 			this.getChartData();
 
 		}
