@@ -221,19 +221,19 @@ class LeadTime extends Component {
 		 */
 		let newLeadDataArray = [
 			{
-				"mas_cd_nm" : "Pre. Stiching",
+				"mas_cd_nm" : "Pre. Stitching",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
 				"process_cd": "20101"
 			},
 			{
-				"mas_cd_nm" : "Computer Stiching",
+				"mas_cd_nm" : "Computer Stitching",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
 				"process_cd": "20103"
 			},
 			{
-				"mas_cd_nm" : "Normal Stiching",
+				"mas_cd_nm" : "Normal Stitching",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
 				"process_cd": "20104"
@@ -337,13 +337,13 @@ class LeadTime extends Component {
 	findPerformance = (leadData, ccrProcess) => {
 		console.log("findPerformance");
 		console.log("leadData: ", leadData);
-		let maxStiching      = 0, sumStiching = 0;
+		let maxStitching      = 0, sumStitching = 0;
 		let maxShoeMaking    = 0, sumShoeMaking = 0;
 		let maxLineBalancing = 0, sumLineBalancing = 0;
 		for (let i = 0; i < 3; i++) {
-			sumStiching += leadData[i].pair_qty;
-			if (maxStiching < leadData[i].pair_qty) {
-				maxStiching = leadData[i].pair_qty;
+			sumStitching += leadData[i].pair_qty;
+			if (maxStitching < leadData[i].pair_qty) {
+				maxStitching = leadData[i].pair_qty;
 			}
 		}
 		for (let i = 3; i < leadData.length; i++) {
@@ -358,13 +358,13 @@ class LeadTime extends Component {
 				maxLineBalancing = leadData[i].pair_qty;
 			}
 		}
-		maxStiching               = maxStiching > 0 ? maxStiching : 1;
+		maxStitching               = maxStitching > 0 ? maxStitching : 1;
 		maxShoeMaking             = maxShoeMaking > 0 ? maxShoeMaking : 1;
 		maxLineBalancing          = maxLineBalancing > 0 ? maxLineBalancing : 1;
 		let line_balancing_stitch = 0, line_balancing_shoe_make = 0, line_balancing_all = 0;
 		line_balancing_all        = sumLineBalancing * 100 / (maxLineBalancing * 16);
 		line_balancing_shoe_make  = sumShoeMaking * 100 / (maxShoeMaking * 14);
-		line_balancing_stitch     = sumStiching * 100 / (maxStiching * 3);
+		line_balancing_stitch     = sumStitching * 100 / (maxStitching * 3);
 		ccrProcess                = {
 			...ccrProcess,
 			line_balancing_all      : line_balancing_all,
@@ -378,7 +378,7 @@ class LeadTime extends Component {
 		let workingHourData  = [];
 		let workingHourLabel = [];
 		for (let i = 1; i < leadData.length; i++) {
-			//mas_cd_nm: "Pre. Stiching", pair_qty: 0, lead_time: 0, process_cd: "20101"
+			//mas_cd_nm: "Pre. Stitching", pair_qty: 0, lead_time: 0, process_cd: "20101"
 			workingHourData.push(leadData[i].lead_time);
 			workingHourLabel.push(leadData[i].mas_cd_nm);
 		}
