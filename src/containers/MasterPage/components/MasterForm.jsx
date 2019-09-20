@@ -63,7 +63,7 @@ class MasterForm extends Component {
 		let definitionArray = definitionValue.split('');
 		this.props.change(field.temperature, definitionArray.length > 0 ? definitionArray[0] : '0');
 		this.props.change(field.pressure, definitionArray.length > 1 ? definitionArray[1] : '0');
-		this.props.change(field.curingTime, definitionArray.length > 2 ? definitionArray[2] : '0');
+		this.props.change(field.timer, definitionArray.length > 2 ? definitionArray[2] : '0');
 
 		this.props.change(field.virtualYn, formData[field.virtualYn]);
 		this.props.change(field.activeYn, formData[field.activeYn]);
@@ -87,7 +87,7 @@ class MasterForm extends Component {
 		let definitionArray = definitionValue.split('');
 		let temperature     = definitionArray.length > 0 ? definitionArray[0] : '0';
 		let pressure        = definitionArray.length > 1 ? definitionArray[1] : '0';
-		let curingTime      = definitionArray.length > 2 ? definitionArray[2] : '0';
+		let timer           = definitionArray.length > 2 ? definitionArray[2] : '0';
 
 		return (
 			<Col md={12} lg={12}>
@@ -328,7 +328,7 @@ class MasterForm extends Component {
 										this.setState({
 											formData: {
 												...formData,
-												[field.definitionValue]: `${value}${pressure}${curingTime}`,
+												[field.definitionValue]: `${value}${pressure}${timer}`,
 											},
 										});
 									}}
@@ -362,7 +362,7 @@ class MasterForm extends Component {
 										this.setState({
 											formData: {
 												...formData,
-												[field.definitionValue]: `${temperature}${value}${curingTime}`,
+												[field.definitionValue]: `${temperature}${value}${timer}`,
 											},
 										});
 									}}
@@ -371,7 +371,7 @@ class MasterForm extends Component {
 							</div>
 							<div style={{display: 'flex',}}>
 								<Field
-									name={field.curingTime}
+									name={field.timer}
 									component={renderField}
 									props={{
 										disabled: formData[field.sysCodeYn] === 1
@@ -379,7 +379,7 @@ class MasterForm extends Component {
 										                  .processFixedNoOfSensors
 										                  .includes(parseInt(formData[field.masCd.name])),
 										style   : {width: 35, marginRight: 5},
-										value   : curingTime,
+										value   : timer,
 									}}
 									onChange={(event, newValue) => {
 										let definitionValueRange = MASTER_FORM_CONSTANTS.definitionValueRange;
@@ -392,7 +392,7 @@ class MasterForm extends Component {
 										) {
 											value = definitionValueRange[0];
 										}
-										this.props.change(field.curingTime, value);
+										this.props.change(field.timer, value);
 										this.setState({
 											formData: {
 												...formData,

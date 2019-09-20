@@ -33,7 +33,7 @@ const MASTER_FORM_CONSTANTS = {
 		definitionValue: 'definitionValue',
 		temperature    : 'temperature',
 		pressure       : 'pressure',
-		curingTime     : 'curingTime',
+		timer          : 'curingTime',
 
 		description: {
 			name     : 'remark',
