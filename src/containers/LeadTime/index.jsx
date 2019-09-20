@@ -221,181 +221,182 @@ class LeadTime extends Component {
 		 */
 		let newLeadDataArray = [
 			{
-				"mas_cd_nm": "Pre. Stiching",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Pre. Stiching",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20101"
 			},
 			{
-				"mas_cd_nm": "Computer Stiching",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Computer Stiching",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20103"
 			},
 			{
-				"mas_cd_nm": "Normal Stiching",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Normal Stiching",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20104"
 			},
 			{
-				"mas_cd_nm": "Backpack Molding",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Backpack Molding",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20105"
 			},
 			{
-				"mas_cd_nm": "Toe Molding",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Toe Molding",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20106"
 			},
 			{
-				"mas_cd_nm": "Strobel",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Strobel",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20107"
 			},
 			{
-				"mas_cd_nm": "Lasting",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Lasting",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20108"
 			},
 			{
-				"mas_cd_nm": "Heal Lasting",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Heal Lasting",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20109"
 			},
 			{
-				"mas_cd_nm": "Heat Chamber",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Heat Chamber",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20110"
 			},
 			{
-				"mas_cd_nm": "Negative Gage",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Negative Gage",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20111"
 			},
 			{
-				"mas_cd_nm": "Cementing",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Cementing",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20112"
 			},
 			{
-				"mas_cd_nm": "Attach Sole With Upper",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Attach Sole With Upper",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20113"
 			},
 			{
-				"mas_cd_nm": "Chiller",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Chiller",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20114"
 			},
 			{
-				"mas_cd_nm": "Delasting",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Delasting",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20115"
 			},
 			{
-				"mas_cd_nm": "Metal Detect",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Metal Detect",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20116"
 			},
 			{
-				"mas_cd_nm": "QIP Defect",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "QIP Defect",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20117"
 			},
 			{
-				"mas_cd_nm": "Packing",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Packing",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20118"
 			}
 		];
-		for (let i = 0; i < newLeadDataArray.length; i++){
-			for (let j = 0; j < leadData.length; j++){
-				if (leadData[j].process_cd.toString() === newLeadDataArray[i].process_cd.toString()){
-					newLeadDataArray[i].pair_qty    =  leadData[j].pair_qty;
-					newLeadDataArray[i].lead_time   =  leadData[j].lead_time;
+		for (let i = 0; i < newLeadDataArray.length; i++) {
+			for (let j = 0; j < leadData.length; j++) {
+				if (leadData[j].process_cd.toString() === newLeadDataArray[i].process_cd.toString()) {
+					newLeadDataArray[i].pair_qty  = leadData[j].pair_qty;
+					newLeadDataArray[i].lead_time = leadData[j].lead_time;
 				}
 			}
 		}
 		return newLeadDataArray;
-	}
+	};
 
 	findPerformance = (leadData, ccrProcess) => {
 		console.log("findPerformance");
 		console.log("leadData: ", leadData);
-		let maxStiching = 0, sumStiching = 0;
-		let maxShoeMaking = 0, sumShoeMaking = 0;
+		let maxStiching      = 0, sumStiching = 0;
+		let maxShoeMaking    = 0, sumShoeMaking = 0;
 		let maxLineBalancing = 0, sumLineBalancing = 0;
-		for (let i = 0; i < 3; i++){
+		for (let i = 0; i < 3; i++) {
 			sumStiching += leadData[i].pair_qty;
-			if (maxStiching < leadData[i].pair_qty){
+			if (maxStiching < leadData[i].pair_qty) {
 				maxStiching = leadData[i].pair_qty;
 			}
 		}
-		for (let i = 3; i < leadData.length; i++){
+		for (let i = 3; i < leadData.length; i++) {
 			sumShoeMaking += leadData[i].pair_qty;
-			if (maxShoeMaking < leadData[i].pair_qty){
+			if (maxShoeMaking < leadData[i].pair_qty) {
 				maxShoeMaking = leadData[i].pair_qty;
 			}
 		}
-		for (let i = 1; i < leadData.length; i++){
+		for (let i = 1; i < leadData.length; i++) {
 			sumLineBalancing += leadData[i].pair_qty;
-			if (maxLineBalancing < leadData[i].pair_qty){
+			if (maxLineBalancing < leadData[i].pair_qty) {
 				maxLineBalancing = leadData[i].pair_qty;
 			}
 		}
-		maxStiching = maxStiching > 0?maxStiching:1;
-		maxShoeMaking = maxShoeMaking > 0?maxShoeMaking:1;
-		maxLineBalancing = maxLineBalancing > 0?maxLineBalancing:1;
+		maxStiching               = maxStiching > 0 ? maxStiching : 1;
+		maxShoeMaking             = maxShoeMaking > 0 ? maxShoeMaking : 1;
+		maxLineBalancing          = maxLineBalancing > 0 ? maxLineBalancing : 1;
 		let line_balancing_stitch = 0, line_balancing_shoe_make = 0, line_balancing_all = 0;
-		line_balancing_all          = sumLineBalancing * 100/(maxLineBalancing * 16);
-		line_balancing_shoe_make    = sumShoeMaking * 100/(maxShoeMaking * 14);
-		line_balancing_stitch       = sumStiching * 100/(maxStiching * 3);
-		ccrProcess = {
+		line_balancing_all        = sumLineBalancing * 100 / (maxLineBalancing * 16);
+		line_balancing_shoe_make  = sumShoeMaking * 100 / (maxShoeMaking * 14);
+		line_balancing_stitch     = sumStiching * 100 / (maxStiching * 3);
+		ccrProcess                = {
 			...ccrProcess,
-			line_balancing_all: line_balancing_all,
+			line_balancing_all      : line_balancing_all,
 			line_balancing_shoe_make: line_balancing_shoe_make,
-			line_balancing_stitch: line_balancing_stitch
-		}
+			line_balancing_stitch   : line_balancing_stitch
+		};
 		return ccrProcess;
-	}
+	};
 
 	findWorkingHour = (leadData) => {
-		let workingHourData = [];
+		let workingHourData  = [];
 		let workingHourLabel = [];
-		for (let i = 1; i < leadData.length; i++){
+		for (let i = 1; i < leadData.length; i++) {
 			//mas_cd_nm: "Pre. Stiching", pair_qty: 0, lead_time: 0, process_cd: "20101"
 			workingHourData.push(leadData[i].lead_time);
 			workingHourLabel.push(leadData[i].mas_cd_nm);
 		}
 		return {
-			workingHourData: [{backgroundColor: "#2880E9",
-								data: workingHourData
-								}],
+			workingHourData : [{
+				backgroundColor: "#2880E9",
+				data           : workingHourData
+			}],
 			workingHourLabel: workingHourLabel
-		}
-	}
+		};
+	};
 
 	render() {
 		let {leadData, ccrProcess} = this.state;
-		leadData = this.handleLeadData(leadData);
+		leadData                   = this.handleLeadData(leadData);
 		//let ccrProcess = this.findCcrProcess(leadData);
-		ccrProcess = this.findPerformance(leadData, ccrProcess);
-		let workingHourItem = this.findWorkingHour(leadData);
+		ccrProcess                 = this.findPerformance(leadData, ccrProcess);
+		let workingHourItem        = this.findWorkingHour(leadData);
 
 		return (
 			<Container className="dashboard">

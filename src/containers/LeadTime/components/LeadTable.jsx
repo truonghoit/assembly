@@ -9,14 +9,14 @@ class LeadTable extends Component {
 	fillRow = (index, data, firstCol) => {
 		let unit = "sec";
 		if (index > 16) {
-			unit = "min"
+			unit = "min";
 		}
-		if (data === null || data === undefined){
+		if (data === null || data === undefined) {
 			data = {
 				mas_cd_nm: 0,
-				pair_qty: 0,
+				pair_qty : 0,
 				lead_time: 0,
-			}
+			};
 		}
 		if (firstCol) {
 			let rowSpan = 1;
@@ -198,118 +198,118 @@ class LeadTable extends Component {
 		 */
 		let newLeadDataArray = [
 			{
-				"mas_cd_nm": "Pre. Stiching",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Pre. Stiching",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20101"
 			},
 			{
-				"mas_cd_nm": "Computer Stiching",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Computer Stiching",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20103"
 			},
 			{
-				"mas_cd_nm": "Normal Stiching",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Normal Stiching",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20104"
 			},
 			{
-				"mas_cd_nm": "Backpack Molding",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Backpack Molding",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20105"
 			},
 			{
-				"mas_cd_nm": "Toe Molding",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Toe Molding",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20106"
 			},
 			{
-				"mas_cd_nm": "Strobel",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Strobel",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20107"
 			},
 			{
-				"mas_cd_nm": "Lasting",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Lasting",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20108"
 			},
 			{
-				"mas_cd_nm": "Heal Lasting",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Heal Lasting",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20109"
 			},
 			{
-				"mas_cd_nm": "Heat Chamber",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Heat Chamber",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20110"
 			},
 			{
-				"mas_cd_nm": "Negative Gage",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Negative Gage",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20111"
 			},
 			{
-				"mas_cd_nm": "Cementing",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Cementing",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20112"
 			},
 			{
-				"mas_cd_nm": "Attach Sole With Upper",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Attach Sole With Upper",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20113"
 			},
 			{
-				"mas_cd_nm": "Chiller",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Chiller",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20114"
 			},
 			{
-				"mas_cd_nm": "Delasting",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Delasting",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20115"
 			},
 			{
-				"mas_cd_nm": "Metal Detect",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Metal Detect",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20116"
 			},
 			{
-				"mas_cd_nm": "QIP Defect",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "QIP Defect",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20117"
 			},
 			{
-				"mas_cd_nm": "Packing",
-				"pair_qty" : 0,
-				"lead_time": 0,
+				"mas_cd_nm" : "Packing",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
 				"process_cd": "20118"
 			}
 		];
-		for (let i = 0; i < newLeadDataArray.length; i++){
-			for (let j = 0; j < leadData.length; j++){
-				if (leadData[j].process_cd.toString() === newLeadDataArray[i].process_cd.toString()){
-					newLeadDataArray[i].pair_qty    =  leadData[j].pair_qty;
-					newLeadDataArray[i].lead_time   =  leadData[j].lead_time;
+		for (let i = 0; i < newLeadDataArray.length; i++) {
+			for (let j = 0; j < leadData.length; j++) {
+				if (leadData[j].process_cd.toString() === newLeadDataArray[i].process_cd.toString()) {
+					newLeadDataArray[i].pair_qty  = leadData[j].pair_qty;
+					newLeadDataArray[i].lead_time = leadData[j].lead_time;
 				}
 			}
 		}
 		return newLeadDataArray;
-	}
+	};
 
 	render() {
 		let {leadData} = this.props;
