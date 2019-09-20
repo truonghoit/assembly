@@ -323,7 +323,7 @@ class AlarmMasterForm extends Component {
 				</Col>
 				<Col md={7} lg={7} style={{backgroundColor: '#1E2229'}}>
 					<form className="form form--horizontal" onSubmit={handleSubmit}>
-						<Col md={6} lg={6}>
+						<Col md={6} lg={6} style={{marginTop: 20}}>
 							<div className="form__form-group">
 								<span className="form__form-group-label">Model</span>
 								<div className="form__form-group-field">
@@ -342,7 +342,7 @@ class AlarmMasterForm extends Component {
 								</div>
 							</div>
 						</Col>
-						<Col md={6} lg={6}>
+						<Col md={6} lg={6} style={{marginTop: 20}}>
 							<div className="form__form-group">
 								<span className="form__form-group-label">Article</span>
 								<div className="form__form-group-field">
@@ -361,6 +361,7 @@ class AlarmMasterForm extends Component {
 							</div>
 						</Col>
 
+						<div style={{height: 100}}></div>
 						<Col md={3} lg={3}>
 							<Field
 								name={field.processCd}
@@ -375,16 +376,16 @@ class AlarmMasterForm extends Component {
 							<span className="form__form-group-label text-center text-uppercase ml-4">Pressure</span>
 						</Col>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label text-center text-uppercase ml-4">Curing Time</span>
+							<span className="form__form-group-label text-center text-uppercase ml-4">Timer</span>
 						</Col>
 
 						<hr style={{height: 30}}/>
-						<Col md={3} lg={3}>
+						<Col md={3} lg={3} style={{paddingTop: 15}}>
 							<span className="form__form-group-label"><FontAwesomeIcon
 								style={{color: '#03CF65', fontSize: 8}} icon={faCircle}/> Standard Value</span>
 						</Col>
 						<Col md={3} lg={3} style={{borderRight: '3px solid #535353'}}>
-							<Row>
+							<Row style={{paddingTop: 15}}>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
@@ -494,7 +495,7 @@ class AlarmMasterForm extends Component {
 						</Col>
 
 						<Col md={3} lg={3} style={{borderRight: '3px solid #535353'}}>
-							<Row>
+							<Row style={{paddingTop: 15}}>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
@@ -608,7 +609,7 @@ class AlarmMasterForm extends Component {
 							</Row>
 						</Col>
 						<Col md={3} lg={3}>
-							<Row>
+							<Row style={{paddingTop: 15}}>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
@@ -723,12 +724,12 @@ class AlarmMasterForm extends Component {
 						</Col>
 
 						<hr style={{height: 30}}/>
-						<Col md={3} lg={3}>
+						<Col md={3} lg={3} style={{paddingTop: 15}}>
 							<span className="form__form-group-label"><FontAwesomeIcon
 								style={{color: '#FFD44F', fontSize: 8}} icon={faCircle}/> Yellow Range</span>
 						</Col>
 						<Col md={3} lg={3} style={{borderRight: '3px solid #535353'}}>
-							<Row>
+							<Row style={{paddingTop: 15}}>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
@@ -842,7 +843,7 @@ class AlarmMasterForm extends Component {
 							</Row>
 						</Col>
 						<Col md={3} lg={3} style={{borderRight: '3px solid #535353'}}>
-							<Row>
+							<Row style={{paddingTop: 15}}>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
@@ -956,7 +957,7 @@ class AlarmMasterForm extends Component {
 							</Row>
 						</Col>
 						<Col md={3} lg={3}>
-							<Row>
+							<Row style={{paddingTop: 15}}>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
@@ -1071,12 +1072,12 @@ class AlarmMasterForm extends Component {
 						</Col>
 
 						<hr style={{height: 30}}/>
-						<Col md={3} lg={3}>
+						<Col md={3} lg={3} style={{paddingTop: 15}}>
 							<span className="form__form-group-label"><FontAwesomeIcon
 								style={{color: '#F84E4E', fontSize: 8}} icon={faCircle}/> Red Range</span>
 						</Col>
 						<Col md={3} lg={3}  style={{borderRight: '3px solid #535353'}}>
-							<Row>
+							<Row style={{paddingTop: 15}}>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
@@ -1190,7 +1191,7 @@ class AlarmMasterForm extends Component {
 							</Row>
 						</Col>
 						<Col md={3} lg={3} style={{borderRight: '3px solid #535353'}}>
-							<Row>
+							<Row style={{paddingTop: 15}}>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
@@ -1304,7 +1305,7 @@ class AlarmMasterForm extends Component {
 							</Row>
 						</Col>
 						<Col md={3} lg={3}>
-							<Row>
+							<Row style={{paddingTop: 15}}>
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
@@ -1457,7 +1458,7 @@ class AlarmMasterForm extends Component {
 						</Col>
 
 						<hr style={{height: 30}}/>
-						<Col md={12} lg={12} style={{display: 'flex', justifyContent: 'flex-end'}}>
+						<Col md={12} lg={12} style={{display: 'flex', justifyContent: 'flex-end', marginTop: 20}}>
 							<ButtonToolbar className="form__button-toolbar">
 								<Button color="primary" type="submit" onClick={() => {
 									if (!submitButtonClicked) {
