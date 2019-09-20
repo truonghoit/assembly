@@ -2,8 +2,8 @@ const MASTER_FORM_CONSTANTS = {
 	masterFormName      : 'MasterForm',
 	field               : {
 		masCd                       : {
-			name     : 'masCd',
-			maxLength: 20,
+			name                   : 'masCd',
+			maxLength              : 20,
 			processFixedNoOfSensors: [20105, 20106, 20107, 20108, 20109, 20110, 20111],
 		},
 		hiddenMasCdDuplicatedChecker: 'hiddenMasCdDuplicatedChecker',
