@@ -45,7 +45,7 @@ class ProductivityTable extends Component {
 									{parseFloat(ccrProcess.line_balancing_all).toFixed(2)}%
 								</Col>
 							</div>
-							<Progress value={92}>
+							<Progress value={parseFloat(ccrProcess.line_balancing_all)}>
 							</Progress>
 						</div>
 					</div>
