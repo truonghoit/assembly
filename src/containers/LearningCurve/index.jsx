@@ -113,7 +113,8 @@ class LearningCurve extends Component {
 			{title: "Model Code", field: LEARNING_CURVE_CONSTANTS.field.modelCode, visible: false},
 			{title: "Line Code", field: LEARNING_CURVE_CONSTANTS.field.lineCode, visible: false},
 			{title: "Basic Target Qty", field: LEARNING_CURVE_CONSTANTS.field.basicTargetQty, visible: false},
-			{title       : "Actual Qty",
+			{
+				title    : "Actual Qty",
 				field    : LEARNING_CURVE_CONSTANTS.field.actualQty,
 				visible  : false,
 				formatter: this.formatTableRow
@@ -162,12 +163,8 @@ class LearningCurve extends Component {
 		 total: 73
 		 */
 		let {modelTableColumns, modelTableData} = this.state;
-		console.log("modelTableColumns: ", modelTableColumns);
-		console.log("modelTableData: ", modelTableData);
-		console.log("rowData 157: ", rowData);
 		rowData[LEARNING_CURVE_CONSTANTS.field.modelSubmissionStatus] = LEARNING_CURVE_CONSTANTS.submissionState.onGoing;
 		modelTableData[0]                                             = rowData;
-		console.log("modelTableData 163: ", modelTableData);
 		this.setState((state, props) => ({
 			modelTableData: modelTableData,
 		}));
@@ -306,7 +303,7 @@ class LearningCurve extends Component {
 
 	onModelArticleClick = (data) => {
 
-	}
+	};
 
 	handleSubmit = (values) => {
 		if (this.isOKClicked && Object.keys(this.state.selectedProcess).length !== 0) {
@@ -366,11 +363,7 @@ class LearningCurve extends Component {
 
 		callAxios(method, url, params).then(response => {
 			try {
-				let chartData = response.data.data
-				console.log("370 370 370");
-				console.log("370 370 370");
-				console.log("370 370 370");
-				console.log("chartData: ", chartData);
+				let chartData = response.data.data;
 				this.setState((state, props) => ({
 					chartData: chartData,
 				}));
@@ -433,9 +426,10 @@ class LearningCurve extends Component {
 					<div style={{position: 'relative', width: '48%', minHeight: 600, backgroundColor: '#1E2229'}}>
 						<Row>
 							<Col md={5} lg={5} style={{minHeight: 300}}>
-								<DataTable id="processTable" columns={processTableColumns} data={processTableData} options={{
-									border: "none",
-								}}
+								<DataTable id="processTable" columns={processTableColumns} data={processTableData}
+								           options={{
+									           border: "none",
+								           }}
 								           onRowClick={this.onProcessRowClick}/>
 							</Col>
 							<Col md={7} lg={7} style={{minHeight: 300, marginTop: 50}}>
@@ -452,9 +446,10 @@ class LearningCurve extends Component {
 					<div style={{position: 'relative', width: '48%', minHeight: 600, backgroundColor: '#1E2229'}}>
 						<Row>
 							<Col md={12} lg={12}>
-								<DataTable id="learningCurve" columns={modelTableColumns} data={modelTableData} options={{
-									border: "none",
-								}} onRowClick={this.onModelArticleClick}/>
+								<DataTable id="learningCurve" columns={modelTableColumns} data={modelTableData}
+								           options={{
+									           border: "none",
+								           }} onRowClick={this.onModelArticleClick}/>
 							</Col>
 						</Row>
 					</div>

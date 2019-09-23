@@ -11,14 +11,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import {ARRAY_ARTICLES, ARRAY_LINES, ARRAY_MODELS} from "../../../constants/propertyConstants";
 import {ASSEMBLY_API, FILTER_LINE, FILTER_MODEL}   from "../../../constants/urlConstants";
 import {changeFilterLine, changeFilterModel}       from "../../../redux/actions/filterActions";
-import callAxios                  from "../../../services/api";
-import {connect}                  from "react-redux";
-import PropTypes                  from 'prop-types';
-import validate                   from "./validateForFilterRange";
-import {renderField}              from "../../../shared/components/form/InputField";
-import {LEARNING_CURVE_CONSTANTS} from "./../constants";
-import Modal                      from "./../components/Modal";
-import moment                     from "moment";
+import callAxios                                   from "../../../services/api";
+import {connect}                                   from "react-redux";
+import PropTypes                                   from 'prop-types';
+import validate                                    from "./validateForFilterRange";
+import {renderField}                               from "../../../shared/components/form/InputField";
+import {LEARNING_CURVE_CONSTANTS}                  from "./../constants";
+import Modal                                       from "./../components/Modal";
+import moment                                      from "moment";
 
 
 let {field} = LEARNING_CURVE_CONSTANTS;
@@ -115,7 +115,7 @@ class FilterRangeForLearningCurve extends Component {
 		let params = {
 			"dropdownlist-name": "model",
 			"code"             : selectedLineCode,
-			"screenname":"learningcurve"
+			"screenname"       : "learningcurve"
 		};
 
 		callAxios(method, url, params).then(response => {
