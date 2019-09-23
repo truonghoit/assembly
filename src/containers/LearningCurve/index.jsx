@@ -139,8 +139,8 @@ class LearningCurve extends Component {
 			submissionState      : LEARNING_CURVE_CONSTANTS.submissionState.initial,
 			modelSubmissionStatus: LEARNING_CURVE_CONSTANTS.submissionState.initial,
 		};
-		this.loadProcessTable();
-		this.loadModelTable();
+		// this.loadProcessTable();
+		// this.loadModelTable();
 	}
 
 	formatTableRow = (cell, formatterParams) => {
