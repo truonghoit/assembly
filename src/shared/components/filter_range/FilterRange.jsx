@@ -45,8 +45,8 @@ class FilterRange extends Component {
 
 	fillComboboxes = () => {
 		this.fillLineCombobox();
-		this.fillModelCombobox();
-		this.fillArticleCombobox();
+		//this.fillModelCombobox();
+		//this.fillArticleCombobox();
 	};
 
 	fillLineCombobox = () => {
@@ -103,15 +103,12 @@ class FilterRange extends Component {
 		let params = {
 			"dropdownlist-name": "model",
 			"code"             : selectedLineCode,
-			"screenName"       : screenName
+			"screenname"       : screenName
 		};
-
-		console.log("params: ", params);
 
 		callAxios(method, url, params).then(response => {
 			try {
 				let dataArray   = response.data.data;
-				console.log("dataArray: ", dataArray);
 				let arrayModels = [
 					{value: '', label: '---'}
 				];
@@ -120,7 +117,6 @@ class FilterRange extends Component {
 						{value: element.code, label: element.name}
 					);
 				});
-
 				this.setState({
 					...this.state,
 					arrayModels: arrayModels,
@@ -373,14 +369,14 @@ class FilterRange extends Component {
 				{
 					screenName ? screenName === "alarmhistory"
 					             ? null
-					             : this.modelFilter()
-					           : this.modelFilter()
+					             : this.modelFilter(arrayModels)
+					           : this.modelFilter(arrayModels)
 				}
 				{
 					screenName ? screenName === "alarmhistory"
 					             ? null
-					             : this.articleFilter()
-					           : this.articleFilter()
+					             : this.articleFilter(arrayArticles)
+					           : this.articleFilter(arrayArticles)
 				}
 			</form>
 		);
