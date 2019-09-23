@@ -242,12 +242,12 @@ class LeadTimeDetail extends Component {
 		                                                                             + PRODUCTION_LEAD_TIME_DETAIL;
 		let params                                                                 = {
 			"factory"   : "",
-			"line"      : "",
-			"model"     : "",
-			"article_no": "",
+			"line"      : filterLine,
+			"model"     : filterModel,
+			"article_no": filterArticle,
 			"process"   : "",
-			"from_date" : "0",
-			"to_date"   : "0"
+			"from_date" : filterFromDate,
+			"to_date"   : filterToDate
 		};
 		callAxios(method, url, params).then(response => {
 			try {
@@ -285,7 +285,7 @@ class LeadTimeDetail extends Component {
 	handleFilterModelChange   = (newValue) => {
 		this.setState({
 			...this.state,
-			filterModel: newValue,
+			filterModel: newValue.value,
 		});
 	};
 	handleFilterArticleChange = (newValue) => {
@@ -301,7 +301,10 @@ class LeadTimeDetail extends Component {
 		    || prevState.filterLine !== this.state.filterLine
 		    || prevState.filterModel !== this.state.filterModel
 		    || prevState.filterArticle !== this.state.filterArticle) {
-			this.loadLeadDetailTable();
+			console.log("this.state.filterArticle: ", this.state.filterArticle);
+			if ("" !== this.state.filterArticle.toString()){
+				this.loadLeadDetailTable();
+			}
 		}
 	}
 
