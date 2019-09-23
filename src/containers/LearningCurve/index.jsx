@@ -162,7 +162,7 @@ class LearningCurve extends Component {
 		 submitButton: undefined
 		 total: 73
 		 */
-		let {modelTableColumns, modelTableData} = this.state;
+		let {modelTableColumns, modelTableData}                       = this.state;
 		rowData[LEARNING_CURVE_CONSTANTS.field.modelSubmissionStatus] = LEARNING_CURVE_CONSTANTS.submissionState.onGoing;
 		modelTableData[0]                                             = rowData;
 		this.setState((state, props) => ({
@@ -190,9 +190,8 @@ class LearningCurve extends Component {
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		if (prevState.filterFromDate !== this.state.filterFromDate
 		    || prevState.filterToDate !== this.state.filterToDate
-		    || prevState.filterLine !== this.state.filterLine || prevState.filterModel !== this.state.filterModel) {
-			let {filterFromDate, filterToDate, filterLine, filterModel} = this.state;
-			//this.getChartData();
+		    || prevState.filterLine !== this.state.filterLine
+		    || prevState.filterModel !== this.state.filterModel) {
 			this.loadProcessTable();
 			this.loadModelTable();
 		}
@@ -403,7 +402,12 @@ class LearningCurve extends Component {
 	};
 
 	render() {
-		let {processTableColumns, processTableData, modelTableColumns, modelTableData, chartInitialData, chartOptions, chartData, formData, basicTargetQty, selectedProcess, submissionState} = this.state;
+		let {
+			    processTableColumns, processTableData,
+			    modelTableColumns, modelTableData,
+			    chartInitialData, chartOptions, chartData,
+			    formData, selectedProcess, submissionState
+		    } = this.state;
 		return (
 			<Container className="dashboard">
 				<h3>Dashboard/Learning Curve</h3>
