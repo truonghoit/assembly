@@ -500,7 +500,7 @@ class Overview extends Component {
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
 				             handleFilterArticleChange={this.handleFilterArticleChange}
-				             screenname="overview"
+				             screenName="overview"
 				/>
 				<hr/>
 				<Row>

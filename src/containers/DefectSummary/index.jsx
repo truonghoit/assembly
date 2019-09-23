@@ -121,7 +121,7 @@ class DefectSummary extends Component {
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
 				             handleFilterArticleChange={this.handleFilterArticleChange}
-				             screenname="defectsummary"
+				             screenName="defectsummary"
 				/>
 
 				<div style={{paddingTop: 30}}></div>

@@ -298,7 +298,7 @@ class LeadTimeDetail extends Component {
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
 				             handleFilterArticleChange={this.handleFilterArticleChange}
-				             screenname="leadtimedetail"
+				             screenName="leadtimedetail"
 				/>
 				<hr/>
 				<Row>

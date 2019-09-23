@@ -130,7 +130,7 @@ class DefectStatus extends Component {
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
 				             handleFilterArticleChange={this.handleFilterArticleChange}
-				             screenname="defectstatus"
+				             screenName="defectstatus"
 				/>
 				<hr/>
 				<Row>

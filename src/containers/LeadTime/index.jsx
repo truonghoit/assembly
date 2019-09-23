@@ -407,7 +407,7 @@ class LeadTime extends Component {
 				             handleFilterModelChange={this.handleFilterModelChange}
 				             handleFilterLineChange={this.handleFilterLineChange}
 				             handleFilterArticleChange={this.handleFilterArticleChange}
-				             screenname="leadtime"
+				             screenName="leadtime"
 				/>
 				<hr/>
 				<Row>
@@ -420,7 +420,7 @@ class LeadTime extends Component {
 								<ProductivityTable ccrProcess={ccrProcess}/>
 							</Col>
 							<hr/>
-							<Col md={12} lg={12} style={{backgroundColor: '#232529'}}>
+							<Col md={12}    lg={12} style={{backgroundColor: '#232529'}}>
 								<WorkingHourTable workingHourData={workingHourItem.workingHourData}
 								                  workingHourLabel={workingHourItem.workingHourLabel}/>
 							</Col>

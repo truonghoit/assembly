@@ -425,7 +425,7 @@ class LearningCurve extends Component {
 				             changeIsOKClicked={this.changeIsOKClicked}
 				             selectedProcess={selectedProcess}
 				             submissionState={submissionState}
-				             screenname="learningcurve"
+				             screenName="learningcurve"
 				/>
 				<hr/>
 				<div className="form form--preview d-flex" style={{minheight: 600, marginTop: -35, paddingLeft: 20}}>

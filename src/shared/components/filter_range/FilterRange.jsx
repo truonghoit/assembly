@@ -106,9 +106,12 @@ class FilterRange extends Component {
 			"screenName"       : screenName
 		};
 
+		console.log("params: ", params);
+
 		callAxios(method, url, params).then(response => {
 			try {
 				let dataArray   = response.data.data;
+				console.log("dataArray: ", dataArray);
 				let arrayModels = [
 					{value: '', label: '---'}
 				];
