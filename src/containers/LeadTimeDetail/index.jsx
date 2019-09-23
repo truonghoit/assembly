@@ -152,23 +152,44 @@ class LeadTimeDetail extends Component {
 		totalQTyLastRow[16] = leadDetailData[leadDetailData.length - 1].totalQty;
 
 		//Does not countpre.stiching stage
-		totalLTLastRow[0]  = ((parseFloat(totalLTLastRow[0]) - leadDetailData[0].LT_0730) / 60).toFixed(2);
-		totalLTLastRow[1]  = ((parseFloat(totalLTLastRow[1]) - leadDetailData[0].LT_0830) / 60).toFixed(2);
-		totalLTLastRow[2]  = ((parseFloat(totalLTLastRow[2]) - leadDetailData[0].LT_0930) / 60).toFixed(2);
-		totalLTLastRow[3]  = ((parseFloat(totalLTLastRow[3]) - leadDetailData[0].LT_1030) / 60).toFixed(2);
-		totalLTLastRow[4]  = ((parseFloat(totalLTLastRow[4]) - leadDetailData[0].LT_1130) / 60).toFixed(2);
-		totalLTLastRow[5]  = ((parseFloat(totalLTLastRow[5]) - leadDetailData[0].LT_1230) / 60).toFixed(2);
-		totalLTLastRow[6]  = ((parseFloat(totalLTLastRow[6]) - leadDetailData[0].LT_1330) / 60).toFixed(2);
-		totalLTLastRow[7]  = ((parseFloat(totalLTLastRow[7]) - leadDetailData[0].LT_1430) / 60).toFixed(2);
-		totalLTLastRow[8]  = ((parseFloat(totalLTLastRow[8]) - leadDetailData[0].LT_1530) / 60).toFixed(2);
-		totalLTLastRow[9]  = ((parseFloat(totalLTLastRow[9]) - leadDetailData[0].LT_1630) / 60).toFixed(2);
-		totalLTLastRow[10] = ((parseFloat(totalLTLastRow[10]) - leadDetailData[0].LT_1730) / 60).toFixed(2);
-		totalLTLastRow[11] = ((parseFloat(totalLTLastRow[11]) - leadDetailData[0].LT_1830) / 60).toFixed(2);
-		totalLTLastRow[12] = ((parseFloat(totalLTLastRow[12]) - leadDetailData[0].LT_1930) / 60).toFixed(2);
-		totalLTLastRow[13] = ((parseFloat(totalLTLastRow[13]) - leadDetailData[0].LT_2030) / 60).toFixed(2);
-		totalLTLastRow[14] = ((parseFloat(totalLTLastRow[14]) - leadDetailData[0].LT_2130) / 60).toFixed(2);
-		totalLTLastRow[15] = ((parseFloat(totalLTLastRow[15]) - leadDetailData[0].LT_2230) / 60).toFixed(2);
-		totalLTLastRow[16] = ((totalLTLastRow[16] - leadDetailData[0].totalLT) / 60).toFixed(2);
+		if (leadDetailData[0].line_cd.toString() === "20101".toString()){
+			totalLTLastRow[0]  = ((parseFloat(totalLTLastRow[0]) - leadDetailData[0].LT_0730) / 60).toFixed(2);
+			totalLTLastRow[1]  = ((parseFloat(totalLTLastRow[1]) - leadDetailData[0].LT_0830) / 60).toFixed(2);
+			totalLTLastRow[2]  = ((parseFloat(totalLTLastRow[2]) - leadDetailData[0].LT_0930) / 60).toFixed(2);
+			totalLTLastRow[3]  = ((parseFloat(totalLTLastRow[3]) - leadDetailData[0].LT_1030) / 60).toFixed(2);
+			totalLTLastRow[4]  = ((parseFloat(totalLTLastRow[4]) - leadDetailData[0].LT_1130) / 60).toFixed(2);
+			totalLTLastRow[5]  = ((parseFloat(totalLTLastRow[5]) - leadDetailData[0].LT_1230) / 60).toFixed(2);
+			totalLTLastRow[6]  = ((parseFloat(totalLTLastRow[6]) - leadDetailData[0].LT_1330) / 60).toFixed(2);
+			totalLTLastRow[7]  = ((parseFloat(totalLTLastRow[7]) - leadDetailData[0].LT_1430) / 60).toFixed(2);
+			totalLTLastRow[8]  = ((parseFloat(totalLTLastRow[8]) - leadDetailData[0].LT_1530) / 60).toFixed(2);
+			totalLTLastRow[9]  = ((parseFloat(totalLTLastRow[9]) - leadDetailData[0].LT_1630) / 60).toFixed(2);
+			totalLTLastRow[10] = ((parseFloat(totalLTLastRow[10]) - leadDetailData[0].LT_1730) / 60).toFixed(2);
+			totalLTLastRow[11] = ((parseFloat(totalLTLastRow[11]) - leadDetailData[0].LT_1830) / 60).toFixed(2);
+			totalLTLastRow[12] = ((parseFloat(totalLTLastRow[12]) - leadDetailData[0].LT_1930) / 60).toFixed(2);
+			totalLTLastRow[13] = ((parseFloat(totalLTLastRow[13]) - leadDetailData[0].LT_2030) / 60).toFixed(2);
+			totalLTLastRow[14] = ((parseFloat(totalLTLastRow[14]) - leadDetailData[0].LT_2130) / 60).toFixed(2);
+			totalLTLastRow[15] = ((parseFloat(totalLTLastRow[15]) - leadDetailData[0].LT_2230) / 60).toFixed(2);
+			totalLTLastRow[16] = ((totalLTLastRow[16] - leadDetailData[0].totalLT) / 60).toFixed(2);
+		} else {
+			totalLTLastRow[0]  = (parseFloat(totalLTLastRow[0]) / 60).toFixed(2);
+			totalLTLastRow[1]  = (parseFloat(totalLTLastRow[1]) / 60).toFixed(2);
+			totalLTLastRow[2]  = (parseFloat(totalLTLastRow[2]) / 60).toFixed(2);
+			totalLTLastRow[3]  = (parseFloat(totalLTLastRow[3]) / 60).toFixed(2);
+			totalLTLastRow[4]  = (parseFloat(totalLTLastRow[4]) / 60).toFixed(2);
+			totalLTLastRow[5]  = (parseFloat(totalLTLastRow[5]) / 60).toFixed(2);
+			totalLTLastRow[6]  = (parseFloat(totalLTLastRow[6]) / 60).toFixed(2);
+			totalLTLastRow[7]  = (parseFloat(totalLTLastRow[7]) / 60).toFixed(2);
+			totalLTLastRow[8]  = (parseFloat(totalLTLastRow[8]) / 60).toFixed(2);
+			totalLTLastRow[9]  = (parseFloat(totalLTLastRow[9]) / 60).toFixed(2);
+			totalLTLastRow[10] = (parseFloat(totalLTLastRow[10]) / 60).toFixed(2);
+			totalLTLastRow[11] = (parseFloat(totalLTLastRow[11]) / 60).toFixed(2);
+			totalLTLastRow[12] = (parseFloat(totalLTLastRow[12]) / 60).toFixed(2);
+			totalLTLastRow[13] = (parseFloat(totalLTLastRow[13]) / 60).toFixed(2);
+			totalLTLastRow[14] = (parseFloat(totalLTLastRow[14]) / 60).toFixed(2);
+			totalLTLastRow[15] = (parseFloat(totalLTLastRow[15]) / 60).toFixed(2);
+			totalLTLastRow[16] = (parseFloat(totalLTLastRow[16]) / 60).toFixed(2);
+		}
+
 		this.setState({
 			...this.state,
 			leadDetailFooter: {totalQTyLastRow: totalQTyLastRow, totalLTLastRow: totalLTLastRow}
@@ -231,9 +252,6 @@ class LeadTimeDetail extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let leadDetailData = response.data.data;
-				console.log("207 207 207 207 207 207 207");
-				console.log("207 207 207 207 207 207 207");
-				console.log("leadDetailData: ", leadDetailData);
 				/*this.setState((state, props) => ({
 				 test: "123"
 				 }));*/
