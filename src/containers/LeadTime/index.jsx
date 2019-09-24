@@ -31,8 +31,8 @@ class LeadTime extends Component {
 		/*leadData: [
 		 { mas_cd_nm:'', pair_qty: 0, lead_time: 0, prod_qty_day: 0, prod_time_pair: 0, ccr_yn: 0, min_process_crr: ''},
 		 ],*/
-		this.retrieveLeadTableData();
-		this.retrieveWorkingHourData();
+		//this.retrieveLeadTableData();
+		//this.retrieveWorkingHourData();
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
