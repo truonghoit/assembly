@@ -40,22 +40,10 @@ class AlarmMasterForm extends Component {
 		let method = 'POST';
 		let url    = ASSEMBLY_API + ALARM_LIST_PROCESS;
 
-		console.log("loadProcessList");
-		console.log("loadProcessList");
-		console.log("loadProcessList");
-		console.log("loadProcessList");
-		console.log("loadProcessList");
-		console.log("params: ", params);
-
 		callAxios(method, url, params).then(response => {
 			try {
 				let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
 				let responseArray = response.data.data;
-				console.log("54 54 54 54 54 54 54 54");
-				console.log("54 54 54 54 54 54 54 54");
-				console.log("54 54 54 54 54 54 54 54");
-				console.log("54 54 54 54 54 54 54 54");
-				console.log("responseArray: ", responseArray);
 				let processList   = [];
 				let dataProcess   = [];
 				responseArray.map(item => {
@@ -67,11 +55,6 @@ class AlarmMasterForm extends Component {
 					processList.push(item);
 					dataProcess.push(item);
 				});
-				console.log("58 58 58 58 58 58 58 58");
-				console.log("58 58 58 58 58 58 58 58");
-				console.log("58 58 58 58 58 58 58 58");
-				console.log("58 58 58 58 58 58 58 58");
-				console.log("dataProcess: ", dataProcess);
 				this.setState({
 					processList: processList,
 					dataProcess: dataProcess,
@@ -117,11 +100,46 @@ class AlarmMasterForm extends Component {
 
 		this.setState((state, props) => ({
 			submitButtonClicked: false,
-			selectedModel: data.model_cd
+			selectedModel: data.model_cd,
+			dataArticle:[],
+			dataProcess:[]
 		}));
+
+		let modelTable = this.refs.modelTable;
+		let modules = modelTable.table.modules;
+		let selectedRows = modules.selectRow.selectedRows;
+		let selectedModel = selectedRows[0];
+
+		let articleTable = this.refs.articleTable;
+		let selectedArticles = articleTable.table.modules.selectRow.selectedRows;
+		let selectedArticle = selectedArticles[0];
+		articleTable.table.deselectRow();
+		if (selectedArticle){
+			//selectedArticle.toggleSelect();
+			selectedArticle.modules.select.selected = false;
+			selectedArticles = articleTable.table.modules.selectRow.selectedRows;
+		}
 		this.props.onModelClick(selectedRow);
 		this.props.loadArticleTable(selectedRow);
 	};
+
+	onModelDeselect = (data) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		if (this.props.onMounted) {
+			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
+		}
+
+		let selectedRow = data;
+
+		this.setState((state, props) => ({
+			submitButtonClicked: false,
+			selectedModel      : "",
+			selectedArticle    : "",
+			dataArticle        : [],
+			dataProcess        : []
+		}));
+		this.props.onModelDeselect(data);
+	}
 
 	onArticleClick = (data) => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
@@ -134,9 +152,26 @@ class AlarmMasterForm extends Component {
 		let params = {
 			model_cd  : this.state.selectedModel,
 			article_no: this.state.selectedArticle,
-			resetForm : true
+			resetForm : true,
 		};
 		this.loadProcessList(params);
+	}
+
+	onArticleDeselect = (data) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		if (this.props.onMounted) {
+			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
+		}
+
+		let selectedRow = data;
+
+		this.setState((state, props) => ({
+			submitButtonClicked: false,
+			selectedArticle    : "",
+			dataArticle        : [],
+			dataProcess        : []
+		}));
+		this.props.onArticleDeselect(data);
 	}
 
 	onProcessClick = (data) => {
@@ -156,6 +191,20 @@ class AlarmMasterForm extends Component {
 			return false;
 		});
 	};
+
+	onProcessDeselect = (data) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		if (this.props.onMounted) {
+			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
+		}
+
+		let selectedRow = data;
+
+		this.setState((state, props) => ({
+			submitButtonClicked: false,
+		}));
+		this.props.onProcessDeselect(data);
+	}
 
 	callChildLoadProcessList = (params) => {
 		this.loadProcessList(params);
@@ -248,11 +297,6 @@ class AlarmMasterForm extends Component {
 
 		let {columnsModelArticle, columnsModel, columnsArticle, dataModelArticle, columnsProcess, dataModel, dataArticle, handleSubmit, reset, onReset, submissionState} = this.props;
 		let {formData, processList, dataProcess, submitButtonClicked, submissionError}                          = this.state;
-		console.log("processList processList processList ");
-		console.log("processList processList processList ");
-		console.log("processList processList processList ");
-		console.log("processList: ", processList);
-		console.log("dataProcess: ", dataProcess);
 		let definitionArray     = formData[field.definitionValue]
 		                          ? formData[field.definitionValue].split("")
 		                          : [0, 0, 0];
@@ -267,21 +311,23 @@ class AlarmMasterForm extends Component {
 						height: "500px",
 						border: "none",
 					}} onRowClick={this.onModelArticleClick} id="modelTable"/>*/}
-						<DataTable id="modelTable" columns={columnsModel} data={dataModel}
+						<DataTable id="modelTable" columns={columnsModel} data={dataModel} ref="modelTable"
 						           options={{
 							           height         : "40em",
 							           columnVertAlign: "bottom"
 						           }}
 						           onRowClick={this.onModelClick}
+						           onRowDeselect={this.onModelDeselect}
 						/>
 				</Col>
 				<Col md={1.5} lg={1.5} style={{minHeight: 300, minWidth: 220}}>
-					<DataTable id="articleTable" columns={columnsArticle} data={dataArticle}
+					<DataTable id="articleTable" columns={columnsArticle} data={dataArticle} ref="articleTable"
 					           options={{
 						           height         : "40em",
 						           columnVertAlign: "bottom"
 					           }}
 					           onRowClick={this.onArticleClick}
+					           onRowDeselect={this.onArticleDeselect}
 					/>
 				</Col>
 				<Col md={1.5} lg={1.5} style={{minHeight: 300, minWidth: 220}}>
@@ -313,12 +359,13 @@ class AlarmMasterForm extends Component {
 						</ul>
 
 					</div>*/}
-					<DataTable id="processTable" columns={columnsProcess} data={dataProcess}
+					<DataTable id="processTable" columns={columnsProcess} data={dataProcess} ref="processTable"
 					           options={{
 						           height         : "40em",
 						           columnVertAlign: "bottom"
 					           }}
 					           onRowClick={this.onProcessClick}
+					           onRowDeselect={this.onProcessDeselect}
 					/>
 				</Col>
 				<Col md={7} lg={7} style={{backgroundColor: '#1E2229'}}>

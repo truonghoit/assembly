@@ -90,10 +90,6 @@ class MasterAlarm extends Component {
 			try {
 				let responseArray = response.data.data;
 				let dataArray     = [];
-				console.log("89 89 89 89 89 89 89");
-				console.log("89 89 89 89 89 89 89");
-				console.log("89 89 89 89 89 89 89");
-				console.log("responseArray: ", responseArray);
 				responseArray.map(item => {
 					item = {
 						[field.modelNm]  : item.model_nm ? item.model_nm.toString() : '',
@@ -111,12 +107,6 @@ class MasterAlarm extends Component {
 	}
 
 	loadArticleTable = (data) => {
-		console.log("110 110 110 110 110 110 110 110 110 110 110 110 110 110");
-		console.log("110 110 110 110 110 110 110 110 110 110 110 110 110 110");
-		console.log("110 110 110 110 110 110 110 110 110 110 110 110 110 110");
-		console.log("110 110 110 110 110 110 110 110 110 110 110 110 110 110");
-		console.log("loadArticleTable");
-		console.log("data: ", data);
 		let method  = 'POST';
 		let url     = ASSEMBLY_API + ALARM_ARTICLE;
 		let params  = {
@@ -127,7 +117,6 @@ class MasterAlarm extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let responseArray = response.data.data;
-				console.log("responseArray: ", responseArray);
 				let dataArray     = [];
 				responseArray.map(item => {
 					item = {
@@ -246,8 +235,6 @@ class MasterAlarm extends Component {
 	};
 
 	onModelClick = (selectedRow) => {
-		console.log("onModelClick");
-		console.log("selectedRow: ", selectedRow);
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.setState({
 			formData       : {
@@ -261,15 +248,43 @@ class MasterAlarm extends Component {
 		});
 	};
 
+	onModelDeselect = (data) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.setState({
+			formData       : {
+				...this.state.formData,
+				[field.modelNm]        : "",
+				[field.modelCd]        : "",
+				[field.articleNm]      : "",
+				[field.articleNo]      : "",
+				[field.definitionValue]: '000',
+			},
+			editMode       : false,
+			submissionState: ALARM_MASTER_PAGE_CONSTANTS.submissionState.initial,
+		});
+	}
+
 	onArticleClick = (selectedRow) => {
-		console.log("onArticleClick");
-		console.log("selectedRow: ", selectedRow);
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.setState({
 			formData       : {
 				...this.state.formData,
 				[field.articleNm]      : selectedRow[field.articleNm],
 				[field.articleNo]      : selectedRow[field.articleNo],
+				[field.definitionValue]: '000',
+			},
+			editMode       : false,
+			submissionState: ALARM_MASTER_PAGE_CONSTANTS.submissionState.initial,
+		});
+	}
+
+	onArticleDeselect = (data) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.setState({
+			formData       : {
+				...this.state.formData,
+				[field.articleNm]      : "",
+				[field.articleNo]      : "",
 				[field.definitionValue]: '000',
 			},
 			editMode       : false,
@@ -366,6 +381,18 @@ class MasterAlarm extends Component {
 			},
 		});
 	};
+
+	onProcessDeselect = (data) => {
+		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+		this.setState({
+			formData       : {
+				...this.state.formData,
+				[field.definitionValue]: '000',
+			},
+			editMode       : false,
+			submissionState: ALARM_MASTER_PAGE_CONSTANTS.submissionState.initial,
+		});
+	}
 
 	onAlarmSensorTableRowClick = (data) => {
 		let {field, submissionState} = ALARM_MASTER_PAGE_CONSTANTS;
@@ -561,10 +588,6 @@ class MasterAlarm extends Component {
 
 	render() {
 		let {columnsModelArticle, columnsModel, columnsArticle, columnsProcess, dataModelArticle, dataModel, dataArticle, dataProcess, columnsAlarmSensor, dataAlarmSensor, formData, editMode, submissionState} = this.state;
-		console.log("532 532 532 532");
-		console.log("532 532 532 532");
-		console.log("532 532 532 532");
-		console.log("dataArticle: ", dataArticle);
 		return (
 			<Container className="dashboard">
 				<Row>
@@ -579,8 +602,11 @@ class MasterAlarm extends Component {
 					                 dataProcess={dataProcess}
 					                 onModelArticleClick={this.onModelArticleClick}
 					                 onModelClick={this.onModelClick}
+					                 onModelDeselect={this.onModelDeselect}
 					                 onArticleClick={this.onArticleClick}
+					                 onArticleDeselect={this.onArticleDeselect}
 					                 onProcessClick={this.onProcessClick}
+					                 onProcessDeselect={this.onProcessDeselect}
 					                 formData={formData}
 					                 onSubmit={this.handleSubmit}
 					                 onReset={this.onReset}

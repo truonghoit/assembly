@@ -289,6 +289,12 @@ class ChartArea extends Component {
 
 	render() {
 		let {chartData, type} = this.props;
+		console.log("291 291 291 291");
+		console.log("291 291 291 291");
+		console.log("291 291 291 291");
+		console.log("291 291 291 291");
+		console.log("type: ", type);
+		console.log("chartData: ", chartData);
 		let chartContent      = this.fillChartContent(chartData, type);
 		return chartContent;
 	}
