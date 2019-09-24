@@ -509,7 +509,7 @@ class MasterForm extends Component {
 								: ''
 							}
 						</Button>
-						<Button type="button" disabled={formData[field.sysCodeYn] === 1} onClick={() => {
+						<Button type="button" onClick={() => {
 							reset();
 							this.setState({
 								formData: {},
