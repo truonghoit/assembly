@@ -417,13 +417,13 @@ class AlarmMasterForm extends Component {
 							/>
 						</Col>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label text-center text-uppercase ml-4">Temperature</span>
+							<span className="form__form-group-label text-center text-uppercase ml-4">Temperature (°C)</span>
 						</Col>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label text-center text-uppercase ml-4">Pressure</span>
+							<span className="form__form-group-label text-center text-uppercase ml-4">Pressure</span><span> (pa)</span>
 						</Col>
 						<Col md={3} lg={3}>
-							<span className="form__form-group-label text-center text-uppercase ml-4">Timer</span>
+							<span className="form__form-group-label text-center text-uppercase ml-4">Timer</span><span className="text-center ml-4 text-white"> (s)</span>
 						</Col>
 
 						<hr style={{height: 30}}/>
