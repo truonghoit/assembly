@@ -7,7 +7,7 @@ class ChartArea extends Component {
 		super(props);
 	}
 
-	drawChartItem = (dataItem, type = "temp") => {
+	drawChartItem = (dataItem, type = "temp", index = 1) => {
 		let result    = null;
 		let bgColor   = '';
 		let chartType = 'line';
@@ -31,7 +31,8 @@ class ChartArea extends Component {
 			let chartLabels = dataItem[0];
 			let chartData   = dataItem[2];
 
-			let standardData1 = Array(chartData.length);
+			let chartLength = chartData?chartData.length:0;
+			let standardData1 = Array(chartLength);
 			if (dataItem[1] && dataItem[1][0]) {
 				standardData1.fill(dataItem[1][0]);
 				//standardData1.fill(300);
@@ -39,7 +40,7 @@ class ChartArea extends Component {
 				standardData1.fill(0);
 			}
 
-			let standardData2 = Array(chartData.length);
+			let standardData2 = Array(chartLength);
 			if (dataItem[1] && dataItem[1][1]) {
 				standardData2.fill(dataItem[1][1]);
 				//standardData2.fill(500);
@@ -47,52 +48,57 @@ class ChartArea extends Component {
 				standardData2.fill(0);
 			}
 
+			let data = [
+				{
+					label           : "Line Standard 1",
+					data            : standardData1,
+					type            : 'line',
+					borderColor     : "#FFFFFF",
+					pointRadius     : 0,
+					pointHoverRadius: 0,
+					fill            : false,
+					lineTension     : 0,
+					borderWidth     : 1,
+				},
+				{
+					label           : "Line Standard 2",
+					data            : standardData2,
+					type            : 'line',
+					borderColor     : "#FFFFFF",
+					pointRadius     : 0,
+					pointHoverRadius: 0,
+					fill            : false,
+					lineTension     : 0,
+					borderWidth     : 1,
+				},
+				{
+					label           : "Bar dataset",
+					data            : chartData,
+					borderColor     : "#FF71CF",
+					fill            : false,
+					lineTension     : 0,
+					pointRadius     : 3,
+					pointHoverRadius: 0,
+				},
+			];
 			let initialData = {
 				labels  : chartLabels,
-				datasets: [
-					{
-						label           : "Line Standard 1",
-						data            : standardData1,
-						type            : 'line',
-						borderColor     : "#FFFFFF",
-						pointRadius     : 0,
-						pointHoverRadius: 0,
-						fill            : false,
-						lineTension     : 0,
-						borderWidth     : 1,
-					},
-					{
-						label           : "Line Standard 2",
-						data            : standardData2,
-						type            : 'line',
-						borderColor     : "#FFFFFF",
-						pointRadius     : 0,
-						pointHoverRadius: 0,
-						fill            : false,
-						lineTension     : 0,
-						borderWidth     : 1,
-					},
-					{
-						label           : "Bar dataset",
-						data            : chartData,
-						borderColor     : "#FF71CF",
-						fill            : false,
-						lineTension     : 0,
-						pointRadius     : 0,
-						pointHoverRadius: 0,
-					},
-				]
+				datasets: data,
 			};
 
 			result = <Col md={2.5} lg={2.5}
 			              style={{backgroundColor: bgColor, marginRight: 10, marginBottom: 10, borderRadius: 5}}>
-				<MixedLineBarChart chartInitialData={initialData} labels={chartLabels} type={chartType}/>
+				<div style={{display:'flex', justifyContent: 'center'}}>
+					<span style={{color: '#FFFFFF'}}>Temp {index}</span>
+				</div>
+				<MixedLineBarChart chartInitialData={initialData}  data={data} labels={chartLabels} type={chartType}/>
 			</Col>;
 		} else if (type == 'pressure') {
 			let chartLabels = dataItem[0];
 			let chartData   = dataItem[2];
 
-			let standardData1 = Array(chartData.length);
+			let chartLength = chartData?chartData.length:0;
+			let standardData1 = Array(chartLength);
 			if (dataItem[1] && dataItem[1][0]) {
 				standardData1.fill(dataItem[1][0]);
 				//standardData1.fill(300);
@@ -100,7 +106,7 @@ class ChartArea extends Component {
 				standardData1.fill(0);
 			}
 
-			let standardData2 = Array(chartData.length);
+			let standardData2 = Array(chartLength);
 			if (dataItem[1] && dataItem[1][1]) {
 				standardData2.fill(dataItem[1][1]);
 				//standardData2.fill(500);
@@ -108,52 +114,58 @@ class ChartArea extends Component {
 				standardData2.fill(0);
 			}
 
+			let data = [
+				{
+					label           : "Line Standard 1",
+					data            : standardData1,
+					type            : 'line',
+					borderColor     : "#FFFFFF",
+					pointRadius     : 0,
+					pointHoverRadius: 0,
+					fill            : false,
+					lineTension     : 0,
+					borderWidth     : 1,
+				},
+				{
+					label           : "Line Standard 2",
+					data            : standardData2,
+					type            : 'line',
+					borderColor     : "#FFFFFF",
+					pointRadius     : 0,
+					pointHoverRadius: 0,
+					fill            : false,
+					lineTension     : 0,
+					borderWidth     : 1,
+				},
+				{
+					label           : "Bar dataset",
+					data            : chartData,
+					borderColor     : "#8C67F6",
+					fill            : false,
+					lineTension     : 0,
+					pointRadius     : 3,
+					pointHoverRadius: 0,
+				},
+			];
 			let initialData = {
 				labels  : chartLabels,
-				datasets: [
-					{
-						label           : "Line Standard 1",
-						data            : standardData1,
-						type            : 'line',
-						borderColor     : "#FFFFFF",
-						pointRadius     : 0,
-						pointHoverRadius: 0,
-						fill            : false,
-						lineTension     : 0,
-						borderWidth     : 1,
-					},
-					{
-						label           : "Line Standard 2",
-						data            : standardData2,
-						type            : 'line',
-						borderColor     : "#FFFFFF",
-						pointRadius     : 0,
-						pointHoverRadius: 0,
-						fill            : false,
-						lineTension     : 0,
-						borderWidth     : 1,
-					},
-					{
-						label           : "Bar dataset",
-						data            : chartData,
-						borderColor     : "#8C67F6",
-						fill            : false,
-						lineTension     : 0,
-						pointRadius     : 0,
-						pointHoverRadius: 0,
-					},
-				]
+				datasets: data
 			};
 
 			result = <Col md={2.5} lg={2.5}
 			              style={{backgroundColor: bgColor, marginRight: 10, marginBottom: 10, borderRadius: 5}}>
-				<MixedLineBarChart chartInitialData={initialData} labels={chartLabels} type={chartType}/>
+				<div style={{display:'flex', justifyContent: 'center'}}>
+					<span style={{color: '#FFFFFF'}}>Press {index}</span>
+				</div>
+				<MixedLineBarChart chartInitialData={initialData} data={data} labels={chartLabels} type={chartType}/>
 			</Col>;
 		} else if (type == 'curing') {
 			let chartLabels = dataItem[0];
-			let chartData   = dataItem[2];
+			let chartData1   = dataItem[2];
+			let chartData2   = dataItem[3];
 
-			let standardData1 = Array(chartData.length);
+			let chartLength = chartData1?chartData1.length:0;
+			let standardData1 = Array(chartLength);
 			if (dataItem[1] && dataItem[1][0]) {
 				standardData1.fill(dataItem[1][0]);
 				//standardData1.fill(300);
@@ -161,7 +173,7 @@ class ChartArea extends Component {
 				standardData1.fill(0);
 			}
 
-			let standardData2 = Array(chartData.length);
+			let standardData2 = Array(chartLength);
 			if (dataItem[1] && dataItem[1][1]) {
 				standardData2.fill(dataItem[1][1]);
 				//standardData2.fill(500);
@@ -206,55 +218,59 @@ class ChartArea extends Component {
 				},
 			};
 
+			let data = [
+				{
+					label           : "Line Standard 1",
+					data            : standardData1,
+					type            : 'line',
+					borderColor     : "#FFFFFF",
+					pointRadius     : 0,
+					pointHoverRadius: 0,
+					fill            : false,
+					lineTension     : 0,
+					borderWidth     : 1,
+				},
+				{
+					label           : "Line Standard 2",
+					data            : standardData2,
+					type            : 'line',
+					borderColor     : "#FFFFFF",
+					pointRadius     : 0,
+					pointHoverRadius: 0,
+					fill            : false,
+					lineTension     : 0,
+					borderWidth     : 1,
+				},
+				{
+					label           : "preparing Time dataset",
+					data            : chartData1,
+					backgroundColor : "#2880E9",
+					fill            : true,
+					lineTension     : 0,
+					pointRadius     : 0,
+					pointHoverRadius: 0,
+				},
+				{
+					label           : "Curing Time dataset",
+					data            : chartData2,
+					backgroundColor : "#005FCE",
+					fill            : true,
+					lineTension     : 0,
+					pointRadius     : 0,
+					pointHoverRadius: 0,
+				}
+			];
 			let initialData = {
 				labels  : chartLabels,
-				datasets: [
-					{
-						label           : "Line Standard 1",
-						data            : standardData1,
-						type            : 'line',
-						borderColor     : "#FFFFFF",
-						pointRadius     : 0,
-						pointHoverRadius: 0,
-						fill            : false,
-						lineTension     : 0,
-						borderWidth     : 1,
-					},
-					{
-						label           : "Line Standard 2",
-						data            : standardData2,
-						type            : 'line',
-						borderColor     : "#FFFFFF",
-						pointRadius     : 0,
-						pointHoverRadius: 0,
-						fill            : false,
-						lineTension     : 0,
-						borderWidth     : 1,
-					},
-					{
-						label           : "preparing Time dataset",
-						data            : chartData,
-						backgroundColor : "#2880E9",
-						fill            : true,
-						lineTension     : 0,
-						pointRadius     : 0,
-						pointHoverRadius: 0,
-					},
-					{
-						label           : "Curing Time dataset",
-						data            : chartData,
-						backgroundColor : "#005FCE",
-						fill            : true,
-						lineTension     : 0,
-						pointRadius     : 0,
-						pointHoverRadius: 0,
-					}
-				]
+				datasets: data,
 			};
 
 			result = <Col md={2.5} lg={2.5}
 			              style={{backgroundColor: bgColor, marginRight: 10, marginBottom: 10, borderRadius: 5}}>
-				<MixedLineBarChart chartOptions={chartOptions} chartInitialData={initialData} labels={chartLabels}
+				<div style={{display:'flex', justifyContent: 'center'}}>
+					<span style={{color: '#FFFFFF'}}>Timer {index}</span>
+				</div>
+				<MixedLineBarChart chartOptions={chartOptions} chartInitialData={initialData}  data={data} labels={chartLabels}
 				                   type={chartType}/>
 			</Col>;
 		}
@@ -274,13 +290,25 @@ class ChartArea extends Component {
 		 __proto__: Object
 		 1: {graph_2: Array(3)}
 		 */
-		let chartArray = [];
+		let chartArray = new Array();
 		for (let i = 0; i < chartData.length; i++) {
-			let dataItem = chartData[i][`graph_${i + 1}`];
-			if (dataItem.length > 0) {
-				chartArray[i] = this.drawChartItem(dataItem, type);
+			if (chartData[i] && chartData[i]['graph']){
+				let dataItem = chartData[i]['graph'];
+				if (dataItem) {
+					chartArray[i] = this.drawChartItem(dataItem, type, i + 1);
+				}
+			} else {
+				let dataItem = [["7:30", "8:30", "9:30", "10:30", "11:30", "12:30", "13:30", "14:30", "15:30", "16:30", "17:30", "18:30", "19:30", "20:30", "21:30", "22:30"],
+								[0, 0],
+								[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+				if (type.toString() === "curing"){
+					dataItem = [["7:30", "8:30", "9:30", "10:30", "11:30", "12:30", "13:30", "14:30", "15:30", "16:30", "17:30", "18:30", "19:30", "20:30", "21:30", "22:30"],
+					            [0, 0],
+					            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+								[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+				}
+				chartArray[i] = this.drawChartItem(dataItem, type, i + 1);
 			}
-
 		}
 		return <div className="d-flex flex-wrap">
 			{chartArray}
@@ -289,12 +317,6 @@ class ChartArea extends Component {
 
 	render() {
 		let {chartData, type} = this.props;
-		console.log("291 291 291 291");
-		console.log("291 291 291 291");
-		console.log("291 291 291 291");
-		console.log("291 291 291 291");
-		console.log("type: ", type);
-		console.log("chartData: ", chartData);
 		let chartContent      = this.fillChartContent(chartData, type);
 		return chartContent;
 	}

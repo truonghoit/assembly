@@ -69,14 +69,11 @@ class SensingValue extends Component {
 			/*"from_date": 1533700403,
 			 "to_date"  : 1565322803*/
 		}
-		console.log("url: ", url);
-		console.log("params: ", params);
 
 		callAxios(method, url, params).then(response => {
 			try {
 				let data            = response.data.data;
 				let selectedProcess = data[0];
-				console.log("data 77: ", data);
 				this.setState((state, props) => ({
 					processData: data,
 				}));
@@ -94,10 +91,9 @@ class SensingValue extends Component {
 
 		let {filterArticle, filterFromDate, filterToDate, filterLine, filterModel} = this.state;
 		let definitionValue                                                        = processData.definition_value;
-		console.log("91 91 91 91 91 91 91");
-		console.log("definitionValue: ", definitionValue);
-		if (definitionValue !== null && definitionValue !== undefined && parseInt(definitionValue.charAt(0)) > 0) {
+		if (definitionValue !== null && definitionValue !== undefined && parseInt(definitionValue.charAt(1)) >= 0) {
 			//Get temp data
+			let tempValue = parseInt(definitionValue.charAt(0));
 			let method = 'POST';
 			let url    = ASSEMBLY_API + SENSING_TEMP;
 			let params = {
@@ -110,6 +106,35 @@ class SensingValue extends Component {
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
+					if (processData.definition_value.toString() === "244" && processData.process_cd === "20105"){
+						let chart1 = data[0]?data[0]:[];
+						let chart3 = data[2]?data[2]:[];
+						data = [chart1, chart3];
+					} else if (processData.definition_value.toString() === "444" && processData.process_cd === "20106") {
+						let chart1 = data[0]?data[0]:[];
+						let chart2 = data[1]?data[1]:[];
+						let chart3 = data[2]?data[2]:[];
+						let chart4 = data[3]?data[3]:[];
+						data = [chart1, chart2, chart3, chart4];
+					} else if (processData.definition_value.toString() === "100" && processData.process_cd === "20110") {
+						let chart1 = data[0]?data[0]:[];
+						data = [chart1];
+					} else if (processData.definition_value.toString() === "800" && processData.process_cd === "20112") {
+						let chart1 = data[0]?data[0]:[];
+						let chart2 = data[1]?data[1]:[];
+						let chart3 = data[2]?data[2]:[];
+						let chart4 = data[3]?data[3]:[];
+						let chart5 = data[4]?data[4]:[];
+						let chart6 = data[5]?data[5]:[];
+						let chart7 = data[6]?data[6]:[];
+						let chart8 = data[7]?data[7]:[];
+						data = [chart1, chart2, chart3, chart4, chart5, chart6, chart7, chart8];
+					} else if (processData.definition_value.toString() === "033" && processData.process_cd === "20113") {
+						data = [];
+					} else if (processData.definition_value.toString() === "100" && processData.process_cd === "20114") {
+						let chart1 = data[0]?data[0]:[];
+						data = [chart1];
+					}
 					this.setState((state, props) => ({
 						tempChartData: data
 					}));
@@ -118,7 +143,7 @@ class SensingValue extends Component {
 				}
 			});
 		}
-		if (definitionValue !== null && definitionValue !== undefined && parseInt(definitionValue.charAt(1)) > 0) {
+		if (definitionValue !== null && definitionValue !== undefined && parseInt(definitionValue.charAt(1)) >= 0) {
 			//Get pressure data
 			let method = 'POST';
 			let url    = ASSEMBLY_API + SENSING_PRESS;
@@ -133,6 +158,30 @@ class SensingValue extends Component {
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
+					if (processData.definition_value.toString() === "244" && processData.process_cd === "20105"){
+						let chart1 = data[0]?data[0]:[];
+						let chart2 = data[1]?data[1]:[];
+						let chart3 = data[2]?data[2]:[];
+						let chart4 = data[3]?data[3]:[];
+						data = [chart1, chart2, chart3, chart4];
+					} else if (processData.definition_value.toString() === "444" && processData.process_cd === "20106") {
+						let chart1 = data[0]?data[0]:[];
+						let chart2 = data[1]?data[1]:[];
+						let chart3 = data[2]?data[2]:[];
+						let chart4 = data[3]?data[3]:[];
+						data = [chart1, chart2, chart3, chart4];
+					} else if (processData.definition_value.toString() === "100" && processData.process_cd === "20110") {
+						data = [];
+					} else if (processData.definition_value.toString() === "800" && processData.process_cd === "20112") {
+						data = [];
+					} else if (processData.definition_value.toString() === "033" && processData.process_cd === "20113") {
+						let chart1 = data[0]?data[0]:[];
+						let chart2 = data[1]?data[1]:[];
+						let chart3 = data[2]?data[2]:[];
+						data = [chart1, chart2, chart3];
+					} else if (processData.definition_value.toString() === "100" && processData.process_cd === "20114") {
+						data = [];
+					}
 					this.setState((state, props) => ({
 						pressureChartData: data
 					}));
@@ -142,7 +191,7 @@ class SensingValue extends Component {
 			});
 		}
 
-		if (definitionValue !== null && definitionValue !== undefined && parseInt(definitionValue.charAt(2)) > 0) {
+		if (definitionValue !== null && definitionValue !== undefined && parseInt(definitionValue.charAt(2)) >= 0) {
 			//Get curing time data
 			let method = 'POST';
 			let url    = ASSEMBLY_API + SENSING_TIME;
@@ -157,6 +206,30 @@ class SensingValue extends Component {
 			callAxios(method, url, params).then(response => {
 				try {
 					let data = response.data.data;
+					if (processData.definition_value.toString() === "244" && processData.process_cd === "20105"){
+						let chart1 = data[0]?data[0]:[];
+						let chart2 = data[1]?data[1]:[];
+						let chart3 = data[2]?data[2]:[];
+						let chart4 = data[3]?data[3]:[];
+						data = [chart1, chart2, chart3, chart4];
+					} else if (processData.definition_value.toString() === "444" && processData.process_cd === "20106") {
+						let chart1 = data[0]?data[0]:[];
+						let chart2 = data[1]?data[1]:[];
+						let chart3 = data[2]?data[2]:[];
+						let chart4 = data[3]?data[3]:[];
+						data = [chart1, chart2, chart3, chart4];
+					} else if (processData.definition_value.toString() === "100" && processData.process_cd === "20110") {
+						data = [];
+					} else if (processData.definition_value.toString() === "800" && processData.process_cd === "20112") {
+						data = [];
+					} else if (processData.definition_value.toString() === "033" && processData.process_cd === "20113") {
+						let chart1 = data[0]?data[0]:[];
+						let chart2 = data[1]?data[1]:[];
+						let chart3 = data[2]?data[2]:[];
+						data = [chart1, chart2, chart3];
+					} else if (processData.definition_value.toString() === "100" && processData.process_cd === "20114") {
+						data = [];
+					}
 					this.setState((state, props) => ({
 						curingChartData: data
 					}));
@@ -210,7 +283,6 @@ class SensingValue extends Component {
 
 	render() {
 		let {tempChartData, pressureChartData, curingChartData, processData} = this.state;
-		console.log("curingChartData: ", curingChartData);
 		return (
 			<Container className="dashboard">
 				<h3>DASHBOARD / SENSING VALUE</h3>

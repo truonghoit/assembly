@@ -41,11 +41,11 @@ class MachineAlarmLeftBar extends Component {
 				divArray[i] = <div className="d-flex flex-column mt-1" key={dataItem.process_cd}
 				                   onClick={this.handleProcessClick.bind(this, dataItem)}>
 					<div className="d-flex flex-column justify-content-center"
-					     style={{backgroundColor: bgColor, paddingTop: 10, paddingBottom: 10}}>
+					     style={{backgroundColor: bgColor, paddingTop: 30, paddingBottom: 30}}>
 						<div className="d-flex justify-content-around" style={{color: '#BEBEBE'}}>
 							{dataItem.process_nm.toUpperCase()}
 						</div>
-						<div className="d-flex justify-content-around" style={{paddingLeft: 60, paddingRight: 60}}>
+						{/*<div className="d-flex justify-content-around" style={{paddingLeft: 60, paddingRight: 60}}>
 							<span style={{color: '#BEBEBE', fontSize: 'large'}}>●</span>
 							<span style={{color: '#FFD44F', fontSize: 'large'}}>●</span>
 							<span style={{color: '#F84E4E', fontSize: 'large'}}>●</span>
@@ -54,7 +54,7 @@ class MachineAlarmLeftBar extends Component {
 							<span style={{color: '#BEBEBE'}}>{dataItem.sensor_no_gray}</span>
 							<span style={{color: '#FFD44F'}}>{dataItem.sensor_no_yellow}</span>
 							<span style={{color: '#F84E4E'}}>{dataItem.sensor_no_red}</span>
-						</div>
+						</div>*/}
 					</div>
 				</div>;
 			}
