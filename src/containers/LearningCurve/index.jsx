@@ -45,8 +45,8 @@ class LearningCurve extends Component {
 			{title: "Model Code", field: LEARNING_CURVE_CONSTANTS.field.modelCode, visible: false},
 			{title: "Line Code", field: LEARNING_CURVE_CONSTANTS.field.lineCode, visible: false},
 			{
-				title         : "STICHING",
-				field         : LEARNING_CURVE_CONSTANTS.field.stiching,
+				title         : "STITCHING",
+				field         : LEARNING_CURVE_CONSTANTS.field.stitching,
 				width         : '15%',
 				align         : "center",
 				titleFormatter: titleFormater,
@@ -219,7 +219,7 @@ class LearningCurve extends Component {
 						[LEARNING_CURVE_CONSTANTS.field.modelName]            : item.model_nm,
 						[LEARNING_CURVE_CONSTANTS.field.modelCode]            : item.model_cd,
 						[LEARNING_CURVE_CONSTANTS.field.lineCode]             : item.line_cd,
-						[LEARNING_CURVE_CONSTANTS.field.stiching]             : item.stitching,
+						[LEARNING_CURVE_CONSTANTS.field.stitching]            : item.stitching,
 						[LEARNING_CURVE_CONSTANTS.field.shoemaking]           : item.shoemaking,
 						[LEARNING_CURVE_CONSTANTS.field.total]                : parseInt(item.stitching)
 						                                                        + parseInt(item.shoemaking),
