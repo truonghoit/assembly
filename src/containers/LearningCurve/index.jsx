@@ -442,8 +442,6 @@ class LearningCurve extends Component {
 							</Col>
 							<Col md={7} lg={7} style={{minHeight: 300, marginTop: 50}}>
 								<p style={{fontWeight: 'bold'}}>PROCESS CHART</p>
-								<p style={{marginBottom: 20}}>Target
-									Qty: {formData[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]} pairs</p>
 								<LearningCurveChart showLegend={true} chartInitialData={chartInitialData}
 								                    chartOptions={chartOptions} chartData={chartData}/>
 							</Col>
