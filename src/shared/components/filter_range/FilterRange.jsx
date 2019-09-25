@@ -75,7 +75,7 @@ class FilterRange extends Component {
 					changeFilterLine(arrayLines)
 				);
 
-				if (this.props.screenName === 'alarmhistory') {
+				/*if (this.props.screenName === 'alarmhistory') {
 					this.setState((state) => ({
 						...state,
 						selectedLine: arrayLines.length > 0 ? arrayLines[0] : ARRAY_LINES[0],
@@ -84,7 +84,18 @@ class FilterRange extends Component {
 					if (arrayLines.length > 0) {
 						this.handleFilterLineChange(arrayLines[0]);
 					}
+				}*/
+				this.setState((state) => ({
+					...state,
+					selectedLine: arrayLines.length > 0 ? arrayLines[0] : ARRAY_LINES[0],
+				}));
+
+				if (arrayLines.length > 0) {
+					console.log("94 94 94 94 94 94");
+					console.log("arrayLines[0]: ", arrayLines[0]);
+					this.handleFilterLineChange(arrayLines[0]);
 				}
+
 			} catch (e) {
 				console.log("Error: ", e);
 			}
@@ -112,15 +123,24 @@ class FilterRange extends Component {
 				let arrayModels = [
 					{value: '', label: '---'}
 				];
-				dataArray.forEach(element => {
-					arrayModels.push(
-						{value: element.code, label: element.name}
-					);
-				});
+				if (dataArray.length > 0){
+					arrayModels = [];
+					dataArray.forEach(element => {
+						arrayModels.push(
+							{value: element.code, label: element.name}
+						);
+					});
+				}
+
 				this.setState({
 					...this.state,
 					arrayModels: arrayModels,
+					selectedModel: arrayModels.length > 0 ? arrayModels[0] : ARRAY_MODELS[0],
 				});
+
+				if (arrayModels.length > 0){
+					this.fillArticleCombobox(arrayModels[0]);
+				}
 
 				this.props.dispatch(
 					changeFilterModel(arrayModels)
@@ -151,14 +171,19 @@ class FilterRange extends Component {
 				let arrayArticles = [
 					{value: '', label: '---'}
 				];
-				dataArray.forEach(element => {
-					arrayArticles.push(
-						{value: element.code, label: element.name}
-					);
-				});
+				if (dataArray.length > 0){
+					arrayArticles = [];
+					dataArray.forEach(element => {
+						arrayArticles.push(
+							{value: element.code, label: element.name}
+						);
+					});
+				}
+
 
 				this.setState({
 					...this.state,
+					selectedArticle: arrayArticles.length > 0 ? arrayArticles[0] : ARRAY_ARTICLES[0],
 					arrayArticles: arrayArticles,
 				});
 
@@ -194,16 +219,18 @@ class FilterRange extends Component {
 	handleFilterLineChange = (value) => {
 		this.props.handleFilterLineChange(value);
 
-		if (this.props.screenName !== 'alarmhistory') {
-			this.fillModelCombobox(value);
-		}
-
 		this.setState({
 			...this.state,
 			selectedLine   : value,
 			selectedModel  : ARRAY_MODELS[0],
 			selectedArticle: ARRAY_ARTICLES[0]
 		});
+
+		if (this.props.screenName !== 'alarmhistory') {
+			this.fillModelCombobox(value);
+		}
+
+
 	};
 
 	handleFilterModelChange = (value) => {
