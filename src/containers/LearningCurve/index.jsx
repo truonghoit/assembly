@@ -26,6 +26,10 @@ import {
 import callAxios             from "../../services/api";
 import {reactFormatter}      from "react-tabulator";
 import ButtonSubmitFormatter from "./components/ButtonSubmitFormatter";
+import {
+	ARRAY_LINES,
+	ARRAY_MODELS
+}                            from "../../constants/propertyConstants";
 
 class LearningCurve extends Component {
 	constructor(props) {
@@ -134,8 +138,8 @@ class LearningCurve extends Component {
 			formData             : {},
 			filterFromDate       : changeDateToUnix(new Date(), "start"),//for filter
 			filterToDate         : changeDateToUnix(new Date(), "end"),
-			filterLine           : '',
-			filterModel          : '',
+			filterLine           : ARRAY_LINES[0],
+			filterModel          : ARRAY_MODELS[0],
 			submissionState      : LEARNING_CURVE_CONSTANTS.submissionState.initial,
 			modelSubmissionStatus: LEARNING_CURVE_CONSTANTS.submissionState.initial,
 		};
@@ -203,9 +207,9 @@ class LearningCurve extends Component {
 		let url                                                     = ASSEMBLY_API + LEARNING_CURVE_MODEL;
 		let params                                                  = {
 			"factory"   : "",
-			"line"      : filterLine,
+			"line"      : filterLine.value,
 			"process"   : "",
-			"model"     : filterModel,
+			"model"     : filterModel.value,
 			"article_no": "",
 			"from_date" : filterFromDate,
 			"to_date"   : filterToDate
@@ -242,9 +246,9 @@ class LearningCurve extends Component {
 		let url                       = ASSEMBLY_API + LEARNING_CURVE_PROCESS;
 		let params                    = {
 			"factory"   : "",
-			"line"      : filterLine,
+			"line"      : filterLine.value,
 			"process"   : "",
-			"model"     : filterModel,
+			"model"     : filterModel.value,
 			"article_no": "",
 			"from_date" : 1564989863,
 			"to_date"   : 1564989863
@@ -386,13 +390,13 @@ class LearningCurve extends Component {
 	};
 	handleFilterLineChange    = (newValue) => {
 		this.setState((state, props) => ({
-			filterLine : newValue.value,
-			filterModel: ''
+			filterLine : newValue,
+			filterModel: ARRAY_MODELS[0]
 		}));
 	};
 	handleFilterModelChange   = (newValue) => {
 		this.setState((state, props) => ({
-			filterModel: newValue.value,
+			filterModel: newValue,
 		}));
 	};
 	handleFilterArticleChange = (newValue) => {
