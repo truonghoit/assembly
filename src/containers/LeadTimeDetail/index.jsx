@@ -308,6 +308,10 @@ class LeadTimeDetail extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this.loadLeadDetailTable();
+	}
+
 	render() {
 		let {chartData, chartLabels, leadDetailData, leadDetailFooter} = this.state;
 		return (
