@@ -5,6 +5,11 @@ import ButtonSubmitFormatter from "./components/ButtonSubmitFormatter";
 export const LEARNING_CURVE_CONSTANTS = {
 	alarmMasterFormName: 'AlarmMasterForm',
 	field              : {
+		filterLine           : 'filterLine',
+		filterModel          : 'filterModel',
+		dateRadio            : 'dateRadio',
+		filterFromDate       : 'filterFromDate',
+		filterToDate         : 'filterToDate',
 		process              : 'process',
 		processCode          : 'process_cd',
 		day                  : 'day',

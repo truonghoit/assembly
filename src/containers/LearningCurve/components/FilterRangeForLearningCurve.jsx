@@ -279,7 +279,7 @@ class FilterRangeForLearningCurve extends Component {
 						</Col>
 						<Col md={2} lg={2} style={{marginTop: -12}}>
 							<Field
-								name="filterLine"
+								name={field.filterLine}
 								component={renderSelectField}
 								options={arrayLines}
 								onChange={this.handleFilterLineChange}
@@ -297,7 +297,7 @@ class FilterRangeForLearningCurve extends Component {
 						</Col>
 						<Col md={4} lg={4} style={{marginLeft: 10, marginTop: -12}}>
 							<Field
-								name="filterModel"
+								name={field.filterModel}
 								component={renderSelectField}
 								options={arrayModels}
 								onChange={this.handleFilterModelChange}
@@ -367,7 +367,7 @@ class FilterRangeForLearningCurve extends Component {
 							<div className="form__form-group" style={{marginLeft: 20}}>
 								<div className="form__form-group-field">
 									<Field
-										name="dateRadio"
+										name={field.dateRadio}
 										component={renderRadioButtonField}
 										label="Today"
 										radioValue="1"
@@ -375,7 +375,7 @@ class FilterRangeForLearningCurve extends Component {
 										onChange={this.onCheckboxChange}
 									/>
 									<Field
-										name="dateRadio"
+										name={field.dateRadio}
 										component={renderRadioButtonField}
 										label="Select"
 										radioValue="2"
@@ -389,7 +389,7 @@ class FilterRangeForLearningCurve extends Component {
 								<div className="form__form-group-field">
 									<div style={{width: 100}}>
 										<Field
-											name="filterFromDate"
+											name={field.filterFromDate}
 											component={renderDatePickerField}
 											disabled={this.state.disableFromDatePicker}
 											selected={this.state.selectedFromDate}
@@ -408,7 +408,7 @@ class FilterRangeForLearningCurve extends Component {
 								<div className="form__form-group-field">
 									<div style={{width: 100}}>
 										<Field
-											name="filterToDate"
+											name={field.filterToDate}
 											component={renderDatePickerField}
 											disabled={this.state.disableToDatePicker}
 											selected={this.state.selectedToDate}
