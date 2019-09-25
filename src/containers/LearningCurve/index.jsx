@@ -86,7 +86,7 @@ class LearningCurve extends Component {
 			},
 			{
 				title     : "",
-				field     : LEARNING_CURVE_CONSTANTS.field.modelSubmissionStatus,
+				field     : LEARNING_CURVE_CONSTANTS.field.modelSubmissionState,
 				width     : '10%',
 				align     : "center",
 				formatter : reactFormatter(<ButtonSubmitFormatter onOkClicked={(rowData) => {
@@ -126,22 +126,22 @@ class LearningCurve extends Component {
 		];
 
 		this.state = {
-			processTableColumns  : processTableColumns,
-			processTableData     : defaultProcessTableData,
+			processTableColumns : processTableColumns,
+			processTableData    : defaultProcessTableData,
 			//modelTableColumns  : modelTableColumns,
-			modelTableColumns    : modelTableColumns,
-			modelTableData       : defaultModelTableData,
-			chartInitialData     : [],
-			chartOptions         : chartOptions,
-			chartData            : [],
-			selectedProcess      : {},
-			formData             : {},
-			filterFromDate       : changeDateToUnix(new Date(), "start"),//for filter
-			filterToDate         : changeDateToUnix(new Date(), "end"),
-			filterLine           : ARRAY_LINES[0],
-			filterModel          : ARRAY_MODELS[0],
-			submissionState      : LEARNING_CURVE_CONSTANTS.submissionState.initial,
-			modelSubmissionStatus: LEARNING_CURVE_CONSTANTS.submissionState.initial,
+			modelTableColumns   : modelTableColumns,
+			modelTableData      : defaultModelTableData,
+			chartInitialData    : [],
+			chartOptions        : chartOptions,
+			chartData           : [],
+			selectedProcess     : {},
+			formData            : {},
+			filterFromDate      : changeDateToUnix(new Date(), "start"),//for filter
+			filterToDate        : changeDateToUnix(new Date(), "end"),
+			filterLine          : ARRAY_LINES[0],
+			filterModel         : ARRAY_MODELS[0],
+			submissionState     : LEARNING_CURVE_CONSTANTS.submissionState.initial,
+			modelSubmissionState: LEARNING_CURVE_CONSTANTS.submissionState.initial,
 		};
 		// this.loadProcessTable();
 		// this.loadModelTable();
@@ -166,9 +166,9 @@ class LearningCurve extends Component {
 		 submitButton: undefined
 		 total: 73
 		 */
-		let {modelTableColumns, modelTableData}                       = this.state;
-		rowData[LEARNING_CURVE_CONSTANTS.field.modelSubmissionStatus] = LEARNING_CURVE_CONSTANTS.submissionState.onGoing;
-		modelTableData[0]                                             = rowData;
+		let {modelTableColumns, modelTableData}                      = this.state;
+		rowData[LEARNING_CURVE_CONSTANTS.field.modelSubmissionState] = LEARNING_CURVE_CONSTANTS.submissionState.onGoing;
+		modelTableData[0]                                            = rowData;
 		this.setState((state, props) => ({
 			modelTableData: modelTableData,
 		}));
@@ -183,8 +183,8 @@ class LearningCurve extends Component {
 		callAxios(method, url, params).then(response => {
 			this.loadModelTable();
 
-			rowData[LEARNING_CURVE_CONSTANTS.field.modelSubmissionStatus] = LEARNING_CURVE_CONSTANTS.submissionState.done;
-			modelTableData[0]                                             = rowData;
+			rowData[LEARNING_CURVE_CONSTANTS.field.modelSubmissionState] = LEARNING_CURVE_CONSTANTS.submissionState.done;
+			modelTableData[0]                                            = rowData;
 			this.setState((state, props) => ({
 				modelTableData: modelTableData,
 			}));
@@ -220,15 +220,15 @@ class LearningCurve extends Component {
 				let modelTableData = [];
 				data.map(item => {
 					modelTableData.push({
-						[LEARNING_CURVE_CONSTANTS.field.modelName]            : item.model_nm,
-						[LEARNING_CURVE_CONSTANTS.field.modelCode]            : item.model_cd,
-						[LEARNING_CURVE_CONSTANTS.field.lineCode]             : item.line_cd,
-						[LEARNING_CURVE_CONSTANTS.field.stitching]            : item.stitching,
-						[LEARNING_CURVE_CONSTANTS.field.shoemaking]           : item.shoemaking,
-						[LEARNING_CURVE_CONSTANTS.field.total]                : parseInt(item.stitching)
-						                                                        + parseInt(item.shoemaking),
-						[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]       : item.basic_target_qty,
-						[LEARNING_CURVE_CONSTANTS.field.modelSubmissionStatus]: LEARNING_CURVE_CONSTANTS.submissionState.initial
+						[LEARNING_CURVE_CONSTANTS.field.modelName]           : item.model_nm,
+						[LEARNING_CURVE_CONSTANTS.field.modelCode]           : item.model_cd,
+						[LEARNING_CURVE_CONSTANTS.field.lineCode]            : item.line_cd,
+						[LEARNING_CURVE_CONSTANTS.field.stitching]           : item.stitching,
+						[LEARNING_CURVE_CONSTANTS.field.shoemaking]          : item.shoemaking,
+						[LEARNING_CURVE_CONSTANTS.field.total]               : parseInt(item.stitching)
+						                                                       + parseInt(item.shoemaking),
+						[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]      : item.basic_target_qty,
+						[LEARNING_CURVE_CONSTANTS.field.modelSubmissionState]: LEARNING_CURVE_CONSTANTS.submissionState.initial
 					});
 				});
 				this.setState((state, props) => ({
