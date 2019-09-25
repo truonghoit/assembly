@@ -391,6 +391,11 @@ class LeadTime extends Component {
 		};
 	};
 
+	componentDidMount(){
+		this.retrieveLeadTableData();
+		this.retrieveWorkingHourData();
+	}
+
 	render() {
 		let {leadData, ccrProcess} = this.state;
 		leadData                   = this.handleLeadData(leadData);
