@@ -271,7 +271,7 @@ class MasterPage extends Component {
 				<h1 style={{height: 50}}/>
 				<Row>
 					<Col md={12} lg={12}>
-						<DataTable tableData={tableData} fillForm={this.fillForm}/>
+						<DataTable tableData={tableData} fillForm={this.fillForm} onReset={this.onReset}/>
 					</Col>
 				</Row>
 			</Container>

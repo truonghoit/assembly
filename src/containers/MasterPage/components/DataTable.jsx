@@ -55,18 +55,18 @@ class DataTable extends Component {
 		this.table                  = new Tabulator("#dataTable", {
 			height             : "40em",
 			movableRows        : false,
-			selectable         : true, //make rows selectable
+			selectable         : 1, //make rows selectable
 			columns            : columns,
 			data               : tableData,
 			rowSelectionChanged: (data, rows) => {
-				for (let i = 0; i < rows.length - 1; i++) {
-					let row = rows[i];
-					row.deselect();
-				}
+				console.log("data 66: : ", data);
 				if (rows.length > 0) {
 					_this.props.fillForm(data[data.length - 1]);
 				}
 			},
+			rowDeselected: (data) => {
+				this.props.onReset();
+			}
 		});
 	}
 
