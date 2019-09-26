@@ -209,7 +209,7 @@ class LearningCurve extends Component {
 			"factory"   : "",
 			"line"      : filterLine.value,
 			"process"   : "",
-			"model"     : filterModel.value,
+			// "model"     : filterModel.value,
 			"article_no": "",
 			"from_date" : filterFromDate,
 			"to_date"   : filterToDate
