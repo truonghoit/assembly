@@ -436,7 +436,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.tempStandardFrom}
 										component={renderField}
@@ -486,7 +486,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">To</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.tempStandardTo}
 										component={renderField}
@@ -546,7 +546,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.presStandardFrom}
 										component={renderField}
@@ -601,7 +601,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">To</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.presStandardTo}
 										component={renderField}
@@ -660,7 +660,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.curStandardFrom}
 										component={renderField}
@@ -715,7 +715,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">To</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.curStandardTo}
 										component={renderField}
@@ -780,7 +780,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.tempYellowFirst}
 										component={renderField}
@@ -835,7 +835,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">To</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.tempYellowLast}
 										component={renderField}
@@ -894,7 +894,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.presYellowFirst}
 										component={renderField}
@@ -949,7 +949,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">To</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.presYellowLast}
 										component={renderField}
@@ -1008,7 +1008,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.curYellowFirst}
 										component={renderField}
@@ -1063,7 +1063,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">To</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.curYellowLast}
 										component={renderField}
@@ -1128,7 +1128,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.tempRedFirst}
 										component={renderField}
@@ -1183,7 +1183,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">To</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.tempRedLast}
 										component={renderField}
@@ -1242,7 +1242,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.presRedFirst}
 										component={renderField}
@@ -1297,7 +1297,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">To</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.presRedLast}
 										component={renderField}
@@ -1356,7 +1356,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">From</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.curRedFirst}
 										component={renderField}
@@ -1411,7 +1411,7 @@ class AlarmMasterForm extends Component {
 								<Col md={2} lg={2}>
 									<span className="form__form-group-label">To</span>
 								</Col>
-								<Col md={4} lg={4}>
+								<Col md={4} lg={4} style={{marginTop:-6}}>
 									<Field
 										name={field.curRedLast}
 										component={renderField}
