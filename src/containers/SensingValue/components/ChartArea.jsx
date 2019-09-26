@@ -7,6 +7,24 @@ class ChartArea extends Component {
 		super(props);
 	}
 
+	handleChartItem = (dataItem) => {
+		let labels = ["7:30", "8:30", "9:30", "10:30", "11:30", "12:30", "13:30", "14:30", "15:30", "16:30", "17:30", "18:30", "19:30", "20:30", "21:30", "22:30"];
+		let data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		let chartLabels = dataItem[0];
+		let chartData   = dataItem[2];
+		for (let i = 0; i < labels.length; i++){
+			for (let j = 0; j < chartLabels.length; j++){
+				if (labels[i] === chartLabels[j]){
+					data[i] = chartData[j];
+				}
+			}
+		}
+		return {
+			data: data,
+			labels: labels
+		}
+	}
+
 	drawChartItem = (dataItem, type = "temp", index = 1) => {
 		let result    = null;
 		let bgColor   = '';
@@ -28,8 +46,9 @@ class ChartArea extends Component {
 		}
 
 		if (type == 'temp') {
-			let chartLabels = dataItem[0];
-			let chartData   = dataItem[2];
+			let chartItem = this.handleChartItem(dataItem);
+			let chartLabels = chartItem.labels;
+			let chartData   = chartItem.data;
 
 			let chartLength = chartData?chartData.length:0;
 			let standardData1 = Array(chartLength);
