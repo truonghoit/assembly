@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
-import Modal              from "../components/Modal";
+import React, {Component}         from 'react';
+import Modal                      from "../components/Modal";
+import {LEARNING_CURVE_CONSTANTS} from "../constants";
 
 class ButtonSubmitFormatter extends Component {
 	constructor(props) {
@@ -14,11 +15,11 @@ class ButtonSubmitFormatter extends Component {
 
 	render() {
 		let rowData = this.props.cell._cell.row.data;
-		/*model_cd: "MU534"
+		/*model_no: "MU534"
 		 model_nm: "PRINCESS WIDE D"*/
 		let modelSubmissionStatus = -1;
 		let message               = `You're about to submit new value for target quantity
-		for model: ${rowData.model_nm} model code: ${rowData.model_cd}`;
+		for model: ${rowData[LEARNING_CURVE_CONSTANTS.field.modelName]} model number: ${rowData[LEARNING_CURVE_CONSTANTS.field.modelNo]}`;
 		//return <div>{rowData.basic_target_qty}</div>
 		return <Modal
 			style={{marginLeft: -25, marginTop: -8}}

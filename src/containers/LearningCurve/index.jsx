@@ -46,7 +46,7 @@ class LearningCurve extends Component {
 				headerFilter  : "input",
 				titleFormatter: titleFormater
 			},
-			{title: "Model Code", field: LEARNING_CURVE_CONSTANTS.field.modelCode, visible: false},
+			{title: "Model Number", field: LEARNING_CURVE_CONSTANTS.field.modelNo, visible: false},
 			{title: "Line Code", field: LEARNING_CURVE_CONSTANTS.field.lineCode, visible: false},
 			{
 				title         : "STITCHING",
@@ -114,7 +114,7 @@ class LearningCurve extends Component {
 				headerSort    : false,
 				titleFormatter: titleFormater,
 			},
-			{title: "Model Code", field: LEARNING_CURVE_CONSTANTS.field.modelCode, visible: false},
+			{title: "Model Number", field: LEARNING_CURVE_CONSTANTS.field.modelNo, visible: false},
 			{title: "Line Code", field: LEARNING_CURVE_CONSTANTS.field.lineCode, visible: false},
 			{title: "Basic Target Qty", field: LEARNING_CURVE_CONSTANTS.field.basicTargetQty, visible: false},
 			{
@@ -176,7 +176,7 @@ class LearningCurve extends Component {
 		let url    = ASSEMBLY_API + LEARNING_CURVE_PROCESS_UPDATE;
 		let params = {
 			"status"          : "UPDATE",
-			"model_cd"        : rowData[LEARNING_CURVE_CONSTANTS.field.modelCode],
+			"model"           : rowData[LEARNING_CURVE_CONSTANTS.field.modelNo],
 			"line"            : rowData[LEARNING_CURVE_CONSTANTS.field.lineCode],
 			"basic_target_qty": rowData[LEARNING_CURVE_CONSTANTS.field.basicTargetQty],
 		};
@@ -221,7 +221,7 @@ class LearningCurve extends Component {
 				data.map(item => {
 					modelTableData.push({
 						[LEARNING_CURVE_CONSTANTS.field.modelName]           : item.model_nm,
-						[LEARNING_CURVE_CONSTANTS.field.modelCode]           : item.model_cd,
+						[LEARNING_CURVE_CONSTANTS.field.modelNo]             : item.model_cd,
 						[LEARNING_CURVE_CONSTANTS.field.lineCode]            : item.line_cd,
 						[LEARNING_CURVE_CONSTANTS.field.stitching]           : item.stitching,
 						[LEARNING_CURVE_CONSTANTS.field.shoemaking]          : item.shoemaking,
@@ -265,7 +265,7 @@ class LearningCurve extends Component {
 						[LEARNING_CURVE_CONSTANTS.field.process]       : item.process_nm,
 						[LEARNING_CURVE_CONSTANTS.field.processCode]   : item.process_cd,
 						[LEARNING_CURVE_CONSTANTS.field.day]           : item.working_days,
-						[LEARNING_CURVE_CONSTANTS.field.modelCode]     : item.model_cd,
+						[LEARNING_CURVE_CONSTANTS.field.modelNo]       : item.model_no,
 						[LEARNING_CURVE_CONSTANTS.field.lineCode]      : item.line_cd,
 						[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]: item.basic_target_qty,
 						[LEARNING_CURVE_CONSTANTS.field.actualQty]     : item.actual_qty,
