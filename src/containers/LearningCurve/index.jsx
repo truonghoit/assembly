@@ -250,8 +250,8 @@ class LearningCurve extends Component {
 			"process"   : "",
 			"model"     : filterModel.value,
 			"article_no": "",
-			"from_date" : 1564989863,
-			"to_date"   : 1564989863
+			"from_date" : changeDateToUnix(new Date()),
+			"to_date"   : changeDateToUnix(new Date(), "end")
 		};
 
 		callAxios(method, url, params).then(response => {
