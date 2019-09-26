@@ -9,7 +9,6 @@ import {ARROW_ICON}       from "../../../constants/propertyConstants";
 // "article_no":"R6-30500","created_date":1562660433,"standard_from":1234570000,"standard_to":2,
 // "model_nm":"PRINCESS WIDE D","article_nm":"R6-30500","process_nm":"Packpart Molding"}]}
 const formatAlarmColumn = function (cell, formatterParams, onRendered) { //plain text value
-	console.log("cell.getRow(): ", cell.getRow());
 	let value = cell._cell.value;
 	if (value.toUpperCase() === "R") {
 		//cell.getRow().getElement().style.color = '#F84E4E';
@@ -18,6 +17,8 @@ const formatAlarmColumn = function (cell, formatterParams, onRendered) { //plain
 	} else if (value.toUpperCase() === "Y") {
 		//cell.getRow().getElement().style.color = '#FFD44F';
 		return "<span style='color:#FFD44F; font-size: large;'>●</span>";
+	} else if (value.toUpperCase() === "G") {
+		return `<span style='color:#03CF65; font-size: large;'>●</span>`;
 	} else {
 		return "<span style='color:#BEBEBE; font-size: large;'>●</span>";
 	}
@@ -30,6 +31,8 @@ const formatValueColumn = function (cell, formatterParams, onRendered) { //plain
 		return `<span style='color:#F84E4E;'>${value}</span>`;
 	} else if (rowData.alarm.toUpperCase() === "Y") {
 		return `<span style='color:#FFD44F;'>${value}</span>`;
+	} else if (rowData.alarm.toUpperCase() === "G") {
+		return `<span style='color:#03CF65;'>${value}</span>`;
 	} else {
 		return "<span></span>";
 	}
@@ -43,6 +46,8 @@ const formatDateTimeSensorColumn = function (cell, formatterParams, onRendered) 
 		return `<span style='color:#F84E4E;'>${value}</span>`;
 	} else if (rowData.alarm.toUpperCase() === "Y") {
 		return `<span style='color:#FFD44F;'>${value}</span>`;
+	} else if (rowData.alarm.toUpperCase() === "G") {
+		return `<span style='color:#03CF65;'>${value}</span>`;
 	} else {
 		return `<span'>${value}</span>`;
 	}
@@ -72,7 +77,16 @@ const columns = [
 		headerFilter: "input",
 		formatter   : formatDateTimeSensorColumn
 	},
-	{title: "STN", field: "standard_from", width: '15%', align: "center", headerFilter: "input"},
+	{title          : "SENSOR NUMBER",
+		field       : "sensor_no",
+		width       : '10%',
+		align       : "center",
+		headerFilter: "input",
+		formatter   : formatDateTimeSensorColumn
+	},
+	{title: "STANDARD", field: "standard_value", width: '15%', align: "center", headerFilter: "input", mutator: function(value, data, type, params, component){
+			return data['standard_from'].toString().concat(ARROW_ICON).concat(data['standard_to']);
+		}},
 	{title          : "VALUE",
 		field       : "value",
 		width       : '10%',
@@ -133,8 +147,8 @@ class AlarmHistoryTable extends Component {
 	};
 
 	render() {
-		/*let {alarmHistoryData} = this.props;
-		 alarmHistoryData = alarmHistoryData ? alarmHistoryData : [];*/
+		let {alarmHistoryData} = this.props;
+		 alarmHistoryData = alarmHistoryData ? alarmHistoryData : [];
 		const options = {
 			height     : "40em",
 			movableRows: false,
