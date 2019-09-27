@@ -266,7 +266,7 @@ class LearningCurve extends Component {
 						[LEARNING_CURVE_CONSTANTS.field.processCode]   : item.process_cd,
 						[LEARNING_CURVE_CONSTANTS.field.workingDays]   : item.working_days,
 						[LEARNING_CURVE_CONSTANTS.field.modelNo]       : item.model_no,
-						[LEARNING_CURVE_CONSTANTS.field.lineCode]      : item.line_cd,
+						[LEARNING_CURVE_CONSTANTS.field.lineCode]      : filterLine.value,
 						[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]: item.basic_target_qty,
 						[LEARNING_CURVE_CONSTANTS.field.actualQty]     : item.actual_qty,
 					});
@@ -276,7 +276,7 @@ class LearningCurve extends Component {
 							[LEARNING_CURVE_CONSTANTS.field.processCode]   : item.process_cd,
 							[LEARNING_CURVE_CONSTANTS.field.workingDays]   : item.working_days,
 							[LEARNING_CURVE_CONSTANTS.field.modelNo]       : item.model_no,
-							[LEARNING_CURVE_CONSTANTS.field.lineCode]      : item.line_cd,
+							[LEARNING_CURVE_CONSTANTS.field.lineCode]      : filterLine.value,
 							[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]: item.basic_target_qty,
 							[LEARNING_CURVE_CONSTANTS.field.actualQty]     : item.actual_qty,
 						};
