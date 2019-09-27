@@ -12,7 +12,7 @@ export const LEARNING_CURVE_CONSTANTS = {
 		filterToDate        : 'filterToDate',
 		process             : 'process',
 		processCode         : 'process_cd',
-		day                 : 'day',
+		workingDays         : 'working_days',
 		modelNo             : 'model_no',
 		modelName           : 'model_nm',
 		stitching           : 'stitching',
@@ -76,7 +76,7 @@ export const defaultProcessTableData = [
 	{
 		[LEARNING_CURVE_CONSTANTS.field.process]       : "",
 		[LEARNING_CURVE_CONSTANTS.field.processCode]   : "",
-		[LEARNING_CURVE_CONSTANTS.field.day]           : "",
+		[LEARNING_CURVE_CONSTANTS.field.workingDays]   : "",
 		[LEARNING_CURVE_CONSTANTS.field.modelNo]       : "",
 		[LEARNING_CURVE_CONSTANTS.field.lineCode]      : "",
 		[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]: "",
@@ -187,7 +187,7 @@ export const defaultModelTableData = [
 	{
 		[LEARNING_CURVE_CONSTANTS.field.process]    : "",
 		[LEARNING_CURVE_CONSTANTS.field.processCode]: "",
-		[LEARNING_CURVE_CONSTANTS.field.day]        : "",
+		[LEARNING_CURVE_CONSTANTS.field.workingDays]: "",
 	},
 ];
 

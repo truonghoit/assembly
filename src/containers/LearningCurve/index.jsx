@@ -108,7 +108,7 @@ class LearningCurve extends Component {
 			{title: "Process Code", field: LEARNING_CURVE_CONSTANTS.field.processCode, visible: false},
 			{
 				title         : "DAYS",
-				field         : LEARNING_CURVE_CONSTANTS.field.day,
+				field         : LEARNING_CURVE_CONSTANTS.field.workingDays,
 				width         : '50%',
 				align         : "center",
 				headerSort    : false,
@@ -264,7 +264,7 @@ class LearningCurve extends Component {
 					processTableData.push({
 						[LEARNING_CURVE_CONSTANTS.field.process]       : item.process_nm,
 						[LEARNING_CURVE_CONSTANTS.field.processCode]   : item.process_cd,
-						[LEARNING_CURVE_CONSTANTS.field.day]           : item.working_days,
+						[LEARNING_CURVE_CONSTANTS.field.workingDays]   : item.working_days,
 						[LEARNING_CURVE_CONSTANTS.field.modelNo]       : item.model_no,
 						[LEARNING_CURVE_CONSTANTS.field.lineCode]      : item.line_cd,
 						[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]: item.basic_target_qty,
@@ -274,7 +274,7 @@ class LearningCurve extends Component {
 						selectedProcess = {
 							[LEARNING_CURVE_CONSTANTS.field.process]       : item.process_nm,
 							[LEARNING_CURVE_CONSTANTS.field.processCode]   : item.process_cd,
-							[LEARNING_CURVE_CONSTANTS.field.day]           : item.working_days,
+							[LEARNING_CURVE_CONSTANTS.field.workingDays]   : item.working_days,
 							[LEARNING_CURVE_CONSTANTS.field.modelNo]       : item.model_no,
 							[LEARNING_CURVE_CONSTANTS.field.lineCode]      : item.line_cd,
 							[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]: item.basic_target_qty,
