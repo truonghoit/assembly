@@ -21,6 +21,11 @@ class AlarmMasterForm extends Component {
 	constructor(props) {
 		super(props);
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
+
+		this.modelTableRef = React.createRef();
+		this.articleTableRef = React.createRef();
+		this.processTableRef = React.createRef();
+
 		this.state  = ({
 			processList        : [],
 			dataProcess        : [],
@@ -105,7 +110,7 @@ class AlarmMasterForm extends Component {
 			dataProcess:[]
 		}));
 
-		let modelTable = this.refs.modelTable;
+		/*let modelTable = this.refs.modelTable;
 		let modules = modelTable.table.modules;
 		let selectedRows = modules.selectRow.selectedRows;
 		let selectedModel = selectedRows[0];
@@ -118,26 +123,35 @@ class AlarmMasterForm extends Component {
 			//selectedArticle.toggleSelect();
 			selectedArticle.modules.select.selected = false;
 			selectedArticles = articleTable.table.modules.selectRow.selectedRows;
-		}
+		}*/
+		/*let modelTable = this.modelTableRef;
+		modelTable.current.table.deselectRow();
+		let processTable = this.processTableRef;
+		processTable.current.table.deselectRow();*/
+
+
 		this.props.onModelClick(selectedRow);
 		this.props.loadArticleTable(selectedRow);
 	};
 
 	onModelDeselect = (data) => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
-		if (this.props.onMounted) {
-			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
-		}
 
 		let selectedRow = data;
+
+		let articleTable = this.articleTableRef;
+		articleTable.current.table.deselectRow();
+		let processTable = this.processTableRef;
+		processTable.current.table.deselectRow();
 
 		this.setState((state, props) => ({
 			submitButtonClicked: false,
 			selectedModel      : "",
 			selectedArticle    : "",
-			dataArticle        : [],
-			dataProcess        : []
+			dataArticle: [],
+			dataProcess: [],
 		}));
+
 		this.props.onModelDeselect(data);
 	}
 
@@ -179,6 +193,7 @@ class AlarmMasterForm extends Component {
 
 		let {field}       = ALARM_MASTER_PAGE_CONSTANTS;
 		let {processList} = this.state;
+
 		processList.some(item => {
 			if (item[field.processCd] == selectedProcessCode) {
 				this.setState({
@@ -213,12 +228,18 @@ class AlarmMasterForm extends Component {
 	onAlarmSensorTableRowClick = (selectedProcessCode, definitionValue) => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.props.change(field.definitionValue, definitionValue);
+
+		let modelTable = this.modelTableRef;
+		modelTable.current.table.deselectRow();
+		this.props.onModelDeselect();
+
 		this.setState({
 			formData           : {
 				...this.state.formData,
 				[field.processCd]      : selectedProcessCode,
 				[field.definitionValue]: definitionValue,
 			},
+			dataProcess: [],
 			submitButtonClicked: false,
 		});
 	};
@@ -311,7 +332,7 @@ class AlarmMasterForm extends Component {
 						height: "500px",
 						border: "none",
 					}} onRowClick={this.onModelArticleClick} id="modelTable"/>*/}
-						<DataTable id="modelTable" columns={columnsModel} data={dataModel} ref="modelTable"
+						<DataTable id="modelTable" columns={columnsModel} data={dataModel} ref={this.modelTableRef}
 						           options={{
 							           height         : "40em",
 							           columnVertAlign: "bottom"
@@ -321,7 +342,7 @@ class AlarmMasterForm extends Component {
 						/>
 				</Col>
 				<Col md={1.5} lg={1.5} style={{minHeight: 300, minWidth: 220}}>
-					<DataTable id="articleTable" columns={columnsArticle} data={dataArticle} ref="articleTable"
+					<DataTable id="articleTable" columns={columnsArticle} data={dataArticle} ref={this.articleTableRef}
 					           options={{
 						           height         : "40em",
 						           columnVertAlign: "bottom"
@@ -359,7 +380,7 @@ class AlarmMasterForm extends Component {
 						</ul>
 
 					</div>*/}
-					<DataTable id="processTable" columns={columnsProcess} data={dataProcess} ref="processTable"
+					<DataTable id="processTable" columns={columnsProcess} data={dataProcess} ref={this.processTableRef}
 					           options={{
 						           height         : "40em",
 						           columnVertAlign: "bottom"

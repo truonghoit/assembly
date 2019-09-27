@@ -27,18 +27,19 @@ class MasterAlarm extends Component {
 		let {field, submissionState} = ALARM_MASTER_PAGE_CONSTANTS;
 
 		this.child = React.createRef();
+		this.mainTableRef = React.createRef();
 
 		this.state = {
 			columnsModelArticle: modelArticleTableColumns,
 			columnsModel       : modelTableColumns,
 			columnsArticle     : articleTableColumns,
 			columnsProcess     : processTableColumns,
-			dataModelArticle   : defaultModelArticleTableData,
-			dataModel          : defaultModelTableData,
-			dataArticle        : defaultArticleTableData,
-			dataProcess        : defaultProcessTableData,
+			dataModelArticle   : [...defaultModelArticleTableData],
+			dataModel          : [...defaultModelTableData],
+			dataArticle        : [...defaultArticleTableData],
+			dataProcess        : [...defaultProcessTableData],
 			columnsAlarmSensor : alarmSensorTableColumns,
-			dataAlarmSensor    : defaultAlarmSensorTableData,
+			dataAlarmSensor    : [...defaultAlarmSensorTableData],
 			formData           : {
 				[field.definitionValue]: '000',
 			},
@@ -107,6 +108,9 @@ class MasterAlarm extends Component {
 	}
 
 	loadArticleTable = (data) => {
+		console.log("loadArticleTable");
+		console.log("loadArticleTable");
+		console.log("loadArticleTable");
 		let method  = 'POST';
 		let url     = ASSEMBLY_API + ALARM_ARTICLE;
 		let params  = {
@@ -259,6 +263,8 @@ class MasterAlarm extends Component {
 				[field.articleNo]      : "",
 				[field.definitionValue]: '000',
 			},
+			dataArticle: [],
+			dataProcess: [],
 			editMode       : false,
 			submissionState: ALARM_MASTER_PAGE_CONSTANTS.submissionState.initial,
 		});
@@ -315,6 +321,12 @@ class MasterAlarm extends Component {
 		let cur_yellow_last   = '0';
 		let cur_red_first     = '0';
 		let cur_red_last      = '0';
+
+		/*
+		 Deselect main table
+		 */
+		let mainTable = this.mainTableRef;
+		mainTable.current.table.deselectRow();
 
 		for (let i = 0; i < definitionValue.length; ++i) {
 			switch (i) {
@@ -427,7 +439,9 @@ class MasterAlarm extends Component {
 				[field.curRedFirst]     : selectedRow[field.curRedFirst],
 				[field.curRedLast]      : selectedRow[field.curRedLast],
 				[field.definitionValue] : selectedRow[field.definitionValue],
-			}
+			},
+			dataArticle: [],
+			dataProcess: [],
 		});
 		let params = {
 			model_cd        : selectedRow[field.modelCd],
@@ -435,7 +449,7 @@ class MasterAlarm extends Component {
 			process_cd      : selectedRow[field.processCd],
 			definition_value: selectedRow[field.definitionValue],
 		};
-		this.child.ref.current.wrapped.current.callChildLoadProcessList(params);
+		//this.child.ref.current.wrapped.current.callChildLoadProcessList(params);
 		this.child.ref.current.wrapped.current.onAlarmSensorTableRowClick(params.process_cd, params.definition_value);
 	};
 
@@ -588,6 +602,9 @@ class MasterAlarm extends Component {
 
 	render() {
 		let {columnsModelArticle, columnsModel, columnsArticle, columnsProcess, dataModelArticle, dataModel, dataArticle, dataProcess, columnsAlarmSensor, dataAlarmSensor, formData, editMode, submissionState} = this.state;
+		console.log("dataModel: ", dataModel);
+		console.log("dataArticle: ", dataArticle);
+		console.log("dataProcess: ", dataProcess);
 		return (
 			<Container className="dashboard">
 				<Row>
@@ -623,6 +640,7 @@ class MasterAlarm extends Component {
 							           columnVertAlign: "bottom"
 						           }}
 						           onRowClick={this.onAlarmSensorTableRowClick}
+						           ref={this.mainTableRef}
 						/>
 					</Col>
 				</Row>
