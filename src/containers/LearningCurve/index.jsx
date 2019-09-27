@@ -99,7 +99,7 @@ class LearningCurve extends Component {
 		let processTableColumns = [
 			{
 				title         : "PROCESS",
-				field         : LEARNING_CURVE_CONSTANTS.field.process,
+				field         : LEARNING_CURVE_CONSTANTS.field.processName,
 				width         : '50%',
 				align         : "center",
 				headerFilter  : "input",
@@ -262,7 +262,7 @@ class LearningCurve extends Component {
 				let {selectedProcess} = this.state;
 				data.map((item, index) => {
 					processTableData.push({
-						[LEARNING_CURVE_CONSTANTS.field.process]       : item.process_nm,
+						[LEARNING_CURVE_CONSTANTS.field.processName]   : item.process_nm,
 						[LEARNING_CURVE_CONSTANTS.field.processCode]   : item.process_cd,
 						[LEARNING_CURVE_CONSTANTS.field.workingDays]   : item.working_days,
 						[LEARNING_CURVE_CONSTANTS.field.modelNo]       : item.model_no,
@@ -272,7 +272,7 @@ class LearningCurve extends Component {
 					});
 					if (index === data.length - 1) {    // Select Last Process by default to load chart
 						selectedProcess = {
-							[LEARNING_CURVE_CONSTANTS.field.process]       : item.process_nm,
+							[LEARNING_CURVE_CONSTANTS.field.processName]   : item.process_nm,
 							[LEARNING_CURVE_CONSTANTS.field.processCode]   : item.process_cd,
 							[LEARNING_CURVE_CONSTANTS.field.workingDays]   : item.working_days,
 							[LEARNING_CURVE_CONSTANTS.field.modelNo]       : item.model_no,

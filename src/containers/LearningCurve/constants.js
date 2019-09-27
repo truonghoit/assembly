@@ -10,7 +10,7 @@ export const LEARNING_CURVE_CONSTANTS = {
 		dateRadio           : 'dateRadio',
 		filterFromDate      : 'filterFromDate',
 		filterToDate        : 'filterToDate',
-		process             : 'process',
+		processName         : 'process_nm',
 		processCode         : 'process_cd',
 		workingDays         : 'working_days',
 		modelNo             : 'model_no',
@@ -51,7 +51,7 @@ export const LEARNING_CURVE_CONSTANTS = {
 /*export const processTableColumns = [
  {
  title       : "PROCESS",
- field       : LEARNING_CURVE_CONSTANTS.field.process,
+ field       : LEARNING_CURVE_CONSTANTS.field.processName,
  width       : '50%',
  align       : "center",
  headerFilter: "input",
@@ -74,7 +74,7 @@ export const LEARNING_CURVE_CONSTANTS = {
 
 export const defaultProcessTableData = [
 	{
-		[LEARNING_CURVE_CONSTANTS.field.process]       : "",
+		[LEARNING_CURVE_CONSTANTS.field.processName]   : "",
 		[LEARNING_CURVE_CONSTANTS.field.processCode]   : "",
 		[LEARNING_CURVE_CONSTANTS.field.workingDays]   : "",
 		[LEARNING_CURVE_CONSTANTS.field.modelNo]       : "",
@@ -185,7 +185,7 @@ export const modelTableColumns = [
 
 export const defaultModelTableData = [
 	{
-		[LEARNING_CURVE_CONSTANTS.field.process]    : "",
+		[LEARNING_CURVE_CONSTANTS.field.processName]: "",
 		[LEARNING_CURVE_CONSTANTS.field.processCode]: "",
 		[LEARNING_CURVE_CONSTANTS.field.workingDays]: "",
 	},
