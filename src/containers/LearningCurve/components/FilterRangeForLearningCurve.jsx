@@ -124,9 +124,11 @@ class FilterRangeForLearningCurve extends Component {
 				let arrayModels = [];
 				dataArray.forEach(element => {
 					if (element.code.toString().trim() && element.name.toString().trim()) {
-						arrayModels.push(
-							{value: element.code, label: element.name}
-						);
+						arrayModels.push({
+							value  : element.code,
+							label  : element.name,
+							workYMD: element.work_ymd,
+						});
 					}
 				});
 
