@@ -325,7 +325,7 @@ class LearningCurve extends Component {
 			let params                                     = {
 				"status"          : "UPDATE",
 				"process_cd"      : selectedProcess.process_cd,
-				"model_cd"        : selectedProcess.model_cd,
+				"model"           : selectedProcess.model_no,
 				"line"            : selectedProcess.line_cd,
 				"basic_target_qty": values[LEARNING_CURVE_CONSTANTS.field.basicTargetQty],
 				"actual_qty"      : selectedProcess.actual_qty,
@@ -363,7 +363,7 @@ class LearningCurve extends Component {
 			"factory"   : "",
 			"line"      : selectedProcess.line_cd,
 			"process"   : selectedProcess.process_cd,
-			"model"     : selectedProcess.model_cd,
+			"model"     : selectedProcess.model_no,
 			"article_no": "",
 			"from_date" : 1564447211,
 			"to_date"   : 1564447211
