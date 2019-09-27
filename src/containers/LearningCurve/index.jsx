@@ -329,6 +329,7 @@ class LearningCurve extends Component {
 				"line"            : selectedProcess.line_cd,
 				"basic_target_qty": +values[LEARNING_CURVE_CONSTANTS.field.basicTargetQty],
 				// "actual_qty"      : selectedProcess.actual_qty,
+				"work_ymd"        : filterModel.workYMD,
 			};
 			this.setState((state, props) => ({
 				selectedProcess: {
