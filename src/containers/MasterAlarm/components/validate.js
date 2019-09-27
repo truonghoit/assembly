@@ -38,22 +38,22 @@ const validate = (values) => {
 			}
 
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempStandardFrom])) {
-				errors[field.tempStandardFrom] = 'Wrong number format';
+				errors[field.tempStandardFrom] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempStandardTo])) {
-				errors[field.tempStandardTo] = 'Wrong number format';
+				errors[field.tempStandardTo] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempYellowFirst])) {
-				errors[field.tempYellowFirst] = 'Wrong number format';
+				errors[field.tempYellowFirst] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempYellowLast])) {
-				errors[field.tempYellowLast] = 'Wrong number format';
+				errors[field.tempYellowLast] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempRedFirst])) {
-				errors[field.tempRedFirst] = 'Wrong number format';
+				errors[field.tempRedFirst] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.tempRedLast])) {
-				errors[field.tempRedLast] = 'Wrong number format';
+				errors[field.tempRedLast] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 		}
 
@@ -78,22 +78,22 @@ const validate = (values) => {
 			}
 
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presStandardFrom])) {
-				errors[field.presStandardFrom] = 'Wrong number format';
+				errors[field.presStandardFrom] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presStandardTo])) {
-				errors[field.presStandardTo] = 'Wrong number format';
+				errors[field.presStandardTo] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presYellowFirst])) {
-				errors[field.presYellowFirst] = 'Wrong number format';
+				errors[field.presYellowFirst] = 'Wrong number, right format: [-]xxxx.xx';
 			}
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presYellowLast])) {
-				errors[field.presYellowLast] = 'Wrong number format';
+				errors[field.presYellowLast] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presRedFirst])) {
-				errors[field.presRedFirst] = 'Wrong number format';
+				errors[field.presRedFirst] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (!/^([-]?[0-9]{1,3}([.][0-9]{1,2})?)$/i.test(values[field.presRedLast])) {
-				errors[field.presRedLast] = 'Wrong number format';
+				errors[field.presRedLast] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 		}
 
@@ -118,22 +118,22 @@ const validate = (values) => {
 			}
 
 			if (values[field.curStandardFrom] === '-') {
-				errors[field.curStandardFrom] = 'Wrong number format';
+				errors[field.curStandardFrom] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (values[field.curStandardTo] === '-') {
-				errors[field.curStandardTo] = 'Wrong number format';
+				errors[field.curStandardTo] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (values[field.curYellowFirst] === '-') {
-				errors[field.curYellowFirst] = 'Wrong number format';
+				errors[field.curYellowFirst] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (values[field.curYellowLast] === '-') {
-				errors[field.curYellowLast] = 'Wrong number format';
+				errors[field.curYellowLast] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (values[field.curRedFirst] === '-') {
-				errors[field.curRedFirst] = 'Wrong number format';
+				errors[field.curRedFirst] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 			if (values[field.curRedLast] === '-') {
-				errors[field.curRedLast] = 'Wrong number format';
+				errors[field.curRedLast] = 'Wrong number format, right format: [-]xxxx.xx';
 			}
 		}
 	} else {
