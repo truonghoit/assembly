@@ -366,8 +366,8 @@ class LearningCurve extends Component {
 			"process"   : selectedProcess.process_cd,
 			"model"     : selectedProcess.model_no,
 			"article_no": "",
-			"from_date" : 1564447211,
-			"to_date"   : 1564447211
+			"from_date" : changeDateToUnix(new Date()),
+			"to_date"   : changeDateToUnix(new Date(), "end")
 		};
 
 		callAxios(method, url, params).then(response => {
