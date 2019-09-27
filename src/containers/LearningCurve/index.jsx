@@ -260,7 +260,7 @@ class LearningCurve extends Component {
 				let processTableData  = [];
 				//{process_cd: "20103", process_nm: "Computer Stitching", model_no: "AUZ71",
 				let {selectedProcess} = this.state;
-				data.map(item => {
+				data.map((item, index) => {
 					processTableData.push({
 						[LEARNING_CURVE_CONSTANTS.field.process]       : item.process_nm,
 						[LEARNING_CURVE_CONSTANTS.field.processCode]   : item.process_cd,
@@ -270,11 +270,16 @@ class LearningCurve extends Component {
 						[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]: item.basic_target_qty,
 						[LEARNING_CURVE_CONSTANTS.field.actualQty]     : item.actual_qty,
 					});
-
-					if (Object.keys(selectedProcess).length === 0) {//No selected process
-						if (item.process_nm.toUpperCase() === "Packing".toUpperCase()) {
-							selectedProcess = item;
-						}
+					if (index === data.length - 1) {    // Select Last Process by default to load chart
+						selectedProcess = {
+							[LEARNING_CURVE_CONSTANTS.field.process]       : item.process_nm,
+							[LEARNING_CURVE_CONSTANTS.field.processCode]   : item.process_cd,
+							[LEARNING_CURVE_CONSTANTS.field.day]           : item.working_days,
+							[LEARNING_CURVE_CONSTANTS.field.modelNo]       : item.model_no,
+							[LEARNING_CURVE_CONSTANTS.field.lineCode]      : item.line_cd,
+							[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]: item.basic_target_qty,
+							[LEARNING_CURVE_CONSTANTS.field.actualQty]     : item.actual_qty,
+						};
 					}
 				});
 				this.loadLearningCurveChart(selectedProcess);
