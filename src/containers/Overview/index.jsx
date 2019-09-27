@@ -441,8 +441,9 @@ class Overview extends Component {
 			try {
 				let data = response.data.data;
 				console.log("data 440: ", data);
+				let metaDetectData = data[0];
 				this.setState((state, props) => ({
-					metalDetectData: data[0],
+					metalDetectData: metaDetectData,
 				}));
 			} catch (e) {
 				console.log("Error: ", e);
