@@ -193,8 +193,4 @@ export const defaultModelTableData = [
 
 export const chartOptions = {
 	legend: {display: false},
-	title : {
-		display: true,
-		text   : 'Predicted world population (millions) in 2050'
-	}
 };
