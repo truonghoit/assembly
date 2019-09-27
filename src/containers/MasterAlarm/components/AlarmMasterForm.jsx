@@ -212,12 +212,16 @@ class AlarmMasterForm extends Component {
 	};
 
 	onAlarmSensorTableRowClick = (selectedProcessCode, definitionValue) => {
+		console.log("onAlarmSensorTableRowClick onAlarmSensorTableRowClick onAlarmSensorTableRowClick");
+		console.log("onAlarmSensorTableRowClick onAlarmSensorTableRowClick onAlarmSensorTableRowClick");
+		console.log("selectedProcessCode: ", selectedProcessCode);
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
 		this.props.change(field.definitionValue, definitionValue);
 
 		let modelTable = this.modelTableRef;
 		modelTable.current.table.deselectRow();
-		this.props.onModelDeselect();
+		//this.props.onModelDeselect();
+		//this.props.onAlarmSensorTableRowClick();
 
 		this.setState({
 			formData           : {
