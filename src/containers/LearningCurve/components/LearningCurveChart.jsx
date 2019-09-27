@@ -25,7 +25,7 @@ class LearningCurveChart extends Component {
 			let barDataArray      = chartData[2];
 			chartData             = [
 				{
-					label           : "Line Standard",
+					label           : "Target",
 					data            : standardDataArray,
 					type            : 'line',
 					borderColor     : "#FFFFFF",
@@ -36,7 +36,7 @@ class LearningCurveChart extends Component {
 					borderWidth     : 1,
 				},
 				{
-					label           : "Bar dataset",
+					label           : "Quantity",
 					data            : barDataArray,
 					backgroundColor : "#2D7AD3",
 					fill            : false,
