@@ -75,10 +75,6 @@ class AlarmMasterForm extends Component {
 
 	onModelArticleClick = (data) => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
-		if (this.props.onMounted) {
-			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
-		}
-
 		let selectedRow = data;
 
 		this.setState({
@@ -97,9 +93,6 @@ class AlarmMasterForm extends Component {
 
 	onModelClick = (data) => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
-		if (this.props.onMounted) {
-			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
-		}
 
 		let selectedRow = data;
 
@@ -173,10 +166,6 @@ class AlarmMasterForm extends Component {
 
 	onArticleDeselect = (data) => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
-		if (this.props.onMounted) {
-			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
-		}
-
 		let selectedRow = data;
 
 		this.setState((state, props) => ({
@@ -209,9 +198,6 @@ class AlarmMasterForm extends Component {
 
 	onProcessDeselect = (data) => {
 		let {field} = ALARM_MASTER_PAGE_CONSTANTS;
-		if (this.props.onMounted) {
-			console.log("ref table: ", this.ref.table); // this is the Tabulator table instance
-		}
 
 		let selectedRow = data;
 

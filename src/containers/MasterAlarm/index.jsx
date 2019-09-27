@@ -108,9 +108,6 @@ class MasterAlarm extends Component {
 	}
 
 	loadArticleTable = (data) => {
-		console.log("loadArticleTable");
-		console.log("loadArticleTable");
-		console.log("loadArticleTable");
 		let method  = 'POST';
 		let url     = ASSEMBLY_API + ALARM_ARTICLE;
 		let params  = {
@@ -602,9 +599,6 @@ class MasterAlarm extends Component {
 
 	render() {
 		let {columnsModelArticle, columnsModel, columnsArticle, columnsProcess, dataModelArticle, dataModel, dataArticle, dataProcess, columnsAlarmSensor, dataAlarmSensor, formData, editMode, submissionState} = this.state;
-		console.log("dataModel: ", dataModel);
-		console.log("dataArticle: ", dataArticle);
-		console.log("dataProcess: ", dataProcess);
 		return (
 			<Container className="dashboard">
 				<Row>

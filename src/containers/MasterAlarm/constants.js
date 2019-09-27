@@ -121,24 +121,24 @@ export const defaultModelArticleTableData = [
 ];
 
 export const defaultModelTableData = [
-	{
+	/*{
 		[ALARM_MASTER_PAGE_CONSTANTS.field.modelNm]  : "",
 		[ALARM_MASTER_PAGE_CONSTANTS.field.modelCd]  : "",
-	},
+	},*/
 ];
 
 export const defaultArticleTableData = [
-	{
+	/*{
 		[ALARM_MASTER_PAGE_CONSTANTS.field.articleNm]: "",
 		[ALARM_MASTER_PAGE_CONSTANTS.field.articleNo]: "",
-	},
+	},*/
 ];
 
 export const defaultProcessTableData = [
-	{
+	/*{
 		[ALARM_MASTER_PAGE_CONSTANTS.field.processNm]: "",
 		[ALARM_MASTER_PAGE_CONSTANTS.field.processCd]: "",
-	},
+	},*/
 ];
 
 let formatStandard = (cell) => {
