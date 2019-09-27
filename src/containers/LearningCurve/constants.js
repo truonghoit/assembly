@@ -193,4 +193,15 @@ export const defaultModelTableData = [
 
 export const chartOptions = {
 	legend: {display: false},
+	tooltips: {
+		callbacks: {
+			label: function(tooltipItem, data) {
+				let label = '';
+				label += data.datasets[tooltipItem.datasetIndex].label + ': ';
+				label += data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+				label += ' (pair)';
+				return label;
+			},
+		},
+	},
 };
