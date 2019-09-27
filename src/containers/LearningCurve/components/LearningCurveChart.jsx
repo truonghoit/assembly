@@ -46,8 +46,8 @@ class LearningCurveChart extends Component {
 				},
 			];
 		}
-		let chartOptions = chartOptions;
-		return <MixedLineBarChart chartOptions={chartOptions} data={chartData} labels={labels}/>;
+		let options = chartOptions;
+		return <MixedLineBarChart chartOptions={options} data={chartData} labels={labels}/>;
 	};
 
 	render() {
