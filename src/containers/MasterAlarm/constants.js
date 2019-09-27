@@ -183,21 +183,21 @@ export const alarmSensorTableColumns = [
 		title  : "TEMPERATURE",
 		columns: [
 			{
-				title          : "<span style='color:#03CF65; font-size: large'>●</span>",
+				title          : "<span style='color:#03CF65; font-size: large'>&nbsp; &nbsp; &nbsp; ●</span>",
 				field          : ALARM_MASTER_PAGE_CONSTANTS.field.tempStandard,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatStandard
 			},
 			{
-				title          : "<span style='color:#FFD44F; font-size: large'>●</span>",
+				title          : "<span style='color:#FFD44F; font-size: large'>&nbsp; &nbsp; &nbsp; ●</span>",
 				field          : ALARM_MASTER_PAGE_CONSTANTS.field.tempYellow,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatYellow
 			},
 			{
-				title          : "<span style='color:#F84E4E; font-size: large'>●</span>",
+				title          : "<span style='color:#F84E4E; font-size: large'>&nbsp; &nbsp; &nbsp; ●</span>",
 				field          : ALARM_MASTER_PAGE_CONSTANTS.field.tempRed,
 				width          : '8%',
 				align          : "center",
@@ -209,21 +209,21 @@ export const alarmSensorTableColumns = [
 		title  : "PRESSURE",
 		columns: [
 			{
-				title          : "<span style='color:#03CF65; font-size: large'>●</span>",
+				title          : "<span style='color:#03CF65; font-size: large'>&nbsp; &nbsp; &nbsp; ●</span>",
 				field          : ALARM_MASTER_PAGE_CONSTANTS.field.presStandard,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatStandard
 			},
 			{
-				title          : "<span style='color:#FFD44F; font-size: large'>●</span>",
+				title          : "<span style='color:#FFD44F; font-size: large'>&nbsp; &nbsp; &nbsp; ●</span>",
 				field          : ALARM_MASTER_PAGE_CONSTANTS.field.presYellow,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatYellow
 			},
 			{
-				title          : "<span style='color:#F84E4E; font-size: large'>●</span>",
+				title          : "<span style='color:#F84E4E; font-size: large'>&nbsp; &nbsp; &nbsp; ●</span>",
 				field          : ALARM_MASTER_PAGE_CONSTANTS.field.presRed,
 				width          : '8%',
 				align          : "center",
@@ -235,21 +235,21 @@ export const alarmSensorTableColumns = [
 		title  : "CURING TIME",
 		columns: [
 			{
-				title          : "<span style='color:#03CF65; font-size: large'>●</span>",
+				title          : "<span style='color:#03CF65; font-size: large'>&nbsp; &nbsp; &nbsp; ●</span>",
 				field          : ALARM_MASTER_PAGE_CONSTANTS.field.curStandard,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatStandard
 			},
 			{
-				title          : "<span style='color:#FFD44F; font-size: large'>●</span>",
+				title          : "<span style='color:#FFD44F; font-size: large'>&nbsp; &nbsp; &nbsp; ●</span>",
 				field          : ALARM_MASTER_PAGE_CONSTANTS.field.curYellow,
 				width          : '8%',
 				align          : "center",
 				formatterParams: formatYellow
 			},
 			{
-				title          : "<span style='color:#F84E4E; font-size: large'>●</span>",
+				title          : "<span style='color:#F84E4E; font-size: large'>&nbsp; &nbsp; &nbsp; ●</span>",
 				field          : ALARM_MASTER_PAGE_CONSTANTS.field.curRed,
 				width          : '8%',
 				align          : "center",
