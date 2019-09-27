@@ -222,6 +222,7 @@ class FilterRangeForLearningCurve extends Component {
 			selectedModel: ARRAY_MODELS[0],
 			//selectedArticle: ARRAY_ARTICLES[0]
 		});
+		this.props.change(field.filterLine, value);
 	};
 
 	handleFilterModelChange = (value) => {
@@ -232,6 +233,7 @@ class FilterRangeForLearningCurve extends Component {
 			selectedModel: value,
 			//selectedArticle: ARRAY_ARTICLES[0]
 		});
+		this.props.change(field.filterModel, value);
 	};
 
 	/*handleFilterArticleChange = (value) => {
