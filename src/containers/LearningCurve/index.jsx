@@ -180,6 +180,7 @@ class LearningCurve extends Component {
 			"model"           : rowData[LEARNING_CURVE_CONSTANTS.field.modelNo],
 			"line"            : rowData[LEARNING_CURVE_CONSTANTS.field.lineCode],
 			"basic_target_qty": rowData[LEARNING_CURVE_CONSTANTS.field.basicTargetQty],
+			"work_ymd"        : rowData[LEARNING_CURVE_CONSTANTS.field.workYMD],
 		};
 		callAxios(method, url, params).then(response => {
 			this.loadModelTable();
