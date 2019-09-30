@@ -24,6 +24,11 @@ const validate = (values) => {
 		errors[field.masCdNm.name] = `General Name field shouldn\'t exceed ${field.masCdNm.maxLength} characters`;
 	}
 
+	console.log("values[field.description.name]: ", values[field.description.name]);
+	if (values[field.description.name] && values[field.description.name].trim().length > 400) {
+		errors[field.description.name] = 'Description field shouldn\'t be longer than 400 characters';
+	}
+
 	if (!values[field.catCd.name]) {
 		errors[field.catCdNm] = 'Please select a category';
 	}

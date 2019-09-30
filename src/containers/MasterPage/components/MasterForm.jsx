@@ -6,6 +6,7 @@ import renderCheckBoxField   from '../../../shared/components/form/CheckBox';
 import renderSelectField     from '../../../shared/components/form/Select';
 import validate              from './validate';
 import {renderField}         from "../../../shared/components/form/InputField";
+import {textAreaField}       from "../../../shared/components/form/TextAreaField";
 import LoadingSpinner        from "../../../shared/components/loading_spinner/LoadingSpinner";
 import MASTER_FORM_CONSTANTS from "../constants";
 
@@ -436,8 +437,10 @@ class MasterForm extends Component {
 							<div className="form__form-group-field">
 								<Field
 									name={field.description.name}
-									component="textarea"
-									type="text"
+									wrap={true}
+									component={textAreaField}
+									style={{width: 343, height: 100}}
+									placeholder="Description here"
 									props={{
 										disabled: formData[field.sysCodeYn] === 1,
 										value   : formData[field.description.name]
