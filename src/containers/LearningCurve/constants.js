@@ -24,7 +24,7 @@ export const LEARNING_CURVE_CONSTANTS = {
 		isOKClicked         : 'isOKClicked',
 		submitButton        : 'submitButton',
 		modelSubmissionState: 'modelSubmissionState',
-
+		workYMD             : 'work_ymd',
 	},
 	submissionState    : {
 		initial: -1,
