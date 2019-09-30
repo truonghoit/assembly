@@ -183,6 +183,7 @@ class LearningCurve extends Component {
 			"work_ymd"        : rowData[LEARNING_CURVE_CONSTANTS.field.workYMD],
 		};
 		callAxios(method, url, params).then(response => {
+			this.loadProcessTable();
 			this.loadModelTable();
 
 			rowData[LEARNING_CURVE_CONSTANTS.field.modelSubmissionState] = LEARNING_CURVE_CONSTANTS.submissionState.done;
