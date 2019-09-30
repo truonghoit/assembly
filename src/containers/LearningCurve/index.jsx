@@ -84,6 +84,7 @@ class LearningCurve extends Component {
 				editor        : "input",
 				headerSort    : false
 			},
+			{title: "Work Date", field: LEARNING_CURVE_CONSTANTS.field.workYMD, visible: false},
 			{
 				title     : "",
 				field     : LEARNING_CURVE_CONSTANTS.field.modelSubmissionState,
@@ -228,6 +229,7 @@ class LearningCurve extends Component {
 						[LEARNING_CURVE_CONSTANTS.field.total]               : parseInt(item.stitching)
 						                                                       + parseInt(item.shoemaking),
 						[LEARNING_CURVE_CONSTANTS.field.basicTargetQty]      : item.basic_target_qty,
+						[LEARNING_CURVE_CONSTANTS.field.workYMD]             : item.work_ymd,
 						[LEARNING_CURVE_CONSTANTS.field.modelSubmissionState]: LEARNING_CURVE_CONSTANTS.submissionState.initial
 					});
 				});
