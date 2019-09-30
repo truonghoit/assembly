@@ -227,16 +227,16 @@ class LeadTime extends Component {
 				"process_cd": "20101"
 			},
 			{
-				"mas_cd_nm" : "Computer Stitching",
-				"pair_qty"  : 0,
-				"lead_time" : 0,
-				"process_cd": "20103"
-			},
-			{
 				"mas_cd_nm" : "Normal Stitching",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
 				"process_cd": "20104"
+			},
+			{
+				"mas_cd_nm" : "Computer Stitching",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
+				"process_cd": "20103"
 			},
 			{
 				"mas_cd_nm" : "Backpack Molding",
