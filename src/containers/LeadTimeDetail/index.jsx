@@ -219,7 +219,7 @@ class LeadTimeDetail extends Component {
 				label      : "Lead Time",
 				data       : totalLTLastRow.slice(0, totalLTLastRow.length - 1),
 				type       : 'line',
-				borderColor: "#EBEDF1",
+				borderColor: "#0CD0EB",
 				fill       : false,
 				lineTension: 0,
 			},

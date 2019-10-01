@@ -28,7 +28,7 @@ class LearningCurveChart extends Component {
 					label           : "Target",
 					data            : standardDataArray,
 					type            : 'line',
-					borderColor     : "#FFFFFF",
+					borderColor     : "#0CD0EB",
 					pointRadius     : 0,
 					pointHoverRadius: 0,
 					fill            : false,
