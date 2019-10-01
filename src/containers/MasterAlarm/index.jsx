@@ -242,6 +242,8 @@ class MasterAlarm extends Component {
 				...this.state.formData,
 				[field.modelNm]        : selectedRow[field.modelNm],
 				[field.modelCd]        : selectedRow[field.modelCd],
+				[field.articleNm]      : "",
+				[field.articleNo]      : "",
 				[field.definitionValue]: '000',
 			},
 			editMode       : false,
@@ -293,6 +295,11 @@ class MasterAlarm extends Component {
 			editMode       : false,
 			submissionState: ALARM_MASTER_PAGE_CONSTANTS.submissionState.initial,
 		});
+	}
+
+	deselectMainTable = () => {
+		let mainTable = this.mainTableRef;
+		mainTable.current.table.deselectRow();
 	}
 
 	onProcessClick = (processCode, definitionValue) => {
@@ -624,6 +631,7 @@ class MasterAlarm extends Component {
 					                 editMode={editMode}
 					                 submissionState={submissionState}
 					                 loadArticleTable={this.loadArticleTable}
+					                 deselectMainTable={this.deselectMainTable}
 					/>
 				</Row>
 				<Row style={{marginTop: 50}}>

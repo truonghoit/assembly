@@ -99,6 +99,7 @@ class AlarmMasterForm extends Component {
 		this.setState((state, props) => ({
 			submitButtonClicked: false,
 			selectedModel: data.model_cd,
+			selectedArticle: "",
 			dataArticle:[],
 			dataProcess:[]
 		}));
@@ -122,7 +123,7 @@ class AlarmMasterForm extends Component {
 		let processTable = this.processTableRef;
 		processTable.current.table.deselectRow();*/
 
-
+		this.props.deselectMainTable();
 		this.props.onModelClick(selectedRow);
 		this.props.loadArticleTable(selectedRow);
 	};
