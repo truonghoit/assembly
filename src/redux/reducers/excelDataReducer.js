@@ -1,8 +1,9 @@
-import {STORE_DEFECT_STATUS_DATA, STORE_DEFECT_SUMMARY_DATA} from '../actions/excelDataActions';
+import {STORE_DEFECT_STATUS_DATA, STORE_DEFECT_SUMMARY_DATA, STORE_ALARM_HISTORY_DATA} from '../actions/excelDataActions';
 
 const initialState = {
 	defectStatusData : null,
 	defectSummaryData: null,
+	alarmHistoryData: null,
 };
 
 export default function (state = initialState, action) {
@@ -16,6 +17,11 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				defectSummaryData: action.defectSummaryData
+			};
+		case STORE_ALARM_HISTORY_DATA:
+			return {
+				...state,
+				alarmHistoryData: action.alarmHistoryData
 			};
 		default:
 			return state;

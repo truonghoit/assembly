@@ -1,11 +1,15 @@
-import React, {Component} from 'react';
-import {withRouter}       from "react-router-dom";
-import {Col, Container}   from "reactstrap";
-import FilterRange        from "../../shared/components/filter_range/FilterRange";
-import {changeDateToUnix} from "../../shared/utils/Utilities";
-import {ASSEMBLY_API, ALARM_HISTORY}     from "../../constants/urlConstants";
-import callAxios          from "../../services/api";
-import AlarmHistoryTable  from "./components/AlarmHistoryTable";
+import React, {Component}            from 'react';
+import {withRouter}                  from "react-router-dom";
+import {Col, Container}                                from "reactstrap";
+import FilterRange                                     from "../../shared/components/filter_range/FilterRange";
+import {changeDateToUnix}                              from "../../shared/utils/Utilities";
+import {ASSEMBLY_API, ALARM_HISTORY}                   from "../../constants/urlConstants";
+import callAxios                                       from "../../services/api";
+import AlarmHistoryTable                               from "./components/AlarmHistoryTable";
+import DataExporter                                    from "../../shared/components/data_table/DataExporter";
+import {storeAlarmHistoryData, storeDefectSummaryData} from "../../redux/actions/excelDataActions";
+import connect                                         from "react-redux/es/connect/connect";
+import {ARROW_ICON}                                    from "../../constants/propertyConstants";
 
 class AlarmHistory extends Component {
 	constructor(props) {
@@ -19,6 +23,17 @@ class AlarmHistory extends Component {
 			filterArticle   : ''
 		};
 		//this.loadMachineAlarmTable();
+	}
+
+	handleExcelData = (alarmData) => {
+		let result = [];
+		result[0] = ['PROCESS', 'DATE', 'TIME', 'SENSOR_TYPE', 'SENSOR_NUMBER', 'STANDARD', 'VALUE', 'ALARM', 'MODEL', 'ARTICLE'];
+		for (let i = 0; i < alarmData.length; i++){
+			let alarmItem = alarmData[i];
+			let standard = alarmItem.standard_from.toString().concat(ARROW_ICON, alarmItem.standard_to);
+			result[i+1] = [alarmItem.process_nm, alarmItem.alarm_date, alarmItem.alarm_time, alarmItem.sensor_type, alarmItem.sensor_no, standard, alarmItem.value, alarmItem.alarm, alarmItem.model_nm, alarmItem.article_nm];
+		}
+		return result;
 	}
 
 	loadMachineAlarmData = () => {
@@ -37,6 +52,8 @@ class AlarmHistory extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let alarmData = response.data.data;
+				let excelData = this.handleExcelData(alarmData);
+				this.props.dispatch(storeAlarmHistoryData(excelData));
 				this.setState({
 					...this.state,
 					alarmHistoryData: alarmData,
@@ -98,6 +115,15 @@ class AlarmHistory extends Component {
 				             screenName="alarmhistory"
 				/>
 				<hr/>
+				<div className="d-flex flex-row" style={{paddingBottom: 20}}>
+					<Col md={11} lg={11}></Col>
+					<Col md={1} lg={1}>
+						<div key='excel' className="filter-div-excel" style={{paddingLeft: 10, paddingRight: 10}}>
+				            <DataExporter/>
+				        </div>
+					</Col>
+				</div>
+
 				<Col md={12} lg={12}>
 					<AlarmHistoryTable alarmHistoryData={alarmHistoryData}/>
 				</Col>
@@ -106,4 +132,4 @@ class AlarmHistory extends Component {
 	}
 }
 
-export default withRouter(AlarmHistory);
+export default withRouter(connect()(AlarmHistory));

@@ -8,9 +8,7 @@ import {faFileExcel}      from "@fortawesome/free-solid-svg-icons";
 
 class DataExporter extends Component {
 	exportExcelFile = (props) => {
-		console.log("exportExcelFile");
-		console.log("props: ", props);
-		let defectStatusData = null, defectSummaryData = null;
+		let defectStatusData = null, defectSummaryData = null, alarmHistoryData = null;
 		let location         = props.location; //defect-status: /pages/defect-status
 		let excelData        = props.excelData;//defect-status-data: .defectStatusData
 		switch (location.pathname) {
@@ -19,6 +17,9 @@ class DataExporter extends Component {
 				break;
 			case "/pages/defect-summary":
 				defectSummaryData = excelData.defectSummaryData;
+				break;
+			case "/pages/alarm-history":
+				alarmHistoryData = excelData.alarmHistoryData;
 				break;
 		}
 		let fileName            = "dataExport";
@@ -37,6 +38,9 @@ class DataExporter extends Component {
 			this.addDefectSummaryToExcelTable(workbook, defectSummaryData);
 		}
 
+		if (alarmHistoryData) {
+			this.addAlarmHistoryToExcelTable(workbook, alarmHistoryData);
+		}
 		//End of add sheet
 
 		workbook.xlsx.writeBuffer()
@@ -125,6 +129,52 @@ class DataExporter extends Component {
 					left  : currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
 					bottom: currentRow === 3 + defectSummaryData.length ? {style: 'thick'} : {style: 'thin'},
 					right : currentRow === 1 + defectSummaryData[0].length ? {style: 'thick'} : {style: 'thin'}
+				};
+
+				if (currentRow._number === 2) {
+					currentRow.getCell(currentCol).font = {
+						bold: true,
+					};
+				}
+				if (currentCol === 1) {
+					currentRow.getCell(currentCol).font = {
+						bold: true,
+					};
+				}
+				currentRow.getCell(currentCol).value = rowData[j];
+
+			}
+		}
+	};
+
+	addAlarmHistoryToExcelTable = (workbook, alarmHistoryData) => {
+		console.log("alarmHistoryData: ", alarmHistoryData);
+		let worksheet = workbook.addWorksheet('alarmHistoryData');
+
+		let middleCenterAlignment = {vertical: 'middle', horizontal: 'center'};
+		let middleRightAlignment  = {vertical: 'middle', horizontal: 'right'};
+		let middleLeftAlignment   = {vertical: 'middle', horizontal: 'left'};
+
+		worksheet.mergeCells('A1:J1');
+		worksheet.getCell('A1').font      = {
+			bold: true,
+		};
+		worksheet.getCell('A1').alignment = middleCenterAlignment;
+		worksheet.getCell('A1').value     = "ALARM HISTORY";
+
+		for (let i = 0; i < alarmHistoryData.length; i++) {
+			let rowData    = alarmHistoryData[i];
+			let currentRow = worksheet.getRow(i + 2);
+			for (let j = 0; j < rowData.length; j++) {
+				let currentCol                           = j + 1;
+				worksheet.getColumn(currentCol).width    = 30;
+				currentRow.getCell(currentCol).alignment = middleCenterAlignment;
+
+				currentRow.getCell(currentCol).border = {
+					top   : currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
+					left  : currentRow === 1 ? {style: 'thick'} : {style: 'thin'},
+					bottom: currentRow === 3 + alarmHistoryData.length ? {style: 'thick'} : {style: 'thin'},
+					right : currentRow === 1 + alarmHistoryData[0].length ? {style: 'thick'} : {style: 'thin'}
 				};
 
 				if (currentRow._number === 2) {
