@@ -336,6 +336,10 @@ class FilterRangeForLearningCurve extends Component {
 										// If the most recent input character of newValue is not a number
 										// Then remove it
 										newValue = newValue.slice(0, -1);
+									} else if (newValue.length > 3) {
+										while (newValue.length > 3) {
+											newValue = newValue.slice(0, -1);
+										}
 									}
 									this.setState({
 										formData: {
