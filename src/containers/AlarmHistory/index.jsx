@@ -118,7 +118,7 @@ class AlarmHistory extends Component {
 				<div className="d-flex flex-row" style={{paddingBottom: 20}}>
 					<Col md={11} lg={11}></Col>
 					<Col md={1} lg={1}>
-						<div key='excel' className="filter-div-excel" style={{paddingLeft: 10, paddingRight: 10}}>
+						<div key='excel' className="filter-div-excel">
 				            <DataExporter/>
 				        </div>
 					</Col>

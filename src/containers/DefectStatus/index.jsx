@@ -140,7 +140,10 @@ class DefectStatus extends Component {
 						<span style={{color: '#BEBEBE'}}>Total Working Hour: 92 Hours</span>
 					</Col>
 					<Col md={2} lg={2}>
-						<DataExporter/>
+						<div style={{marginLeft: 100}}>
+							<DataExporter/>
+						</div>
+
 					</Col>
 				</Row>
 				<Row>

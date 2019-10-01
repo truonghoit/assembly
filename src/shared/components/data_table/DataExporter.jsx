@@ -5,6 +5,9 @@ import {connect}          from "react-redux";
 import {withRouter}       from 'react-router-dom';
 import {FontAwesomeIcon}  from "@fortawesome/react-fontawesome";
 import {faFileExcel}      from "@fortawesome/free-solid-svg-icons";
+import {
+	Button
+} from 'reactstrap';
 
 class DataExporter extends Component {
 	exportExcelFile = (props) => {
@@ -194,9 +197,13 @@ class DataExporter extends Component {
 	};
 
 	render() {
-		return <span className="filter-div-excel" onClick={() => this.exportExcelFile(this.props)}>
-					<FontAwesomeIcon icon={faFileExcel}/><span style={{paddingLeft: 5}}>EXCEL</span>
-				</span>;
+		return  <Button className="icon" color="primary" onClick={() => this.exportExcelFile(this.props)}>
+					<p><FontAwesomeIcon icon={faFileExcel}/><span>EXCEL</span></p>
+				</Button>
+
+		/*<span className="filter-div-excel" onClick={() => this.exportExcelFile(this.props)}>
+		 <FontAwesomeIcon icon={faFileExcel}/><span style={{paddingLeft: 5}}>EXCEL</span>
+		 </span>;*/
 	}
 }
 
