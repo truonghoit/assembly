@@ -195,10 +195,12 @@ class LearningCurve extends Component {
 	};
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
+		console.log("componentDidUpdate 198 198 198");
 		if (prevState.filterFromDate !== this.state.filterFromDate
 		    || prevState.filterToDate !== this.state.filterToDate
 		    || prevState.filterLine !== this.state.filterLine
 		    || prevState.filterModel !== this.state.filterModel) {
+			console.log("205 205");
 			this.loadProcessTable();
 			this.loadModelTable();
 		}
@@ -390,7 +392,6 @@ class LearningCurve extends Component {
 		this.setState((state, props) => ({
 			filterFromDate: changeDateToUnix(newValue),
 		}));
-
 	};
 
 	handleFilterToDateChange  = (newValue) => {

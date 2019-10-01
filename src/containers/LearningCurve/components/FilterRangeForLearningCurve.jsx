@@ -253,6 +253,8 @@ class FilterRangeForLearningCurve extends Component {
 				selectedFromDate     : new Date(),
 				selectedToDate       : new Date(),
 			});
+			this.props.handleFilterFromDateChange(new Date());
+			this.props.handleFilterToDateChange(new Date());
 		} else {
 			this.setState({
 				...this.state,
