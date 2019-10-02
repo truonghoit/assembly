@@ -102,7 +102,7 @@ const columns = [
 		formatter   : formatAlarmColumn
 	},
 	{title: "MODEL", field: "model_nm", align: "center", width: '10%', headerFilter: "input"},
-	{title: "ARTICLE", field: "article", width: '10%', align: "center", headerFilter: "input", formatter: "input"},
+	{title: "ARTICLE", field: "article_nm", width: '10%', align: "center", headerFilter: "input", formatter: "input"},
 ];
 
 const alarmHistoryData = [
