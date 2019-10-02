@@ -46,7 +46,7 @@ class FilterTypeBar extends Component {
 				<p><span style={{paddingLeft: 5}}>ARTICLE</span></p>
 			</Button>*/}
 			<Button className="icon" color="primary" onClick={this.handleTypeClick.bind(this, 'article')}>
-				<p><FontAwesomeIcon icon={faFileExcel}/><span>EXCEL</span></p>
+				<p><FontAwesomeIcon icon={faFileExcel}/><span>ARTICLE</span></p>
 			</Button>
 		</Col>;
 		filterTypeArray[3]  = <Col key='excel' md={1} lg={1}>
