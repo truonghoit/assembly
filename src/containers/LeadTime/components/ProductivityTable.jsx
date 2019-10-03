@@ -72,7 +72,7 @@ class ProductivityTable extends Component {
 							style={{selfAlign: 'flex-end'}}>
 							<div className="d-flex">
 								<Col md={7} lg={7} style={{marginLeft: -15}}>
-									SHOE MAKING
+									ASC
 								</Col>
 								<Col md={3} lg={3}>
 								</Col>
