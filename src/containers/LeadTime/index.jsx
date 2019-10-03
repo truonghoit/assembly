@@ -227,16 +227,16 @@ class LeadTime extends Component {
 				"process_cd": "20101"
 			},
 			{
-				"mas_cd_nm" : "Computer Stitching",
-				"pair_qty"  : 0,
-				"lead_time" : 0,
-				"process_cd": "20103"
-			},
-			{
 				"mas_cd_nm" : "Normal Stitching",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
 				"process_cd": "20104"
+			},
+			{
+				"mas_cd_nm" : "Computer Stitching",
+				"pair_qty"  : 0,
+				"lead_time" : 0,
+				"process_cd": "20103"
 			},
 			{
 				"mas_cd_nm" : "Backpack Molding",
@@ -361,7 +361,7 @@ class LeadTime extends Component {
 		maxStitching               = maxStitching > 0 ? maxStitching : 1;
 		maxShoeMaking             = maxShoeMaking > 0 ? maxShoeMaking : 1;
 		maxLineBalancing          = maxLineBalancing > 0 ? maxLineBalancing : 1;
-		
+
 		let computerStitchingValue  = leadData[1].pair_qty > 0?leadData[1].pair_qty:1;
 		let backpackMoldingValue  = leadData[3].pair_qty?leadData[3].pair_qty:1;
 		let line_balancing_stitch = 0, line_balancing_shoe_make = 0, line_balancing_all = 0;
