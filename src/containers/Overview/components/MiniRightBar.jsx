@@ -38,7 +38,7 @@ class MiniRightBar extends Component {
 							QTY
 						</Col>
 						<Col md={3} lg={3} style={{color: '#FFFFFF'}}>
-							{qty}%
+							{qty.toFixed(2)}%
 						</Col>
 					</div>
 					<Progress value={92}>
@@ -49,19 +49,19 @@ class MiniRightBar extends Component {
 						Cycle
 					</Col>
 					<Col md={3} lg={3} style={{color: '#FFFFFF'}}>
-						{cycle}s
+						{cycle?cycle.toFixed(2):0}s
 					</Col>
 					<Col md={9} lg={9} style={{marginLeft: -15, color: '#FFFFFF', paddingTop: 10}}>
 						<span style={{color:'#2880E9', fontSize: 8}}><FontAwesomeIcon icon={faSquareFull} /></span> Prep
 					</Col>
 					<Col md={3} lg={3} style={{color: '#FFFFFF', paddingTop: 10}}>
-						{prep}s
+						{prep?prep.toFixed(2):0}s
 					</Col>
 					<Col md={9} lg={9} style={{marginLeft: -15, color: '#FFFFFF', paddingTop: 5}}>
 						<span style={{color:'#2880E9', fontSize: 8}}><FontAwesomeIcon icon={faSquareFull} /></span> Curing
 					</Col>
 					<Col md={3} lg={3} style={{color: '#FFFFFF', paddingTop: 5}}>
-						{curing}s
+						{curing?curing.toFixed(2):0}s
 					</Col>
 				</div>
 			</div>
