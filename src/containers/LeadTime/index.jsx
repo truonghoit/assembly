@@ -366,8 +366,8 @@ class LeadTime extends Component {
 		let backpackMoldingValue  = leadData[3].pair_qty?leadData[3].pair_qty:1;
 		let line_balancing_stitch = 0, line_balancing_shoe_make = 0, line_balancing_all = 0;
 		line_balancing_all        = sumLineBalancing * 100 / (maxLineBalancing * 16);
-		line_balancing_shoe_make  = sumShoeMaking * 100 / (backpackMoldingValue * 14);
-		line_balancing_stitch     = sumStitching * 100 / (computerStitchingValue * 2);
+		line_balancing_shoe_make  = sumShoeMaking * 100 / (maxShoeMaking * 14);
+		line_balancing_stitch     = sumStitching * 100 / (maxStitching * 2);
 		ccrProcess                = {
 			...ccrProcess,
 			line_balancing_all      : line_balancing_all,
