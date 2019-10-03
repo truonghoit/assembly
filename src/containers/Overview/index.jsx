@@ -507,8 +507,8 @@ class Overview extends Component {
 				<Row>
 					<Col md={9} lg={9}>
 						<Row>
-							<ComputerStiching computerStichingData={computerStichingData}/>
 							<NormalStiching normalStichingData={normalStichingData}/>
+							<ComputerStiching computerStichingData={computerStichingData}/>
 							<PreStiching preStichingData={preStichingData} />
 						</Row>
 						<Row>
