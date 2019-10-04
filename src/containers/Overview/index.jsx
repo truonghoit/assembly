@@ -520,9 +520,9 @@ class Overview extends Component {
 				<Row>
 					<Col md={9} lg={9}>
 						<Row>
+							<PreStiching preStichingData={preStichingData} />
 							<NormalStiching normalStichingData={normalStichingData}/>
 							<ComputerStiching computerStichingData={computerStichingData}/>
-							<PreStiching preStichingData={preStichingData} />
 						</Row>
 						<Row>
 							<BackpackMolding backPackMoldingData={backPackMoldingData}/>

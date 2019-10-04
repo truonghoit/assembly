@@ -28,7 +28,7 @@ class NormalStiching extends Component {
 		let cycle   = prep + curing;
 		let qty     = countQtyPercent(normalStichingData);
 		return (
-			<div style={{backgroundColor: 'yellow', width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
+			<div style={{backgroundColor: 'yellow', width: '32%', height: 180, marginLeft: 15, marginRight: 15, marginBottom: 15}}>
 				<div className="d-flex">
 					<div className="d-flex flex-column" style={{width:'60%', backgroundColor:'#002F49', height: 180, paddingTop: 10, paddingLeft: 10, paddingRight: 10}}>
 						<span style={{color: '#FFFFFF', marginBottom: 15}}>Normal Stiching</span>
