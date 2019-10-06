@@ -6,6 +6,7 @@ import MainWrapper from './MainWrapper';
 import LogIn              from '../LogIn/index';
 import MasterPage         from '../MasterPage/index';
 import MasterAlarm        from "../MasterAlarm/index";
+import MappingStitch        from "../MappingStitch/index";
 import LeadTime           from "../LeadTime/index";
 import LeadTimeDetail     from "../LeadTimeDetail/index";
 import AlarmHistory from "../AlarmHistory/index";
@@ -20,6 +21,7 @@ const Pages = () => (
 	<Switch>
 		<Route path="/pages/master-page" component={MasterPage} />
 		<Route path="/pages/alarm-master" component={MasterAlarm} />
+		<Route path="/pages/mapping-stitch" component={MappingStitch} />
 		<Route path="/pages/lead-time" component={LeadTime} />
 		<Route path="/pages/lead-time-detail" component={LeadTimeDetail} />
 		<Route path="/pages/alarm-history" component={AlarmHistory} />

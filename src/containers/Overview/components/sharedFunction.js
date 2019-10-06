@@ -149,15 +149,15 @@ export const handleLeftPanel = (backPackMoldingData) => {
 	    timerYellow = 0,
 	    timerRed = 0;
 	backPackMoldingData.forEach(item => {
-		if (item.sensor_type.toUpperCase() === "Curing".toUpperCase()){
+		if (item.sensor_type && item.sensor_type.toUpperCase() === "Curing".toUpperCase()){
 			timerGreen  = item.sensor_no_green
 			timerYellow = item.sensor_no_red
 			timerRed    = item.sensor_no_yellow
-		} else if (item.sensor_type.toUpperCase() === "Temp".toUpperCase()){
+		} else if (item.sensor_type && item.sensor_type.toUpperCase() === "Temp".toUpperCase()){
 			tempGreen   = item.sensor_no_green;
 			tempYellow  = item.sensor_no_red;
 			tempRed     = item.sensor_no_yellow;
-		} else if (item.sensor_type.toUpperCase() === "Pres".toUpperCase()){
+		} else if (item.sensor_type && item.sensor_type.toUpperCase() === "Pres".toUpperCase()){
 			presGreen   = item.sensor_no_green;
 			presYellow  = item.sensor_no_red;
 			presRed     = item.sensor_no_yellow;

@@ -1,4 +1,8 @@
 //Constant for comboboxes in filer
+export const ARRAY_FACTORIES = [    // initial data
+	{value: '', label: '---'}
+];
+
 export const ARRAY_LINES = [    // initial data
 	{value: '', label: '---'}
 ];

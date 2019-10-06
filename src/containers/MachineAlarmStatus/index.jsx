@@ -27,11 +27,13 @@ class MachineAlarmStatus extends Component {
 		let url                                                                    = ASSEMBLY_API
 		                                                                             + MACHINE_ALARM_STATUS;
 		let params                                                                 = {
-			"factory"  : "",
-			"line"     : "",
-			"process"  : "",
-			"from_date": 1562660433,//filterFromDate
-			"to_date"  : 1562660433 //filterToDate
+			"factory"   : "",
+			"line"      : filterLine,
+			"model"     : filterModel,
+			"article_no": filterArticle,
+			"process"   : "",
+			"from_date" : filterFromDate,
+			"to_date"   : filterToDate
 		};
 		console.log("params: ", params);
 		callAxios(method, url, params).then(response => {

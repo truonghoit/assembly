@@ -83,6 +83,7 @@ class MasterForm extends Component {
 		    }          = this.props;
 		let {formData} = this.state;
 		const {field}  = MASTER_FORM_CONSTANTS;
+		console.log("categoryCodeOptions: ", categoryCodeOptions);
 
 		let definitionValue = formData[field.definitionValue] ? formData[field.definitionValue] : "000";
 		let definitionArray = definitionValue.split('');
