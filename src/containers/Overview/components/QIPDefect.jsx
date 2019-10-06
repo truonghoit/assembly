@@ -3,6 +3,8 @@ import React           from "react";
 import DoughnutChart   from "../../../shared/components/chart/DoughnutChart";
 import DefectBarChart from "./DefectBarChart";
 import {countTotal}   from "../../../shared/utils/Utilities";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faSquare } from '@fortawesome/free-solid-svg-icons'
 
 class QIPDefect extends Component {
 	constructor(props) {
@@ -46,19 +48,54 @@ class QIPDefect extends Component {
 		}
 
 		return (
-			<div style={{width: '32%', height: 180, marginBottom: 15, marginRight: 15}}>
+			<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
 				<div className="d-flex">
-					<div className="d-flex flex-column" style={{width:'60%', backgroundColor:'#002F49', height: 180, paddingTop: 10, paddingLeft: 10, paddingRight: 10}}>
-						<span style={{color: '#FFFFFF', marginBottom: 15}}>QIP DEFECT</span>
-						<DefectBarChart chartData={qipDefectData}  showLegend={false} />
+					<div className="d-flex" style={{paddingTop: -600, width:'60%', backgroundColor:'#002F49', height: 180, paddingLeft: 10, paddingRight: 10}}>
+						<div className="d-flex flex-column" style={{flex: '0 0 70%', paddingTop: 10}}>
+							<span style={{color: '#FFFFFF'}}>QIP DEFECT</span>
+							<div style={{height: 22}}></div>
+							<DoughnutChart labels={['Boarding Gap', 'Dirty Bottom', 'Dirty Bottom', 'Over Cement', 'Wrinkles', 'Other Defects']} data={defectDonutChartData}
+							               centerText={grandTotal.toString()}
+							               showLegend={false}
+							/>
+						</div>
+						{/*<span style={{color: '#FFFFFF', marginBottom: 15}}>QIP DEFECT</span>
+						<DefectBarChart chartData={qipDefectData}  showLegend={false} />*/}
+
 					</div>
-					<div className="d-flex flex-column" style={{flex: '0 0 40%', paddingTop: 10, backgroundColor:'#082738'}}>
-						<span style={{color: '#FFFFFF', paddingLeft: 10}}>Total of Defect</span>
+					<div style={{width:'40%', backgroundColor:'#082738', height:180, paddingTop: 25, paddingLeft: 10, paddingRight: 10}}>
+						{/*<span style={{color: '#FFFFFF', paddingLeft: 10}}>Total of Defect</span>
 						<div style={{height: 22}}></div>
 						<DoughnutChart labels={['Defect']} data={defectDonutChartData}
 						               centerText={grandTotal.toString()}
 						               showLegend={false}
-						/>
+						/>*/}
+						<div className="d-flex flex-column">
+							<div className="d-flex flex-row">
+								<span style={{color: '#FFFFFF'}}><FontAwesomeIcon icon={faSquare} /></span>
+								<span style={{color: '#FFFFFF', marginLeft: 10}}>Boarding Gap</span>
+							</div>
+							<div className="d-flex flex-row" style={{marginTop: 5}}>
+								<span style={{color: '#C6FCFF'}}><FontAwesomeIcon icon={faSquare} /></span>
+								<span style={{color: '#FFFFFF', marginLeft: 10}}>Dirty Upper</span>
+							</div>
+							<div className="d-flex flex-row" style={{marginTop: 5}}>
+								<span style={{color: '#46D6EA'}}><FontAwesomeIcon icon={faSquare} /></span>
+								<span style={{color: '#FFFFFF', marginLeft: 10}}>Dirty Bottom</span>
+							</div>
+							<div className="d-flex flex-row" style={{marginTop: 5}}>
+								<span style={{color: '#62A4F0'}}><FontAwesomeIcon icon={faSquare} /></span>
+								<span style={{color: '#FFFFFF', marginLeft: 10}}>Over Cement</span>
+							</div>
+							<div className="d-flex flex-row" style={{marginTop: 5}}>
+								<span style={{color: '#8C67F6'}}><FontAwesomeIcon icon={faSquare} /></span>
+								<span style={{color: '#FFFFFF', marginLeft: 10}}>Wrinkles</span>
+							</div>
+							<div className="d-flex flex-row" style={{marginTop: 5}}>
+								<span style={{color: '#514EEC'}}><FontAwesomeIcon icon={faSquare} /></span>
+								<span style={{color: '#FFFFFF', marginLeft: 10}}>Other Defects</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
