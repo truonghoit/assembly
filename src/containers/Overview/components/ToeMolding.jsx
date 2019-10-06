@@ -9,22 +9,41 @@ class ToeMolding extends Component {
 		super(props);
 		this.state = {
 			toeMoldingData: [],
+			tempPresTimeItem: {
+				tempGreen: 0,
+				tempYellow: 0,
+				tempRed: 0,
+				presGreen: 0,
+				presYellow: 0,
+				presRed: 0,
+				timerGreen: 0,
+				timerYellow: 0,
+				timerRed: 0
+			},
+			rightPanelItem: {
+				qty: 0,
+				prep: 0,
+				curing: 0,
+				cycle: 0
+			}
 		}
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot){
 		if (this.props.toeMoldingData != prevProps.toeMoldingData){
 			let {toeMoldingData} = this.props;
+			let tempPresTimeItem = handleLeftPanel(toeMoldingData);
+			let rightPanelItem = handleRightPanel(toeMoldingData);
 			this.setState((state, props) => ({
 				toeMoldingData: toeMoldingData,
+				tempPresTimeItem: tempPresTimeItem,
+				rightPanelItem: rightPanelItem
 			}));
 		}
 	}
 
 	render(){
-		let {toeMoldingData} = this.state;
-		let tempPresTimeItem = handleLeftPanel(toeMoldingData);
-		let rightPanelItem = handleRightPanel(toeMoldingData);
+		let {toeMoldingData, tempPresTimeItem, rightPanelItem} = this.state;
 		return (
 			<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
 				<div className="d-flex">

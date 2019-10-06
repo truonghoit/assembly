@@ -149,15 +149,15 @@ export const handleLeftPanel = (backPackMoldingData) => {
 	    timerYellow = 0,
 	    timerRed = 0;
 	backPackMoldingData.forEach(item => {
-		if (item.sensor_type.toUpperCase() === "Curing".toUpperCase()){
+		if (item.sensor_type.toUpperCase() === "Curing Time".toUpperCase()){
 			timerGreen  = item.sensor_no_green
 			timerYellow = item.sensor_no_red
 			timerRed    = item.sensor_no_yellow
-		} else if (item.sensor_type.toUpperCase() === "Temp".toUpperCase()){
+		} else if (item.sensor_type.toUpperCase() === "Temperature".toUpperCase()){
 			tempGreen   = item.sensor_no_green;
 			tempYellow  = item.sensor_no_red;
 			tempRed     = item.sensor_no_yellow;
-		} else if (item.sensor_type.toUpperCase() === "Pres".toUpperCase()){
+		} else if (item.sensor_type.toUpperCase() === "Pressure".toUpperCase()){
 			presGreen   = item.sensor_no_green;
 			presYellow  = item.sensor_no_red;
 			presRed     = item.sensor_no_yellow;
@@ -185,6 +185,9 @@ export const handleRightPanel = (data) => {
 		let actual  = data[0].actual_pair_qty;
 		let target  = data[0].kpi_target_qty_day?data[0].kpi_target_qty_day:1;
 		qty         = actual/target;
+		if (isNaN(qty)){
+			qty = 0;
+		}
 		prep       = data[0].preparing_time;
 		curing       = data[0].curing_time;
 		cycle       = prep + curing;

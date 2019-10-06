@@ -10,25 +10,33 @@ class PreStiching extends Component {
 		super(props);
 		this.state = {
 			preStichingData: [],
+			prep: 0,
+			curing: 0,
+			cycle: 0,
+			qty: 0
 		}
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot){
 		if (this.props.preStichingData != prevProps.preStichingData){
 			let {preStichingData} = this.props;
+			let prep    = countPrep(preStichingData);
+			let curing  = countCuring(preStichingData);
+			let cycle   = prep + curing;
+			let qty     = countQtyPercent(preStichingData);
 			this.setState((state, props) => ({
 				preStichingData: preStichingData,
+				prep: prep,
+				curing: curing,
+				cycle: cycle,
+				qty: qty
 			}));
 		}
 	}
 
 	render(){
-		let {preStichingData} = this.state;
+		let {preStichingData, prep, curing, cycle, qty} = this.state;
 		let chart   = drawChartItem(preStichingData);
-		let prep    = countPrep(preStichingData);
-		let curing  = countCuring(preStichingData);
-		let cycle   = prep + curing;
-		let qty     = countQtyPercent(preStichingData);
 		return (
 			<div style={{backgroundColor: 'purple', width: '32%', height: 180, marginBottom: 15}}>
 				<div className="d-flex">

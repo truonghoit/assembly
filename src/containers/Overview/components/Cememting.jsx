@@ -9,22 +9,42 @@ class Cememting extends Component {
 		super(props);
 		this.state = {
 			cementingData: [],
+			tempPresTimeItem: {
+				tempGreen: 0,
+				tempYellow: 0,
+				tempRed: 0,
+				presGreen: 0,
+				presYellow: 0,
+				presRed: 0,
+				timerGreen: 0,
+				timerYellow: 0,
+				timerRed: 0
+			},
+			rightPanelItem: {
+				qty: 0,
+				prep: 0,
+				curing: 0,
+				cycle: 0
+			}
 		}
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot){
 		if (this.props.cementingData != prevProps.cementingData){
 			let {cementingData} = this.props;
+			let tempPresTimeItem = handleLeftPanel(cementingData);
+			let rightPanelItem = handleRightPanel(cementingData);
 			this.setState((state, props) => ({
 				cementingData: cementingData,
+				tempPresTimeItem: tempPresTimeItem,
+				rightPanelItem: rightPanelItem
 			}));
 		}
 	}
 
 	render(){
-		let {cementingData} = this.state;
-		let tempPresTimeItem = handleLeftPanel(cementingData);
-		let rightPanelItem = handleRightPanel(cementingData);
+		let {cementingData, tempPresTimeItem, rightPanelItem} = this.state;
+
 		return (
 			<div style={{width: '32%', height: 180, marginRight: 15, marginBottom: 15}}>
 				<div className="d-flex">
