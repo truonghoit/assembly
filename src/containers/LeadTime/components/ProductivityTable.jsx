@@ -16,11 +16,11 @@ class ProductivityTable extends Component {
 					<Col md={12} lg={12} style={{marginTop: 15}}><span>PRODUCTIVITY</span></Col>
 					<Col className="d-flex mt-1">
 						<Col md={6} lg={6} className="d-flex flex-column" style={{marginLeft: 20,}}>
-							<div md={12} lg={12} className="bold-text h3">{ccrProcess.prod_qty_day}</div>
+							<div md={12} lg={12} className="bold-text h3">{ccrProcess.productivityPairPerDay}</div>
 							<div md={12} lg={12}>pairs/day</div>
 						</Col>
 						<Col md={6} lg={6} className="d-flex flex-column">
-							<div md={12} lg={12} className="bold-text h3">{parseInt(ccrProcess.prod_time_pair)}</div>
+							<div md={12} lg={12} className="bold-text h3">{ccrProcess.productivityMinPerPair.toFixed(2)}</div>
 							<div md={12} lg={12}>mins/pair</div>
 						</Col>
 					</Col>

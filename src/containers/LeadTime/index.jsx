@@ -224,102 +224,119 @@ class LeadTime extends Component {
 				"mas_cd_nm" : "Pre. Stitching",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20101"
 			},
 			{
 				"mas_cd_nm" : "Normal Stitching",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20104"
 			},
 			{
 				"mas_cd_nm" : "Computer Stitching",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20103"
 			},
 			{
 				"mas_cd_nm" : "Backpack Molding",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20105"
 			},
 			{
 				"mas_cd_nm" : "Toe Molding",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20106"
 			},
 			{
 				"mas_cd_nm" : "Strobel",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20107"
 			},
 			{
 				"mas_cd_nm" : "Lasting",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20108"
 			},
 			{
 				"mas_cd_nm" : "Heal Lasting",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20109"
 			},
 			{
 				"mas_cd_nm" : "Heat Chamber",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20110"
 			},
 			{
 				"mas_cd_nm" : "Negative Gage",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20111"
 			},
 			{
 				"mas_cd_nm" : "Cementing",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20112"
 			},
 			{
 				"mas_cd_nm" : "Attach Sole With Upper",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20113"
 			},
 			{
 				"mas_cd_nm" : "Chiller",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20114"
 			},
 			{
 				"mas_cd_nm" : "Delasting",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20115"
 			},
 			{
 				"mas_cd_nm" : "Metal Detect",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20116"
 			},
 			{
 				"mas_cd_nm" : "QIP Defect",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20117"
 			},
 			{
 				"mas_cd_nm" : "Packing",
 				"pair_qty"  : 0,
 				"lead_time" : 0,
+				"number_of_day" : 0,
 				"process_cd": "20118"
 			}
 		];
@@ -328,6 +345,7 @@ class LeadTime extends Component {
 				if (leadData[j].process_cd.toString() === newLeadDataArray[i].process_cd.toString()) {
 					newLeadDataArray[i].pair_qty  = leadData[j].pair_qty;
 					newLeadDataArray[i].lead_time = leadData[j].lead_time;
+					newLeadDataArray[i].number_of_day = leadData[j].number_of_day;
 				}
 			}
 		}
@@ -335,11 +353,10 @@ class LeadTime extends Component {
 	};
 
 	findPerformance = (leadData, ccrProcess) => {
-		console.log("findPerformance");
-		console.log("leadData: ", leadData);
 		let maxStitching      = 0, sumStitching = 0;
 		let maxShoeMaking    = 0, sumShoeMaking = 0;
 		let maxLineBalancing = 0, sumLineBalancing = 0;
+		let sumLeadTime         = 0;
 		for (let i = 0; i < 3; i++) {
 			sumStitching += leadData[i].pair_qty;
 			if (maxStitching < leadData[i].pair_qty) {
@@ -354,6 +371,7 @@ class LeadTime extends Component {
 		}
 		for (let i = 1; i < leadData.length; i++) {
 			sumLineBalancing += leadData[i].pair_qty;
+			sumLeadTime += leadData[i].lead_time;
 			if (maxLineBalancing < leadData[i].pair_qty) {
 				maxLineBalancing = leadData[i].pair_qty;
 			}
@@ -368,11 +386,23 @@ class LeadTime extends Component {
 		line_balancing_all        = sumLineBalancing * 100 / (maxLineBalancing * 16);
 		line_balancing_shoe_make  = sumShoeMaking * 100 / (maxShoeMaking * 14);
 		line_balancing_stitch     = sumStitching * 100 / (maxStitching * 2);
+
+		//count productivity pairs/day, mins/pair
+		let packingQty = leadData[16].pair_qty;
+		let numberOfWorkingDays = leadData[16].number_of_day > 0?leadData[16].number_of_day:1;
+		let productivityPairPerDay = packingQty/numberOfWorkingDays;
+		let productivityMinPerPair = sumLeadTime/60;
+		console.log("sumLeadTime: ", sumLeadTime);
+		console.log("productivityMinPerPair: ", productivityMinPerPair);
+
+
 		ccrProcess                = {
 			...ccrProcess,
 			line_balancing_all      : line_balancing_all,
 			line_balancing_shoe_make: line_balancing_shoe_make,
-			line_balancing_stitch   : line_balancing_stitch
+			line_balancing_stitch   : line_balancing_stitch,
+			productivityPairPerDay  : productivityPairPerDay,
+			productivityMinPerPair  : productivityMinPerPair
 		};
 		return ccrProcess;
 	};
