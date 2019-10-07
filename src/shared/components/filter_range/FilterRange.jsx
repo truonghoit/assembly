@@ -37,7 +37,8 @@ class FilterRange extends Component {
 			arrayModels          : ARRAY_MODELS,
 			selectedModel        : ARRAY_MODELS[0],
 			arrayArticles        : ARRAY_ARTICLES,
-			selectedArticle      : ARRAY_ARTICLES[0]
+			selectedArticle      : ARRAY_ARTICLES[0],
+			callUpdateTimes      : 0
 		};
 
 		this.fillComboboxes();
@@ -306,6 +307,20 @@ class FilterRange extends Component {
 			</Row>
 		</Col>
 	);
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (this.state.callUpdateTimes < 1) {
+			if (this.state.selectedLine.value != "" && this.state.selectedModel.value != "" && this.state.selectedArticle.value != ""){
+				this.props.handleFilterLineChange(this.state.selectedLine);
+				this.props.handleFilterModelChange(this.state.selectedModel);
+				this.props.handleFilterArticleChange(this.state.selectedArticle);
+				this.setState({
+					...this.state,
+					callUpdateTimes: this.state.callUpdateTimes + 1,
+				})
+			}
+		}
+	}
 
 	render() {
 		let {handleSubmit, screenName}               = this.props;
