@@ -4,17 +4,17 @@ const validate = (values) => {
 	let errors                   = {};
 	const {field} = MAPPING_STITCH_CONSTANTS;
 
+	if (values[field.hiddenMacAddressDuplicatedChecker]) {
+		errors[field.macAddress] = 'Duplicated Mac Address';
+	}
+
 	if (!values[field.macAddress] || (values[field.macAddress] && !values[field.macAddress].trim())) {
 		errors[field.macAddress] = 'Mac Address field shouldn\'t be empty';
 	} else if (values[field.macAddress].length > 30) {
 		errors[field.macAddress] = 'Mac Address field shouldn\'t longer than 30 characters';
 	}
-	if (values[field.hiddenMasCdDuplicatedChecker]) {
-		errors[field.macAddress] = 'Duplicated Mac Address Found! Please use another one or select a table row below'
-		                           + ' to edit.';
-	}
 
-	console.log("values[field.factoryCode: ", values[field.factoryCode]);
+
 	if (!values[field.factoryCode]) {
 		errors[field.factoryCode] = 'Factory code field shouldn\'t be empty';
 	}
@@ -23,9 +23,8 @@ const validate = (values) => {
 		errors[field.lineCode] = 'Line code field shouldn\'t be empty';
 	}
 
-	console.log("values[field.processName: ", values[field.processName]);
-	if (!values[field.processName]) {
-		errors[field.processName] = 'Process code field shouldn\'t be empty';
+	if (!values[field.processCode]) {
+		errors[field.processCode] = 'Process code field shouldn\'t be empty';
 	}
 
 	if (!values[field.posittionCode]) {

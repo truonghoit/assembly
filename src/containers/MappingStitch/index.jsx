@@ -31,6 +31,7 @@ class MappingStitch extends Component {
 		this.setState({
 			formData       : {
 				...selectedRow,
+				[field.hiddenMacAddressDuplicatedChecker]: false,
 			},
 			editMode       : true,
 			submissionState: MAPPING_STITCH_CONSTANTS.submissionState.initial,
@@ -51,22 +52,21 @@ class MappingStitch extends Component {
 			submissionState: onGoing,
 		});
 		event.preventDefault();
-
 		const {field}        = MAPPING_STITCH_CONSTANTS;
 
 		let method = 'POST';
 		let url    = ASSEMBLY_API + MAPPING_STITCH_IU;
 		let param  = {
 			"status"            : this.state.editMode ? "UPDATE" : "INSERT",
-			"mac_address"       : values[field.macAddress],
+			[field.macAddress]      : values[field.macAddress],
 			"mapping_seq"       : "0",
-			"factory_cd"        : values[field.factoryCode],
-			"line_cd"           : values[field.lineCode],
-			"process_cd"        : values[field.processCode],
-			"position_no"       : values[field.posittionCode],
-			"active_yn"         : values[field.active]?"1":"0",
-			"description"       : values[field.description],
-			"entry_date"        : changeDateToUnix(values[field.entryDate]),
+			[field.factoryCode]        : values[field.factoryCode],
+			[field.lineCode]           : values[field.lineCode],
+			[field.processCode]         : values[field.processCode],
+			[field.posittionCode]        : values[field.posittionCode],
+			[field.active]          : values[field.active]?"1":"0",
+			[field.description]        : values[field.description],
+			[field.entryDate]         : changeDateToUnix(values[field.entryDate]),
 			"rtn_value"         : ""
 		};
 		callAxios(method, url, param).then(response => {
@@ -81,34 +81,37 @@ class MappingStitch extends Component {
 					gotError = true;
 				}
 				return {
-					"mac_address"       : rowData[field.macAddress],
+					[field.macAddress]       : rowData[field.macAddress],
 					"mapping_seq"       : "0",
-					"factory_cd"        : rowData[field.factoryCode],
-					"line_cd"           : rowData[field.lineCode],
-					"process_cd"        : rowData[field.processCode],
-					"position_no"       : rowData[field.posittionCode],
-					"active_yn"         : rowData[field.active]?"1":"0",
-					"description"       : rowData[field.description],
-					"entry_date"        : changeDateToUnix(rowData[field.entryDate]),
+					[field.factoryCode]        : rowData[field.factoryCode],
+					[field.lineCode]           : rowData[field.lineCode],
+					[field.processCode]        : rowData[field.processCode],
+					[field.posittionCode]       : rowData[field.posittionCode],
+					[field.active]         : rowData[field.active]?"1":"0",
+					[field.description]       : rowData[field.description],
+					[field.entryDate]        : changeDateToUnix(rowData[field.entryDate]),
 					"rtn_value"         : ""
 				};
 			});
 			if (!this.state.editMode && gotError) { // Is in Insert Mode and Duplicated Mas Code found
-				console.log("Insert duplicated");
-				console.log("values: ", values);
 				this.setState({
 					formData       : {
 						...this.state.formData,
 						"status"            : this.state.editMode ? "UPDATE" : "INSERT",
-						"mac_address"       : values[field.macAddress],
+						[field.macAddress]       : values[field.macAddress],
 						"mapping_seq"       : "0",
-						"factory_cd"        : values[field.factoryCode],
-						"line_cd"           : values[field.lineCode],
-						"process_cd"        : values[field.processCode],
-						"position_no"       : values[field.posittionCode],
-						"active_yn"         : values[field.active]?"1":"0",
-						"description"       : values[field.description],
-						"entry_date"        : changeDateToUnix(values[field.entryDate]),
+						[field.factoryCode]        : values[field.factoryCode],
+						[field.factoryName]        : values[field.factoryName],
+						[field.lineCode]           : values[field.lineCode],
+						[field.lineName]           : values[field.lineName],
+						[field.processCode]        : values[field.processCode],
+						[field.processName]        : values[field.processName],
+						[field.posittionCode]       : values[field.posittionCode],
+						[field.posittionName]       : values[field.posittionName],
+						[field.active]         : values[field.active]?"1":"0",
+						[field.description]       : values[field.description],
+						[field.entryDate]       : changeDateToUnix(values[field.entryDate]),
+						[field.hiddenMacAddressDuplicatedChecker]: true,
 						"rtn_value"         : ""
 					},
 					submissionState: failed,
@@ -124,6 +127,11 @@ class MappingStitch extends Component {
 				this.getStitchList();
 				this.onReset();
 			}
+			setTimeout(() => {
+				this.setState({
+					submissionState: initial,
+				});
+			}, 1000);
 		}).catch(error => {
 			console.log("Error: ", error);
 			this.setState({
@@ -162,7 +170,6 @@ class MappingStitch extends Component {
 		let {
 			    tableData, formData, editMode, submissionState
 		    } = this.state;
-		console.log("submissionState 164: ", submissionState);
 		return (
 			<Container className="dashboard">
 				<h3>Table board/Mapping Stitch Sensor And Process</h3>

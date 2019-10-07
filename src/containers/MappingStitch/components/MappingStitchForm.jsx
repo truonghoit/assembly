@@ -40,7 +40,6 @@ class MappingStitchForm extends Component {
 		callAxios(method, url, params).then(response => {
 			try {
 				let dataArray  = response.data.data;
-				console.log("38: ", dataArray);
 				let factoryCodeOptions = [...ARRAY_FACTORIES];
 				dataArray.forEach(element => {
 					factoryCodeOptions.push(
@@ -101,11 +100,16 @@ class MappingStitchForm extends Component {
 		this.props.change(field.entryDate, formData[field.entryDate] ? moment.unix(formData[field.entryDate]).format('DD/MM/YYYY') : moment().format('DD/MM/YYYY'));
 		this.props.change(field.macAddress, formData[field.macAddress] ? formData[field.macAddress] : '');
 		this.props.change(field.factoryCode, formData[field.factoryCode] ? formData[field.factoryCode] : '');
+		this.props.change(field.factoryName, formData[field.factoryName] ? formData[field.factoryName] : '---');
 		this.props.change(field.lineCode, formData[field.lineCode] ? formData[field.lineCode] : '');
+		this.props.change(field.lineName, formData[field.lineName] ? formData[field.lineName] : '---');
 		this.props.change(field.processCode, formData[field.processCode] ? formData[field.processCode] : '');
+		this.props.change(field.processName, formData[field.processName] ? formData[field.processName] : '---');
 		this.props.change(field.posittionCode, formData[field.posittionCode] ? formData[field.posittionCode] : '');
+		this.props.change(field.posittionName, formData[field.posittionName] ? formData[field.posittionName] : '---');
 		this.props.change(field.description, formData[field.description] ? formData[field.description] : '');
 		this.props.change(field.active, formData[field.active] ? formData[field.active] : "");
+		this.props.change(field.hiddenMacAddressDuplicatedChecker, formData[field.hiddenMacAddressDuplicatedChecker] ? formData[field.hiddenMacAddressDuplicatedChecker] : false);
 		//this.props.change(field.masCdNm.name, formData[field.masCdNm.name] ? formData[field.masCdNm.name] : '');
 	}
 
@@ -159,7 +163,6 @@ class MappingStitchForm extends Component {
 		let { handleSubmit, reset, onReset, editMode, submissionState}    = this.props;
 		const {field} = MAPPING_STITCH_CONSTANTS;
 		let {formData, lineCodeOptions, posittionCodeOptions, factoryCodeOptions, processCodeOptions} = this.state;
-		console.log("formData 162: ", formData);
 		return (
 			<Col md={12} lg={12}>
 				<form className="form form--horizontal" onSubmit={handleSubmit}>
@@ -201,6 +204,10 @@ class MappingStitchForm extends Component {
 											value   : formData[field.macAddress] ? formData[field.macAddress] : ''
 										}}
 										onChange={(event, newValue) => {
+											this.props.change(
+												field.hiddenMacAddressDuplicatedChecker,
+												false
+											);
 											this.setState({
 												formData: {
 													...formData,
@@ -258,6 +265,10 @@ class MappingStitchForm extends Component {
 												},
 											}}
 											onChange={(event, newValue) => {
+												this.props.change(
+													field.factoryName,
+													newValue.label
+												);
 												this.setState({
 													formData: {
 														...formData,
@@ -336,6 +347,10 @@ class MappingStitchForm extends Component {
 												},
 											}}
 											onChange={(event, newValue) => {
+												/*this.props.change(
+													field.lineName,
+													newValue.label
+												);*/
 												this.fillPosittionCombobox(newValue.value);
 												this.setState({
 													formData: {
@@ -437,8 +452,8 @@ class MappingStitchForm extends Component {
 														return 'Failed';
 													case initial:
 														this.props.change(
-															field.hiddenMasCdDuplicatedChecker,
-															formData[field.hiddenMasCdDuplicatedChecker]
+															field.hiddenMacAddressDuplicatedChecker,
+															formData[field.hiddenMacAddressDuplicatedChecker]
 														);
 														return 'Save';
 													case onGoing:
@@ -452,8 +467,8 @@ class MappingStitchForm extends Component {
 												switch (submissionState) {
 													case failed:
 														this.props.change(
-															field.hiddenMasCdDuplicatedChecker,
-															formData[field.hiddenMasCdDuplicatedChecker]
+															field.hiddenMacAddressDuplicatedChecker,
+															formData[field.hiddenMacAddressDuplicatedChecker]
 														);
 														return 'Failed';
 													case initial:
