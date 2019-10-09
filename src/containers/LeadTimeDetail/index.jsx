@@ -249,14 +249,9 @@ class LeadTimeDetail extends Component {
 			"from_date" : filterFromDate,
 			"to_date"   : filterToDate
 		};
-		console.log("params: ", params);
 		callAxios(method, url, params).then(response => {
 			try {
 				let leadDetailData = response.data.data;
-				console.log("255 255 255 255 255");
-				console.log("255 255 255 255 255");
-				console.log("255 255 255 255 255");
-				console.log("leadDetailData: ", leadDetailData);
 				/*this.setState((state, props) => ({
 				 test: "123"
 				 }));*/
@@ -306,8 +301,6 @@ class LeadTimeDetail extends Component {
 		    || prevState.filterLine !== this.state.filterLine
 		    || prevState.filterModel !== this.state.filterModel
 		    || prevState.filterArticle !== this.state.filterArticle) {
-			console.log("this.state.filterArticle: ", this.state.filterArticle);
-				console.log("componentDidUpdate");
 				this.loadLeadDetailTable();
 		}
 	}
