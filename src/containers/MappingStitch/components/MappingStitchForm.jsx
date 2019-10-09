@@ -118,7 +118,7 @@ class MappingStitchForm extends Component {
 		let url    = ASSEMBLY_API + FILTER_PROCESS;
 		let params = {
 			"dropdownlist-name": "process",
-			"code": "20101,20103,20104,20107"
+			"code": "20101,20104,20107"
 		};
 
 		callAxios(method, url, params).then(response => {
@@ -224,24 +224,16 @@ class MappingStitchForm extends Component {
 									component={renderCheckBoxField}
 									label="Active(Y/N)"
 									checked = {formData[field.active] === true || formData[field.active] === 1}
+									defaultChecked={true}
 									props={{
 										value           : formData[field.active] ? formData[field.active] : '',
-										/*value           : (() => {
-											console.log("219 219 219");
-											console.log("219 219 219");
-											console.log("219 219 219");
-											if (formData[field.active] == null){
-												return true;
-											} else {
-												return formData[field.active] ? formData[field.active] : '';
-											}
-										})*/
 									}}
 									onChange={(event, newValue) => {
+										this.props.change(field.active, newValue );
 										this.setState({
 											formData: {
 												...formData,
-												[field.active]: newValue ? newValue : '',
+												[field.active]: newValue ? newValue : true,
 											},
 										});
 									}}
@@ -369,7 +361,7 @@ class MappingStitchForm extends Component {
 								<div style={{width:'10%'}}></div>
 								<div className="d-flex flex-row" style={{width: '55%'}}>
 									<div className="d-flex flex-row" style={{width:'60%'}}>
-										<span className="form__form-group-label">Posittion No.</span>
+										<span className="form__form-group-label">Position No.</span>
 										<div className="form__form-group-field">
 											<Field
 												name={field.posittionName}

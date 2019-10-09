@@ -28,7 +28,7 @@ const validate = (values) => {
 	}
 
 	if (!values[field.posittionCode]) {
-		errors[field.posittionCode] = 'Posittion code field shouldn\'t be empty';
+		errors[field.posittionCode] = 'Position code field shouldn\'t be empty';
 	}
 
 	if (values[field.description] && values[field.description].trim().length > 300) {
