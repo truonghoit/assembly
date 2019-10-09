@@ -36,7 +36,7 @@ class CheckBoxField extends PureComponent {
 
 	render() {
 		const {
-			      disabled, className, name, value, onChange, label, color,
+			      disabled, className, name, value, onChange, label, color, defaultChecked
 		      }             = this.props;
 		const CheckboxClass = classNames({
 			'checkbox-btn': true,
@@ -54,7 +54,8 @@ class CheckBoxField extends PureComponent {
 					id={name}
 					name={name}
 					onChange={onChange}
-					checked={value}
+					//checked={value}
+					defaultChecked={defaultChecked}
 					disabled={disabled}
 				/>
 				<span
