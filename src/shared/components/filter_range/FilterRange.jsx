@@ -92,8 +92,6 @@ class FilterRange extends Component {
 				}));
 
 				if (arrayLines.length > 0) {
-					console.log("94 94 94 94 94 94");
-					console.log("arrayLines[0]: ", arrayLines[0]);
 					this.handleFilterLineChange(arrayLines[0]);
 				}
 
@@ -140,7 +138,7 @@ class FilterRange extends Component {
 				});
 
 				if (arrayModels.length > 0){
-					this.fillArticleCombobox(arrayModels[0]);
+					this.handleFilterModelChange(arrayModels[0]);
 				}
 
 				this.props.dispatch(
@@ -181,12 +179,15 @@ class FilterRange extends Component {
 					});
 				}
 
-
 				this.setState({
 					...this.state,
 					selectedArticle: arrayArticles.length > 0 ? arrayArticles[0] : ARRAY_ARTICLES[0],
 					arrayArticles: arrayArticles,
 				});
+
+				if (arrayArticles.length > 0){
+					this.handleFilterArticleChange(arrayArticles[0]);
+				}
 
 				this.props.dispatch(
 					changeFilterArticle(arrayArticles)
@@ -307,20 +308,6 @@ class FilterRange extends Component {
 			</Row>
 		</Col>
 	);
-
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (this.state.callUpdateTimes < 1) {
-			if (this.state.selectedLine.value != "" && this.state.selectedModel.value != "" && this.state.selectedArticle.value != ""){
-				this.props.handleFilterLineChange(this.state.selectedLine);
-				this.props.handleFilterModelChange(this.state.selectedModel);
-				this.props.handleFilterArticleChange(this.state.selectedArticle);
-				this.setState({
-					...this.state,
-					callUpdateTimes: this.state.callUpdateTimes + 1,
-				})
-			}
-		}
-	}
 
 	render() {
 		let {handleSubmit, screenName}               = this.props;
