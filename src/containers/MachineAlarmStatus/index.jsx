@@ -35,6 +35,16 @@ class MachineAlarmStatus extends Component {
 			"from_date" : filterFromDate,
 			"to_date"   : filterToDate
 		};
+		/*let params                                                                 = {
+			"factory"   : "",
+			"line"      : "",
+			"model"     : "",
+			"article_no": "",
+			"process"   : "",
+			"from_date" : 0,
+			"to_date"   : 0
+		};*/
+
 		console.log("params: ", params);
 		callAxios(method, url, params).then(response => {
 			try {
@@ -78,17 +88,17 @@ class MachineAlarmStatus extends Component {
 	};
 	handleFilterLineChange    = (newValue) => {
 		this.setState((state, props) => ({
-			filterLine: changeDateToUnix(newValue),
+			filterLine: newValue.value,
 		}));
 	};
 	handleFilterModelChange   = (newValue) => {
 		this.setState((state, props) => ({
-			filterModel: changeDateToUnix(newValue),
+			filterModel: newValue.value,
 		}));
 	};
 	handleFilterArticleChange = (newValue) => {
 		this.setState((state, props) => ({
-			filterArticle: changeDateToUnix(newValue),
+			filterArticle: newValue.value,
 		}));
 	};
 
